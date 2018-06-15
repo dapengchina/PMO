@@ -176,6 +176,36 @@ var path='<%=path%>';
 										</div>
 										</div>
 										</br></br></br>
+										 <div class="panel panel-default">
+							 <div class="panel-heading">Employee Upgrade Record Query Conditions</div>
+                             <div class="panel-body">
+                                    <div class="group">
+										<label class="col-lg-2 control-label">StartTime</label>  
+                                        <!--指定 date标记--> 
+                                        <div class="col-lg-4">
+                                        <div class='input-group date' id='datetimepicker1'>  
+                                            <input id="startTime" type='text' class="form-control" />  
+                                            <span class="input-group-addon">  
+                                             <span class="glyphicon glyphicon-calendar"></span>  
+                                            </span>  
+                                        </div> 
+                                        </div> 
+									</div>
+									<div class="group">
+										<label class="col-lg-2 control-label">EndTime</label>  
+                                        <!--指定 date标记-->  
+                                        <div class="col-lg-4">
+                                        <div class='input-group date' id='datetimepicker2'>  
+                                            <input id="endTime" type='text' class="form-control" />  
+                                            <span class="input-group-addon">  
+                                              <span class="glyphicon glyphicon-calendar"></span>  
+                                            </span>  
+                                        </div>
+                                        </div>  
+									</div>
+									
+                               </div>
+                             </div>
 										
 										<div class="form-group">
 									    <div style="text-align:center;width:50%;float:left">
@@ -351,9 +381,133 @@ var path='<%=path%>';
 		<c:import url="/service/manage/footer" />
 
 	</div>
+	
+	<!-- 员工调级 -->
+	<div class="modal fade" id="employeeUpgrade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div style="width:65%" class="modal-dialog">
+					<div class="modal-content">
+					    <div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							 <h4 class="modal-title" id="myModalLabel">
+								 Promote Detail Information Of <b id="upgradeemployeename"></b>
+							 </h4>
+						</div>
+						<div class="modal-body">
+						   <!-- 员工调级记录模块 -->
+						   <div class="panel panel-default">
+							 <div class="panel-heading">Employee Upgrade History Record</div>
+                             <div class="panel-body">
+                                 <table id="employeeUpgradeRecordList"></table>
+                             </div>
+                           </div>
+                           <!-- 员工基本信息模块 -->
+						   <div class="panel panel-default">
+							 <div class="panel-heading">Employee Base Information</div>
+                             <div class="panel-body">
+                                    <div class="group">
+										<label class="col-sm-2 control-label">Promote Role</label>
+										<div class="col-sm-4">
+											<select class="form-control" name="promoteroleupgrade"
+													id="promoteroleupgrade">
+												<option value="">--Option--</option>	
+											</select>
+										</div>
+									</div>
+									<div class="group">
+										<label class="col-sm-2 control-label">Now Rate</label>
+										<div class="col-sm-4">
+											<input type="text" class="form-control" name="nowrateupgrade"
+													id="nowrateupgrade" />
+										</div>
+									</div>
+									<br/><br/><br/>
+									<div class="group">
+										<label class="col-lg-2 control-label">Effective Date</label>  
+                                        <!--指定 date标记-->  
+                                        <div class="col-lg-4">
+                                        <div class='input-group date' id='datetimepicker3'>  
+                                            <input id="effectivedate" type='text' class="form-control" />  
+                                            <span class="input-group-addon">  
+                                              <span class="glyphicon glyphicon-calendar"></span>  
+                                            </span>  
+                                        </div>
+                                        </div>  
+									</div>
+                                    <div class="group">
+										<label class="col-sm-2 control-label">E-HR</label>
+										<div class="col-sm-4">
+											<input readonly="readonly" type="text" class="form-control" name="eHrupgrade"
+													id="eHrupgrade" />
+										</div>
+									</div>
+									<br/><br/><br/>
+									<div class="group">
+										<label class="col-sm-2 control-label">StaffId</label>
+										<div class="col-sm-4">
+											<input readonly="readonly" type="text" class="form-control" name="staffidupgrade"
+													id="staffidupgrade" />
+										</div>
+									</div>
+									<div class="group">
+										<label class="col-sm-2 control-label">Staff Name</label>
+										<div class="col-sm-4">
+											<input readonly="readonly" type="text" class="form-control" name="staffnameupgrade"
+													id="staffnameupgrade" />
+										</div>
+									</div>
+									<br/><br/><br/>
+									<div class="group">
+										<label class="col-sm-2 control-label">LOB</label>
+										<div class="col-sm-4">
+											<input readonly="readonly" type="text" class="form-control" name="lobupgrade"
+													id="lobupgrade" />
+										</div>
+									</div>
+									<div class="group">
+										<label class="col-sm-2 control-label">MSA Role</label>
+										<div class="col-sm-4">
+											<input readonly="readonly" type="text" class="form-control" name="msaroleupgrade"
+													id="msaroleupgrade" />
+										</div>
+									</div>
+									<br/><br/><br/>
+									<div class="group">
+										<label class="col-sm-2 control-label">Previous Rate</label>
+										<div class="col-sm-4">
+											<input readonly="readonly" type="text" class="form-control" name="previousrateupgrade"
+													id="previousrateupgrade" />
+										</div>
+									</div>
+									<br/><br/><br/>
+									
+									
+                               </div>
+                           </div>
+						
+						 
+						 
+			            </div>
+						<div class="modal-footer">
+							 <button id="cancel" type="button" class="btn btn-default" data-dismiss="modal">Cancel&nbsp;</button>
+							 <button id="send" type="button" onclick="sendemail()" class="btn btn-primary">Update&nbsp;&nbsp;</button>
+						</div>
+					</div>
+					
+				</div>
+				
+	</div>
 	<!--/.fluid-container-->
 
 	<!-- external javascript -->
+	<!-- CSS引用 -->
+    <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.css" type="text/css" />
+    <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.min.css" type="text/css" />     
+  
+    <!-- JS引用 -->
+    <script src="<%=path %>/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="<%=path %>/extensionjs/bootstrap-table/dist/bootstrap-table.js" type="text/javascript"></script>
+    <script src="<%=path %>/extensionjs/bootstrap-table/dist/bootstrap-table-locale-all.js" type="text/javascript"></script>
+	<script src="<%=path %>/extensionjs/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
 
 	<script
 		src="<%=path %>/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>

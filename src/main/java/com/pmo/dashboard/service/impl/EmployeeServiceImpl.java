@@ -22,12 +22,12 @@ public class EmployeeServiceImpl implements EmployeeService
     private EmployeeMapper employeeMapper;
 
     @Override
-    public boolean addEmployee(Employee employee)
+    public String addEmployee(Employee employee)
     {
         if(employeeMapper.addEmployee(employee)>0){
-            return true;
+            return employee.getEmployeeId();
         }
-        return false;
+        return "";
     }
 
     @Override

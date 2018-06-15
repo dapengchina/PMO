@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.pmo.dashboard.entity.CandidatePush;
 import com.pmo.dashboard.entity.Demand;
+import com.pmo.dashboard.entity.QueryModel;
 
 public interface DemandMapper
 {
@@ -21,4 +22,8 @@ public interface DemandMapper
 	public int updateBackForCandidate(Map<String,Object> params);
 	public Demand queryDemandById(String demandId);
 	public Demand queryDemandBycandidateId(String candidateId);
+	
+	List<Demand> getDemand(QueryModel qm);
+	
+	int update(Demand demand);
 }

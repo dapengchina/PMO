@@ -79,10 +79,24 @@ public class Demand
     
     private String userType;
     
+    private String hsbcDeptName;
+    private String csDeptName;
     
     
     
-    public String getGbgf() {
+    
+    /**
+     * 表外字段
+     */
+    private String gbgfid;
+    private String hsbcdeptid;
+    private String hsbcsubdeptid;
+    
+    
+    
+    
+
+	public String getGbgf() {
 		return gbgf;
 	}
 
@@ -131,18 +145,7 @@ public class Demand
 		this.csDeptName = csDeptName;
 	}
 
-	private String hsbcDeptName;
-    private String csDeptName;
-    
-    
-    
-    
-    /**
-     * 表外字段
-     */
-    private String gbgfid;
-    private String hsbcdeptid;
-    private String hsbcsubdeptid;
+	
     
     
     

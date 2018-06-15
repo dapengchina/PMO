@@ -16,12 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.pmo.dashboard.entity.CSDept;
 import com.pmo.dashboard.entity.EmployeeInfo;
 import com.pmo.dashboard.entity.EmployeePageCondition;
-import com.pmo.dashboard.entity.OfflineOper;
 import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.util.Constants;
 import com.pom.dashboard.service.CSDeptService;
@@ -43,135 +40,119 @@ public class EmployeeInfoController
     
     @RequestMapping("/queryEmployeeList")
     @ResponseBody
-    public Object queryEmployeeList(int pageSize, int pageNumber, final HttpServletRequest request,
+    public Object queryEmployeeList(final HttpServletRequest request,
             final HttpServletResponse response)
     {
-//        String pageState = request.getParameter("pageState");
-//        
-//        String hsbcStaffId = request.getParameter("hsbcStaffId");
-//        
-//        String eHr = request.getParameter("eHr");
-//        
-//        String lob = request.getParameter("lob");
-//        
-//        String csDeptName = request.getParameter("csDeptName");
-//        
-//        String csSubDeptName = request.getParameter("csSubDeptName");
-//        
-//        String csBuName = request.getParameter("csBuName");
-//        
-//        String resourceStatus = request.getParameter("resourceStatus");
-//        
-//        String staffName = request.getParameter("staffName");
-//        
-//        String rmUserId = request.getParameter("rmUserId");
-//        
-//		String engagementType = request.getParameter("engagementType");
-//		
-//		int pageRecordsNum = Constants.TEN;
-//		
-//		if (request.getParameter("pageRecordsNum") != null) {
-//
-//			pageRecordsNum = Integer.parseInt(request.getParameter("pageRecordsNum"));
-//		}
-//
-//        User user = (User) request.getSession().getAttribute("loginUser");
-//        
-//        List<String>  csSubDeptNames = new ArrayList<String>();   
-//        
-//        List<CSDept> cSDepts = null;
-//        
-//        if(user.getCsdeptId() != null && user.getCsdeptId() != ""){
-//        	cSDepts= csDeptService.queryCSDeptByIds(user.getCsdeptId().split(","));
-//        	for (CSDept csDept : cSDepts) {
-//        		csSubDeptNames.add(csDept.getCsSubDeptName());
-//			}
-//        }
-//        String userType = user.getUserType();
-//      	
-//    	String[] csBuNames = null;
-//		if (user.getBu() != null && user.getBu() != "") {
-//    		csBuNames = user.getBu().split(",");
-//    	}
-//
-//        String csSubDeptId = null;
-//       
-//        if(("".equals(csSubDeptName) || csSubDeptName == null) &&
-//                ("".equals(csBuName) || csBuName == null)){
-//            
-//            if("1".equals(userType)|| "2".equals(userType)|| "3".equals(userType)|| "4".equals(userType)||"5".equals(userType)){
-//                csBuName = csBuNames[0];
-//            }
-//            
-//            if("3".equals(userType)|| "4".equals(userType)|| "5".equals(userType)){
-//            	csSubDeptName = cSDepts.get(0).getCsSubDeptName();               	             
-//            }
-//            
-//        }	
-//        
-//        int countPage = 0;
-//        
-//        String currentPage = null;
-//        
-//        EmployeePageCondition employeePageCondition = new EmployeePageCondition();
-//        
-//        if("".equals(pageState) || pageState == null){
-//            currentPage = "0";
-//            employeePageCondition.setHsbcStaffId(hsbcStaffId);
-//            employeePageCondition.seteHr(eHr);
-//            employeePageCondition.setLob(lob);
-//            employeePageCondition.setCsSubDeptName(csSubDeptName);
-//            employeePageCondition.setCsDeptName(csDeptName);
-//            employeePageCondition.setCsbuName(csBuName);
-//            employeePageCondition.setCurrentPage(currentPage);
-//            employeePageCondition.setStaffName(staffName);
-//            employeePageCondition.setResourceStatus(resourceStatus);
-//            employeePageCondition.setRmUserId(rmUserId);
-//            employeePageCondition.setEngagementType(engagementType);
-//            employeePageCondition.setPageRecordsNum(pageRecordsNum);
-//            countPage = employeeInfoService.countEmployeeList(employeePageCondition);
-//            employeePageCondition.setPageCount(countPage+"");
-//            request.getSession().setAttribute("employeePageCondition", employeePageCondition);
-//        }else if("frist".equals(pageState)){
-//            currentPage = "0";
-//            employeePageCondition = (EmployeePageCondition) request.getSession().getAttribute("employeePageCondition");
-//            employeePageCondition.setCurrentPage(currentPage);
-//            request.getSession().setAttribute("employeePageCondition", employeePageCondition);
-//        }else if("next".equals(pageState)){
-//            employeePageCondition = (EmployeePageCondition) request.getSession().getAttribute("employeePageCondition");
-//            currentPage = Integer.parseInt(employeePageCondition.getCurrentPage()) + employeePageCondition.getPageRecordsNum()+"";
-//            employeePageCondition.setCurrentPage(currentPage);
-//            request.getSession().setAttribute("employeePageCondition", employeePageCondition);
-//        }else if("previous".equals(pageState)){
-//            employeePageCondition = (EmployeePageCondition) request.getSession().getAttribute("employeePageCondition");
-//            currentPage = Integer.parseInt(employeePageCondition.getCurrentPage()) - employeePageCondition.getPageRecordsNum() +"";
-//            employeePageCondition.setCurrentPage(currentPage);
-//            request.getSession().setAttribute("employeePageCondition", employeePageCondition);
-//        }else if("last".equals(pageState)){
-//            employeePageCondition = (EmployeePageCondition) request.getSession().getAttribute("employeePageCondition");
-//            currentPage = (Integer.parseInt(employeePageCondition.getPageCount()) - Constants.ONE) * employeePageCondition.getPageRecordsNum() +"";
-//            employeePageCondition.setCurrentPage(currentPage);
-//            request.getSession().setAttribute("employeePageCondition", employeePageCondition);
-//        }
+        String pageState = request.getParameter("pageState");
         
-//        List<EmployeeInfo> list = employeeInfoService.queryEmployeeList(employeePageCondition);
-//        Map<String,Object> result = new HashMap<String,Object>();
+        String hsbcStaffId = request.getParameter("hsbcStaffId");
         
-    	String csSubDeptName = request.getParameter("csSubDeptName");
-        String csSubDeptId = null;
-    	User user = (User) request.getSession().getAttribute("loginUser");
-    	String userType = user.getUserType();
-    	EmployeePageCondition employeePageCondition = new EmployeePageCondition();
-    	List<String>  csSubDeptNames = new ArrayList<String>(); 
+        String eHr = request.getParameter("eHr");
+        
+        String lob = request.getParameter("lob");
+        
+        String csDeptName = request.getParameter("csDeptName");
+        
+        String csSubDeptName = request.getParameter("csSubDeptName");
+        
+        String csBuName = request.getParameter("csBuName");
+        
+        String resourceStatus = request.getParameter("resourceStatus");
+        
+        String staffName = request.getParameter("staffName");
+        
+        String rmUserId = request.getParameter("rmUserId");
+        
+		String engagementType = request.getParameter("engagementType");
+		
+		int pageRecordsNum = Constants.TEN;
+		
+		if (request.getParameter("pageRecordsNum") != null) {
+
+			pageRecordsNum = Integer.parseInt(request.getParameter("pageRecordsNum"));
+		}
+
+        User user = (User) request.getSession().getAttribute("loginUser");
+        
+        List<String>  csSubDeptNames = new ArrayList<String>();   
+        
+        List<CSDept> cSDepts = null;
+        
+        if(user.getCsdeptId() != null && user.getCsdeptId() != ""){
+        	cSDepts= csDeptService.queryCSDeptByIds(user.getCsdeptId().split(","));
+        	for (CSDept csDept : cSDepts) {
+        		csSubDeptNames.add(csDept.getCsSubDeptName());
+			}
+        }
+        String userType = user.getUserType();
+      	
     	String[] csBuNames = null;
-    	
-    	PageHelper.startPage(pageNumber,pageSize);
-    	    	
+		if (user.getBu() != null && user.getBu() != "") {
+    		csBuNames = user.getBu().split(",");
+    	}
+
+        String csSubDeptId = null;
+       
+        if(("".equals(csSubDeptName) || csSubDeptName == null) &&
+                ("".equals(csBuName) || csBuName == null)){
+            
+            if("1".equals(userType)|| "2".equals(userType)|| "3".equals(userType)|| "4".equals(userType)||"5".equals(userType)){
+                csBuName = csBuNames[0];
+            }
+            
+            if("3".equals(userType)|| "4".equals(userType)|| "5".equals(userType)){
+            	csSubDeptName = cSDepts.get(0).getCsSubDeptName();               	             
+            }
+            
+        }	
+        
+        int countPage = 0;
+        
+        String currentPage = null;
+        
+        EmployeePageCondition employeePageCondition = new EmployeePageCondition();
+        
+        if("".equals(pageState) || pageState == null){
+            currentPage = "0";
+            employeePageCondition.setHsbcStaffId(hsbcStaffId);
+            employeePageCondition.seteHr(eHr);
+            employeePageCondition.setLob(lob);
+            employeePageCondition.setCsSubDeptName(csSubDeptName);
+            employeePageCondition.setCsDeptName(csDeptName);
+            employeePageCondition.setCsbuName(csBuName);
+            employeePageCondition.setCurrentPage(currentPage);
+            employeePageCondition.setStaffName(staffName);
+            employeePageCondition.setResourceStatus(resourceStatus);
+            employeePageCondition.setRmUserId(rmUserId);
+            employeePageCondition.setEngagementType(engagementType);
+            employeePageCondition.setPageRecordsNum(pageRecordsNum);
+            countPage = employeeInfoService.countEmployeeList(employeePageCondition);
+            employeePageCondition.setPageCount(countPage+"");
+            request.getSession().setAttribute("employeePageCondition", employeePageCondition);
+        }else if("frist".equals(pageState)){
+            currentPage = "0";
+            employeePageCondition = (EmployeePageCondition) request.getSession().getAttribute("employeePageCondition");
+            employeePageCondition.setCurrentPage(currentPage);
+            request.getSession().setAttribute("employeePageCondition", employeePageCondition);
+        }else if("next".equals(pageState)){
+            employeePageCondition = (EmployeePageCondition) request.getSession().getAttribute("employeePageCondition");
+            currentPage = Integer.parseInt(employeePageCondition.getCurrentPage()) + employeePageCondition.getPageRecordsNum()+"";
+            employeePageCondition.setCurrentPage(currentPage);
+            request.getSession().setAttribute("employeePageCondition", employeePageCondition);
+        }else if("previous".equals(pageState)){
+            employeePageCondition = (EmployeePageCondition) request.getSession().getAttribute("employeePageCondition");
+            currentPage = Integer.parseInt(employeePageCondition.getCurrentPage()) - employeePageCondition.getPageRecordsNum() +"";
+            employeePageCondition.setCurrentPage(currentPage);
+            request.getSession().setAttribute("employeePageCondition", employeePageCondition);
+        }else if("last".equals(pageState)){
+            employeePageCondition = (EmployeePageCondition) request.getSession().getAttribute("employeePageCondition");
+            currentPage = (Integer.parseInt(employeePageCondition.getPageCount()) - Constants.ONE) * employeePageCondition.getPageRecordsNum() +"";
+            employeePageCondition.setCurrentPage(currentPage);
+            request.getSession().setAttribute("employeePageCondition", employeePageCondition);
+        }
+        
         List<EmployeeInfo> list = employeeInfoService.queryEmployeeList(employeePageCondition);
-        PageInfo<OfflineOper> page = new PageInfo(list);
         Map<String,Object> result = new HashMap<String,Object>();
-        result.put("total", page.getTotal());
-        result.put("rows", list);
         
        // change csSubDeptName to csSubDeptId
      	List<CSDept> allCsDepts = csDeptService.queryAllCSDept();

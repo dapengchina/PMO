@@ -276,4 +276,50 @@
 		update t_demand set BGV_CLEARED = #{bgvCleared},UPDATE_DATE= date_format(now(),'%Y-%m-%d')
 		where CANDIDATE_ID = #{candidateId}
 	</update>
+	
+	<select id="getDemand" resultMap="demandMap" parameterType="com.pmo.dashboard.entity.QueryModel">
+	
+	    select * from t_demand where 1=1
+	    <if test="status != null and status != ''">
+			and STATUS = #{status}
+		</if>
+		<if test="rr != null and rr != ''">
+			and RR = #{rr}
+		</if>
+		<if test="jobcode != null and jobcode != ''">
+			and JOB_CODE = #{jobcode}
+		</if>
+		<if test="type != null and type != ''">
+			and ENGAGEMENT_TYPE = #{type}
+		</if>
+		<if test="skill != null and skill != ''">
+			and SKILL = #{skill}
+		</if>
+		<if test="employeeid != null and employeeid != ''">
+			and CANDIDATE_ID = #{employeeid}
+		</if>
+		<if test="csdeptids != null and csdeptids != ''">
+		    and CS_SUBDEPT in
+			<foreach collection="list" open="(" separator="," close=")" item="deptid">
+               #{deptid}
+            </foreach>
+		</if>
+		
+	
+	</select>
+	
+	
+	<update id="update" parameterType="com.pmo.dashboard.entity.Demand" >
+    update t_demand
+    <set >
+      <if test="status != null and status != ''" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateId != null" >
+        CANDIDATE_ID = #{candidateId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DEMAND_ID = #{demandId,jdbcType=VARCHAR}
+  </update>
+	
 </mapper>

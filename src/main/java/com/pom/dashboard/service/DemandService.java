@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.pmo.dashboard.entity.CandidatePush;
 import com.pmo.dashboard.entity.Demand;
 import com.pmo.dashboard.entity.PageCondition;
+import com.pmo.dashboard.entity.QueryModel;
 
 /**
  * 需求service类
@@ -25,4 +26,8 @@ public interface DemandService {
 	public boolean updateBackForCandidate(Demand demand);
 	public Demand queryDemandById(String demandId);
 	public Demand queryDemandByCandidateId(String candidateId);
+	
+	List<Demand> getDemand(QueryModel qm);
+	
+	int update(Demand demand);
 }

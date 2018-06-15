@@ -87,7 +87,8 @@ var path='<%=path%>';
 							<form id="updateEmployeeForm" method="post">
 							    
 									    <input type="hidden" name="employeeId" id="employeeId" value="${employeeId}"/>
-								
+								<input id="udemandid" value="" type="hidden"></input>
+								<input id="senddemandtype" value="2" type="hidden"></input>
 								<div id="successAlert" class="alert alert-success" style="display: none;"></div>	
 							    <br/>
 								<div class="form-group">
@@ -321,6 +322,20 @@ var path='<%=path%>';
 									   </div>
 								</div>
 								<div class="form-group">
+									<div class="group">
+										<label class="col-sm-2 control-label">Demand</label>
+										<div class="col-lg-4">
+											<input readonly="readonly" onclick="cdemand()" type="text" class="form-control" name="demandskill"
+												   id="demandskill" data-bv-group=".group"/>
+										</div>
+									</div>
+
+									<div class="group">
+										
+									</div>
+								</div>
+								
+								<div class="form-group">
 									    <div style="text-align:center;width:100%;">
 									    <input type="button" value="Update"
 										name="subscribe" id="sub_search" href="#"
@@ -372,8 +387,61 @@ var path='<%=path%>';
 				
 	</div>
 	<!--/.fluid-container-->
+	<!-- 需求列表 -->
+	<div class="modal fade" id="demandlist" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div style="width:75%" class="modal-dialog">
+					<div class="modal-content">
+					    <div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							 <h4 class="modal-title" id="myModalLabel">
+								 Demand List
+							 </h4>
+						</div>
+						<div class="modal-body">
+						  <div class="form-group">
+									<div class="group">
+										<label class="col-sm-2 control-label">Skill</label>
+										<div class="col-lg-4">
+											<input type="text" class="form-control" name="searchdemandskill"
+												   id="searchdemandskill" data-bv-group=".group"/>
+										</div>
+									</div>
+						  </div>
+						  
+						  <div class="form-group">
+									    <div style="text-align:center;width:50%;float:left">
+									    <input type="button" value="Search"
+										name="subscribedemand" id="sub_searchdemand" href="#"
+										class="button btn btn-primary"
+										onclick="searchDemand()"
+										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+									    </div>
+						  </div>
+						  
+				          
+				          <table id="demandlist2"></table>
+				          
+			            </div>
+						<div class="modal-footer">
+							 <button id="cancel" type="button" class="btn btn-default" data-dismiss="modal">Cancel&nbsp;</button>
+							 <button id="sure" type="button" onclick="sureDemand(2)" class="btn btn-primary">Sure&nbsp;&nbsp;</button>
+						</div>
+					</div>
+					
+				</div>
+				
+	</div>
 
 	<!-- external javascript -->
+	<!-- CSS引用 -->
+    <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.css" type="text/css" />
+    <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.min.css" type="text/css" />     
+  
+    <!-- JS引用 -->
+    <script src="<%=path %>/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="<%=path %>/extensionjs/bootstrap-table/dist/bootstrap-table.js" type="text/javascript"></script>
+    <script src="<%=path %>/extensionjs/bootstrap-table/dist/bootstrap-table-locale-all.js" type="text/javascript"></script>
+	<script src="<%=path %>/extensionjs/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
 
 	<script
 		src="<%=path %>/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>

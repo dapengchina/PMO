@@ -41,12 +41,14 @@ import com.pmo.dashboard.entity.EmployeeLog;
 import com.pmo.dashboard.entity.EmployeePageCondition;
 import com.pmo.dashboard.entity.HSBCDept;
 import com.pmo.dashboard.entity.Promote;
+import com.pmo.dashboard.entity.QueryModel;
 import com.pmo.dashboard.entity.StayinCandidate;
 import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.util.Constants;
 import com.pmo.dashboard.util.Utils;
 import com.pom.dashboard.service.CSDeptService;
 import com.pom.dashboard.service.CandidateService;
+import com.pom.dashboard.service.DemandService;
 import com.pom.dashboard.service.EmployeeLogService;
 import com.pom.dashboard.service.EmployeeService;
 import com.pom.dashboard.service.HSBCDeptService;
@@ -85,6 +87,9 @@ public class EmployeeController {
 
 	@Resource
 	private CandidateService candidateService;
+	
+	@Resource
+	private DemandService demandService;
 
 
 
@@ -162,6 +167,14 @@ public class EmployeeController {
         String employeeId = request.getParameter("employeeId");
 
         Employee employee = employeeService.queryEmployeeById(employeeId);
+        //根据employeeid获取需求
+        QueryModel qm = new QueryModel();
+        qm.setEmployeeid(employee.getEmployeeId());
+        List<Demand> list = demandService.getDemand(qm);
+        if(list!=null && list.size()>0){
+        	employee.setDemandrr(list.get(0).getRr());
+        	employee.setDemandskill(list.get(0).getSkill());
+        }
 
         return employee;
     }
@@ -217,6 +230,7 @@ public class EmployeeController {
         String gbGf = request.getParameter("gbGf");
         String entryDate = request.getParameter("entryDate");
         String rmUserId = request.getParameter("rmUserId");
+        String demandid = request.getParameter("udemandid");
         String itindustryWorkYear = request.getParameter("itindustryWorkYear");
 
         //add begin
@@ -248,8 +262,8 @@ public class EmployeeController {
                 entryDate,rmUserId, createTime, updateTime,itindustryWorkYear,
                 chsoftiProNumber,chsoftiProStartDate1,chsoftiProName);
 
-        boolean resultFlag = employeeService.addEmployee(employee);
-        if(resultFlag) {
+        String employeeid = employeeService.addEmployee(employee);
+        if(!"".equals(employeeid)) {
         	String candidateId=(String) request.getSession().getAttribute("onboardCandidateId");
     		candidateService.updateOnboardCandidate(candidateId);
 
@@ -267,8 +281,16 @@ public class EmployeeController {
             }catch(Exception e){
             	e.printStackTrace();
             }
+            //修改需求状态并且将返回的员工ID保存到需求表中的候选人ID字段中
+            if(!"".equals(demandid) && demandid!=null){
+            	Demand demand = new Demand();
+                demand.setDemandId(demandid);
+                demand.setStatus("Onboard");
+                demand.setCandidateId(employeeid);
+                demandService.update(demand);
+            }
         }
-        return resultFlag;
+        return employeeid!=""?true:false;
     }
 
 
@@ -309,6 +331,7 @@ public class EmployeeController {
         String gbGf = request.getParameter("gbGf");
         String entryDate = request.getParameter("entryDate");
         String rmUserId = request.getParameter("rmUserId");
+        String demandid = request.getParameter("udemandid");
         String itindustryWorkYear = request.getParameter("itindustryWorkYear");
         
         //add begin
@@ -362,9 +385,34 @@ public class EmployeeController {
         }catch(Exception e){
         	e.printStackTrace();
         }
-
+        
         boolean resultFlag = employeeService.updateEmployee(employee);
-
+        
+        
+        if(!"".equals(demandid) && demandid!=null){
+        	/**
+             * 第一步:清空原来对应需求的候选人ID字段，并且将原来需求的状态修改回Open状态
+             */
+            QueryModel qm = new QueryModel();
+            Demand demand = new Demand();
+            qm.setEmployeeid(employee.getEmployeeId());
+            List<Demand> list = demandService.getDemand(qm);
+            if(list!=null && list.size()>0){
+            	demand.setDemandId(list.get(0).getDemandId());
+            	demand.setStatus("Open");
+            	demand.setCandidateId("");
+            	demandService.update(demand);
+            }
+            
+            /**
+             * 第二步:修改需求状态并且将员工ID保存到需求表中的候选人ID字段中
+             */
+            
+            demand.setDemandId(demandid);
+            demand.setStatus("Onboard");
+            demand.setCandidateId(employee.getEmployeeId());
+            demandService.update(demand);
+        }
         return resultFlag;
     }
     

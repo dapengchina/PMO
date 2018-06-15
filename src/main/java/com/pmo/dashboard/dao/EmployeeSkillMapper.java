@@ -22,4 +22,13 @@ public interface EmployeeSkillMapper {
     List<String> skills();
     
     List<EmployeeSkill> detail(String eHr);
+    
+    List<EmployeeSkill> toEdit(String eHr);
+    
+    List<String> queryEhrIds(String eHr);
+    
+    String haveSkill(EmployeeSkill condition);
+    
+    List<EmployeeSkill> toBatch();
+    
 }

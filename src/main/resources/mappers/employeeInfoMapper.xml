@@ -59,7 +59,7 @@
 			</if>
 			
 		ORDER BY u.NICKNAME,e.ROLE
-<!--         LIMIT #{currentPage},#{pageRecordsNum}; -->
+    LIMIT #{currentPage},#{pageRecordsNum}; 
 	</select>
 	
 	<select id="countEmployeeList" parameterType="com.pmo.dashboard.entity.EmployeePageCondition" resultType="int" >

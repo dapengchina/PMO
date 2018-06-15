@@ -21,14 +21,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.pmo.dashboard.entity.CSDept;
 import com.pmo.dashboard.entity.Demand;
 import com.pmo.dashboard.entity.Employee;
 import com.pmo.dashboard.entity.HSBCDept;
 import com.pmo.dashboard.entity.PageCondition;
+import com.pmo.dashboard.entity.QueryModel;
 import com.pmo.dashboard.entity.StayinCandidate;
 import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.util.Constants;
@@ -64,6 +70,8 @@ public class DemandController {
 	
 	@Resource
 	CSDeptService csDeptService;
+	
+	private ObjectMapper objectMapper = new ObjectMapper();  
 
 	private static Logger logger = LoggerFactory.getLogger(DemandController.class);
 	
@@ -132,6 +140,73 @@ public class DemandController {
 		List<CSDept> list = csDeptService.queryCSSubDeptNameByCsBuName(csBuName);
 		return list;
 	}
+	
+	/**
+	 * 获取需求信息
+	 * @throws JsonProcessingException 
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping("/getDemand/{id}")
+	@ResponseBody
+	public String getDemand(int pageSize,int pageNumber,String rr,String jobcode,String skill,@PathVariable("id") String id,HttpServletRequest request) throws JsonProcessingException{
+		//获取当前登录用户
+		User user = (User) request.getSession().getAttribute("loginUser");
+		//获取用户类型
+		String usertype = user.getUserType();
+		//如果不是管理员,则查询对应交付部，open的需求
+		String[] temp = null;
+		List tempList = null;
+		if(!usertype.equals("0")){
+			if(user.getCsdeptId()!=null && !"".equals(user.getCsdeptId())){
+				if(user.getCsdeptId().indexOf(",")!=-1){
+					temp=user.getCsdeptId().split(",");
+				}else{
+					temp = new String[1];
+					temp[0] = user.getCsdeptId();
+				}
+			}
+		}
+		if(temp!=null){
+			tempList = new ArrayList();
+			for(int k=0;k<temp.length;k++){
+				tempList.add(temp[k]);
+			}
+		}
+		
+		QueryModel qm = new QueryModel();
+		qm.setCsdeptids(tempList);
+		qm.setStatus("Open");
+		qm.setRr(rr);
+		qm.setJobcode(jobcode);
+		if(id.equals("1")){
+			qm.setType("Time&Material");
+		}
+        if(id.equals("2")){
+        	qm.setType("Fixed Price");
+		}
+        if(id.equals("3")){
+        	qm.setType("Support");
+        }
+		//第一个参数当前页码，第二个参数每页条数
+		PageHelper.startPage(pageNumber,pageSize);  
+		List<Demand> list = demandService.getDemand(qm);
+		/**
+		 * 处理交付部名称
+		 */
+		for(int i=0;i<list.size();i++){
+			CSDept csdept = csDeptService.queryCSDeptById(list.get(i).getCsSubDept());
+			if(csdept!=null){
+				list.get(i).setCsDeptName(csdept.getCsSubDeptName());
+			}
+		}
+		Map map = new HashMap();
+		PageInfo<Demand> page = new PageInfo(list);
+		map.put("total",page.getTotal());
+		map.put("rows", list);
+		return objectMapper.writeValueAsString(map);
+	}
+	
+	
 	
 	/**
 	 * 按条件查询招聘需求和分页功能

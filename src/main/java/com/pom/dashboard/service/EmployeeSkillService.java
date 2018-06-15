@@ -23,4 +23,11 @@ public interface EmployeeSkillService {
     
     List<EmployeeSkill> detail(String eHr);
     
+    List<EmployeeSkill> toEdit(String eHr);
+    
+    String haveSkill(EmployeeSkill condition);
+    
+    List<EmployeeSkill> toBatch();
+    
+    boolean batch(EmployeeSkill record); 
 }

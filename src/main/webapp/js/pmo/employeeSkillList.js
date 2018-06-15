@@ -2,16 +2,11 @@ $(function () {
 	$('#myModal').modal('hide')
     loadSkillList();
     loadCSSubDept();
+    loadLevel();
     loadRole();
     loadSkill();
     
-    $("#officialAccreditation").change(function() { 
-    	if($(this).is(':checked')){
-    		$("#officialAccreditation").val('1');
-    	}else{
-    		$("#officialAccreditation").val('');
-    	}
-    });
+    
 });
 
 function loadCSSubDept(result){
@@ -51,14 +46,39 @@ function loadSkill(result){
 }
 
 function loadRole(result){
-	var url = path+'/json/role.json'
+	var url = path+'/json/role.json';
 	$.getJSON(url,  function(data) {
 		   $("#role").empty();
 		   $("#role").append("<option value=''>--Option--</option>");
 	       $.each(data, function(i, item) {
 	    	   $("#role").append("<option>"+item.name+"</option>");
 	       })
-//		   $('#csBu').val(result.pageInfo.bu);
+	});
+}
+
+function loadLevel(result){
+	var url = path+'/json/capabilityLevel.json';
+	$.getJSON(url,  function(data) {
+		   $("#capabilityLevel").empty();
+		   $("#capabilityLevel").append("<option value=''>--Option--</option>");
+	       $.each(data, function(i, item) {
+	    	   $("#capabilityLevel").append("<option value='"+item.key+"'>"+item.name+"</option>");
+	       })
+	});
+}
+function loadLevelToTd(sele, abilityLevel){
+	if(abilityLevel==null) abilityLevel='';
+	var url = path+'/json/capabilityLevel.json';
+	$.getJSON(url,  function(data) {
+		$(sele).empty();
+		$(sele).append("<option value=''>--Option--</option>");
+	    $.each(data, function(i, item) {
+	    	 if(item.key==abilityLevel){
+	    		 $(sele).append("<option selected value='"+item.key+"'>"+item.name+"</option>");
+	    	 }else{
+	    		 $(sele).append("<option value='"+item.key+"'>"+item.name+"</option>");
+	    	 }
+	    })
 	});
 }
 
@@ -101,7 +121,7 @@ function loadSkillList(){
         striped: true,                      //是否显示行间隔色
         fixedColumns: true,
         fixedNumber: 0,
-        singleSelect : true,                // 单选checkbox 
+        singleSelect : false,                // 单选checkbox 
         cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
         pagination: true,                   //是否显示分页（*）
         sortable: true,                     //是否启用排序
@@ -182,7 +202,7 @@ function loadSkillList(){
         ,{
             field: 'workExperience',
 //            title: 'work Experience(Years)',
-            title: 'work',
+            title: 'work(Years)',
             sortable: true
         }
         ,{
@@ -190,9 +210,9 @@ function loadSkillList(){
             title: 'Operate'
 //            ,sortable: true
             ,formatter:function(value,row,index){
-            	return "<a href='javascript:void(0);' class='btn btn-info btn-small' onclick=detail('"+row.eHr+"')>Detail</a>"
-            	+"<a href='javascript:void(0);' class='btn btn-info btn-small' onclick=editSkill('"+row.eHr+"')>Edit</a>"
-            	;
+            	var r = row.id==null?'':"<a href='javascript:void(0);' class='btn btn-info btn-small' onclick=detail('"+row.eHr+"')>Detail</a>" ;
+//            	var r = "<a href='javascript:void(0);' class='btn btn-info btn-small' onclick=detail('"+row.eHr+"')>Detail</a>" ;
+            	return r+"<a href='javascript:void(0);' class='btn btn-info btn-small' onclick=toEdit('"+row.eHr+"')>Edit</a>" ;
             }
         }
         /*{
@@ -229,6 +249,7 @@ function search(){
 	var paramName = $("#paramName").val();
 	var officialAccreditation = $("#officialAccreditation").val();
 	var workExperience = $("#workExperience").val();
+	var capabilityLevel = $("#capabilityLevel").val();
 	
 	var queryParams = { 
 		query: {  
@@ -241,22 +262,26 @@ function search(){
 			,paramName:paramName
 			,officialAccreditation:officialAccreditation
 			,workExperience:workExperience
+			,abilityLevel:capabilityLevel
         }
     }  
 	//刷新表格  
     $('#skillList').bootstrapTable('refresh',queryParams);  
 }
 
-function editSkill(id){
-//	$("#editForm").attr("action",path+"/service/capability/editPage.html");
-//	$("#id").val(id);
-//	$("#editForm").submit();
-	var url= path+"/service/skill/editPage.html"+"?id="+id
-	location=url;
-}
+//function editSkill(id){
+////	$("#editForm").attr("action",path+"/service/capability/editPage.html");
+////	$("#id").val(id);
+////	$("#editForm").submit();
+//	var url= path+"/service/skill/editPage.html"+"?id="+id
+//	location=url;
+//}
 
-function detail(id){
-	var queryUrl = path+'/service/skill/detail/'+id;
+function detail(eHr){
+	$("tr:empty").remove();
+	$("#updateSkills").css("display","none");
+	$("#batchUpdate").css("display","none");
+	var queryUrl = path+'/service/skill/detail/'+eHr;
 	$.ajax({
 		url:queryUrl,
 		dataType:"json",
@@ -272,14 +297,8 @@ function detail(id){
 			
 			var tbody ;
 			var last_majorcate = '' ;
-			if(data.length>0){
-//				last_majorcate = data[0].majorcateId;= 
-				var t = "View Detail Information of "+data[0].employeeId ;
-				$("#myModalLabel").text(t);
+			$("#myModalLabel").text("View Detail Information of "+eHr);
 				
-//				console.log($("#myModalLabel").val());
-//				console.log($("#myModalLabel").text($("#myModalLabel").text()+" "+data[0].employeeId);
-			}
 			for (var i = 0; i <data.length; i++) {
 //				if(i>1) return;
 				if(last_majorcate!=data[i].majorcateId){
@@ -300,8 +319,8 @@ function detail(id){
 				var tr = $("<tr></tr>");
 				tr.appendTo(tbody);
 				
-				var td1 = $("<td>"	+data[i].paramName + "</td>");
-				var td2 = $("<td>"	+(data[i].abilityLevel==null?'':data[i].abilityLevel)	+ "</td>");
+				var td1 = $("<td width='20%'>"	+data[i].paramName + "</td>");
+				var td2 = $("<td>"	+(data[i].abilityLevel==null?'':showLeve(data[i].abilityLevel))	+ "</td>");
 				var td3 = $("<td>"	+( data[i].mainAbility==null?'': ('1'==data[i].mainAbility?'<input CHECKED type="radio"/>':'' )	)+ "</td>");
 				var td4 = $("<td>"	+( data[i].officialAccreditation==null?'':('1'==data[i].officialAccreditation?'Yes':'No' ))		+ "</td>");
 				var td5 = $("<td>"	+( data[i].authenticationName==null?'':data[i].authenticationName)	+ "</td>");
@@ -316,73 +335,254 @@ function detail(id){
 				last_majorcate = data[i].majorcateId ;
 			}
 		}
-	}
-)
-	
-//function toEdit(id){
-//	var queryUrl = path+'/service/skill/toEdit/'+id;
-//	$.ajax({
-//		url:queryUrl,
-//		dataType:"json",
-//		async:true,
-//		cache:false,
-//		type:"post",
-//		success:function(data){
-//			$("#detailBtn").click();
-////			$("#accordion tbody").remove();
-//			$("#accordion > div:gt(0)").remove();
-//			
-////			var _firstDiv = $("#accordion > div");
-//			
-//			var tbody ;
-//			var last_majorcate = '' ;
-//			if(data.length>0){
-////				last_majorcate = data[0].majorcateId;= 
-//				var t = "View Detail Information of "+data[0].employeeId ;
-//				$("#myModalLabel").text(t);
-//				
-////				console.log($("#myModalLabel").val());
-////				console.log($("#myModalLabel").text($("#myModalLabel").text()+" "+data[0].employeeId);
-//			}
-//			for (var i = 0; i <data.length; i++) {
-////				if(i>1) return;
-//				if(last_majorcate!=data[i].majorcateId){
-//					var div_id='div_'+data[i].majorcateId;
-//					var a_id='a_'+data[i].majorcateId;
-////					$("#accordion > div:first-child").clone().insertAfter($("#accordion > div:last-child")); 
-//					$("#accordion > div:first-child").clone().appendTo($("#accordion")); 
-//					$("#accordion > div:last-child").attr('id',div_id);
-//					
-//					$("#"+div_id +" a").attr('href','#'+a_id);
-//					$("#"+div_id +" a").text(data[i].fatherName);
-//					$("#"+div_id +" > div").eq(1).attr('id', a_id);
-//					
-//					$("#accordion > div:last-child").css("display","block");
-//					tbody = $("#accordion tbody:last-child");
-//					div_id = '';
-//				}
-//				var tr = $("<tr></tr>");
-//				tr.appendTo(tbody);
-//				
-//				var td1 = $("<td>"	+data[i].paramName + "</td>");
-//				var td2 = $("<td>"	+(data[i].abilityLevel==null?'':data[i].abilityLevel)	+ "</td>");
-//				var td3 = $("<td>"	+( data[i].mainAbility==null?'': ('1'==data[i].mainAbility?'<input CHECKED type="radio"/>':'' )	)+ "</td>");
-//				var td4 = $("<td>"	+( data[i].officialAccreditation==null?'':('1'==data[i].officialAccreditation?'Yes':'No' ))		+ "</td>");
-//				var td5 = $("<td>"	+( data[i].authenticationName==null?'':data[i].authenticationName)	+ "</td>");
-//				var td6 = $("<td>"	+( data[i].workExperience==null?'':data[i].workExperience)	+ "</td>");
-//				
-//				td1.appendTo(tr);
-//				td2.appendTo(tr);
-//				td3.appendTo(tr);
-//				td4.appendTo(tr);
-//				td5.appendTo(tr);
-//				td6.appendTo(tr);
-//				last_majorcate = data[i].majorcateId ;
-//			}
-//		}
-//	}
-	
-	
+	});
+	$(".panel-collapse").css("in");
 }
+	
+function toEdit(eHr){
+	$("tr:empty").remove();
+	$("#updateSkills").css("display","block");
+	$("#batchUpdate").css("display","none");
+	var queryUrl = path+'/service/skill/toEdit/'+eHr;
+	$.ajax({
+		url:queryUrl,
+		dataType:"json",
+		async:true,
+		cache:false,
+		type:"post",
+		success:function(data){
+			$("#detailBtn").click();
+//			$("#accordion tbody").remove();
+			$("#accordion > div:gt(0)").remove();
+			
+//			var _firstDiv = $("#accordion > div");
+			
+			var tbody ;
+			var last_majorcate = '' ;
+			$("#myModalLabel").text("Edit Competence Tag for "+eHr);
+			for (var i = 0; i <data.length; i++) {
+				if(last_majorcate!=data[i].majorcateId){
+					var div_id='div_'+data[i].majorcateId;
+					var a_id='a_'+data[i].majorcateId;
+					$("#accordion > div:first-child").clone().appendTo($("#accordion")); 
+					$("#accordion > div:last-child").attr('id',div_id);
+					
+					$("#"+div_id +" a").attr('href','#'+a_id);
+					$("#"+div_id +" a").text(data[i].fatherName);
+					$("#"+div_id +" > div").eq(1).attr('id', a_id);
+					
+					$("#accordion > div:last-child").css("display","block");
+					tbody = $("#accordion tbody:last-child");
+					div_id = '';
+				}
+				var tr = $("<tr></tr>");
+				tr.appendTo(tbody);
+				
+				var td1 = $("<td width='20%'>" +"<input id='capparamId' type='hidden' value='"+(data[i].capparamId==null?'':data[i].capparamId)+"'/>"
+						+"<input id='status' type='hidden' value='"+data[i].status+"'/>"
+						+"<input id='id' type='hidden' value='"+(data[i].id==null?'':data[i].id)+"'/>"
+						+"<input id='ischeck' type='checkbox'"+ (data[i].status=='1'?'checked':'')
+						+" />"  	+data[i].paramName + "</td>");
+				var td2 = $("<td></td>");  
+				var sel_level = $("<SELECT ID='capabilityLevel' ></SELECT>");
+				var td3 = $("<td>"	+( data[i].mainAbility==null?'<input id="mainAbility" name="mainAbility" type="radio" value="0"/>': 
+						('1'==data[i].mainAbility?'<input id="mainAbility" name="mainAbility" CHECKED type="radio" value="1"/>':
+							'<input id="mainAbility" name="mainAbility" type="radio" value="0"/>' )	
+						)
+						+ "</td>"); 
+				var td4 = $("<td>"	+( data[i].officialAccreditation==null?
+						'<SELECT ID="officialAccreditation" ><OPTION VALUE="1">Yes<OPTION VALUE="0" selected="selected">No</SELECT>'
+						:('1'==data[i].officialAccreditation?
+							'<SELECT ID="officialAccreditation" ><OPTION VALUE="1" selected="selected">Yes<OPTION VALUE="0">No</SELECT>':
+							'<SELECT ID="officialAccreditation" ><OPTION VALUE="1">Yes<OPTION VALUE="0" selected="selected">No</SELECT>' ))		+ "</td>");
+				var td5 = $("<td>"+(data[i].authenticationName==null?"<input id='authenticationName' type='text' maxLength=100 />": 
+					"<input id='authenticationName' type='text' value='"+data[i].authenticationName + "' maxLength=100 />")+"</td>") ;
+				var td6 = $("<td>"+(data[i].workExperience==null?"<input id='workExperience' type='text' onkeypress='return event.keyCode>=48&&event.keyCode<=57' ng-pattern=''/[^a-zA-Z]/' size=2 maxLength=2 />": 
+					"<input id='workExperience' type='text' value='"+data[i].workExperience + "' onkeypress='return event.keyCode>=48&&event.keyCode<=57' ng-pattern=''/[^a-zA-Z]/' size=2 maxLength=2 />")+"</td>") ;
+				
+				td1.appendTo(tr);
+				td2.appendTo(tr);
+				td3.appendTo(tr);
+				td4.appendTo(tr);
+				td5.appendTo(tr);
+				td6.appendTo(tr);
+				
+				sel_level.appendTo(td2);
+				loadLevelToTd(sel_level, data[i].abilityLevel);
+				last_majorcate = data[i].majorcateId ;
+			}
+		}
+	});
+	$(".panel-collapse").css("in");
+}
+
+function update(eHr){
+	$("tr:empty").remove();
+	
+	var _ischeck = $("#accordion tbody tr").find("#ischeck:checked").length==0?true:false; 
+	if(_ischeck){
+		alert("Please choose  at least one  skills.");
+		return ;
+	}
+	
+	var _mainAbility = $("#accordion tbody tr").find("input[name='mainAbility']").is(':checked')?false:true; 
+	if(_mainAbility){
+		alert("Please choose Main Ability.");
+		return ;
+	}
+	
+	
+	var eHr= $("#myModalLabel").text().replace('Edit Competence Tag for ','');
+	var url = path+'/service/skill/save';
+	var rtn=1;
+	$("#accordion tbody tr").each(function(index,domEle){
+//		alert( $(domEle).find("td").length);
+//		alert( $(domEle).find("td").eq(0).text());
+//		return ;
+		
+		var ischeck=$(domEle).find('#ischeck').prop('checked'); 
+		var status=$(domEle).find('#status').val();
+		var id=$(domEle).find('#id').val();
+		if(ischeck){
+			var capabilityLevel= $(domEle).find("#capabilityLevel").val();
+			var paramName= $(domEle).find("td").eq(0).text();
+			var capparamId=$(domEle).find('#capparamId').val();
+			var mainAbility=$(domEle).find('#mainAbility').prop('checked')?'1':''; 
+			var officialAccreditation=$(domEle).find("#officialAccreditation").val();
+			var authenticationName=$(domEle).find("#authenticationName").val(); 
+			var workExperience=$(domEle).find("#workExperience").val(); 
+//			alert(capparamId+','+id+','+mainAbility+','+officialAccreditation+','+authenticationName+','+workExperience);  
+			$.ajax({
+				url:url,
+				dataType:"json",
+				data:{"abilityLevel":capabilityLevel, "employeeId":eHr, "status":status, "capparamId":capparamId, "id":id,  "mainAbility":mainAbility
+					, "officialAccreditation":officialAccreditation, "authenticationName":authenticationName, "workExperience":workExperience },
+				async:true,
+				cache:false,
+				type:"post",
+				success:function(flag){
+					if(flag=='0'){
+						alert(eHr +" update "+paramName+" fail1");
+					}
+				}
+			})
+		}else{
+			//del
+			if(status=='1'){
+				url = path+'/service/skill/delete/'+id;
+				$.post(url);
+			}
+		}
+		
+		
+	});
+	alert(eHr+" update Success.");
+	$(".modal-footer .group > button").click();
+}
+
+function showLeve(n){
+	var v='';
+	switch(n)
+	{
+		case '0':
+	        v='junior';
+	        break;
+	    case '1':
+	    	v='intermediate';
+	        break;
+	    case '2':
+	    	v='senior';
+	        break;
+	}
+	return v;
+}
+
+function toBatch(){
+	if($("#skillList .bs-checkbox :checkbox:checked").length==0){
+		alert("please select employee.");
+		return ;
+	}
+	var eHrs ='';
+	$("#skillList .bs-checkbox :checkbox:checked").each(function(i){
+//		alert($(this).html())  //.eq(1).html()
+		alert($(this).parent().parent().find("td").length)  //.eq(1).html()
+	 });
+	return ;
+	
+	$("tr:empty").remove();
+	$("#updateSkills").css("display","none");
+	$("#batchUpdate").css("display","block");
+	
+	var queryUrl = path+'/service/skill/toBatch';
+	$.ajax({
+		url:queryUrl,
+		dataType:"json",
+		async:true,
+		cache:false,
+		type:"post",
+		success:function(data){
+			$("#detailBtn").click();
+			$("#accordion > div:gt(0)").remove();
+			var tbody ;
+			var last_majorcate = '' ;
+			$("#myModalLabel").text("Batch Edit");
+			for (var i = 0; i <data.length; i++) {
+				if(last_majorcate!=data[i].majorcateId){
+					var div_id='div_'+data[i].majorcateId;
+					var a_id='a_'+data[i].majorcateId;
+					$("#accordion > div:first-child").clone().appendTo($("#accordion")); 
+					$("#accordion > div:last-child").attr('id',div_id);
+					
+					$("#"+div_id +" a").attr('href','#'+a_id);
+					$("#"+div_id +" a").text(data[i].fatherName);
+					$("#"+div_id +" > div").eq(1).attr('id', a_id);
+					
+					$("#accordion > div:last-child").css("display","block");
+					tbody = $("#accordion tbody:last-child");
+					div_id = '';
+				}
+				var tr = $("<tr></tr>");
+				tr.appendTo(tbody);
+				
+				var td1 = $("<td width='20%'>" +"<input id='capparamId' type='hidden' value='"+(data[i].capparamId==null?'':data[i].capparamId)+"'/>"
+						+"<input id='status' type='hidden' value='"+data[i].status+"'/>"
+						+"<input id='id' type='hidden' value='"+(data[i].id==null?'':data[i].id)+"'/>"
+						+"<input id='ischeck' type='checkbox'"+ (data[i].status=='1'?'checked':'')
+						+" />"  	+data[i].paramName + "</td>");
+				var td2 = $("<td></td>");  
+				var sel_level = $("<SELECT ID='capabilityLevel' ></SELECT>");
+				var td3 = $("<td>"	+( data[i].mainAbility==null?'<input id="mainAbility" name="mainAbility" type="radio" value="0"/>': 
+						('1'==data[i].mainAbility?'<input id="mainAbility" name="mainAbility" CHECKED type="radio" value="1"/>':
+							'<input id="mainAbility" name="mainAbility" type="radio" value="0"/>' )	
+						)
+						+ "</td>"); 
+				var td4 = $("<td>"	+( data[i].officialAccreditation==null?
+						'<SELECT ID="officialAccreditation" ><OPTION VALUE="1">Yes<OPTION VALUE="0" selected="selected">No</SELECT>'
+						:('1'==data[i].officialAccreditation?
+							'<SELECT ID="officialAccreditation" ><OPTION VALUE="1" selected="selected">Yes<OPTION VALUE="0">No</SELECT>':
+							'<SELECT ID="officialAccreditation" ><OPTION VALUE="1">Yes<OPTION VALUE="0" selected="selected">No</SELECT>' ))		+ "</td>");
+				var td5 = $("<td>"+(data[i].authenticationName==null?"<input id='authenticationName' type='text' maxLength=100 />": 
+					"<input id='authenticationName' type='text' value='"+data[i].authenticationName + "' maxLength=100 />")+"</td>") ;
+				var td6 = $("<td>"+(data[i].workExperience==null?"<input id='workExperience' type='text' onkeypress='return event.keyCode>=48&&event.keyCode<=57' ng-pattern=''/[^a-zA-Z]/' size=2 maxLength=2 />": 
+					"<input id='workExperience' type='text' value='"+data[i].workExperience + "' onkeypress='return event.keyCode>=48&&event.keyCode<=57' ng-pattern=''/[^a-zA-Z]/' size=2 maxLength=2 />")+"</td>") ;
+				
+				td1.appendTo(tr);
+				td2.appendTo(tr);
+				td3.appendTo(tr);
+				td4.appendTo(tr);
+				td5.appendTo(tr);
+				td6.appendTo(tr);
+				
+				sel_level.appendTo(td2);
+				loadLevelToTd(sel_level, data[i].abilityLevel);
+				last_majorcate = data[i].majorcateId ;
+			}
+		}
+	});
+	$(".panel-collapse").css("in");
+}
+
+
+
 
 

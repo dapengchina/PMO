@@ -55,9 +55,29 @@ public class Employee
     
     
     
+    /**
+     * 表外字段
+     * @return
+     */
+    private String demandrr;
+    private String demandskill;
     
     
     
+    
+    
+	public String getDemandskill() {
+		return demandskill;
+	}
+	public void setDemandskill(String demandskill) {
+		this.demandskill = demandskill;
+	}
+	public String getDemandrr() {
+		return demandrr;
+	}
+	public void setDemandrr(String demandrr) {
+		this.demandrr = demandrr;
+	}
 	public String getHsbcDeptSubName() {
 		return hsbcDeptSubName;
 	}

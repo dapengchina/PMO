@@ -21,6 +21,7 @@ import com.pmo.dashboard.entity.CandidatePush;
 import com.pmo.dashboard.entity.Demand;
 import com.pmo.dashboard.entity.HSBCDept;
 import com.pmo.dashboard.entity.PageCondition;
+import com.pmo.dashboard.entity.QueryModel;
 import com.pom.dashboard.service.DemandService;
 
 /**
@@ -92,10 +93,15 @@ public class DemandServiceImpl implements DemandService{
 		HSBCDept hsbcdept = new HSBCDept();
 		//将部门信息设置到需求信息中
 		for (Demand demands : list) {
-			temp = demands.getHsbcSubDeptId().split(",");
-			hsbcdept.setId(temp[0]);
-			List<HSBCDept> hsbcDept = hsbcDeptMapper.queryById(hsbcdept);
-			demands.setHsbcDept(hsbcDept.get(0));
+			List<HSBCDept> hsbcDept = null;
+			if(demands.getHsbcSubDeptId()!=null && !"".equals(demands.getHsbcSubDeptId())){
+				temp = demands.getHsbcSubDeptId().split(",");
+				hsbcdept.setId(temp[0]);
+				hsbcDept = hsbcDeptMapper.queryById(hsbcdept);
+				demands.setHsbcDept(hsbcDept.get(0));
+			}
+			
+			
 			if(hsbcDept!=null) {
 //				if(hsbcDept.getHsbcSubDeptName()==null||"".equals(hsbcDept.getHsbcSubDeptName())) {
 //					hsbcDept.setHsbcSubDeptName(hsbcDept.getHsbcDeptName());
@@ -208,6 +214,16 @@ public class DemandServiceImpl implements DemandService{
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<Demand> getDemand(QueryModel qm) {
+		return demandMapper.getDemand(qm);
+	}
+
+	@Override
+	public int update(Demand demand) {
+		return demandMapper.update(demand);
 	}
 	
 }

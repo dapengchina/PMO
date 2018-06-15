@@ -8,7 +8,7 @@ import com.pmo.dashboard.entity.Promote;
 
 public interface EmployeeService
 {
-    boolean addEmployee(Employee employee);
+	String addEmployee(Employee employee);
     Employee queryEmployeeById(String employeeId);
     boolean updateEmployee(Employee employee);
     List<Employee> queryEmployeeList(EmployeePageCondition employeePageCondition);

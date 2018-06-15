@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -77,6 +79,44 @@ public class EmployeeSkillController {
 	@ResponseBody
 	public String toEdit(@PathVariable String eHr)  throws JsonProcessingException
     {
-        return objectMapper.writeValueAsString(employeeSkillService.detail(eHr));
+        return objectMapper.writeValueAsString(employeeSkillService.toEdit(eHr));
     }
+	
+	@RequestMapping(value= {"/save"})
+	@ResponseBody
+	public String save(EmployeeSkill skill,HttpServletRequest request) throws JsonProcessingException{
+		User user = (User) request.getSession().getAttribute("loginUser");
+		boolean rtn ;
+		if("0".equals( skill.getStatus())) {
+			rtn = employeeSkillService.insert(skill);
+		}else {
+			rtn = employeeSkillService.update(skill);
+		}
+		return objectMapper.writeValueAsString( rtn? "1" : "0");
+	}
+	
+	@RequestMapping(value= {"/delete/{id}"})
+	@ResponseBody
+	public String delete(@PathVariable String id,HttpServletRequest request) throws JsonProcessingException{
+		User user = (User) request.getSession().getAttribute("loginUser");
+		boolean rtn ;
+		rtn = employeeSkillService.delete(id);
+		return objectMapper.writeValueAsString( rtn? "1" : "0");
+	}
+	
+	@RequestMapping("/toBatch")
+	@ResponseBody
+	public String toBatch()  throws JsonProcessingException
+    {
+        return objectMapper.writeValueAsString(employeeSkillService.toBatch());
+    }
+	
+	@RequestMapping(value= {"/batch"})
+	@ResponseBody
+	public String batch(EmployeeSkill skill,HttpServletRequest request) throws JsonProcessingException{
+		User user = (User) request.getSession().getAttribute("loginUser");
+		boolean rtn ;
+		rtn = employeeSkillService.batch(skill);
+		return objectMapper.writeValueAsString( rtn? "1" : "0");
+	}
 }
