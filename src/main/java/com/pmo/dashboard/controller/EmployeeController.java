@@ -40,6 +40,7 @@ import com.pmo.dashboard.entity.EmployeeGraphParam;
 import com.pmo.dashboard.entity.EmployeeLog;
 import com.pmo.dashboard.entity.EmployeePageCondition;
 import com.pmo.dashboard.entity.HSBCDept;
+import com.pmo.dashboard.entity.Promote;
 import com.pmo.dashboard.entity.StayinCandidate;
 import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.util.Constants;
@@ -163,6 +164,18 @@ public class EmployeeController {
         Employee employee = employeeService.queryEmployeeById(employeeId);
 
         return employee;
+    }
+    
+    @RequestMapping("/queryPromoteByEmployeeId")
+    @ResponseBody
+    public Object queryPromoteByEmployeeId(final HttpServletRequest request,
+            final HttpServletResponse response)
+    {
+        String employeeId = request.getParameter("employeeId");
+
+        List<Promote> promote = employeeService.queryPromoteByEmployeeId(employeeId);
+
+        return promote;
     }
 
 
@@ -353,6 +366,33 @@ public class EmployeeController {
         boolean resultFlag = employeeService.updateEmployee(employee);
 
         return resultFlag;
+    }
+    
+    @RequestMapping("/updatePromote")
+    @ResponseBody
+    public boolean updatePromote(final HttpServletRequest request,
+            final HttpServletResponse response)
+    {
+        String employeeId = request.getParameter("employeeId");
+        String operateId = request.getParameter("operateId");
+        String effectDate = request.getParameter("effectDate");
+        String originalLevel = request.getParameter("originalLevel");
+        String nowLevel = request.getParameter("nowLevel");
+        String previousRate = request.getParameter("previousRate");
+        String nowRate = request.getParameter("nowRate");
+        
+        Promote promote = new Promote();
+        promote.setEmployeeId(employeeId);
+        promote.setOperateId(operateId);
+        promote.setEffectDate(effectDate);
+        promote.setOriginalLevel(originalLevel);
+        promote.setNowLevel(nowLevel);
+        promote.setPreviousRate(previousRate);
+        promote.setNowRate(nowRate);
+        
+        boolean resultFlag = employeeService.updatePromote(promote);
+
+        return true;
     }
 
     /**

@@ -43,6 +43,18 @@
 		<result property="chsoftiProName" column="CHSOFTI_PRO_NAME" javaType="String" />
 	</resultMap>
 	
+	<resultMap id="promoteMap" type="com.pmo.dashboard.entity.Promote">
+	    <id column="ID" javaType="String" property="id" />
+	    <result column="EMPLOYEE_ID" javaType="String" property="employeeId" />
+	    <result column="CREATE_DATE" javaType="String" property="createDate" />
+	    <result column="OPERATE_ID" javaType="String" property="operateId" />
+	    <result column="EFFECT_DATE" javaType="String" property="effectDate" />
+	    <result column="ORIGINAL_LEVEL" javaType="String" property="originalLevel" />
+	    <result column="NOW_LEVEL" javaType="String" property="nowLevel" />
+	    <result column="PREVIOUS_RATE" javaType="DECIMAL" property="previousRate" />
+	    <result column="NOW_RATE" javaType="DECIMAL" property="nowRate" />
+  	</resultMap>
+	
 	
 	<insert id="addEmployee" parameterType="com.pmo.dashboard.entity.Employee">
 	    insert into t_employee (EMPLOYEE_ID,HSBC_STAFF_ID,STAFF_NAME,LN,STAFF_REGION,STAFF_LOCATION,LOCATION_TYPE,ONSHORE_OR_OFFSHORE,SOW,SOW_EXPIRED_DATE,STAFF_CATEGORY,ENGAGEMENT_TYPE,HSBC_DOJ,GRADUATION_DATE,BILL_CURRENCY,BILL_RATE,RESOURCE_STATUS,MENTION_LWD,REASON_FOR_TERMINATION,E_HR,HSBC_SUBDEPT_ID,SKILL,ROLE,CS_SUBDEPT_ID,LOB,HSBC_MANAGER,HSBC_PROJECT_NAME,Email,GB_GF,ENTRY_DATE,RM_USER_ID,CREATE_TIME,UPDATE_TIME,ITINDUSTRY_WORK_YEAR,CHSOFTI_PRO_NUMBER,CHSOFTI_PRO_STARTDATE,CHSOFTI_PRO_NAME)
@@ -277,6 +289,12 @@
 	    WHERE EMPLOYEE_ID = #{employeeId};
 	</select>
 	
+	<select id="queryPromoteByEmployeeId" parameterType="String" resultMap="promoteMap">
+	    SELECT *  FROM t_upgrade_record
+	    WHERE EMPLOYEE_ID = #{employeeId}
+	    ORDER BY CREATE_DATE;
+	</select>
+	
 	<select id="queryEmployeeList" parameterType="com.pmo.dashboard.entity.EmployeePageCondition" resultMap="employeeMap">
 	    SELECT * FROM t_employee e left join t_cs_dept c on e.CS_SUBDEPT_ID = c.CS_SUBDEPT_ID WHERE 1 = 1 
 	    <if test="csDeptName != null and csDeptName != ''">
@@ -317,6 +335,13 @@
 	     Email = #{email},GB_GF = #{gbGf},ENTRY_DATE = #{entryDate},UPDATE_TIME = #{updateTime},ITINDUSTRY_WORK_YEAR = #{itindustryWorkYear,jdbcType=VARCHAR},
 	     CHSOFTI_PRO_NUMBER = #{chsoftiProNumber},CHSOFTI_PRO_STARTDATE = #{chsoftiProStartdate},CHSOFTI_PRO_NAME = #{chsoftiProName} WHERE EMPLOYEE_ID = #{employeeId} 
 	</update>
+	
+	<insert id="updatePromote" parameterType="com.pmo.dashboard.entity.Promote">
+	    insert into t_upgrade_record 
+	    (EMPLOYEE_ID,CREATE_DATE,OPERATE_ID,EFFECT_DATE,ORIGINAL_LEVEL,NOW_LEVEL,PREVIOUS_RATE,NOW_RATE)
+	    values
+	    (#{employeeId},sysdate,#{operateId},#{effectDate},#{originalLevel},#{nowLevel},#{previousRate},#{nowRate})
+	</insert>  
 	
 	<select id="queryEmployeeByCsSubDeptId" parameterType="java.util.HashMap" resultMap="employeeMap">
 	    SELECT * FROM t_employee WHERE CS_SUBDEPT_ID = #{csSubDeptId} and INTERVIERW_STATUS = #{intervierwStatus};

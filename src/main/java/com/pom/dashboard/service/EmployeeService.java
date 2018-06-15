@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pmo.dashboard.entity.Employee;
 import com.pmo.dashboard.entity.EmployeePageCondition;
+import com.pmo.dashboard.entity.Promote;
 
 public interface EmployeeService
 {
@@ -19,4 +20,6 @@ public interface EmployeeService
 	public List<Employee> getAllEmployee();
 	public List<Employee> getEmployeeByLastUpdateTime(String lastUpdateTime);
 	boolean importEmployeeProject(Employee employee);
+	List<Promote> queryPromoteByEmployeeId(String employeeId);
+	boolean updatePromote(Promote promote);
 }
