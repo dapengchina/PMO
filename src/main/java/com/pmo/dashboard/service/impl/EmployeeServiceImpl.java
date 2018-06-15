@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pmo.dashboard.dao.EmployeeMapper;
 import com.pmo.dashboard.entity.Employee;
 import com.pmo.dashboard.entity.EmployeePageCondition;
+import com.pmo.dashboard.entity.Promote;
 import com.pom.dashboard.service.EmployeeService;
 
 @Service
@@ -35,11 +36,27 @@ public class EmployeeServiceImpl implements EmployeeService
         Employee employee =  employeeMapper.queryEmployeeById(employeeId);
         return employee;
     }
+    
+    @Override
+    public List<Promote> queryPromoteByEmployeeId(String employeeId)
+    {
+    	List<Promote> promote =  employeeMapper.queryPromoteByEmployeeId(employeeId);
+        return promote;
+    }
 
     @Override
     public boolean updateEmployee(Employee employee)
     {
         if(employeeMapper.updateEmployee(employee)>0){
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    public boolean updatePromote(Promote promote)
+    {
+        if(employeeMapper.updatePromote(promote)>0){
             return true;
         }
         return false;

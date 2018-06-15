@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.pmo.dashboard.entity.Employee;
 import com.pmo.dashboard.entity.EmployeePageCondition;
+import com.pmo.dashboard.entity.Promote;
 
 public interface EmployeeMapper
 {
@@ -21,4 +22,6 @@ public interface EmployeeMapper
 	List<Employee> queryAllEmployee();
 	List<Employee> getEmployeeByLastUpdateTime(String lastUpdateTime);
 	int importEmployeeProject(Employee employee);
+	List<Promote> queryPromoteByEmployeeId(String employeeId);
+	int updatePromote(Promote promote);
 }
