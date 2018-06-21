@@ -220,6 +220,7 @@ public class EmployeeController {
         String rmUserId = request.getParameter("rmUserId");
         String demandid = request.getParameter("udemandid");
         String itindustryWorkYear = request.getParameter("itindustryWorkYear");
+        String employeeType = request.getParameter("employeetype");
 
         //add begin
         String chsoftiProNumber = request.getParameter("chsoftiProNumber");
@@ -249,8 +250,14 @@ public class EmployeeController {
                 terminatedDate, terminationReason,email,gbGf,
                 entryDate,rmUserId, createTime, updateTime,itindustryWorkYear,
                 chsoftiProNumber,chsoftiProStartDate1,chsoftiProName);
-
-        String employeeid = employeeService.addEmployee(employee);
+        
+        String employeeid = "";
+        if(employeeType.equals("HSBC")){
+        	employeeid = employeeService.addEmployee(employee);
+        }else{
+        	employeeid = employeeService.saveForOtherEmployee(employee);
+        }
+        
         if(!"".equals(employeeid)) {
         	String candidateId=(String) request.getSession().getAttribute("onboardCandidateId");
     		candidateService.updateOnboardCandidate(candidateId);
@@ -985,18 +992,24 @@ public String entryEmployee(final HttpServletRequest request,
         	finalchangeInfo = checkFieldChange(em,employee);
     	}
     	if(em!=null && employee !=null){
-    		if(!em.getCsSubDept().equals(employee.getCsSubDept())){
-        		log.setCsSubdeptIdNew(employee.getCsSubDept());
-            	log.setCsSubdeptIdOriginal(em.getCsSubDept());
-        	}
-            if(!em.getRole().equals(employee.getRole())){
-            	log.setRoleNew(employee.getRole());
-            	log.setRoleOriginal(em.getRole());
-        	}
-            if(!em.getResourceStatus().equals(employee.getResourceStatus())){
-            	log.setStatusNew(employee.getResourceStatus());
-            	log.setStatusOriginal(em.getResourceStatus());
-        	}
+    		if(em.getCsSubDept()!=null && employee.getCsSubDept()!=null){
+    			if(!em.getCsSubDept().equals(employee.getCsSubDept())){
+            		log.setCsSubdeptIdNew(employee.getCsSubDept());
+                	log.setCsSubdeptIdOriginal(em.getCsSubDept());
+            	}
+    		}
+    		if(em.getRole()!=null && employee.getRole()!=null){
+    			if(!em.getRole().equals(employee.getRole())){
+                	log.setRoleNew(employee.getRole());
+                	log.setRoleOriginal(em.getRole());
+            	}
+    		}
+    		if(em.getResourceStatus()!=null && employee.getResourceStatus()!=null){
+    			if(!em.getResourceStatus().equals(employee.getResourceStatus())){
+                	log.setStatusNew(employee.getResourceStatus());
+                	log.setStatusOriginal(em.getResourceStatus());
+            	}
+    		}
         	if(type.equals("0")){
         		log.setChangeInformation(addInfo.toString());
         	}

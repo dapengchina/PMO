@@ -23,4 +23,6 @@ public interface EmployeeMapper
 	int importEmployeeProject(Employee employee);
 	
 	int updatePromoteInfo(Employee employee);
+	
+	int saveForOtherEmployee(Employee employee);
 }

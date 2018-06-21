@@ -372,5 +372,253 @@
     </set>
     where EMPLOYEE_ID = #{employeeId,jdbcType=VARCHAR}
   </update>
+  
+  <insert id="saveForOtherEmployee" keyProperty="employeeId" parameterType="com.pmo.dashboard.entity.Employee" >
+    insert into t_employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="employeeId != null and employeeId!=''" >
+        EMPLOYEE_ID,
+      </if>
+      <if test="employeeType != null and employeeType!=''" >
+        EMPLOYEE_TYPE,
+      </if>
+      <if test="hsbcStaffId != null and hsbcStaffId!=''" >
+        HSBC_STAFF_ID,
+      </if>
+      <if test="staffName != null and staffName!=''" >
+        STAFF_NAME,
+      </if>
+      <if test="ln != null and ln!=''" >
+        LN,
+      </if>
+      <if test="staffRegion != null and staffRegion!=''" >
+        STAFF_REGION,
+      </if>
+      <if test="staffLocation != null and staffLocation!=''" >
+        STAFF_LOCATION,
+      </if>
+      <if test="locationType != null and locationType!=''" >
+        LOCATION_TYPE,
+      </if>
+      <if test="onshoreOrOffshore != null and onshoreOrOffshore!=''" >
+        ONSHORE_OR_OFFSHORE,
+      </if>
+      <if test="sow != null and sow!=''" >
+        SOW,
+      </if>
+      <if test="sowExpiredDate != null and sowExpiredDate!=''" >
+        SOW_EXPIRED_DATE,
+      </if>
+      <if test="staffCategory != null and staffCategory!=''" >
+        STAFF_CATEGORY,
+      </if>
+      <if test="engagementType != null and engagementType!=''" >
+        ENGAGEMENT_TYPE,
+      </if>
+      <if test="hsbcDOJ != null and hsbcDOJ!=''" >
+        HSBC_DOJ,
+      </if>
+      <if test="graduationDate != null and graduationDate!=''" >
+        GRADUATION_DATE,
+      </if>
+      <if test="billingCurrency != null and billingCurrency!=''" >
+        BILL_CURRENCY,
+      </if>
+      <if test="billRateType != null and billRateType!=''" >
+        BILL_RATE_TYPE,
+      </if>
+      <if test="billRate != null and billRate!=''" >
+        BILL_RATE,
+      </if>
+      <if test="resourceStatus != null and resourceStatus!=''" >
+        RESOURCE_STATUS,
+      </if>
+      <if test="terminatedDate != null and terminatedDate!=''" >
+        MENTION_LWD,
+      </if>
+      <if test="terminationReason != null and terminationReason!=''" >
+        REASON_FOR_TERMINATION,
+      </if>
+      <if test="eHr != null and eHr!=''" >
+        E_HR,
+      </if>
+      <if test="hsbcSubDept != null and hsbcSubDept!=''" >
+        HSBC_SUBDEPT_ID,
+      </if>
+      <if test="skill != null and skill!=''" >
+        SKILL,
+      </if>
+      <if test="role != null and role!=''" >
+        ROLE,
+      </if>
+      <if test="csSubDept != null and csSubDept!=''" >
+        CS_SUBDEPT_ID,
+      </if>
+      <if test="lob != null and lob!=''" >
+        LOB,
+      </if>
+      <if test="interviewStatus != null and interviewStatus!=''" >
+        INTERVIERW_STATUS,
+      </if>
+      <if test="projectManager != null and projectManager!=''" >
+        HSBC_MANAGER,
+      </if>
+      <if test="projectName != null and projectName!=''" >
+        HSBC_PROJECT_NAME,
+      </if>
+      <if test="rmUserId != null and rmUserId!=''" >
+        RM_USER_ID,
+      </if>
+      <if test="email != null and email!=''" >
+        Email,
+      </if>
+      <if test="gbGf != null and gbGf!=''" >
+        GB_GF,
+      </if>
+      <if test="entryDate != null and entryDate!=''" >
+        ENTRY_DATE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="itindustryWorkYear != null and itindustryWorkYear!=''" >
+        ITINDUSTRY_WORK_YEAR,
+      </if>
+      <if test="chsoftiProNumber != null and chsoftiProNumber!=''" >
+        CHSOFTI_PRO_NUMBER,
+      </if>
+      <if test="chsoftiProStartdate != null and chsoftiProStartdate!=''" >
+        CHSOFTI_PRO_STARTDATE,
+      </if>
+      <if test="chsoftiProName != null and chsoftiProName!=''" >
+        CHSOFTI_PRO_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="employeeId != null and employeeId!=''" >
+        #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeType != null and employeeType!=''" >
+        #{employeeType,jdbcType=VARCHAR},
+      </if>
+      <if test="hsbcStaffId != null and hsbcStaffId!=''" >
+        #{hsbcStaffId,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null and staffName!=''" >
+        #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="ln != null and ln!=''" >
+        #{ln,jdbcType=VARCHAR},
+      </if>
+      <if test="staffRegion != null and staffRegion!=''" >
+        #{staffRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="staffLocation != null and staffLocation!=''" >
+        #{staffLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="locationType != null and locationType!=''" >
+        #{locationType,jdbcType=VARCHAR},
+      </if>
+      <if test="onshoreOrOffshore != null and onshoreOrOffshore!=''" >
+        #{onshoreOrOffshore,jdbcType=VARCHAR},
+      </if>
+      <if test="sow != null and sow!=''" >
+        #{sow,jdbcType=VARCHAR},
+      </if>
+      <if test="sowExpiredDate != null and sowExpiredDate!=''" >
+        #{sowExpiredDate,jdbcType=DATE},
+      </if>
+      <if test="staffCategory != null and staffCategory!=''" >
+        #{staffCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="engagementType != null and engagementType!=''" >
+        #{engagementType,jdbcType=VARCHAR},
+      </if>
+      <if test="hsbcDOJ != null and hsbcDOJ!=''" >
+        #{hsbcDOJ,jdbcType=DATE},
+      </if>
+      <if test="graduationDate != null and graduationDate!=''" >
+        #{graduationDate,jdbcType=DATE},
+      </if>
+      <if test="billingCurrency != null and billingCurrency!=''" >
+        #{billingCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="billRateType != null and billRateType!=''" >
+        #{billRateType,jdbcType=VARCHAR},
+      </if>
+      <if test="billRate != null and billRate!=''" >
+        #{billRate,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceStatus != null and resourceStatus!=''" >
+        #{resourceStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="terminatedDate != null and terminatedDate!=''" >
+        #{terminatedDate,jdbcType=VARCHAR},
+      </if>
+      <if test="terminationReason != null and terminationReason!=''" >
+        #{terminationReason,jdbcType=VARCHAR},
+      </if>
+      <if test="eHr != null and eHr!=''" >
+        #{eHr,jdbcType=VARCHAR},
+      </if>
+      <if test="hsbcSubDept != null and hsbcSubDept!=''" >
+        #{hsbcSubDept,jdbcType=VARCHAR},
+      </if>
+      <if test="skill != null and skill!=''" >
+        #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null and role!=''" >
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="csSubDept != null and csSubDept!=''" >
+        #{csSubDept,jdbcType=VARCHAR},
+      </if>
+      <if test="lob != null and lob!=''" >
+        #{lob,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewStatus != null and interviewStatus!=''" >
+        #{interviewStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="projectManager != null and projectManager!=''" >
+        #{projectManager,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null and projectName!=''" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="rmUserId != null and rmUserId!=''" >
+        #{rmUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null and email!=''" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="gbGf != null and gbGf!=''" >
+        #{gbGf,jdbcType=VARCHAR},
+      </if>
+      <if test="entryDate != null and entryDate!=''" >
+        #{entryDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itindustryWorkYear != null and itindustryWorkYear!=''" >
+        #{itindustryWorkYear,jdbcType=VARCHAR},
+      </if>
+      <if test="chsoftiProNumber != null and chsoftiProNumber!=''" >
+        #{chsoftiProNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="chsoftiProStartdate != null and chsoftiProStartdate!=''" >
+        #{chsoftiProStartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chsoftiProName != null and chsoftiProName!=''" >
+        #{chsoftiProName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
 	
 </mapper>

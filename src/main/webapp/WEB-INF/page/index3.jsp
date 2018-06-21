@@ -111,7 +111,7 @@ var path='<%=path%>';
 								<div class="form-group">
 								
 										<div class="group">
-											<label class="col-sm-2 control-label">HSBC Staff ID</label>
+											<label class="col-sm-2 control-label">Staff ID</label>
 											<div class="col-sm-4">
 												<input type="text" class="form-control" name="hsbcStaffId"
 													id="hsbcStaffId" data-bv-group=".group"/>

@@ -26,6 +26,62 @@ $(document).ready(function() {
 
                  }
             },
+            billRateType: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select billratetype'
+                    }
+                }
+            },
+            csSubDept: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select csdept'
+                    }
+                }
+            },
+            gbGf: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select gbgf'
+                    }
+                }
+            },
+            role: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select msarole'
+                    }
+                }
+            },
+            skill: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select skills'
+                    }
+                }
+            },
+            nickName: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select rm'
+                    }
+                }
+            },
+            hsbcDept: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select dept'
+                    }
+                }
+            },
+            hsbcSubDept: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select subdept'
+                    }
+                }
+            },
 
             lob: {
                 validators: {
@@ -49,7 +105,7 @@ $(document).ready(function() {
             hsbcStaffId: {
                 validators: {
                 	notEmpty: {
-                        message: 'Please enter hsbcStaffId'
+                        message: 'Please enter staffId'
                     },
                     /*numeric: {
                 	message:'Please enter number'
@@ -72,7 +128,7 @@ $(document).ready(function() {
             staffName: {
                 validators: {
                     notEmpty: {
-                        message: 'Please enter staffName'
+                        message: 'Please enter staffname'
                     },
                     stringLength: {
                         max: 32,
@@ -84,7 +140,7 @@ $(document).ready(function() {
             LN: {
                 validators: {
                 	notEmpty: {
-                        message: 'Please enter LN'
+                        message: 'Please enter ln'
                     },
                 	regexp:{
             			regexp:/^[0-9a-zA-Z\s?]+$/,
@@ -100,7 +156,7 @@ $(document).ready(function() {
             hsbcProjectName: {
                 validators: {
                     notEmpty: {
-                        message: 'Please enter  hsbcProjectName'
+                        message: 'Please enter projectname'
                     },
                     stringLength: {
                         max: 32,
@@ -113,7 +169,7 @@ $(document).ready(function() {
             hsbcProjectManager: {
                 validators: {
                     notEmpty: {
-                        message: 'Please select  hsbcProjectManager'
+                        message: 'Please select projectmanager'
                     },
                     stringLength: {
                         max: 32,
@@ -125,7 +181,7 @@ $(document).ready(function() {
             sow: {
                 validators: {
                     notEmpty: {
-                        message: 'Please select  sow'
+                        message: 'Please select sow'
                     },
                     stringLength: {
                         max: 32,
@@ -137,7 +193,7 @@ $(document).ready(function() {
             graduationDate1: {
                 validators: {
                     notEmpty: {
-                        message: 'Please select Graduation Date'
+                        message: 'Please select graduation date'
                     },
                     date : {  
                         format : 'YYYY-MM-DD',  
@@ -149,7 +205,7 @@ $(document).ready(function() {
             hsbcDOJ1: {
                 validators: {
                     notEmpty: {
-                        message: 'Please select hsbcDOJ'
+                        message: 'Please select doj'
                     },
                     date : {  
                         format : 'YYYY-MM-DD',  
@@ -161,7 +217,7 @@ $(document).ready(function() {
             chsoftiProStartDate1: {
                 validators: {
                     notEmpty: {
-                        message: 'Please select chsoftiProStartDate'
+                        message: 'Please select chsoftiprostartdate'
                     },
                     date : {
                         format : 'YYYY-MM-DD',
@@ -199,7 +255,7 @@ $(document).ready(function() {
             itworkyear: {
                 validators: {
                     notEmpty: {
-                        message: 'Please enter Itworkyear'
+                        message: 'Please enter itworkyear'
                     },
                     stringLength: {
                         max: 32,
@@ -266,7 +322,7 @@ $(document).ready(function() {
             lob: {
                 validators: {
                     notEmpty: {
-                        message: 'Please enter  lob'
+                        message: 'Please enter lob'
                     },
                     numeric: {
                     	message:'Please enter number'
@@ -280,7 +336,7 @@ $(document).ready(function() {
             hsbcStaffId: {
                 validators: {
                 	notEmpty: {
-                        message: 'Please enter hsbcStaffId'
+                        message: 'Please enter staffid'
                     },
                     /*numeric: {
                 	message:'Please enter number'
@@ -299,7 +355,7 @@ $(document).ready(function() {
             staffName: {
                 validators: {
                     notEmpty: {
-                        message: 'Please enter staffName'
+                        message: 'Please enter staffname'
                     },
                     stringLength: {
                         max: 32,
@@ -311,7 +367,7 @@ $(document).ready(function() {
             LN: {
                 validators: {
                 	notEmpty: {
-                        message: 'Please enter LN'
+                        message: 'Please enter ln'
                     },
             		regexp:{
             			regexp:/^[0-9a-zA-Z\s?]+$/,
@@ -327,7 +383,7 @@ $(document).ready(function() {
             hsbcProjectName: {
                 validators: {
                     notEmpty: {
-                        message: 'Please enter hsbcProjectName'
+                        message: 'Please enter projectname'
                     },
                     stringLength: {
                         max: 32,
@@ -340,7 +396,7 @@ $(document).ready(function() {
             hsbcProjectManager: {
                 validators: {
                     notEmpty: {
-                        message: 'Please select hsbcProjectManager'
+                        message: 'Please select projectmanager'
                     },
                     stringLength: {
                         max: 32,
@@ -380,7 +436,7 @@ $(document).ready(function() {
             itworkyear: {
                 validators: {
                     notEmpty: {
-                        message: 'Please enter Itworkyear'
+                        message: 'Please enter itworkyear'
                     },
                     stringLength: {
                         max: 32,
@@ -421,7 +477,7 @@ $(document).ready(function() {
             graduationDate1: {
                 validators: {
                     notEmpty: {
-                        message: 'Please select Graduation Date'
+                        message: 'Please select graduation date'
                     },
                     date : {  
                         format : 'YYYY-MM-DD',  
@@ -445,7 +501,7 @@ $(document).ready(function() {
         hsbcDOJ1: {
             validators: {
                 notEmpty: {
-                    message: 'Please select hsbcDOJ'
+                    message: 'Please select doj'
                 },
                 date : {  
                     format : 'YYYY-MM-DD',  
@@ -457,7 +513,7 @@ $(document).ready(function() {
         chsoftiProStartDate1: {
             validators: {
                 notEmpty: {
-                    message: 'Please select chsoftiProStartDate'
+                    message: 'Please select chsoftiprostartdate'
                 },
                 date : {
                     format : 'YYYY-MM-DD',

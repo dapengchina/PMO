@@ -107,4 +107,14 @@ public class EmployeeServiceImpl implements EmployeeService
 	public int updatePromoteInfo(Employee employee) {
 		return employeeMapper.updatePromoteInfo(employee);
 	}
+
+	@Override
+	public String saveForOtherEmployee(Employee employee) {
+		if(employeeMapper.saveForOtherEmployee(employee)>0){
+			return employee.getEmployeeId();
+		}else{
+			return "";
+		}
+		
+	}
 }

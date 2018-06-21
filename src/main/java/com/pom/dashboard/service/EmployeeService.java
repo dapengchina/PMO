@@ -21,4 +21,6 @@ public interface EmployeeService
 	boolean importEmployeeProject(Employee employee);
 	
 	int updatePromoteInfo(Employee employee);
+	
+	String saveForOtherEmployee(Employee employee);
 }

@@ -6,6 +6,7 @@ public class Employee
 {
     
     private String employeeId;
+    private String employeeType;
     private String eHr;
     private String lob;
     private String hsbcStaffId;
@@ -66,6 +67,12 @@ public class Employee
     
     
     
+	public String getEmployeeType() {
+		return employeeType;
+	}
+	public void setEmployeeType(String employeeType) {
+		this.employeeType = employeeType;
+	}
 	public String getBillRateType() {
 		return billRateType;
 	}

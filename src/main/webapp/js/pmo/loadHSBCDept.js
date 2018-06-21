@@ -1,6 +1,7 @@
 $(function(){
 	//loadDept();
 	loadStaffCategory();
+	loadEmployeeType();
 	//loadEngagementType();
 	loadRole();
 	loadSkill();
@@ -31,10 +32,19 @@ $(function(){
 
 var lastConditionStr = "";
 function addEmployee(){
-	var bootstrapValidator = $("#registerEmployeeForm").data('bootstrapValidator');
-	bootstrapValidator.validate();
-	if(bootstrapValidator.isValid()){
+	var emptype = $("#employeeType").val();
+	var validflag = false;
+	if(emptype=='HSBC'){
+		var bootstrapValidator = $("#registerEmployeeForm").data('bootstrapValidator');
+		bootstrapValidator.validate();
+		var validflag = bootstrapValidator.isValid();
+	}else{
+		validflag = true;
+	}
+	
+	if(validflag){
 		//$('#sub_search').addClass('disabled'); 
+		var employeetype = $("#employeeType").val();
 		var udemandid = $("#udemandid").val();
 		var eHr = $('#eHr').val();
 		var lob = $('#lob').val();
@@ -121,7 +131,7 @@ function addEmployee(){
 		$.ajax({
 			url:path+'/service/employee/addEmployee',
 			dataType:"json",
-			data:{"billRateType":billRateType,"udemandid":udemandid,"eHr":eHr,"lob":lob,"hsbcStaffId":hsbcStaffId,"staffName":staffName,"LN":LN,"staffRegion":staffRegion,
+			data:{"employeetype":employeetype,"billRateType":billRateType,"udemandid":udemandid,"eHr":eHr,"lob":lob,"hsbcStaffId":hsbcStaffId,"staffName":staffName,"LN":LN,"staffRegion":staffRegion,
 				"staffLocation":staffLocation,"locationType":locationType,"onshoreOrOffshore":onshoreOrOffshore,"csSubDept":csSubDept,
 				"hsbcSubDept":zuhe,"projectName":projectName,"projectManager":projectManager,"sow":sow,"sowExpiredDate":sowExpiredDate,
 				"staffCategory":staffCategory,"engagementType":engagementType,"hsbcDOJ":hsbcDOJ,"graduationDate":graduationDate,
@@ -820,4 +830,674 @@ function loadBillRateType(){
 	    	   $("#billRateType").append("<option value='"+item.name+"'>"+item.name+"</option>");
 	       })
 	});
+}
+
+function loadEmployeeType(){
+	var url = path+'/json/employeeType.json'
+	$.getJSON(url,  function(data) {
+	       $.each(data, function(i, item) {
+	    	   $("#employeeType").append("<option value='"+item.name+"'>"+item.name+"</option>");
+	       })
+	});
+}
+
+function removeEmployeeValid(){
+	
+	var type = $("#employeeType").val();
+	if(type=='HSBC'){
+		alert("恢复验证");
+		initEmployeeValidate();
+	}else{
+		$('#registerEmployeeForm').data('bootstrapValidator').destroy();
+		$('#registerEmployeeForm').data('bootstrapValidator', null);
+		
+		/*$("#registerEmployeeForm").bootstrapValidator('resetForm');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','eHr');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','lob');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','hsbcStaffId');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','staffName');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','LN');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','hsbcProjectName');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','hsbcProjectManager');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','sow');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','graduationDate1');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','hsbcDOJ1');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','chsoftiProStartDate1');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','sowExpiredDate1');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','billRate');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','itworkyear');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','email');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','entryDate1');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','billRateType');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','csSubDept');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','gbGf');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','hsbcDept');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','hsbcSubDept');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','role');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','skill');
+		$("#registerEmployeeForm").bootstrapValidator('removeField','nickName');*/
+	}
+}
+
+function initEmployeeValidate(){
+	$('#registerEmployeeForm').bootstrapValidator({
+		message: 'This value is not valid',
+
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        excluded:[":disabled"],
+        fields: {
+        	eHr: {
+				validators: {
+                    notEmpty: {
+                        message: 'Please enter E-HR'
+                    },
+                    regexp: {
+                        regexp: /^E\d{9}$/,
+                        message: 'Please enter the E-HR（E and 9 digits）'
+                    },
+                    remote:{
+                    	type:"post",
+                    	url: path+'/service/employee/checkEhr',
+                        message:"E-HR already exists"
+                    }
+
+                 }
+            },
+            billRateType: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select billratetype'
+                    }
+                }
+            },
+            csSubDept: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select csdept'
+                    }
+                }
+            },
+            gbGf: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select gbgf'
+                    }
+                }
+            },
+            role: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select msarole'
+                    }
+                }
+            },
+            skill: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select skills'
+                    }
+                }
+            },
+            nickName: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select rm'
+                    }
+                }
+            },
+            hsbcDept: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select dept'
+                    }
+                }
+            },
+            hsbcSubDept: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select subdept'
+                    }
+                }
+            },
+
+            lob: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please enter lob'
+                    },
+                    numeric: {
+                    	message:'Please enter number'
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    },
+                    remote:{
+                    	type:"post",
+                    	url: path+'/service/employee/checkLob',
+                        message:"LOB already exists"
+                    }
+                }
+            },
+            hsbcStaffId: {
+                validators: {
+                	notEmpty: {
+                        message: 'Please enter staffId'
+                    },
+                    /*numeric: {
+                	message:'Please enter number'
+                    },*/
+				    regexp:{
+        			   regexp:/^[0-9a-zA-Z\s?]+$/,
+        			   message:'please enter right format.'
+        		    },
+                    remote:{
+                    	type:"post",
+                    	url: path+'/service/employee/checkHSBCStaffID',
+                        message:"hsbcStaffId already exists"
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    },
+                }
+            },
+            staffName: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please enter staffname'
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    },
+
+                }
+            },
+            LN: {
+                validators: {
+                	notEmpty: {
+                        message: 'Please enter ln'
+                    },
+                	regexp:{
+            			regexp:/^[0-9a-zA-Z\s?]+$/,
+            			message:'please enter english.'
+            		},
+            		stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    },
+                }
+            },
+
+            hsbcProjectName: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please enter projectname'
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    },
+
+                }
+            },
+        
+            hsbcProjectManager: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select projectmanager'
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    },
+
+                }
+            },
+            sow: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select sow'
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    },
+
+                }
+            },
+            graduationDate1: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select graduation date'
+                    },
+                    date : {  
+                        format : 'YYYY-MM-DD',  
+                        message : 'Time format is incorrect'  
+                    }
+
+                }
+            },
+            hsbcDOJ1: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select doj'
+                    },
+                    date : {  
+                        format : 'YYYY-MM-DD',  
+                        message : 'Time format is incorrect'  
+                    }
+
+                }
+            },
+            chsoftiProStartDate1: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select chsoftiprostartdate'
+                    },
+                    date : {
+                        format : 'YYYY-MM-DD',
+                        message : 'Time format is incorrect'
+                    }
+                }
+            },
+            sowExpiredDate1: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select sowExpiredDate'
+                    },
+                    date : {  
+                        format : 'YYYY-MM-DD',  
+                        message : 'Time format is incorrect'  
+                    }
+
+                }
+            },
+            billRate: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please enter billRate'
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    },
+                    regexp:{
+            			regexp:/^([1-9]\d*(\.\d*[0-9])?(\/(m|M))?)$|^(0\.\d*[0-9](\/(m|M))?)$/,
+            			message:'Please enter the correct format.'
+            		},
+                }
+            },
+            itworkyear: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please enter itworkyear'
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    },
+                    regexp:{
+            			regexp:/^([1-9]\d*(\.\d*[0-9])?(\/(m|M))?)$|^(0\.\d*[0-9](\/(m|M))?)$/,
+            			message:'Please enter the correct format.'
+            		},
+                }
+            },
+            email: {
+                validators: {
+                	 regexp: {
+                          regexp:/^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/,
+                          message: 'Please enter correct Email'
+                      },
+                      stringLength: {
+                          max: 100,
+                          message: 'Exceeded the maxLength'
+                      },
+                      
+                }
+            },
+            entryDate1: {
+            	validators: {
+                notEmpty: {
+                    message: 'Please select EntryDate'
+                },
+                date : {  
+                    format : 'YYYY-MM-DD',  
+                    message : 'Time format is incorrect'  
+                }
+
+            }
+        },
+         
+        }
+    });
+	/*$("#registerEmployeeForm").data('bootstrapValidator').addField(
+			'eHr', 
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please enter E-HR'
+                    },
+                    regexp: {
+                        regexp: /^E\d{9}$/,
+                        message: 'Please enter the E-HR（E and 9 digits）'
+                    },
+                    remote:{
+                    	type:"post",
+                    	url: path+'/service/employee/checkEhr',
+                        message:"E-HR already exists"
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").data('bootstrapValidator').addField(
+			'lob',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please enter lob'
+                    },
+                    numeric: {
+                    	message:'Please enter number'
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    },
+                    remote:{
+                    	type:"post",
+                    	url: path+'/service/employee/checkLob',
+                        message:"LOB already exists"
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'hsbcStaffId',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please enter staffId'
+                    },
+				    regexp:{
+        			   regexp:/^[0-9a-zA-Z\s?]+$/,
+        			   message:'please enter right format.'
+        		    },
+                    remote:{
+                    	type:"post",
+                    	url: path+'/service/employee/checkHSBCStaffID',
+                        message:"hsbcStaffId already exists"
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    }
+				} 
+	});
+	
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'staffName',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please enter staffname'
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'LN',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please enter ln'
+                    },
+                	regexp:{
+            			regexp:/^[0-9a-zA-Z\s?]+$/,
+            			message:'please enter english.'
+            		},
+            		stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'hsbcProjectName',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please enter projectname'
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'hsbcProjectManager',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please select projectmanager'
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'sow',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please select sow'
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'graduationDate1',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please select graduation date'
+                    },
+                    date : {  
+                        format : 'YYYY-MM-DD',  
+                        message : 'Time format is incorrect'  
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'hsbcDOJ1',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please select doj'
+                    },
+                    date : {  
+                        format : 'YYYY-MM-DD',  
+                        message : 'Time format is incorrect'  
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'chsoftiProStartDate1',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please select chsoftiprostartdate'
+                    },
+                    date : {
+                        format : 'YYYY-MM-DD',
+                        message : 'Time format is incorrect'
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'sowExpiredDate1',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please select sowExpiredDate'
+                    },
+                    date : {  
+                        format : 'YYYY-MM-DD',  
+                        message : 'Time format is incorrect'  
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'billRate',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please enter billRate'
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    },
+                    regexp:{
+            			regexp:/^([1-9]\d*(\.\d*[0-9])?(\/(m|M))?)$|^(0\.\d*[0-9](\/(m|M))?)$/,
+            			message:'Please enter the correct format.'
+            		}
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'itworkyear',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please enter itworkyear'
+                    },
+                    stringLength: {
+                        max: 32,
+                        message: 'Exceeded the maxLength'
+                    },
+                    regexp:{
+            			regexp:/^([1-9]\d*(\.\d*[0-9])?(\/(m|M))?)$|^(0\.\d*[0-9](\/(m|M))?)$/,
+            			message:'Please enter the correct format.'
+            		}
+				} 
+	});
+	
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'entryDate1',
+			{ 
+				validators: { 
+					notEmpty: {
+	                    message: 'Please select EntryDate'
+	                },
+	                date : {  
+	                    format : 'YYYY-MM-DD',  
+	                    message : 'Time format is incorrect'  
+	                }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'billRateType',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please select billratetype'
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'csSubDept',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please select csdept'
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'gbGf',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please select gbgf'
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'hsbcDept',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please select dept'
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'hsbcSubDept',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please select subdept'
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'role',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please select msarole'
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'skill',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please select skills'
+                    }
+				} 
+	});
+	$("#registerEmployeeForm").bootstrapValidator(
+			'addField',
+			'nickName',
+			{ 
+				validators: { 
+					notEmpty: {
+                        message: 'Please select rm'
+                    }
+				} 
+	});*/
 }
