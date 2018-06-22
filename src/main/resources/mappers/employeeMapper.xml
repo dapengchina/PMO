@@ -4,6 +4,7 @@
 <mapper namespace="com.pmo.dashboard.dao.EmployeeMapper">
 	<resultMap id="employeeMap" type="com.pmo.dashboard.entity.Employee">
 		<id property="employeeId" column="EMPLOYEE_ID" javaType="String" />
+		<result property="employeeType" column="EMPLOYEE_TYPE"  javaType="String" />
 		<result property="eHr" column="E_Hr" javaType="String" />
 		<result property="lob" column="LOB" javaType="String" />
 		<result property="hsbcStaffId" column="HSBC_STAFF_ID" javaType="String" />
@@ -46,9 +47,9 @@
 	
 	
 	<insert id="addEmployee" keyProperty="employeeId" parameterType="com.pmo.dashboard.entity.Employee">
-	    insert into t_employee (EMPLOYEE_ID,HSBC_STAFF_ID,STAFF_NAME,LN,STAFF_REGION,STAFF_LOCATION,LOCATION_TYPE,ONSHORE_OR_OFFSHORE,SOW,SOW_EXPIRED_DATE,STAFF_CATEGORY,ENGAGEMENT_TYPE,HSBC_DOJ,GRADUATION_DATE,BILL_CURRENCY,BILL_RATE_TYPE,BILL_RATE,RESOURCE_STATUS,MENTION_LWD,REASON_FOR_TERMINATION,E_HR,HSBC_SUBDEPT_ID,SKILL,ROLE,CS_SUBDEPT_ID,LOB,HSBC_MANAGER,HSBC_PROJECT_NAME,Email,GB_GF,ENTRY_DATE,RM_USER_ID,CREATE_TIME,UPDATE_TIME,ITINDUSTRY_WORK_YEAR,CHSOFTI_PRO_NUMBER,CHSOFTI_PRO_STARTDATE,CHSOFTI_PRO_NAME)
+	    insert into t_employee (EMPLOYEE_TYPE,EMPLOYEE_ID,HSBC_STAFF_ID,STAFF_NAME,LN,STAFF_REGION,STAFF_LOCATION,LOCATION_TYPE,ONSHORE_OR_OFFSHORE,SOW,SOW_EXPIRED_DATE,STAFF_CATEGORY,ENGAGEMENT_TYPE,HSBC_DOJ,GRADUATION_DATE,BILL_CURRENCY,BILL_RATE_TYPE,BILL_RATE,RESOURCE_STATUS,MENTION_LWD,REASON_FOR_TERMINATION,E_HR,HSBC_SUBDEPT_ID,SKILL,ROLE,CS_SUBDEPT_ID,LOB,HSBC_MANAGER,HSBC_PROJECT_NAME,Email,GB_GF,ENTRY_DATE,RM_USER_ID,CREATE_TIME,UPDATE_TIME,ITINDUSTRY_WORK_YEAR,CHSOFTI_PRO_NUMBER,CHSOFTI_PRO_STARTDATE,CHSOFTI_PRO_NAME)
 	    values
-	    (#{employeeId},#{hsbcStaffId},#{staffName},#{ln},#{staffRegion},#{staffLocation},#{locationType},#{onshoreOrOffshore},#{sow},#{sowExpiredDate},#{staffCategory},#{engagementType},#{hsbcDOJ},#{graduationDate},#{billingCurrency},#{billRateType},#{billRate},#{resourceStatus},#{terminatedDate},#{terminationReason},#{eHr},#{hsbcSubDept},#{skill},#{role},#{csSubDept},#{lob},#{projectManager},#{projectName},
+	    (#{employeeType},#{employeeId},#{hsbcStaffId},#{staffName},#{ln},#{staffRegion},#{staffLocation},#{locationType},#{onshoreOrOffshore},#{sow},#{sowExpiredDate},#{staffCategory},#{engagementType},#{hsbcDOJ},#{graduationDate},#{billingCurrency},#{billRateType},#{billRate},#{resourceStatus},#{terminatedDate},#{terminationReason},#{eHr},#{hsbcSubDept},#{skill},#{role},#{csSubDept},#{lob},#{projectManager},#{projectName},
 	    #{email},#{gbGf},#{entryDate},#{rmUserId},#{createTime},#{updateTime},#{itindustryWorkYear,jdbcType=VARCHAR},#{chsoftiProNumber},#{chsoftiProStartdate},#{chsoftiProName})
 	</insert>  
 	<!--  <insert id="addEmployee" parameterType="com.pmo.dashboard.entity.Employee">
@@ -620,5 +621,129 @@
       </if>
     </trim>
   </insert>
+  
+  <update id="updateForOtherEmployee" parameterType="com.pmo.dashboard.entity.Employee" >
+    update t_employee
+    <set >
+      <if test="employeeType != null" >
+        EMPLOYEE_TYPE = #{employeeType,jdbcType=VARCHAR},
+      </if>
+      <if test="hsbcStaffId != null" >
+        HSBC_STAFF_ID = #{hsbcStaffId,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null" >
+        STAFF_NAME = #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="ln != null" >
+        LN = #{ln,jdbcType=VARCHAR},
+      </if>
+      <if test="staffRegion != null" >
+        STAFF_REGION = #{staffRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="staffLocation != null" >
+        STAFF_LOCATION = #{staffLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="locationType != null" >
+        LOCATION_TYPE = #{locationType,jdbcType=VARCHAR},
+      </if>
+      <if test="onshoreOrOffshore != null" >
+        ONSHORE_OR_OFFSHORE = #{onshoreOrOffshore,jdbcType=VARCHAR},
+      </if>
+      <if test="sow != null" >
+        SOW = #{sow,jdbcType=VARCHAR},
+      </if>
+      <if test="sowExpiredDate != null" >
+        SOW_EXPIRED_DATE = #{sowExpiredDate,jdbcType=DATE},
+      </if>
+      <if test="staffCategory != null" >
+        STAFF_CATEGORY = #{staffCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="engagementType != null" >
+        ENGAGEMENT_TYPE = #{engagementType,jdbcType=VARCHAR},
+      </if>
+      <if test="hsbcDOJ != null" >
+        HSBC_DOJ = #{hsbcDOJ,jdbcType=DATE},
+      </if>
+      <if test="graduationDate != null" >
+        GRADUATION_DATE = #{graduationDate,jdbcType=DATE},
+      </if>
+      <if test="billingCurrency != null" >
+        BILL_CURRENCY = #{billingCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="billRateType != null" >
+        BILL_RATE_TYPE = #{billRateType,jdbcType=VARCHAR},
+      </if>
+      <if test="billRate != null" >
+        BILL_RATE = #{billRate,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceStatus != null" >
+        RESOURCE_STATUS = #{resourceStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="terminatedDate != null" >
+        MENTION_LWD = #{terminatedDate,jdbcType=VARCHAR},
+      </if>
+      <if test="terminationReason != null" >
+        REASON_FOR_TERMINATION = #{terminationReason,jdbcType=VARCHAR},
+      </if>
+      <if test="eHr != null" >
+        E_HR = #{eHr,jdbcType=VARCHAR},
+      </if>
+      <if test="hsbcSubDept != null" >
+        HSBC_SUBDEPT_ID = #{hsbcSubDept,jdbcType=VARCHAR},
+      </if>
+      <if test="skill != null" >
+        SKILL = #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        ROLE = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="csSubDept != null" >
+        CS_SUBDEPT_ID = #{csSubDept,jdbcType=VARCHAR},
+      </if>
+      <if test="lob != null" >
+        LOB = #{lob,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewStatus != null" >
+        INTERVIERW_STATUS = #{interviewStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="projectManager != null" >
+        HSBC_MANAGER = #{projectManager,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        HSBC_PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="rmUserId != null" >
+        RM_USER_ID = #{rmUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        Email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="gbGf != null" >
+        GB_GF = #{gbGf,jdbcType=VARCHAR},
+      </if>
+      <if test="entryDate != null" >
+        ENTRY_DATE = #{entryDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itindustryWorkYear != null" >
+        ITINDUSTRY_WORK_YEAR = #{itindustryWorkYear,jdbcType=VARCHAR},
+      </if>
+      <if test="chsoftiProNumber != null" >
+        CHSOFTI_PRO_NUMBER = #{chsoftiProNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="chsoftiProStartdate != null" >
+        CHSOFTI_PRO_STARTDATE = #{chsoftiProStartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chsoftiProName != null" >
+        CHSOFTI_PRO_NAME = #{chsoftiProName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where EMPLOYEE_ID = #{employeeId,jdbcType=VARCHAR}
+  </update>
 	
 </mapper>

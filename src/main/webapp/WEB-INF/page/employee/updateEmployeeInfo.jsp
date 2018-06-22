@@ -91,6 +91,15 @@ var path='<%=path%>';
 								<input id="senddemandtype" value="1" type="hidden"></input>
 								<div id="successAlert" class="alert alert-success" style="display: none;"></div>	
 							    <br/>
+							    <div class="form-group">
+							            <label class="col-lg-2 control-label">EmployeeType</label>
+										<div class="col-lg-4">
+											<select onchange="removeEmployeeValid()" class="form-control" name="employeeType" data-bv-notempty
+												data-bv-notempty-message="Please select employeetype" id="employeeType" data-bv-group=".group">
+											
+											</select>
+										</div>
+							    </div>
 								<div class="form-group">
 										<div class="group">
 											<label class="col-sm-2 control-label">E-HR</label>
@@ -149,8 +158,8 @@ var path='<%=path%>';
 										<div class="group">
 										<label class="col-lg-2 control-label">Staff Location</label>
 										<div class="col-lg-4">
-											<select class="form-control" name="staffLocation" data-bv-notempty
-												data-bv-notempty-message="please select  staffLocation" id="staffLocation" data-bv-group=".group">
+											<select class="form-control" name="staffLocation"
+												 id="staffLocation" data-bv-group=".group">
 												<option value="">--Option--</option>
 											</select>
 										</div>
@@ -158,8 +167,8 @@ var path='<%=path%>';
 										<div class="group">
 										<label class="col-lg-2 control-label">Location Type</label>
 										<div class="col-lg-4">
-											<select class="form-control" name="locationType" data-bv-notempty
-												data-bv-notempty-message="please select  locationType" id="locationType" data-bv-group=".group">
+											<select class="form-control" name="locationType"
+												 id="locationType" data-bv-group=".group">
 												<option value="">--Option--</option>
 											</select>
 										</div>
@@ -170,8 +179,8 @@ var path='<%=path%>';
 										<div class="group">
 										<label class="col-lg-2 control-label">CS Dept</label>
 										<div class="col-lg-4">
-											<select class="form-control" name="csSubDept" data-bv-notempty
-												data-bv-notempty-message="please select csDept" id="csSubDept" data-bv-group=".group">
+											<select class="form-control" name="csSubDept"
+												id="csSubDept" data-bv-group=".group">
 												<option value="">--Option--</option>
 											</select>
 										</div>
@@ -180,8 +189,8 @@ var path='<%=path%>';
 										<div class="group">
 										<label class="col-lg-2 control-label">GB/GF</label>
 										<div class="col-lg-4">
-											<select onchange="changeGBGF()" class="form-control" name="gbGf" data-bv-notempty
-												data-bv-notempty-message="please select  GB_GF" id="gbGf" data-bv-group=".group">
+											<select onchange="changeGBGF()" class="form-control" name="gbGf"
+											 id="gbGf" data-bv-group=".group">
 											<option value="">--Option--</option>
 											</select>
 										</div>
@@ -193,8 +202,8 @@ var path='<%=path%>';
 								        <div class="group">
 										<label class="col-lg-2 control-label">HSBC Dept</label>
 										<div class="col-lg-4">
-											<select onchange="changeHsbcDept()" class="form-control" name="hsbcDept"  id="hsbcDept" data-bv-notempty
-												data-bv-notempty-message="please select  HSBCDept" data-bv-group=".group">
+											<select onchange="changeHsbcDept()" class="form-control" name="hsbcDept"  id="hsbcDept"
+												 data-bv-group=".group">
 												<option value="">--Option--</option>
 											</select>
 										</div>
@@ -202,8 +211,8 @@ var path='<%=path%>';
 										<div class="group">
 										<label class="col-lg-2 control-label">HSBC Sub Dept</label>
 										<div class="col-lg-4">
-											<select class="form-control" name="hsbcSubDept"  id="hsbcSubDept" data-bv-notempty
-												data-bv-notempty-message="please select  HSBSubDept" data-bv-group=".group">
+											<select class="form-control" name="hsbcSubDept"  id="hsbcSubDept"
+												 data-bv-group=".group">
 												<option value="">--Option--</option>
 											</select>
 										</div>
@@ -253,8 +262,8 @@ var path='<%=path%>';
 										<div class="group">
 										<label class="col-lg-2 control-label">Staff Category</label>
 										<div class="col-lg-4">
-											<select class="form-control" name="staffCategory" data-bv-notempty
-												data-bv-notempty-message="please select StaffCatefory" id="staffCategory" data-bv-group=".group">
+											<select class="form-control" name="staffCategory"
+												 id="staffCategory" data-bv-group=".group">
 												<option value="">--Option--</option>
 											</select>
 										</div>
@@ -262,8 +271,8 @@ var path='<%=path%>';
 										<div class="group">
 										<label class="col-lg-2 control-label">Engagement Type</label>
 										<div class="col-lg-4">
-											<select class="form-control" name="engagementType" data-bv-notempty
-												data-bv-notempty-message="please select Engagement" id="engagementType" data-bv-group=".group">
+											<select class="form-control" name="engagementType"
+												 id="engagementType" data-bv-group=".group">
 												<option value="">--Option--</option>
 											</select>
 										</div>
@@ -302,8 +311,8 @@ var path='<%=path%>';
 										<div class="group">
 										<label class="col-lg-2 control-label">Staff Region</label>
 										<div class="col-lg-4">
-											<select class="form-control" name="staffRegion" data-bv-notempty
-												data-bv-notempty-message="please select  staffRegion" id="staffRegion" data-bv-group=".group" onchange="changeData()">
+											<select class="form-control" name="staffRegion"
+												 id="staffRegion" data-bv-group=".group" onchange="changeData()">
 												<option value="">--Option--</option>
 											</select>
 										</div>
@@ -311,8 +320,8 @@ var path='<%=path%>';
 										<div class="group">
 										<label class="col-lg-2 control-label">Onshore or Offshore</label>
 										<div class="col-lg-4">
-											<select class="form-control" name="onshoreOrOffshore" data-bv-notempty
-												data-bv-notempty-message="please select value" id="onshoreOrOffshore" data-bv-group=".group">
+											<select class="form-control" name="onshoreOrOffshore"
+												 id="onshoreOrOffshore" data-bv-group=".group">
 												<option value="">--Option--</option>
 											</select>
 										</div>
@@ -322,8 +331,8 @@ var path='<%=path%>';
 										<div class="group">
 										<label class="col-lg-2 control-label">MSA Role</label>
 										<div class="col-lg-4">
-											<select class="form-control" name="role" data-bv-notempty
-												data-bv-notempty-message="please select MsaRole" id="role" data-bv-group=".group" onchange="changeData()">
+											<select class="form-control" name="role"
+												 id="role" data-bv-group=".group" onchange="changeData()">
 												<option value="">--Option--</option>
 											</select>
 										</div>
@@ -331,8 +340,8 @@ var path='<%=path%>';
 										<div class="group">
 										<label class="col-lg-2 control-label">Skills/Technology</label>
 										<div class="col-lg-4">
-											<select class="form-control" name="skill" data-bv-notempty
-												data-bv-notempty-message="please select Skills" id="skill" data-bv-group=".group" onchange="changeData()">
+											<select class="form-control" name="skill"
+												 id="skill" data-bv-group=".group" onchange="changeData()">
 												<option value="">--Option--</option>
 											</select>
 										</div>
@@ -343,8 +352,8 @@ var path='<%=path%>';
 								   <div class="group">
 										<label class="col-lg-2 control-label">Billing Currency</label>
 										<div class="col-lg-4">
-											<select class="form-control" name="billingCurrency" data-bv-notempty
-												data-bv-notempty-message="please select BillingCurrency" id="billingCurrency" data-bv-group=".group">
+											<select class="form-control" name="billingCurrency"
+												 id="billingCurrency" data-bv-group=".group">
 												<option value="">--Option--</option>
 											</select>
 										</div>
@@ -352,8 +361,8 @@ var path='<%=path%>';
 								   <div class="group">
 										<label class="col-lg-2 control-label">BillRateType</label>
 										<div class="col-lg-4">
-											<select class="form-control" name="billRateType" data-bv-notempty
-												data-bv-notempty-message="Please Select BillRateType" id="billRateType" data-bv-group=".group">
+											<select class="form-control" name="billRateType"
+												 id="billRateType" data-bv-group=".group">
 											<option value="">--Option--</option>
 											</select>
 										</div>
@@ -393,8 +402,8 @@ var path='<%=path%>';
 									<div class="group">
 										<label class="col-lg-2 control-label">Resource Status</label>
 										<div class="col-lg-4">
-											<select class="form-control" name="resourceStatus" data-bv-notempty
-												data-bv-notempty-message="please select ResourceStatus" id="resourceStatus" data-bv-group=".group">
+											<select class="form-control" name="resourceStatus"
+												 id="resourceStatus" data-bv-group=".group">
 												<option value="">--Option--</option>
 											</select>
 										</div>

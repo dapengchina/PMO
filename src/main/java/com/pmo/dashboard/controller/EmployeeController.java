@@ -239,7 +239,7 @@ public class EmployeeController {
 		
 		
         Timestamp updateTime = createTime;
-        Employee employee = new Employee(billRateType,employeeId,eHr,lob,
+        Employee employee = new Employee(employeeType,billRateType,employeeId,eHr,lob,
                 hsbcStaffId, staffName, LN, staffRegion,
                 staffLocation, locationType, onshoreOrOffshore,
                 csSubDept, hsbcSubDept, projectName,
@@ -329,6 +329,7 @@ public class EmployeeController {
         String rmUserId = request.getParameter("rmUserId");
         String demandid = request.getParameter("udemandid");
         String itindustryWorkYear = request.getParameter("itindustryWorkYear");
+        String employeeType = request.getParameter("employeetype");
         
         //add begin
         String chsoftiProNumber = request.getParameter("chsoftiProNumber");
@@ -348,7 +349,7 @@ public class EmployeeController {
 
         //修改后的employee
 
-        Employee employee = new Employee(billRateType,employeeId,eHr,lob,
+        Employee employee = new Employee(employeeType,billRateType,employeeId,eHr,lob,
                 hsbcStaffId, staffName, LN, staffRegion,
                 staffLocation, locationType, onshoreOrOffshore,
                 csSubDept, hsbcSubDept, projectName,
@@ -382,7 +383,17 @@ public class EmployeeController {
         	e.printStackTrace();
         }
         
-        boolean resultFlag = employeeService.updateEmployee(employee);
+        boolean resultFlag = false;
+        if(employeeType.equals("HSBC")){
+        	resultFlag = employeeService.updateEmployee(employee);
+        }else{
+        	int k = employeeService.updateForOtherEmployee(employee);
+        	if(k>0){
+        		resultFlag = true;
+        	}else{
+        		resultFlag = false;
+        	}
+        }
         
         
         if(!"".equals(demandid) && demandid!=null){

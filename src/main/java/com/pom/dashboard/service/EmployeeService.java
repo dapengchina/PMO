@@ -23,4 +23,6 @@ public interface EmployeeService
 	int updatePromoteInfo(Employee employee);
 	
 	String saveForOtherEmployee(Employee employee);
+	
+	int updateForOtherEmployee(Employee employee);
 }

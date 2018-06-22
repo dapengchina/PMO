@@ -117,4 +117,9 @@ public class EmployeeServiceImpl implements EmployeeService
 		}
 		
 	}
+
+	@Override
+	public int updateForOtherEmployee(Employee employee) {
+		return employeeMapper.updateForOtherEmployee(employee);
+	}
 }

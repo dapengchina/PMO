@@ -25,4 +25,6 @@ public interface EmployeeMapper
 	int updatePromoteInfo(Employee employee);
 	
 	int saveForOtherEmployee(Employee employee);
+	
+	int updateForOtherEmployee(Employee employee);
 }

@@ -12,7 +12,7 @@ $(document).ready(function() {
         	eHr: {
 				validators: {
                     notEmpty: {
-                        message: 'Please enter E-HR'
+                        message: 'Please enter ehr'
                     },
                     regexp: {
                         regexp: /^E\d{9}$/,
@@ -93,7 +93,7 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
                     remote:{
                     	type:"post",
@@ -105,7 +105,7 @@ $(document).ready(function() {
             hsbcStaffId: {
                 validators: {
                 	notEmpty: {
-                        message: 'Please enter staffId'
+                        message: 'Please enter staffid'
                     },
                     /*numeric: {
                 	message:'Please enter number'
@@ -121,7 +121,7 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
                 }
             },
@@ -132,7 +132,7 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
 
                 }
@@ -148,7 +148,7 @@ $(document).ready(function() {
             		},
             		stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
                 }
             },
@@ -160,7 +160,7 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
 
                 }
@@ -173,7 +173,7 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
 
                 }
@@ -185,7 +185,7 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
 
                 }
@@ -228,7 +228,7 @@ $(document).ready(function() {
             sowExpiredDate1: {
                 validators: {
                     notEmpty: {
-                        message: 'Please select sowExpiredDate'
+                        message: 'Please select sowexpireddate'
                     },
                     date : {  
                         format : 'YYYY-MM-DD',  
@@ -240,11 +240,11 @@ $(document).ready(function() {
             billRate: {
                 validators: {
                     notEmpty: {
-                        message: 'Please enter billRate'
+                        message: 'Please enter billrate'
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
                     regexp:{
             			regexp:/^([1-9]\d*(\.\d*[0-9])?(\/(m|M))?)$|^(0\.\d*[0-9](\/(m|M))?)$/,
@@ -259,7 +259,7 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
                     regexp:{
             			regexp:/^([1-9]\d*(\.\d*[0-9])?(\/(m|M))?)$|^(0\.\d*[0-9](\/(m|M))?)$/,
@@ -271,7 +271,7 @@ $(document).ready(function() {
                 validators: {
                 	 regexp: {
                           regexp:/^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/,
-                          message: 'Please enter correct Email'
+                          message: 'Please enter correct email'
                       },
                       stringLength: {
                           max: 100,
@@ -283,7 +283,7 @@ $(document).ready(function() {
             entryDate1: {
             	validators: {
                 notEmpty: {
-                    message: 'Please select EntryDate'
+                    message: 'Please select entrydate'
                 },
                 date : {  
                     format : 'YYYY-MM-DD',  
@@ -308,7 +308,7 @@ $(document).ready(function() {
         	eHr: {
 				validators: {
                     notEmpty: {
-                        message: 'Please enter  E-HR'
+                        message: 'Please enter ehr'
                     },
                     regexp: {
                         regexp: /^E\d{9}$/,
@@ -329,7 +329,7 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
                 }
             },
@@ -359,9 +359,114 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
 
+                }
+            },
+            staffLocation: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select stafflocation'
+                    }
+                }
+            },
+            locationType: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select locationtype'
+                    }
+                }
+            },
+            csSubDept: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select csdept'
+                    }
+                }
+            },
+            gbGf: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select gbgf'
+                    }
+                }
+            },
+            hsbcDept: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select dept'
+                    }
+                }
+            },
+            hsbcSubDept: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select subdept'
+                    }
+                }
+            },
+            staffCategory: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select staffcatefory'
+                    }
+                }
+            },
+            engagementType: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select engagement'
+                    }
+                }
+            },
+            staffRegion: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select staffregion'
+                    }
+                }
+            },
+            onshoreOrOffshore: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select value'
+                    }
+                }
+            },
+            role: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select msarole'
+                    }
+                }
+            },
+            skill: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select skills'
+                    }
+                }
+            },
+            billingCurrency: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select billingcurrency'
+                    }
+                }
+            },
+            billRateType: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select billratetype'
+                    }
+                }
+            },
+            resourceStatus: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please select resourcestatus'
+                    }
                 }
             },
             LN: {
@@ -375,7 +480,7 @@ $(document).ready(function() {
             		},
             		stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
                 }
             },
@@ -387,7 +492,7 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
             		
                 }
@@ -400,7 +505,7 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
 
                 }
@@ -412,7 +517,7 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
 
                 }
@@ -420,11 +525,11 @@ $(document).ready(function() {
             billRate: {
                 validators: {
                     notEmpty: {
-                        message: 'Please Choose billRate'
+                        message: 'Please Choose billrate'
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
                     regexp:{
             			regexp:/^([1-9]\d*(\.\d*[0-9])?(\/(m|M))?)$|^(0\.\d*[0-9](\/(m|M))?)$/,
@@ -440,7 +545,7 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         max: 32,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
                     regexp:{
             			regexp:/^([1-9]\d*(\.\d*[0-9])?(\/(m|M))?)$|^(0\.\d*[0-9](\/(m|M))?)$/,
@@ -458,14 +563,14 @@ $(document).ready(function() {
                     },
                     stringLength: {
                         max: 100,
-                        message: 'Exceeded the maxLength'
+                        message: 'Exceeded the maxlength'
                     },
                 }
             },
             sowExpiredDate1: {
                 validators: {
                     notEmpty: {
-                        message: 'Please select sowExpiredDate'
+                        message: 'Please select sowexpireddate'
                     },
                     date : {  
                         format : 'YYYY-MM-DD',  
@@ -489,7 +594,7 @@ $(document).ready(function() {
             entryDate1: {
             	validators: {
                 notEmpty: {
-                    message: 'Please select EntryDate'
+                    message: 'Please select entrydate'
                 },
                 date : {  
                     format : 'YYYY-MM-DD',  

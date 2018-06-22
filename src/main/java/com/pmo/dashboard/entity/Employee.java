@@ -405,7 +405,7 @@ public class Employee
     {
         super();
     }
-    public Employee(String billRateType,String employeeId, String eHr, String lob,
+    public Employee(String employeeType,String billRateType,String employeeId, String eHr, String lob,
             String hsbcStaffId, String staffName, String ln, String staffRegion,
             String staffLocation, String locationType, String onshoreOrOffshore,
             String csSubDept, String hsbcSubDept, String projectName,
@@ -418,6 +418,7 @@ public class Employee
             String chsoftiProNumber,String chsoftiProStartDate, String chsoftiProName)
     {
         super();
+        this.employeeType = employeeType;
         this.billRateType = billRateType;
         this.employeeId = employeeId;
         this.eHr = eHr;
@@ -457,7 +458,7 @@ public class Employee
         this.chsoftiProStartdate = chsoftiProStartDate;
         this.chsoftiProName = chsoftiProName;
     }
-    public Employee(String billRateType,String employeeId, String eHr, String lob,
+    public Employee(String employeeType,String billRateType,String employeeId, String eHr, String lob,
             String hsbcStaffId, String staffName, String ln, String staffRegion,
             String staffLocation, String locationType, String onshoreOrOffshore,
             String csSubDept, String hsbcSubDept, String projectName,
@@ -471,6 +472,7 @@ public class Employee
     		)
     {
         super();
+        this.employeeType = employeeType;
         this.billRateType = billRateType;
         this.employeeId = employeeId;
         this.eHr = eHr;
