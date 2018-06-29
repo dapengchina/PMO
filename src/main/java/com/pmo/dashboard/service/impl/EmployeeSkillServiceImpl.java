@@ -5,10 +5,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.pmo.dashboard.dao.CapabilityLabelParamMapper;
 import com.pmo.dashboard.dao.EmployeeSkillMapper;
+import com.pmo.dashboard.entity.CapabilityLabelParam;
 import com.pmo.dashboard.entity.EmployeeSkill;
 import com.pmo.dashboard.util.Utils;
 import com.pom.dashboard.service.EmployeeSkillService;
@@ -37,8 +39,8 @@ public class EmployeeSkillServiceImpl implements EmployeeSkillService {
 	@Override
 	public boolean insert(EmployeeSkill record) {
 		boolean rtn = false;
+		setParam(record);
 		record.setId(Utils.getUUID());
-		record.setParamName(capabilityLabelParamMapper.selectByPrimaryKey(record.getCapparamId()).getParamName());
 		record.setCreateDate(new Date());
 		if(employeeSkillMapper.insertSelective(record)>0){
 			rtn = true;
@@ -53,6 +55,7 @@ public class EmployeeSkillServiceImpl implements EmployeeSkillService {
 
 	@Override
 	public boolean update(EmployeeSkill record) {
+		setParam(record);
 		record.setUpdateDate(new Date());
 		if(employeeSkillMapper.updateByPrimaryKeySelective(record)>0){
             return true;
@@ -104,6 +107,35 @@ public class EmployeeSkillServiceImpl implements EmployeeSkillService {
 			}
 		}
 		return true;
+	}
+	
+	private void setParam(EmployeeSkill record) {
+		if(StringUtils.isBlank(record.getCapparamId())) {
+			CapabilityLabelParam p = new CapabilityLabelParam();
+			p.setParamName(record.getParamName());
+			List<CapabilityLabelParam> r = capabilityLabelParamMapper.query(p);
+			if(r.size()>0) {
+				record.setCapparamId(r.get(0).getId());
+			}
+		}
+		if(StringUtils.isBlank(record.getParamName())) {
+			record.setParamName(capabilityLabelParamMapper.selectByPrimaryKey(record.getCapparamId()).getParamName());
+		}
+		if(StringUtils.isNotBlank(record.getAbilityLevel()) && record.getAbilityLevel().length()>1) {
+			String level = record.getAbilityLevel();
+			if("junior".equals(level)) {
+				record.setAbilityLevel("0");
+			}else if("intermediate".equals(level)) {
+				record.setAbilityLevel("1");
+			}else if("senior".equals(level)) {
+				record.setAbilityLevel("2");
+			}
+		}
+	}
+
+	@Override
+	public int cleanMainSkill(String eHr) {
+		return employeeSkillMapper.cleanMainSkill(eHr);
 	}
 
 }

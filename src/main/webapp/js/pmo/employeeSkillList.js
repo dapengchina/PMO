@@ -1,4 +1,41 @@
 $(function () {
+//	$("fileUpload").blur( function() {
+//		alert('upload2');
+//	});
+	
+//	$('#fileUpload').uploadify({
+//    	'buttonText' : '上传'
+//    	,'auto'     : false
+//    	,  'swf'      : path+'/misc/uploadify.swf'
+//    	, 'uploader' : path+'/service/skill/skillUpload2' 
+//    }); 
+	
+	
+	
+//     $("#fileUpload").uploadify({  
+////            'height'        : 27,   
+////            'width'         : 80,    
+//            'buttonText'    : '添加附件',  
+//            'swf'           : path+'/misc/uploadify.swf',  
+//            'uploader'      : path+'/service/skill/skillUpload2',
+//            'auto'          : false,  
+//            'fileTypeExts'  : '*.*',  
+////            'formData'      : {'userName':'','content':''},  
+//            'onUploadStart' : function(file) {  
+//                $("#file_upload").uploadify("settings");  
+//            },  
+//            'onUploadSuccess':function(){  
+//                $.messager.show({  
+//                    msg : '导入成功！',  
+//                    title : '提示'  
+//                });  
+//            },  
+//            'onUploadComplete':function(){  
+//                $('#importLispDialog').window('close');  
+//            }  
+//    });  
+  
+	
 	$('#myModal').modal('hide')
     loadSkillList();
     loadCSSubDept();
@@ -6,6 +43,9 @@ $(function () {
     loadRole();
     loadSkill();
     
+	$("#myfiles").blur( function() {
+		skillUpload();
+	});
     
 });
 
@@ -120,7 +160,7 @@ function loadSkillList(){
         toolbar: '#toolbar',              //工具按钮用哪个容器
         striped: true,                      //是否显示行间隔色
         fixedColumns: true,
-        fixedNumber: 0,
+        fixedNumber: 6,
         singleSelect : false,                // 单选checkbox 
         cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
         pagination: true,                   //是否显示分页（*）
@@ -217,11 +257,10 @@ function loadSkillList(){
         ,{
 //            field: 'Operate',
             title: 'Operate'
-//            ,sortable: true
             ,formatter:function(value,row,index){
-            	var r = row.id==null?'':"<a href='javascript:void(0);' class='btn btn-info btn-small' onclick=detail('"+row.eHr+"')>Detail</a>" ;
-//            	var r = "<a href='javascript:void(0);' class='btn btn-info btn-small' onclick=detail('"+row.eHr+"')>Detail</a>" ;
-            	return r+"<a href='javascript:void(0);' class='btn btn-info btn-small' onclick=toEdit('"+row.eHr+"')>Edit</a>" ;
+//            	 class='btn btn-info btn-small'
+            	var r = row.id==null?'':"<a href='javascript:void(0);' class='btn-info btn-small' onclick=detail('"+row.eHr+"')>Detail</a>" ;
+            	return r+"<a href='javascript:void(0);' class='btn-info btn-small' onclick=toEdit('"+row.eHr+"')>Edit</a>" ;
             }
         }
         /*{
@@ -234,8 +273,7 @@ function loadSkillList(){
         
         ]
         ,onLoadSuccess: function () {
-        	var data = $('#skillList').bootstrapTable('getData');
-//        	loadOfflineSummary(data);
+//        	var data = $('#skillList').bootstrapTable('getData');
         },
         onLoadError: function () {
         	
@@ -511,7 +549,7 @@ function showLeve(n){
 }
 
 function toBatch(){
-	if($("#skillList .bs-checkbox :checkbox:checked").length==0){
+	if($(".bs-checkbox :checkbox:checked").length==0){
 		alert("please select employees.");
 		return ;
 	}
@@ -661,11 +699,13 @@ function batchUpdate(){
 function checkWithMainAbility(obj){
 	if($(obj).is(':checked')){
 		$(obj).parent().parent().find("#mainAbility").attr('checked','true');
-//		$(obj).parent().parent().find("#ischeck").attr('checked','true');
 	}
 }
 
-function importSkill(){
+function skillUpload(){
+	if(''!=$("#myfiles")[0].value){
+		$('#uploadForm').submit();
+	}
 	
 }
 

@@ -31,4 +31,6 @@ public interface EmployeeSkillService {
     
     boolean batch(EmployeeSkill record); 
     
+    int cleanMainSkill(String eHr);
+    
 }
