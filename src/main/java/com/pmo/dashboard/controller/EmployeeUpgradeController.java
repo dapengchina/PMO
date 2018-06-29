@@ -1,5 +1,6 @@
 package com.pmo.dashboard.controller;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -90,7 +91,8 @@ public class EmployeeUpgradeController {
 	public boolean saveUpgradeRecord(EmployeeUpgradeRecord eur,HttpServletRequest request) throws JsonProcessingException, ParseException{
 		User user = (User) request.getSession().getAttribute("loginUser");
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-		eur.setCreateDate(new Date());
+		SimpleDateFormat sf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		eur.setCreateDate(Timestamp.valueOf(sf2.format(new Date())));
 		eur.setEffectDate(sf.parse(eur.getStringeffectivedate()));
 		eur.setId(Utils.getUUID());
 		eur.setOperateId(user.getUserId());
