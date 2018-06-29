@@ -40,6 +40,13 @@ $(document).ready(function() {
                     }
                 }
             },
+            demandrr: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please click then select demand'
+                    }
+                }
+            },
             gbGf: {
                 validators: {
                     notEmpty: {
