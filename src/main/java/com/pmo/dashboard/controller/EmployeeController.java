@@ -252,11 +252,16 @@ public class EmployeeController {
                 chsoftiProNumber,chsoftiProStartDate1,chsoftiProName);
         
         String employeeid = "";
-        if(employeeType.equals("HSBC")){
-        	employeeid = employeeService.addEmployee(employee);
+        if(employeeType!=null){
+        	if(employeeType.equals("HSBC")){
+            	employeeid = employeeService.addEmployee(employee);
+            }else{
+            	employeeid = employeeService.saveForOtherEmployee(employee);
+            }
         }else{
-        	employeeid = employeeService.saveForOtherEmployee(employee);
+        	employeeid = employeeService.addEmployee(employee);
         }
+        
         
         if(!"".equals(employeeid)) {
         	String candidateId=(String) request.getSession().getAttribute("onboardCandidateId");
@@ -289,7 +294,8 @@ public class EmployeeController {
     }
 
 
-    @RequestMapping("/updateEmployee")
+    @SuppressWarnings("unchecked")
+	@RequestMapping("/updateEmployee")
     @ResponseBody
     public boolean updateEmployee(final HttpServletRequest request,
             final HttpServletResponse response)
@@ -372,11 +378,12 @@ public class EmployeeController {
     		@SuppressWarnings({ "unused", "unchecked" })
     		StringBuffer[] result=checkFieldChange(em,employee);
     		if(result[0].length()>0){
-    			@SuppressWarnings({ "unchecked", "unused" })
+    			
     			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             	String ts = sf.format(new Date());
             	log.setUpdateDate(Timestamp.valueOf(ts));
-				boolean flag = employeeLogService.save(log);
+            	employeeLogService.save(log);
+				//boolean flag = employeeLogService.save(log);
     		}
 
         }catch(Exception e){
@@ -384,16 +391,21 @@ public class EmployeeController {
         }
         
         boolean resultFlag = false;
-        if(employeeType.equals("HSBC")){
-        	resultFlag = employeeService.updateEmployee(employee);
+        if(employeeType!=null){
+        	if(employeeType.equals("HSBC")){
+            	resultFlag = employeeService.updateEmployee(employee);
+            }else{
+            	int k = employeeService.updateForOtherEmployee(employee);
+            	if(k>0){
+            		resultFlag = true;
+            	}else{
+            		resultFlag = false;
+            	}
+            }
         }else{
-        	int k = employeeService.updateForOtherEmployee(employee);
-        	if(k>0){
-        		resultFlag = true;
-        	}else{
-        		resultFlag = false;
-        	}
+        	resultFlag = employeeService.updateEmployee(employee);
         }
+        
         
         
         if(!"".equals(demandid) && demandid!=null){

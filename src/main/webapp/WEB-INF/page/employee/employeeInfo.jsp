@@ -518,8 +518,6 @@ var path='<%=path%>';
 	<script src="<%=path %>/extensionjs/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
 
 	<script
-		src="<%=path %>/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script
 		src="<%=path %>/bower_components/bootstrap-val/bootstrapValidator.min.js"></script>
 
 	<!-- library for cookie management -->
