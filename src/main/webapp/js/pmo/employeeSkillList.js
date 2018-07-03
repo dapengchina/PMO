@@ -36,7 +36,7 @@ $(function () {
 //    });  
   
 	
-	$('#myModal').modal('hide')
+	$('#myModal').modal('hide');
     loadSkillList();
     loadCSSubDept();
     loadLevel();
@@ -297,10 +297,13 @@ function search(){
 	var officialAccreditation = $('#officialAccreditation').is(':checked')?'1':'';
 	var workExperience = $("#workExperience").val();
 	var capabilityLevel = $("#capabilityLevel").val();
-//	if($('#officialAccreditation').is(':checked')) {
+	var mainAbility  ;
+	if($('#mainAbility').is(':checked') && paramName=='') {
 //		officialAccreditation='1';
-//	}
-	
+		alert('Please choose Skill list for Main Skill');
+		return ;
+	}
+	mainAbility = $('#mainAbility').is(':checked')?'1':'';
 	var queryParams = { 
 		query: {  
 			eHr:eHr
@@ -313,6 +316,7 @@ function search(){
 			,officialAccreditation:officialAccreditation
 			,workExperience:workExperience
 			,abilityLevel:capabilityLevel
+			,mainAbility:mainAbility
         }
     }  
 	//刷新表格  

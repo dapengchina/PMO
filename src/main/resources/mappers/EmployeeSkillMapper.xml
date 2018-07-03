@@ -211,13 +211,13 @@
     , (SELECT CS_SUBDEPT_NAME FROM t_cs_dept d WHERE d.CS_SUBDEPT_ID=e.CS_SUBDEPT_ID) du
     FROM t_employee e  LEFT JOIN (
     select * from  t_employee_skill s
-    where 1 =1 and s.MAIN_ABILITY='1' 
+    where 1 =1 
     <if test="paramName != null and paramName != ''">
 		AND s.PARAM_NAME = #{paramName}
 	</if>
-<!-- 	<if test="mainAbility != null and mainAbility != ''"> -->
-<!-- 		AND MAIN_ABILITY = '1' -->
-<!-- 	</if> -->
+	<if test="mainAbility != null and mainAbility != ''">
+		AND MAIN_ABILITY = #{mainAbility}
+	</if>
 	<if test="officialAccreditation != null and officialAccreditation != ''">
 		AND s.OFFICIAL_ACCREDITATION = '1'
 	</if>
@@ -227,7 +227,6 @@
 	<if test="abilityLevel != null and abilityLevel != ''">
 		AND s.ABILITY_LEVEL = #{abilityLevel}
 	</if>
-	
     ) s ON e.E_HR = s.EMPLOYEE_ID
     where 1=1 
     <if test="eHr != null and eHr != ''">
@@ -260,6 +259,15 @@
 	<if test="abilityLevel != null and abilityLevel != ''">
 		AND s.ABILITY_LEVEL = #{abilityLevel}
 	</if>
+	AND ( s.PARAM_NAME IS NULL 
+	    OR s.PARAM_NAME =  
+	   ( 
+	    CASE 
+	     WHEN MAIN_ABILITY='1' THEN s.PARAM_NAME
+	     WHEN MAIN_ABILITY='0' THEN (SELECT MAX(PARAM_NAME) FROM t_employee_skill s2 WHERE s2.EMPLOYEE_ID=s.EMPLOYEE_ID LIMIT 1)
+	     END
+	   )
+	  )
   </select>
   <select id="skills"  parameterType="string" resultType="string">
   	SELECT PARAM_NAME paramName FROM  `t_capabilitylabel_param` WHERE LENGTH(SUBCATE_ID)>LENGTH(MAJORCATE_ID) ORDER BY PARAM_NAME
