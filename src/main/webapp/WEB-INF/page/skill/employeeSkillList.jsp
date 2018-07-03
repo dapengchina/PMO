@@ -138,7 +138,7 @@ var path='<%=path%>';
 										<div class="group">
 										<label class="col-lg-2 control-label">Main Skill</label>
 										<div class="col-lg-4">
-											<input type="checkbox" CHECKED  value="1" name="mainAbility" id="mainAbility" onclick="return  false;" disabled>
+											<input type="checkbox" name="mainAbility" id="mainAbility" >
 										</div>
 										</div>
 										</br></br></br>
