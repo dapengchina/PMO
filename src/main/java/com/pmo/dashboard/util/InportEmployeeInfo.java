@@ -39,16 +39,15 @@ public class InportEmployeeInfo
             int clos = rs.getColumns();
             int rows = rs.getRows();
             HSBCDept hsbcDept = new HSBCDept();
-            //String temp = rs.getCell(30, 1).getContents();
-            //System.out.println(temp);
+            
             Employee em = new Employee();
             
             int count = 0;
             for(int i=1;i<rows;i++){
             	String zuhe = "";
-            	//System.out.println(rs.getCell(30, 1).getContents());
+            	//System.out.println(rs.getCell(28, 1).getContents());
             	//先查询此人是否存在，如果存在则修改，如果不存在则添加
-            	List<Employee> emlist = employeeService.selectByEhr(rs.getCell(30, i).getContents());
+            	List<Employee> emlist = employeeService.selectByEhr(rs.getCell(28, i).getContents());
             	
             		//hsbc staff id
             		em.setHsbcStaffId(rs.getCell(1, i).getContents());
@@ -110,59 +109,65 @@ public class InportEmployeeInfo
             		}
             		
             		//graduation date
-            		if(rs.getCell(20, i).getContents()!=null && !"".equals(rs.getCell(20, i).getContents())){
-            			em.setGraduationDate(rs.getCell(20, i).getContents());
+            		if(rs.getCell(19, i).getContents()!=null && !"".equals(rs.getCell(19, i).getContents())){
+            			em.setGraduationDate(rs.getCell(19, i).getContents());
             		}
             		
             		//msa role
-            		em.setRole(rs.getCell(22, i).getContents());
+            		em.setRole(rs.getCell(20, i).getContents());
             		//skill
-            		em.setSkill(rs.getCell(23, i).getContents());
+            		em.setSkill(rs.getCell(21, i).getContents());
             		//entry date	
-            		if(rs.getCell(24, i).getContents()!=null && !"".equals(rs.getCell(24, i).getContents())){
-            			em.setEntryDate(rs.getCell(24, i).getContents());
+            		if(rs.getCell(22, i).getContents()!=null && !"".equals(rs.getCell(22, i).getContents())){
+            			em.setEntryDate(rs.getCell(22, i).getContents());
             		}
             		
             		//billing currency
-            		em.setBillingCurrency(rs.getCell(25, i).getContents());
+            		em.setBillingCurrency(rs.getCell(23, i).getContents());
             		//bill rate
-            		em.setBillRate(rs.getCell(26, i).getContents());
+            		em.setBillRate(rs.getCell(24, i).getContents());
             		//resource status
-            		em.setResourceStatus(rs.getCell(27, i).getContents());
+            		em.setResourceStatus(rs.getCell(25, i).getContents());
             		//lwd
-            		if(rs.getCell(28, i).getContents()!=null && !"".equals(rs.getCell(28, i).getContents())){
-            			em.setTerminatedDate(rs.getCell(28, i).getContents());
+            		if(rs.getCell(26, i).getContents()!=null && !"".equals(rs.getCell(26, i).getContents())){
+            			em.setTerminatedDate(rs.getCell(26, i).getContents());
             		}
             		
             		//terminateddate reason
-            		em.setTerminationReason(rs.getCell(29, i).getContents());
+            		em.setTerminationReason(rs.getCell(27, i).getContents());
             		//ehr
-            		em.seteHr(rs.getCell(30, i).getContents());
+            		em.seteHr(rs.getCell(28, i).getContents());
             		//lob
-            		em.setLob(rs.getCell(31, i).getContents());
+            		em.setLob(rs.getCell(29, i).getContents());
             		
             		//rm
-            		if(rs.getCell(32, i).getContents().equals("张晨")){
-            			em.setRmUserId("d87ca6a3b5534553b7967bc34b8eb59c");
+            		if(rs.getCell(30, i).getContents().equals("王蓓")){
+            			em.setRmUserId("d7f19c09a5f1456fb9edf45bd3c2fbbb");
+            		}
+            		if(rs.getCell(30, i).getContents().equals("高赛")){
+            			em.setRmUserId("0699ce9ceb7343a48c2acbe3e6e3aa97");
+            		}
+            		if(rs.getCell(30, i).getContents().equals("柳夏")){
+            			em.setRmUserId("55988cfa8f07418c84f890cf895460d0");
             		}
             		
             		//csdept
-            		if(rs.getCell(33, i).getContents().equals("财富管理交付部")){
+            		if(rs.getCell(31, i).getContents().equals("财富管理交付部")){
             			em.setCsSubDept("8");
             		}
                     
             		
             		//it work year
-            		em.setItindustryWorkYear(rs.getCell(34, i).getContents());
+            		em.setItindustryWorkYear(rs.getCell(32, i).getContents());
             		//chinasofti pro number
-            		em.setChsoftiProNumber(rs.getCell(35, i).getContents());
+            		em.setChsoftiProNumber(rs.getCell(33, i).getContents());
             		//chinasofti pro startdate
-            		if(rs.getCell(36, i).getContents()!=null && !"".equals(rs.getCell(36, i).getContents())){
-            			em.setChsoftiProStartdate(rs.getCell(36, i).getContents());
+            		if(rs.getCell(34, i).getContents()!=null && !"".equals(rs.getCell(34, i).getContents())){
+            			em.setChsoftiProStartdate(rs.getCell(34, i).getContents());
             		}
             		
             		//chinasofti pro name
-            		em.setChsoftiProName(rs.getCell(37, i).getContents());
+            		em.setChsoftiProName(rs.getCell(35, i).getContents());
             		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date curDate = new Date();
                     Timestamp createTime = null;
@@ -175,71 +180,18 @@ public class InportEmployeeInfo
             	
             	
             	    //如果此人存在则修改，如果不存在则添加
-            		if(emlist!=null && emlist.size()==1){
-            			System.out.println(rs.getCell(30, i).getContents());
+            		if(emlist!=null && emlist.size()>=1){
+            			System.out.println("存在"+rs.getCell(28, i).getContents());
             			em.setEmployeeId(emlist.get(0).getEmployeeId());
             			//存在，修改
             			employeeService.updateEmployee(em);
             		}else{
+            			System.out.println(count+"添加");
             			em.setEmployeeId(Utils.getUUID());
             			//不存在，添加
             			employeeService.addEmployee(em);
             			count++;
             		}
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-                //处理GBGF
-            	/**String ehr = rs.getCell(3, i).getContents();
-            	String gbgf = rs.getCell(0, i).getContents();
-            	System.out.println(ehr);
-            	//根据Name去获取ID
-            	hsbcDept.setName(gbgf);
-            	List<HSBCDept> hsbcDeptList = hsbcDeptService.queryById(hsbcDept);
-
-
-            	if(hsbcDeptList!=null && hsbcDeptList.size()>0){
-            		em.seteHr(ehr);
-                	em.setGbGf(hsbcDeptList.get(0).getId());
-                	employeeService.importEmployeeProject(em);
-            	}*/
-            	//处理HSBCDept和HSBCSubDept
-            	/**String ehr = rs.getCell(3, i).getContents();
-            	String hsbcDeptt = rs.getCell(1, i).getContents();
-            	String hsbcSubDeptt = rs.getCell(2, i).getContents();
-            	
-            	System.out.println(ehr);
-            	//根据Name去获取ID
-            	HSBCDept hsbcDept2 = new HSBCDept();
-            	HSBCDept hsbcDept3 = new HSBCDept();
-            	hsbcDept2.setName(hsbcDeptt);
-            	hsbcDept3.setName(hsbcSubDeptt);
-            	List<HSBCDept> hsbcDeptList1 = hsbcDeptService.queryById(hsbcDept2);
-            	List<HSBCDept> hsbcDeptList2 = hsbcDeptService.queryById(hsbcDept3);
-
-            	String zuhe="";
-            	if(hsbcDeptList1!=null && hsbcDeptList1.size()>0){
-            		zuhe = zuhe+hsbcDeptList1.get(0).getId()+",";
-            		if(hsbcDeptList2!=null && hsbcDeptList2.size()>0){
-            			zuhe = zuhe + hsbcDeptList2.get(0).getId();
-            		}
-            	}
-            	em.seteHr(ehr);
-                em.setHsbcSubDept(zuhe);
-                employeeService.importEmployeeProject(em);*/
             }
             System.out.println("处理完成"+count);    
         }
