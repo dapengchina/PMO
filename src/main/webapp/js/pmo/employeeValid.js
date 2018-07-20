@@ -89,13 +89,13 @@ $(document).ready(function() {
 
                 }
             },
-            demandskill: {
+            /*demandskill: {
                 validators: {
                     notEmpty: {
                         message: 'Please click then select demand'
                     }
                 }
-            },
+            },*/
             LN: {
                 validators: {
                 	regexp:{

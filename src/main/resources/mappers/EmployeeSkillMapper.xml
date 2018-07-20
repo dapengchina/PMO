@@ -268,6 +268,7 @@
 	     END
 	   )
 	  )
+	  GROUP BY E_HR
   </select>
   <select id="skills"  parameterType="string" resultType="string">
   	SELECT PARAM_NAME paramName FROM  `t_capabilitylabel_param` WHERE LENGTH(SUBCATE_ID)>LENGTH(MAJORCATE_ID) ORDER BY PARAM_NAME
