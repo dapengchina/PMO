@@ -235,7 +235,14 @@ function loadSkillList(){
         {
             field: 'paramName',
             title: 'Major Skill',
-            sortable: true
+            sortable: true,
+            formatter:function(value,row,index){
+            	//console.log(row);
+            	if(row.mainAbility==1){
+            		return value;
+            	}
+            	return '';
+            }
         }
         ,{
             field: 'officialAccreditation',
@@ -479,11 +486,11 @@ function update(eHr){
 		return ;
 	}
 	
-	var _mainAbility = $("#accordion tbody tr").find("input[name='mainAbility']").is(':checked')?false:true; 
-	if(_mainAbility){
-		alert("Please choose Main Ability.");
-		return ;
-	}
+//	var _mainAbility = $("#accordion tbody tr").find("input[name='mainAbility']").is(':checked')?false:true; 
+//	if(_mainAbility){
+//		alert("Please choose Main Ability.");
+//		return ;
+//	}
 	
 	
 	var eHr= $("#myModalLabel").text().replace('Edit Competence Tag for ','');
