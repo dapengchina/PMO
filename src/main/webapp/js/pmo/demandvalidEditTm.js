@@ -11,9 +11,9 @@ $(document).ready(function() {
         fields: {
         	rrEdit: {
 				validators: {
-                    notEmpty: {
+                    /*notEmpty: {
                         message: 'Please enter your rr'
-                    },
+                    },*/
                     remote:{
                     	type:"post",
                     	url: path+'/service/resume/checkTel',

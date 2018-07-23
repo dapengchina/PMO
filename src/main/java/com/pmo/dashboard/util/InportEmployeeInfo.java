@@ -141,19 +141,35 @@ public class InportEmployeeInfo
             		em.setLob(rs.getCell(29, i).getContents());
             		
             		//rm
-            		if(rs.getCell(30, i).getContents().equals("王蓓")){
-            			em.setRmUserId("d7f19c09a5f1456fb9edf45bd3c2fbbb");
+            		if(rs.getCell(30, i).getContents().equals("Ashley")){
+            			em.setRmUserId("d3025f2bc1794235aa308ca654703125");
             		}
-            		if(rs.getCell(30, i).getContents().equals("高赛")){
-            			em.setRmUserId("0699ce9ceb7343a48c2acbe3e6e3aa97");
+            		if(rs.getCell(30, i).getContents().equals("Bonnie Chong")){
+            			em.setRmUserId("b08f2184ff5e4e5e9be7864717ee7a98");
             		}
-            		if(rs.getCell(30, i).getContents().equals("柳夏")){
-            			em.setRmUserId("55988cfa8f07418c84f890cf895460d0");
+            		if(rs.getCell(30, i).getContents().equals("Maxine Cheung")){
+            			em.setRmUserId("510ca55683c94a28866657f601467536");
             		}
             		
+            		
             		//csdept
-            		if(rs.getCell(31, i).getContents().equals("财富管理交付部")){
-            			em.setCsSubDept("8");
+            		if(rs.getCell(31, i).getContents().equals("恒生业务交付部")){
+            			em.setCsSubDept("18");
+            		}
+            		if(rs.getCell(31, i).getContents().equals("汇丰业务交付部")){
+            			em.setCsSubDept("17");
+            		}
+            		if(rs.getCell(31, i).getContents().equals("建行")){
+            			//拓展业务交付部
+            			em.setCsSubDept("19");
+            		}
+            		if(rs.getCell(31, i).getContents().equals("交行")){
+            			//拓展业务交付部
+            			em.setCsSubDept("19");
+            		}
+            		if(rs.getCell(31, i).getContents().equals("前海")){
+            			//拓展业务交付部
+            			em.setCsSubDept("19");
             		}
                     
             		

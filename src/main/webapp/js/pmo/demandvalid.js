@@ -9,13 +9,13 @@ $(document).ready(function() {
 		},
 		excluded:[":disabled"],
 		fields : {
-			rrEdit : {
+			/*rrEdit : {
 				validators : {
 					notEmpty : {
 						message : 'Please enter your rr'
 					},
 				}
-			},
+			},*/
 			jobCodeEdit : {
 				validators : {
 					notEmpty : {
@@ -119,9 +119,9 @@ $(document).ready(function() {
 		fields : {
 			rr : {
 				validators : {
-					notEmpty : {
+					/*notEmpty : {
 						message : 'Please enter your rr'
-					},
+					},*/
 					remote : {
 						type : "post",
 						url : path + '/service/resume/checkTel',
