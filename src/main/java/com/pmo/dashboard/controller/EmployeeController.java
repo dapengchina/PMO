@@ -919,6 +919,12 @@ public class EmployeeController {
                        Label label= new Label(++j, i, listE.get(i-1).getChsoftiProName());
                        ws.addCell(label);
                    }
+                   
+                   //员工类型
+                   if(conditionList.contains("EmployeeType")){
+                       Label label= new Label(++j, i, listE.get(i-1).getEmployeeType());
+                       ws.addCell(label);
+                   }
 
                }
 
