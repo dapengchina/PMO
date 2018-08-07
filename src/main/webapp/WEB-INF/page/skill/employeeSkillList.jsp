@@ -252,25 +252,22 @@ var path='<%=path%>';
 						        </div>
 						    </div>
 		            	</div>
-			            <div class="modal-footer">
-							<div class="group">
-								<div class="col-sm-4">
-									<button type="button" style="margin-left: 20px" class="btn btn-primary" data-dismiss="modal">Close
-									</button>
-								</div>
-								<div class="col-sm-4">
-									<button onClick="update()" type="button"
-										id="updateSkills" 
-										class="btn btn-primary">Update</button>
-								</div>
-								<div class="col-sm-4">
-									<button onClick="batchUpdate()" type="button"
-										id="batchUpdate" 
-										class="btn btn-primary">batch Update</button>
-								</div>
-							</div>
-			            </div>
-		        	</div><!-- /.modal-content -->
+			            
+		        	</div>
+
+                    <div class="modal-footer" id="editWin">
+					      <button type="button" class="btn btn-primary"  onClick="update()">Update</button>
+					      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        </div>
+			        
+			        <div class="modal-footer" id="detailWin">
+					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        </div>
+			        
+			        <div class="modal-footer" id="batchWin">
+					  <button type="button" class="btn btn-primary" onClick="batchUpdate()">Batch Update</button>
+			        </div>
+			        
 		    	</div><!-- /.modal-dialog -->
 			</div>
 		</div>

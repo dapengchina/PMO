@@ -180,12 +180,41 @@ function loadSkillList(){
         showToggle: false,                   //是否显示详细视图和列表视图的切换按钮
         cardView: false,                    //是否显示详细视图
         detailView: false,                  //是否显示父子表
-        singleSelect:true, 				//禁止多选_____
+        singleSelect:false, 				//禁止多选_____
         //得到查询的参数
         queryParams : function (params) {
+        	//获取查询条件
+        	var eHr = $("#eHr").val();
+        	var staffId = $("#staffId").val();
+        	var staffName = $("#staffName").val();
+        	var lob = $("#lob").val();
+        	var role = $("#role").val();
+        	var csSubDept = $("#csSubDept").val();
+        	var paramName = $("#paramName").val();
+        	var officialAccreditation = $('#officialAccreditation').is(':checked')?'1':'';
+        	var workExperience = $("#workExperience").val();
+        	var capabilityLevel = $("#capabilityLevel").val();
+        	var mainAbility  ;
+        	if($('#mainAbility').is(':checked') && paramName=='') {
+//        		officialAccreditation='1';
+        		alert('Please choose Skill list for Main Skill');
+        		return ;
+        	}
+        	mainAbility = $('#mainAbility').is(':checked')?'1':'';
         	return {
         		pageSize: params.limit,
         		pageNumber: params.offset/params.limit+1,
+        		eHr:eHr,
+    			staffId:staffId,
+    			staffName:staffName,
+    			lob:lob,
+    			role:role,
+    			csSubDept:csSubDept,
+    			paramName:paramName,
+    			officialAccreditation:officialAccreditation,
+    			workExperience:workExperience,
+    			abilityLevel:capabilityLevel,
+    			mainAbility:mainAbility
             };
         },
         columns: [
@@ -340,8 +369,10 @@ function search(){
 
 function detail(eHr){
 	$("tr:empty").remove();
-	$("#updateSkills").css("display","none");
-	$("#batchUpdate").css("display","none");
+	
+	$("#editWin").hide();
+	$("#batchWin").hide();
+	
 	var queryUrl = path+'/service/skill/detail/'+eHr;
 	$.ajax({
 		url:queryUrl,
@@ -402,8 +433,10 @@ function detail(eHr){
 	
 function toEdit(eHr){
 	$("tr:empty").remove();
-	$("#updateSkills").css("display","block");
-	$("#batchUpdate").css("display","none");
+	$("#editWin").show();
+	$("#detailWin").hide();
+	$("#batchWin").hide();
+	
 	var queryUrl = path+'/service/skill/toEdit/'+eHr;
 	$.ajax({
 		url:queryUrl,
@@ -565,8 +598,9 @@ function toBatch(){
 		return ;
 	}
 	$("tr:empty").remove();
-	$("#updateSkills").css("display","none");
-	$("#batchUpdate").css("display","block");
+	$("#editWin").hide();
+	$("#detailWin").hide();
+	$("#batchWin").show();
 	
 	var queryUrl = path+'/service/skill/toBatch';
 	$.ajax({
