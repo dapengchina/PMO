@@ -42,6 +42,8 @@
 <link href='<%=path %>/css/animate.min.css' rel='stylesheet' />
 <link href='<%=path%>/css/bootstrap-datetimepicker.css' rel='stylesheet' />
 <link href='<%=path%>/css/bootstrap-datetimepicker.min.css' rel='stylesheet' />
+<link href='<%=path%>/css/bootstrap-select.css' rel='stylesheet'>
+<link href='<%=path%>/css/bootstrap-select.min.css' rel='stylesheet'>
 <style type="text/css">
 .ssf {
 	font-size: 15px;
@@ -129,10 +131,11 @@ var path='<%=path%>';
 										<div class="group">
 										<label class="col-lg-2 control-label">Skill</label>
 										<div class="col-lg-4">
-											<select class="form-control" name="paramName" data-bv-notempty
+											<!-- <select class="form-control" name="paramName" data-bv-notempty
 												data-bv-notempty-message="请选择角色" id="paramName" data-bv-group=".group">
 												<option value="">-- Option--</option>
-											</select>
+											</select> -->
+											<select id="paramName" name="paramName" class="selectpicker" data-live-search="true"></select>
 										</div>
 										</div>
 										<div class="group">
@@ -192,7 +195,7 @@ var path='<%=path%>';
 <!--                                </button> -->
                                
                                
-							   <form style="margin-left: 80px" action="<%=path %>/service/skill/skillUpload" id="uploadForm" method="post" target="_blank" enctype="multipart/form-data">
+							   <form style="margin-left: 80px" action="<%=path %>/service/skill/skillUpload" id="uploadForm" method="post" target="_self" enctype="multipart/form-data">
 									<span id="uploadImg">
 											<input type="file" id="myfiles"  name="myfiles" size="1">
 												<input type="button" class="btn btn-primary" value="Batch Upload" id="file_upload2" name="file_upload2"/>
@@ -347,6 +350,9 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/jquery.uploadify-3.1.min.js"></script>
 	<!-- application script for Charisma demo -->
 	<script src="<%=path %>/js/charisma.js"></script>
+	
+	<script type="text/javascript" src="<%=path %>/js/bootstrap-select.js"></script>
+	<script type="text/javascript" src="<%=path %>/js/bootstrap-select.min.js"></script>
 
 	<script type="text/javascript" src="<%=path %>/js/pmo/employeeSkillList.js"></script>
 

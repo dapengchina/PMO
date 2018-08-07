@@ -143,7 +143,7 @@ public class EmployeeSkillController {
 	}
 
 	@RequestMapping(value = "/skillUpload", method = RequestMethod.POST)
-	public void skillUpload(@RequestParam MultipartFile myfiles, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public String skillUpload(@RequestParam MultipartFile myfiles, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		User user = (User) request.getSession().getAttribute("loginUser");
 		String operateId = user.getUserId();
 		String tmpdir = System.getProperty("java.io.tmpdir");
@@ -153,16 +153,16 @@ public class EmployeeSkillController {
 		FileUtils.copyInputStreamToFile(myfiles.getInputStream(), excelFile);
 		List<EmployeeSkill> skillList = importSkill(excelFile, operateId);
 		
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter writer = response.getWriter();
-		writer.print("<title>Batch Upload</title>");
+		//response.setContentType("text/html;charset=utf-8");
+		//PrintWriter writer = response.getWriter();
+		//writer.print("<title>Batch Upload</title>");
 		if(skillList.size()==0) {
-			writer.println("The excel file hasn't  found skill 'sheet' or it hasn't data." + "<br/>");
+			//writer.println("The excel file hasn't  found skill 'sheet' or it hasn't data." + "<br/>");
 		}else {
-			importSkill2DB(skillList, writer);
+			importSkill2DB(skillList, null);
 		}
 		excelFile.delete();
-		// return "redirect:listPage";
+		return "/skill/importSuccess";
 	}
 
 	private List<EmployeeSkill> importSkill(File file, String operateId) throws IOException {
@@ -212,14 +212,14 @@ public class EmployeeSkillController {
 		for (EmployeeSkill skill : list) {
 			List<Employee> employeeList = employeeService.selectByEhr(skill.geteHr());
 			if (employeeList.size() == 0) {
-				writer.println("eHr: "+skill.geteHr() + " not found." + "<br/>");
+				//writer.println("eHr: "+skill.geteHr() + " not found." + "<br/>");
 				continue;
 			}
 			CapabilityLabelParam p = new CapabilityLabelParam();
 			p.setParamName(skill.getParamName());
 			List<CapabilityLabelParam> r = capabilityLabelParamService.query(p);
 			if (r.size() == 0) {
-				writer.println(skill.geteHr() + ": ABILITY Name '"+ skill.getParamName() +"'  not found." + "<br/>");
+				//writer.println(skill.geteHr() + ": ABILITY Name '"+ skill.getParamName() +"'  not found." + "<br/>");
 				continue;
 			}
 
@@ -239,12 +239,12 @@ public class EmployeeSkillController {
 			}
 			row++;
 			if (row % 100 == 0) {
-				writer.print("A total of " + total + " rows of data are being poured into " + row + " of data." + "<br/>");
+				//writer.print("A total of " + total + " rows of data are being poured into " + row + " of data." + "<br/>");
 			}
 		}
-		writer.print("Pour complete, a total of "+ row + " rows of data." + "<br/>");
-		writer.print("<input type='button' onclick='javascript:window.close()' value='Close'/>");
-		// writer.close();
+//		writer.print("Pour complete, a total of "+ row + " rows of data." + "<br/>");
+//		writer.print("<input type='button' onclick='javascript:window.close()' value='Close'/>");
+//		writer.close();
 	}
 
 	@SuppressWarnings("static-access")

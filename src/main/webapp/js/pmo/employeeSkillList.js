@@ -80,6 +80,8 @@ function loadSkill(result){
 			for(var i = 0;i<list.length;i++){
 				$("#paramName").append("<option>"+list[i]+"</option>");
 			}
+			$('.selectpicker').selectpicker('val', '');  
+            $('.selectpicker').selectpicker('refresh');
 //			$('#csSubDept').val(result.pageInfo.du);
 		}
 	})
