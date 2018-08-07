@@ -33,13 +33,13 @@ $(document).ready(function() {
 					 */
                  }
             },
-            jobCodeEdit: {
+            /*jobCodeEdit: {
                 validators: {
                     notEmpty: {
                         message: 'Please enter your jobCode'
                     }
                 }
-            },
+            },*/
             skillEdit: {
                 validators: {
                     notEmpty: {

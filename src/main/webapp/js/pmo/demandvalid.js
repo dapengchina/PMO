@@ -16,13 +16,13 @@ $(document).ready(function() {
 					},
 				}
 			},*/
-			jobCodeEdit : {
+			/*jobCodeEdit : {
 				validators : {
 					notEmpty : {
 						message : 'Please enter your jobCode'
 					}
 				}
-			},
+			},*/
 			requestorEdit : {
 				validators : {
 
@@ -156,13 +156,13 @@ $(document).ready(function() {
 				}
 			},
 
-			jobCode : {
+			/*jobCode : {
 				validators : {
 					notEmpty : {
 						message : 'Please enter your jobCode'
 					}
 				}
-			},
+			},*/
 			
 			requirementNumber : {
 				validators : {

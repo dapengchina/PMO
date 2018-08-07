@@ -49,13 +49,13 @@ $(document).ready(function() {
             },
             
             
-            jobCode: {
+            /*jobCode: {
                 validators: {
                     notEmpty: {
                         message: 'Please enter your jobCode'
                     }
                 }
-            },
+            },*/
             
             
             skill: {
