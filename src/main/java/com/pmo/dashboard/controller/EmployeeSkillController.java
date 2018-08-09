@@ -136,6 +136,9 @@ public class EmployeeSkillController {
 	@ResponseBody
 	public String batch(EmployeeSkill skill, HttpServletRequest request) throws JsonProcessingException {
 		User user = (User) request.getSession().getAttribute("loginUser");
+		if(skill.getMainAbility().equals("")){
+			skill.setMainAbility("0");
+		}
 		skill.setOperateId(user.getUserId());
 		boolean rtn;
 		rtn = employeeSkillService.batch(skill);

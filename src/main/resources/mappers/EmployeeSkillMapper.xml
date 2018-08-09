@@ -259,7 +259,7 @@
 	<if test="abilityLevel != null and abilityLevel != ''">
 		AND s.ABILITY_LEVEL = #{abilityLevel}
 	</if>
-	<!-- AND ( s.PARAM_NAME IS NULL 
+	 AND ( s.PARAM_NAME IS NULL 
 	    OR s.PARAM_NAME =  
 	   ( 
 	    CASE 
@@ -267,7 +267,8 @@
 	     WHEN MAIN_ABILITY='0' THEN (SELECT MAX(PARAM_NAME) FROM t_employee_skill s2 WHERE s2.EMPLOYEE_ID=s.EMPLOYEE_ID LIMIT 1)
 	     END
 	   )
-	  ) -->
+	  )
+	  and RESOURCE_STATUS in ('Active','Released')  
 	  GROUP BY E_HR
   </select>
   <select id="skills"  parameterType="string" resultType="string">
