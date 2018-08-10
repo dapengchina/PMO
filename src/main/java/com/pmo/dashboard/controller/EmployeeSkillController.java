@@ -146,26 +146,33 @@ public class EmployeeSkillController {
 	}
 
 	@RequestMapping(value = "/skillUpload", method = RequestMethod.POST)
+	@ResponseBody
 	public String skillUpload(@RequestParam MultipartFile myfiles, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		User user = (User) request.getSession().getAttribute("loginUser");
-		String operateId = user.getUserId();
-		String tmpdir = System.getProperty("java.io.tmpdir");
-		String now = LocalDateTime.now().toString().replace(":", "");
-		String fileName = now + "-" + myfiles.getOriginalFilename();
-		File excelFile = new File(tmpdir, fileName);
-		FileUtils.copyInputStreamToFile(myfiles.getInputStream(), excelFile);
-		List<EmployeeSkill> skillList = importSkill(excelFile, operateId);
-		
-		//response.setContentType("text/html;charset=utf-8");
-		//PrintWriter writer = response.getWriter();
-		//writer.print("<title>Batch Upload</title>");
-		if(skillList.size()==0) {
-			//writer.println("The excel file hasn't  found skill 'sheet' or it hasn't data." + "<br/>");
-		}else {
-			importSkill2DB(skillList, null);
+		Map<String,Object> result = new HashMap<String,Object>();
+		try{
+			User user = (User) request.getSession().getAttribute("loginUser");
+			String operateId = user.getUserId();
+			String tmpdir = System.getProperty("java.io.tmpdir");
+			String now = LocalDateTime.now().toString().replace(":", "");
+			String fileName = now + "-" + myfiles.getOriginalFilename();
+			File excelFile = new File(tmpdir, fileName);
+			FileUtils.copyInputStreamToFile(myfiles.getInputStream(), excelFile);
+			List<EmployeeSkill> skillList = importSkill(excelFile, operateId);
+			
+			//response.setContentType("text/html;charset=utf-8");
+			//PrintWriter writer = response.getWriter();
+			//writer.print("<title>Batch Upload</title>");
+			if(skillList.size()==0) {
+				//writer.println("The excel file hasn't  found skill 'sheet' or it hasn't data." + "<br/>");
+			}else {
+				importSkill2DB(skillList, null);
+			}
+			excelFile.delete();
+			result.put("msg","导入成功");
+		}catch(Exception e){
+			result.put("msg", "导入失败");
 		}
-		excelFile.delete();
-		return "/skill/importSuccess";
+		return objectMapper.writeValueAsString(result);
 	}
 
 	private List<EmployeeSkill> importSkill(File file, String operateId) throws IOException {

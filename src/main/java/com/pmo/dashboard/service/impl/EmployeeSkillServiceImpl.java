@@ -98,7 +98,11 @@ public class EmployeeSkillServiceImpl implements EmployeeSkillService {
 	public boolean batch(EmployeeSkill record) {
 		String[] ids = record.getEmployeeId().split(",");
 		for(String eHr: ids) {
-			employeeSkillMapper.cleanMainSkill(eHr);
+			//如果选择了主技能，则清除之前的主技能标志
+			if(record.getMainAbility().equals("1")){
+				employeeSkillMapper.cleanMainSkill(eHr);
+			}
+			
 			record.setEmployeeId(eHr);
 			String id = employeeSkillMapper.haveSkill(record);
 			if(null==employeeSkillMapper.haveSkill(record)) {

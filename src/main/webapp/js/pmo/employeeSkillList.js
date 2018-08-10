@@ -760,9 +760,10 @@ function checkWithMainAbility2(obj){
 }
 
 function skillUpload(){
-	if(''!=$("#myfiles")[0].value){
-		$('#uploadForm').submit();
-	}
+//	if(''!=$("#myfiles")[0].value){
+//		$('#uploadForm').submit();
+//	}
+	$('#uploadWin').modal('show');
 	
 }
 
