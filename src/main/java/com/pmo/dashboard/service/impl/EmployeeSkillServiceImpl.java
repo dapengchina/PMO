@@ -148,4 +148,9 @@ public class EmployeeSkillServiceImpl implements EmployeeSkillService {
 		return employeeSkillMapper.cleanMainSkill(eHr);
 	}
 
+	@Override
+	public List<EmployeeSkill> queryImport(EmployeeSkill condition) {
+		return employeeSkillMapper.queryImport(condition);
+	}
+
 }

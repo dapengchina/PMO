@@ -194,15 +194,16 @@ public class EmployeeSkillController {
 				skill.seteHr(skill.getEmployeeId());
 				skill.setParamName(getValue(xssfRow.getCell(1)));
 				skill.setAbilityLevel(getValue(xssfRow.getCell(2)));
-				skill.setOfficialAccreditation(getValue(xssfRow.getCell(3)).equalsIgnoreCase("yes")?"1":"0");
-				skill.setAuthenticationName(getValue(xssfRow.getCell(4)));
-				skill.setWorkExperience(getValue(xssfRow.getCell(5)));
+				skill.setMainAbility(getValue(xssfRow.getCell(3)));
+				skill.setOfficialAccreditation(getValue(xssfRow.getCell(4)).equalsIgnoreCase("yes")?"1":"0");
+				skill.setAuthenticationName(getValue(xssfRow.getCell(5)));
+				skill.setWorkExperience(getValue(xssfRow.getCell(6)));
 				String t = skill.getWorkExperience();
 				if(t.indexOf(".")>0) {
 					t = t.substring(0,t.indexOf("."));
 					skill.setWorkExperience(t);
 				}
-				skill.setMainAbility("1");
+				//skill.setMainAbility("1");
 				skill.setOperateId(operateId);
 				list.add(skill);
 			}
@@ -235,17 +236,26 @@ public class EmployeeSkillController {
 
 			EmployeeSkill condition = new EmployeeSkill();
 			condition.seteHr(skill.geteHr());
-			condition.setMainAbility("1");
-			List<EmployeeSkill> dbSkills = employeeSkillService.query(condition);
-			employeeSkillService.cleanMainSkill(skill.geteHr());
-			if (dbSkills.size() == 1 ) {
+			//condition.setMainAbility("1");
+			condition.setParamName(skill.getParamName());
+			List<EmployeeSkill> dbSkills = employeeSkillService.queryImport(condition);
+			//如果标记为主能力，则清除之前的主能力标记
+			if(skill.getMainAbility().equals("1")){
+				employeeSkillService.cleanMainSkill(skill.geteHr());
+			}else{
+				skill.setMainAbility(null);
+			}
+			
+			if (dbSkills.size() >= 1 ) {
 				if (dbSkills.get(0).getId() != null) {
 					skill.setId(dbSkills.get(0).getId());
 					employeeSkillService.update(skill);
 				} else {
 					// errorList.add(skill.geteHr());
-					employeeSkillService.insert(skill);
+					
 				}
+			}else{
+				employeeSkillService.insert(skill);
 			}
 			row++;
 			if (row % 100 == 0) {

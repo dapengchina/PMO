@@ -264,10 +264,10 @@
 	   ( 
 	    CASE 
 	     WHEN MAIN_ABILITY='1' THEN s.PARAM_NAME
-	     WHEN MAIN_ABILITY='0' THEN (SELECT MAX(PARAM_NAME) FROM t_employee_skill s2 WHERE s2.EMPLOYEE_ID=s.EMPLOYEE_ID LIMIT 1)
+	     WHEN MAIN_ABILITY = '0' THEN s.PARAM_NAME
 	     END
 	   )
-	  )
+	  ) 
 	  and RESOURCE_STATUS in ('Active','Released')  
 	  GROUP BY E_HR
   </select>
@@ -332,5 +332,65 @@
     set MAIN_ABILITY = null
     where EMPLOYEE_ID = #{value}
   </update>
+  
+  
+  <select id="queryImport" parameterType="com.pmo.dashboard.entity.EmployeeSkill" resultMap="JoinResultMap">
+    select 
+    <include refid="Join_Column_List" />
+    , s.MAIN_ABILITY,(SELECT CS_SUBDEPT_NAME FROM t_cs_dept d WHERE d.CS_SUBDEPT_ID=e.CS_SUBDEPT_ID) du
+    FROM t_employee e  LEFT JOIN (
+    select * from  t_employee_skill s
+    where 1 =1 
+    <if test="paramName != null and paramName != ''">
+		AND s.PARAM_NAME = #{paramName}
+	</if>
+	<if test="mainAbility != null and mainAbility != ''">
+		AND MAIN_ABILITY = #{mainAbility}
+	</if>
+	<if test="officialAccreditation != null and officialAccreditation != ''">
+		AND s.OFFICIAL_ACCREDITATION = '1'
+	</if>
+	<if test="workExperience != null and workExperience != ''">
+		AND s.WORK_EXPERIENCE >= #{workExperience}
+	</if>
+	<if test="abilityLevel != null and abilityLevel != ''">
+		AND s.ABILITY_LEVEL = #{abilityLevel}
+	</if>
+    ) s ON e.E_HR = s.EMPLOYEE_ID
+    where 1=1 
+    <if test="eHr != null and eHr != ''">
+		AND e.E_HR = #{eHr}
+	</if>
+	<if test="staffId != null and staffId != ''">
+		AND e.HSBC_STAFF_ID = #{staffId}
+	</if>
+    <if test="staffName != null and staffName != ''">
+		AND e.STAFF_NAME like concat(concat('%',#{staffName}),'%')
+	</if>
+	<if test="lob != null and lob != ''">
+		AND e.LOB = #{lob}
+	</if>
+	<if test="role != null and role != ''">
+		AND e.ROLE = #{role}
+	</if>
+	<if test="csSubDept != null and csSubDept != ''">
+		AND e.CS_SUBDEPT_ID = #{csSubDept}
+	</if>
+	<if test="paramName != null and paramName != ''">
+		AND s.PARAM_NAME = #{paramName}
+	</if>
+    <if test="officialAccreditation != null and officialAccreditation != ''">
+		AND s.OFFICIAL_ACCREDITATION = '1'
+	</if>
+	<if test="workExperience != null and workExperience != ''">
+		AND s.WORK_EXPERIENCE >= #{workExperience}
+	</if>
+	<if test="abilityLevel != null and abilityLevel != ''">
+		AND s.ABILITY_LEVEL = #{abilityLevel}
+	</if>
+	 
+	  and RESOURCE_STATUS in ('Active','Released')  
+	  GROUP BY E_HR
+  </select>
   
 </mapper>
