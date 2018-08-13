@@ -44,6 +44,8 @@ public class EmployeeSkillServiceImpl implements EmployeeSkillService {
 		record.setCreateDate(new Date());
 		if(!"1".equals(record.getMainAbility())){
 			record.setMainAbility("0");
+		}else{
+			employeeSkillMapper.cleanMainSkill(record.getEmployeeId());
 		}
 		if(employeeSkillMapper.insertSelective(record)>0){
 			rtn = true;
@@ -62,6 +64,9 @@ public class EmployeeSkillServiceImpl implements EmployeeSkillService {
 		record.setUpdateDate(new Date());
 		if(!"1".equals(record.getMainAbility())){
 			record.setMainAbility("0");
+			
+		}else{
+			employeeSkillMapper.cleanMainSkill(record.getEmployeeId());
 		}
 		if(employeeSkillMapper.updateByPrimaryKeySelective(record)>0){
             return true;
