@@ -378,6 +378,11 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/jquery.autogrow-textarea.js"></script>
 	<!-- history.js for cross-browser state change on ajax -->
 	<script src="<%=path %>/js/jquery.history.js"></script>
+	
+	<!-- multiple file upload plugin -->
+	<script src="<%=path %>/js/jquery.uploadify-3.1.min.js"></script>
+	<!-- application script for Charisma demo -->
+	<script src="<%=path %>/js/charisma.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
 	
 	<script src="<%=path %>/js/bootstarp-fileinput/fileinput.min.js"></script>

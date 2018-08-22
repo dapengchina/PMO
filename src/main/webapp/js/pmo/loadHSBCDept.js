@@ -252,8 +252,8 @@ function dateType2(){
 		language:'zh-CN',
 		format: 'yyyy-mm-dd',
 		pickerPosition: 'bottom-left',
-		showMeridian: 1,
-		endDate : new Date()
+		showMeridian: 1
+		//endDate : new Date()
 	}).on('changeDate', function(ev){		 
 		 $('#registerEmployeeForm').bootstrapValidator('revalidateField', 'entryDate1'); 
 	});

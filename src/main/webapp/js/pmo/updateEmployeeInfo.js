@@ -227,8 +227,8 @@ function dateType() {
 		language : 'zh-CN',
 		format : 'yyyy-mm-dd',
 		pickerPosition : 'bottom-left',
-		showMeridian : 1,
-		endDate : new Date()
+		showMeridian : 1
+		//endDate : new Date()
 	}).on('changeDate', function(ev){
 		 $('#updateEmployeeForm').bootstrapValidator('revalidateField', 'sowExpiredDate1'); 
 		 $('#updateEmployeeForm').bootstrapValidator('revalidateField', 'graduationDate1');
