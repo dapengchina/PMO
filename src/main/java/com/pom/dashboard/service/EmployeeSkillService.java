@@ -19,6 +19,8 @@ public interface EmployeeSkillService {
     
     List<EmployeeSkill> query(EmployeeSkill condition);
     
+    List<EmployeeSkill> queryImport(EmployeeSkill condition);
+    
     List<String> skills();
     
     List<EmployeeSkill> detail(String eHr);

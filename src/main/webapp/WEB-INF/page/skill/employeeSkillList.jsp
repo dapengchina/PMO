@@ -44,6 +44,9 @@
 <link href='<%=path%>/css/bootstrap-datetimepicker.min.css' rel='stylesheet' />
 <link href='<%=path%>/css/bootstrap-select.css' rel='stylesheet'>
 <link href='<%=path%>/css/bootstrap-select.min.css' rel='stylesheet'>
+<link href='<%=path%>/css/bootstarp-fileinput/fileinput.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="<%=path %>/js/bootstarp-fileinput/themes/explorer-fa/theme.css" media="all" rel="stylesheet" type="text/css"/>
 <style type="text/css">
 .ssf {
 	font-size: 15px;
@@ -190,24 +193,25 @@ var path='<%=path%>';
 							</div>
 							<!-- 工具栏  -->
                             <div id="toolbar" class="btn-group">
-<!--                                <button id="btn_add" type="button" onclick="exportData()" class="btn btn-default"> -->
-<!--                                	Export -->
-<!--                                </button> -->
-                               
-                               
+                               <button onclick="skillUpload()" id="btn_add" type="button" class="btn btn-primary">
+                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Batch Upload
+                               </button>
+                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                               <button onClick="toBatch()" id="btn_add" type="button" class="btn btn-primary">
+                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Batch Edit
+                               </button>
+                            <!--
 							   <form style="margin-left: 80px" action="<%=path %>/service/skill/skillUpload" id="uploadForm" method="post" target="_self" enctype="multipart/form-data">
 									<span id="uploadImg">
 											<input type="file" id="myfiles"  name="myfiles" size="1">
 												<input type="button" class="btn btn-primary" value="Batch Upload" id="file_upload2" name="file_upload2"/>
 										</span>
-								</form>
+								</form> 
 											
                                <button style="margin-left: 300px" onClick="toBatch()" type="button" id="btn_batchEdit" class="btn btn-primary">
                                		Batch Edit
-                               </button>
-<!--                                <button style="margin-left: 100px" onClick="toBatch()" type="button" -->
-<!-- 													 id="btn_batchEdit" -->
-<!-- 													class="btn btn-primary">Batch Edit</button> -->
+                               </button> -->
+                              
                             </div>
 							<!-- 数据列表  -->
 								<table id="skillList"></table>
@@ -276,6 +280,34 @@ var path='<%=path%>';
 		</div>
 	</div>
 	<!-- /.modal -->
+	
+	
+	<!-- 文件上传模态框  -->
+	<div class="modal fade" id="uploadWin" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+					    <div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							 <h4 class="modal-title" id="myModalLabel">
+							   Batch Upload
+							 </h4>
+						</div>
+						<div class="modal-body">
+				          
+				          <div class="form-group">
+                            <div class="file-loading">
+                             <input id="file-4" name="myfiles" type="file" class="file" data-upload-url="<%=path %>/service/skill/skillUpload">
+                            </div>
+                          </div>
+                          
+                          
+			            </div>
+						
+					</div>
+					
+				</div>
+				
+	</div>
 	
 	<c:import url="/service/manage/footer" />
 
@@ -346,10 +378,17 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/jquery.autogrow-textarea.js"></script>
 	<!-- history.js for cross-browser state change on ajax -->
 	<script src="<%=path %>/js/jquery.history.js"></script>
+	
 	<!-- multiple file upload plugin -->
 	<script src="<%=path %>/js/jquery.uploadify-3.1.min.js"></script>
 	<!-- application script for Charisma demo -->
 	<script src="<%=path %>/js/charisma.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
+	
+	<script src="<%=path %>/js/bootstarp-fileinput/fileinput.min.js"></script>
+	<script src="<%=path %>/js/bootstarp-fileinput/themes/explorer-fa/theme.js" type="text/javascript"></script>
+    <script src="<%=path %>/js/bootstarp-fileinput/themes/fa/theme.js" type="text/javascript"></script>
+    
 	
 	<script type="text/javascript" src="<%=path %>/js/bootstrap-select.js"></script>
 	<script type="text/javascript" src="<%=path %>/js/bootstrap-select.min.js"></script>

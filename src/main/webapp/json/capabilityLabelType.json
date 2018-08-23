@@ -4,5 +4,11 @@
         {"key":"2","name":"AI"},
         {"key":"3","name":"Testers"},
         {"key":"4","name":"Big Data"},
-        {"key":"5","name":"Cloud computing"}
+        {"key":"5","name":"Cloud computing"},
+        {"key":"6","name":"Native"},
+        {"key":"7","name":"ITID"},
+        {"key":"8","name":"BA"},
+        {"key":"9","name":"AS400"},
+        {"key":"10","name":"Design"},
+        {"key":"11","name":"Agile development"}
 ]

@@ -254,8 +254,12 @@ function loadSkillList(){
             title: 'DU',
             sortable: true
             , formatter : function(value, row, index){
-            	  var div = "<div style='width:150px;'>"+value+"</div>";
-            	  return div;
+            	  if(value == null){
+            		  return "";
+            	  }else{
+            		  var div = "<div style='width:150px;'>"+value+"</div>";
+                	  return div;
+            	  }
             }
         },
         {
@@ -642,7 +646,7 @@ function toBatch(){
 						+ "</td>");
 				var td2 = $("<td  width='12%'></td>");  
 				var sel_level = $("<SELECT ID='capabilityLevel' ></SELECT>");
-				var td3 = $("<td>" + '<input id="mainAbility" name="mainAbility" type="radio" value="0" onclick="checkWithMainAbility(this)" />'
+				var td3 = $("<td>" + '<input id="mainAbility" name="mainAbility" type="radio" value="0" onclick="checkWithMainAbility2(this)" />'
 //						+( data[i].mainAbility==null?'<input id="mainAbility" name="mainAbility" type="radio" value="0"/>': 
 //						('1'==data[i].mainAbility?'<input id="mainAbility" name="mainAbility" CHECKED type="radio" value="1"/>':
 //							'<input id="mainAbility" name="mainAbility" type="radio" value="0"/>' )	
@@ -697,8 +701,8 @@ function batchUpdate(){
 	
 	var _mainAbility = $("#accordion tbody tr").find("input[name='mainAbility']").is(':checked')?false:true; 
 	if(_mainAbility){
-		alert("Please choose Main Ability.");
-		return ;
+//		alert("Please choose Main Ability.");
+//		return ;
 	}
 	
 	
@@ -745,14 +749,21 @@ function batchUpdate(){
 
 function checkWithMainAbility(obj){
 	if($(obj).is(':checked')){
-		$(obj).parent().parent().find("#mainAbility").attr('checked','true');
+		//$(obj).parent().parent().find("#mainAbility").attr('checked','true');
+	}
+}
+
+function checkWithMainAbility2(obj){
+	if($(obj).is(':checked')){
+		$(obj).parent().parent().find("#mainAbility").attr('checked','false');
 	}
 }
 
 function skillUpload(){
-	if(''!=$("#myfiles")[0].value){
-		$('#uploadForm').submit();
-	}
+//	if(''!=$("#myfiles")[0].value){
+//		$('#uploadForm').submit();
+//	}
+	$('#uploadWin').modal('show');
 	
 }
 

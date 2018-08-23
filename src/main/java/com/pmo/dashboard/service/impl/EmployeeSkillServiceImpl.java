@@ -44,6 +44,8 @@ public class EmployeeSkillServiceImpl implements EmployeeSkillService {
 		record.setCreateDate(new Date());
 		if(!"1".equals(record.getMainAbility())){
 			record.setMainAbility("0");
+		}else{
+			employeeSkillMapper.cleanMainSkill(record.getEmployeeId());
 		}
 		if(employeeSkillMapper.insertSelective(record)>0){
 			rtn = true;
@@ -62,6 +64,9 @@ public class EmployeeSkillServiceImpl implements EmployeeSkillService {
 		record.setUpdateDate(new Date());
 		if(!"1".equals(record.getMainAbility())){
 			record.setMainAbility("0");
+			
+		}else{
+			employeeSkillMapper.cleanMainSkill(record.getEmployeeId());
 		}
 		if(employeeSkillMapper.updateByPrimaryKeySelective(record)>0){
             return true;
@@ -98,7 +103,11 @@ public class EmployeeSkillServiceImpl implements EmployeeSkillService {
 	public boolean batch(EmployeeSkill record) {
 		String[] ids = record.getEmployeeId().split(",");
 		for(String eHr: ids) {
-			employeeSkillMapper.cleanMainSkill(eHr);
+			//如果选择了主技能，则清除之前的主技能标志
+			if(record.getMainAbility().equals("1")){
+				employeeSkillMapper.cleanMainSkill(eHr);
+			}
+			
 			record.setEmployeeId(eHr);
 			String id = employeeSkillMapper.haveSkill(record);
 			if(null==employeeSkillMapper.haveSkill(record)) {
@@ -142,6 +151,11 @@ public class EmployeeSkillServiceImpl implements EmployeeSkillService {
 	@Override
 	public int cleanMainSkill(String eHr) {
 		return employeeSkillMapper.cleanMainSkill(eHr);
+	}
+
+	@Override
+	public List<EmployeeSkill> queryImport(EmployeeSkill condition) {
+		return employeeSkillMapper.queryImport(condition);
 	}
 
 }
