@@ -1,0 +1,49 @@
+ {
+ 
+ "total": 1,
+		"rows":[
+			{"types":"KBO",
+			 "no.":"1",
+			 "kboDes":"招聘管理",
+			 "weightage":"25%",
+			 "phaseGoal":"xxx面试通过率达到30%",
+			 "keyActions":"xxxxxxxx",
+			 "assessmentDept":"xxx交付经理"
+			 },	
+			 {"types":"KBO",
+			 "no.":"2",
+			 "kboDes":"招聘管理",
+			 "weightage":"25%",
+			 "phaseGoal":"xxx面试通过率达到30%",
+			 "keyActions":"xxxxxxxx",
+			 "assessmentDept":"xxx交付经理"
+			 },	
+			 {"types":"KBO",
+			 "no.":"3",
+			 "kboDes":"招聘管理",
+			 "weightage":"25%",
+			 "phaseGoal":"xxx面试通过率达到30%",
+			 "keyActions":"xxxxxxxx",
+			 "assessmentDept":"xxx交付经理"
+			 },	
+			 {"types":"KBO",
+			 "no.":"4",
+			 "kboDes":"招聘管理",
+			 "weightage":"25%",
+			 "phaseGoal":"xxx面试通过率达到30%",
+			 "keyActions":"xxxxxxxx",
+			 "assessmentDept":"xxx交付经理"
+			 },
+			 {"types":"KBO",
+			 "no.":"5",
+			 "kboDes":"招聘管理",
+			 "weightage":"25%",
+			 "phaseGoal":"xxx面试通过率达到30%",
+			 "keyActions":"xxxxxxxx",
+			 "assessmentDept":"xxx交付经理"
+			 }	 	 
+			 
+		  ]
+ 
+ }
+ 
