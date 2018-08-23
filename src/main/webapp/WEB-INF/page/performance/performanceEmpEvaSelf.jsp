@@ -54,7 +54,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  PCB绩效目标模板
+									<i class="glyphicon glyphicon-user"></i>  员工自评
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
@@ -209,7 +209,14 @@ var path='<%=path%>';
 							 </table>
 
 							<br>
-
+							<div class="panel panel-default"  style="border:1px solid black">	
+								 <div class="panel-body" >										
+										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Self-Evaluation</label>
+										<div class="col-lg-10">
+											<textarea rows="3" style="border:1px solid black" class="form-control" id="changeInformation" ></textarea>
+										</div>
+								 </div>
+							</div>
 
 								<div class="form-group">
 									    <div style="text-align:center;width:100%;">

@@ -12,3 +12,22 @@ $("#getLOB").click(function(){
 	window.open(path+"/service/employee/getTMemployee.html?status=4");
 });
 
+//year drop down list for performanceEmpEvaHistoryQuery.html
+$('#datetimepicker1').datetimepicker({
+    startView: 'decade',  
+     minView: 'decade',  
+     format: 'yyyy',  
+     maxViewMode: 2,  
+     minViewMode:2,  
+      autoclose: true  
+});
+$('#datetimepicker2').datetimepicker({
+    startView: 'decade',  
+     minView: 'decade',  
+     format: 'yyyy',  
+     maxViewMode: 2,  
+     minViewMode:2,  
+      autoclose: true  
+});
+
+

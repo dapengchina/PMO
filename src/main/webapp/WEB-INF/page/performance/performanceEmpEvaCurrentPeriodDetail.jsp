@@ -47,6 +47,7 @@ var path='<%=path%>';
 		<div class="row">
 			<c:import url="/service/performance/performanceLeft" />
 
+	<!-- middle content start -->
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
 				<div class="row" >					
@@ -54,7 +55,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  PCB绩效目标模板
+									<i class="glyphicon glyphicon-user"></i>  绩效结果 ->Page-Detail
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
@@ -179,6 +180,7 @@ var path='<%=path%>';
 							 </table>
 
 								<br/>
+
 							 <div>个人能力提升计划IDP (IDP不作为考核项目，是个人成长所做出的承诺)</div>
                              <table id="table3" border="1" width="100%" class="templateTable">
 							   <thead>
@@ -209,38 +211,43 @@ var path='<%=path%>';
 							 </table>
 
 							<br>
+							
+							<div class="panel panel-default"  style="border:1px solid black">	
+								 <div class="panel-body" >										
+										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Self-Evaluation</label>
+										<div class="col-lg-10">
+											<textarea rows="3" style="border:1px solid black" class="form-control"></textarea>
+										</div>
+								 </div>
+							</div>
 
 
-								<div class="form-group">
-									    <div style="text-align:center;width:100%;">
-									    <input type="button" value="Save" name="Save" id="Save" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-									    <input type="button" value="Edit" name="Edit" id="Edit" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-										<input type="button" value="Submit" name="Submit" id="Submit" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-
-									    </div>
-								</div>
+							<div class="panel panel-default"  style="border:1px solid black">	
+								 <div class="panel-body" >										
+										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Comments</label>
+										<div class="col-lg-10">
+											<textarea rows="3" style="border:1px solid black" class="form-control" ></textarea>
+										</div>
+								 </div>
+							</div>
 
 
-                          
+
+		                          
                             </div>        
 						</div>
 				</div>
 				</div>
 
 
+
+		</div>
+	<!-- middle content end -->
+
+	
 		</div>
 	</div>
+
 	<c:import url="/service/manage/footer" />
 	
 	<!-- CSS引用 -->
