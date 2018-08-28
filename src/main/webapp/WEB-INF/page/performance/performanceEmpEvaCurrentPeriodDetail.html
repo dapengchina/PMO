@@ -111,7 +111,7 @@
 				  }, {
 						text: "Page-Detail",
 						href: "performanceEmpEvaCurrentPeriodDetail.html",
-						state: {selected: false}
+						state: {selected: true}
 				  }]
 				}]
 		  }]},{
@@ -184,6 +184,7 @@
 							state: {selected: false}
 					},{
 					  text: "历史绩效",
+					  href:"performanceManageResultHistoryQuery.html",
 					  nodes: [{
 							text: "Page-历史绩效Detail",
 							href:"performanceManageResultHistory.html",
@@ -292,7 +293,7 @@
 							   </thead>
 
                                <tr>
-                                 <td rowspan="5">重点工作</td>
+								 <td rowspan="5" id="leftrowspan">重点工作</td>
                                  <td>1</td>
                                  <td>招聘管理</td>
                                  <td>25%</td>
@@ -332,7 +333,8 @@
                                  <td>XX交付经理</td>
                                </tr>
                                <tr>
-                                 <td colspan="6"><div class="text-center">+</div></td>
+                                 <td colspan="6"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr1('table1', -1, 6);")>+</a>
+								 </td>
                                </tr>
                              </table>
 
@@ -351,7 +353,8 @@
                                  <td>XX交付经理</td>
                                </tr>
                                <tr>
-                                 <td colspan="7"><div class="text-center">+</div></td>
+                                 <td colspan="7"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr2('table2', -1, 7);")>+</a>
+								 </td>
                                </tr>
 							 </table>
 
@@ -382,7 +385,8 @@
                                  <td> 2018-12-31 </td>
                                </tr>
 							    <tr>
-                                 <td colspan="4"><div class="text-center">+</div>  </td>
+                                 <td colspan="4"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr2('table3', -1, 4);")>+</a>
+								 </td>
                                </tr>
 							 </table>
 
@@ -475,6 +479,7 @@
     <script type="text/javascript" src="file:///D:\work\PMO\src\main\webapp\js\pmo\offlineOpe.js"></script>
 
 
+	<script type="text/javascript" src="file:///D:\work\PMO\src\main\webapp\js\pmo\performance.js"></script>
 
 
 
