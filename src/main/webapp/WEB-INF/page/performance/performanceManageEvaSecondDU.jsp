@@ -34,8 +34,6 @@
 .templateTable thead, .templateTable td { 
 	text-align: center;
 }
-
-
 </style>
 </head>
 <script>
@@ -49,54 +47,149 @@ var path='<%=path%>';
 
 <!-- middle content start -->
 			<div id="content" class="col-lg-10 col-sm-10">
-				<!-- content starts -->
-				
+
+				<div class="row" >	
 				<div class="box col-md-12">
-						<div class="box-inner">
-							<div class="box-header well" data-original-title="">
+						<div class="box-inner" >
+							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  当期绩效
+									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->审批->Page-交付部审批
 								</h2>
 							</div>
-							<div id="employeeInfo" class="box-content">
-							
+
+							<div id="employeeInfo" class="box-content">					
+	
+								
 							<div class="panel panel-default">	
                               <div class="panel-body">
 
-									<table id="table3" border="1" width="80%" >
-										<thead >
-											<tr style="background-color:#d9edf7">
-												<th>Year</th>
-												<th>Quarter</th>
-												<th>DU</th>
-												<th>RM</th>
-												<th>Rating</th>
-												<th>Comments</th>
-												<th>Detail</th>
-											</tr>
-										</thead>
+									<table id="table1" border="1" width="100%" borderColor="green" >
+										<tr style="">
+										 <td colspan="7" style="text-align:center"><font color="green"> 交付部绩效审核(参考比例要求控制)</font>	 </td>
+										</tr>
 									   <tr>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
-										 <td> XXX </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
-										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-
+										 <td> A <br/>(10-15%)</td>
+										 <td> B+ <br/>(30-40%) </td>
+										 <td> B <br/> &nbsp;</td>
+										 <td> C <br/>(5-10%)</td>
+										 <td> D <br/>(0-5%) </td>
+										 <td> 参评比例合计 </td>
 									   </tr>
+									   <tr>
+										 <td> 10 </td>
+										 <td> 60  </td>
+										 <td> 30 </td>
+										 <td> 22 </td>
+										 <td> 4  </td>
+										 <td> 76 </td>
+									   </tr>
+									   <tr>
+										 <td> 7.9%	 </td>
+										 <td> 47.6%  </td>
+										 <td> 23.8% </td>
+										 <td> 17.5% </td>
+										 <td> 3.2% </td>
+										 <td> 100% </td>
+									   </tr>
+									</table>
 
+									<br/>
+
+									<table id="table2" border="1" width="100%" >
+										<tr style="background-color:#00688B">
+										 <td colspan="7"><font color="white"> 当期绩效</font>	 </td>
+										</tr>
+										<tr style="background-color:#d9edf7">
+											<th><input type="checkbox"/></th>
+											<th>SL</th>
+											<th>RM</th>
+											<th>Year</th>
+											<th>Quarter</th>
+											<th>状态</th>
+											<th>Detail</th>
+										</tr>
+									   <tr>
+										 <td> <input type="checkbox"/>	 </td>
+										 <td> 1  </td>
+										 <td> Abigal </td>
+										 <td> 2018 </td>
+										 <td> Q2  </td>
+										 <td> 待审批 </td>
+										 <td> <a href='performanceManageEvaSecondQuery.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+									   </tr>
+									   <tr>
+										 <td> <input type="checkbox"/>	 </td>
+										 <td> 2  </td>
+										 <td> Alice </td>
+										 <td> 2018 </td>
+										 <td> Q2  </td>
+										 <td> 已驳回 </td>
+										 <td> <a href='performanceManageEvaSecondQuery.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+									   </tr>
+									   <tr>
+										 <td> <input type="checkbox"/>	 </td>
+										 <td> 3  </td>
+										 <td> Christy </td>
+										 <td> 2018 </td>
+										 <td> Q2  </td>
+										 <td> 已审批 </td>
+										 <td> <a href='performanceManageEvaSecondQuery.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+									   </tr>
+									   <tr>
+										 <td> <input type="checkbox"/>	 </td>
+										 <td> 4  </td>
+										 <td> JOY </td>
+										 <td> 2018 </td>
+										 <td> Q2  </td>
+										 <td> 已审批 </td>
+										 <td> <a href='performanceManageEvaSecondQuery.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+									   </tr>
 									</table>
 						     </div>
                              </div>
-                          
-                            </div>        
+                             
+
+
+
+							<div class="panel panel-default"  style="border:1px solid black">	
+								 <div class="panel-body" >										
+										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Comments</label>
+										<div class="col-lg-10">
+											<textarea rows="3" style="border:1px solid black" class="form-control" ></textarea>
+										</div>
+								 </div>
+							</div>
+
+
+
+									<span>&nbsp;</span>
+									<div class="form-group">
+												<div style="text-align:center;width:100%;">
+												<input type="button" value="Batch export" name="Save" id="Save" href="#"
+												class="button btn btn-primary" data-dismiss="modal"
+												onclick=""
+												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+												<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+												<input type="button" value="Submit" name="Edit" id="Edit" href="#"
+												class="button btn btn-primary" data-dismiss="modal"
+												onclick=""
+												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+												</div>
+										</div>
+
+						    </div>
+						 </div>
+
+
+	                           </div>  
+							</div>
 						</div>
-				</div>
-				</div>
+
 
 
 <!-- middle content end -->
+	
+	
 	
 	
 	
@@ -104,8 +197,6 @@ var path='<%=path%>';
 	<c:import url="/service/manage/footer" />
 </div>
 
-
-	
 	<!-- CSS引用 -->
     <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.css" type="text/css" />
     <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.min.css" type="text/css" />
@@ -155,6 +246,8 @@ var path='<%=path%>';
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/offlineOpe.js"></script>
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
+	
+	
 </body>
 </html>
 

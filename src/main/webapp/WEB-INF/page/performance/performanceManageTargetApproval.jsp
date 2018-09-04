@@ -49,63 +49,125 @@ var path='<%=path%>';
 
 <!-- middle content start -->
 			<div id="content" class="col-lg-10 col-sm-10">
-				<!-- content starts -->
-				
+
+				<div class="row" >	
 				<div class="box col-md-12">
-						<div class="box-inner">
-							<div class="box-header well" data-original-title="">
+						<div class="box-inner" >
+							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  当期绩效
+									<i class="glyphicon glyphicon-user"></i>  Management->绩效目标->审批
 								</h2>
 							</div>
-							<div id="employeeInfo" class="box-content">
-							
-							<div class="panel panel-default">	
-                              <div class="panel-body">
 
-									<table id="table3" border="1" width="80%" >
-										<thead >
-											<tr style="background-color:#d9edf7">
-												<th>Year</th>
-												<th>Quarter</th>
-												<th>DU</th>
-												<th>RM</th>
-												<th>Rating</th>
-												<th>Comments</th>
-												<th>Detail</th>
-											</tr>
-										</thead>
-									   <tr>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
-										 <td> XXX </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
-										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-
-									   </tr>
-
-									</table>
-						     </div>
-                             </div>
-                          
-                            </div>        
-						</div>
-				</div>
-				</div>
-
-
-<!-- middle content end -->
+							<div id="employeeInfo" class="box-content">					
 	
+							<!-- result box start -->
+									<table id="table3" border="1" width="100%" >
+										<tr style="background-color:#00688B">
+										 <td colspan="10"><font color="white"> 绩效目标审批</font>	 </td>
+										</tr>
+										<tr style="background-color:#d9edf7">
+												<th><input type="checkbox"/></th>
+												<th>SL</th>
+												<th>E-HR</th>
+												<th>Employee Name</th>
+												<th>MSA Role</th>
+												<th>Skill/Technology</th>
+												<th>是否提交</th>
+												<th>业务先锋</th>
+												<th>审批状态</th>
+												<th>Detail</th>
+									   </tr>
+									   <tr>
+										 <td><input type="checkbox"/></td>
+										 <td> 1	 </td>
+										 <td> 0090127655	 </td>
+										 <td> XXX  </td>
+										 <td> Senior </td>
+										 <td> HR </td>
+										 <td> 是  </td>
+										 <td> 是 </td>
+										 <td> 已审批 </td>
+										 <td> <a href='performanceManageTargetApprovalDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+									   </tr>
+									   <tr>
+										 <td><input type="checkbox"/></td>
+										 <td> 2	 </td>
+										 <td> 0090127656	 </td>
+										 <td> XXX  </td>
+										 <td> Junior </td>
+										 <td> HTML </td>
+										 <td> 是  </td>
+										 <td> 是 </td>
+										 <td> 未审批 </td>
+										 <td> <a href='performanceManageTargetApprovalDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+									   </tr>
+									   <tr>
+										 <td><input type="checkbox"/></td>
+										 <td> 3	 </td>
+										 <td> 0090127657	 </td>
+										 <td> XXX  </td>
+										 <td> Junior Tester </td>
+										 <td> BA </td>
+										 <td> 是  </td>
+										 <td> 是 </td>
+										 <td> 已审批 </td>
+										 <td> <a href='performanceManageTargetApprovalDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+									   </tr>
+									   <tr>
+										 <td><input type="checkbox"/></td>
+										 <td> 4	 </td>
+										 <td> 0090127658	 </td>
+										 <td> XXX  </td>
+										 <td> AWS </td>
+										 <td> HR </td>
+										 <td> 否  </td>
+										 <td> 是 </td>
+										 <td> 已审批 </td>
+										 <td> <a href='performanceManageTargetApprovalDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+									   </tr>
+									   <tr>
+										 <td><input type="checkbox"/></td>
+										 <td> 5	 </td>
+										 <td> 0090127659	 </td>
+										 <td> XXX  </td>
+										 <td> Junior Tester </td>
+										 <td> C </td>
+										 <td> 否  </td>
+										 <td> 是 </td>
+										 <td> 已审批 </td>
+										 <td> <a href='performanceManageTargetApprovalDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+									   </tr>
+									</table>
+									<span>&nbsp;</span>
+									<div class="form-group">
+												<div style="text-align:center;width:100%;">
+												<input type="button" value="Select All" name="Save" id="Save" href="#"
+												class="button btn btn-primary" data-dismiss="modal"
+												onclick=""
+												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+												<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+												<input type="button" value="Download" name="Edit" id="Edit" href="#"
+												class="button btn btn-primary" data-dismiss="modal"
+												onclick=""
+												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+												</div>
+										</div>
+
+						    </div>
+						 </div>
+							<!-- result box end -->
+
+	                           </div>  
+							</div>
+						</div>
+<!-- middle content end -->
 	
 	
 <div class="ch-container ">
 	<c:import url="/service/manage/footer" />
 </div>
 
-
-	
 	<!-- CSS引用 -->
     <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.css" type="text/css" />
     <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.min.css" type="text/css" />
@@ -155,6 +217,8 @@ var path='<%=path%>';
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/offlineOpe.js"></script>
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
+	
+	
 </body>
 </html>
 

@@ -34,8 +34,9 @@
 .templateTable thead, .templateTable td { 
 	text-align: center;
 }
-
-
+</style>
+<style>
+    .w70 {width: 70px !important;}
 </style>
 </head>
 <script>
@@ -46,56 +47,57 @@ var path='<%=path%>';
 
 	<c:import url="/service/performance/performanceLeft" />
 
-
-	<!-- middle content start -->
+<!-- middle content start -->
 			<div id="content" class="col-lg-10 col-sm-10">
-				<!-- content starts -->
-				<div class="row" >					
+
+				<div class="row" >	
 				<div class="box col-md-12">
-						<div class="box-inner">
-							<div class="box-header well" data-original-title="">
+						<div class="box-inner" >
+							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  PCB绩效目标模板
+									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->初评->绩效评价
 								</h2>
 							</div>
-							<div id="employeeInfo" class="box-content">
-							
+
+							<div id="employeeInfo" class="box-content">					
+	
+								
 							<div class="panel panel-default">	
                               <div class="panel-body">
 
-											<div class="row">
+										<div class="container">
 							             	<div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">姓名</span>
-							                        <input class="form-control" type="text" placeholder="XXX">
+							                        <input class="form-control w70" type="text" placeholder="XXX">
 							                    </div>
 							                </div>
 
 							                <div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">工号</span>
-							                        <input class="form-control" type="text" placeholder="XXXXX">
+							                        <input class="form-control w70" type="text" placeholder="XXXXX">
 							                    </div>
 							                </div>
 							                <div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">所在部门</span>
-							                        <input class="form-control" type="text" placeholder="XX交付部">
+							                        <input class="form-control " type="text" placeholder="XX交付部">
 							                    </div>
 							                </div>
 							                <div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">职位</span>
-							                        <input class="form-control" type="text" placeholder="PM">
+							                        <input class="form-control w70" type="text" placeholder="PM">
 							                    </div>
 							                </div>
 											<div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">考核主管</span>
-							                        <input class="form-control" type="text" placeholder="XXX交付经理">
+							                        <input class="form-control w70" type="text" placeholder="XXX交付经理">
 							                    </div>
 							                </div>
-							            </div>            							
+							          </div>            							
 
                                </div>
                              </div>
@@ -155,7 +157,7 @@ var path='<%=path%>';
                                  <td>XXXXXXXX</td>
                                  <td>XX交付经理</td>
                                </tr>
-                               <tr >
+                               <tr>
                                  <td colspan="6"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr1('table1', -1, 6);")>+</a>
 								 </td>
                                </tr>
@@ -183,7 +185,7 @@ var path='<%=path%>';
 
 								<br/>
 
-							  <div>个人能力提升计划IDP (IDP不作为考核项目，是个人成长所做出的承诺)</div>
+							 <div>个人能力提升计划IDP (IDP不作为考核项目，是个人成长所做出的承诺)</div>
                              <table id="table3" border="1" width="100%" class="templateTable">
 							   <thead>
                                <tr  style="background-color:#d9edf7">
@@ -213,40 +215,67 @@ var path='<%=path%>';
                                </tr>
 							 </table>
 
-							<br>
+								<br/>
+
+							<div class="panel panel-default"  style="border:1px solid black">	
+								 <div class="panel-body" >										
+										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Self-Evaluation</label>
+										<div class="col-lg-10">
+											<textarea rows="3" style="border:1px solid black" class="form-control" ></textarea>
+										</div>
+								 </div>
+							</div>
+
+							<div class="panel panel-default"  style="border:1px solid black">	
+								 <div class="panel-body" >										
+										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Comments</label>
+										<div class="col-lg-10">
+											<textarea rows="3" style="border:1px solid black" class="form-control" ></textarea>
+										</div>
+								 </div>
+							</div>
+
+							<div class="panel panel-default"  style="border:1px solid black">	
+								 <div class="panel-body" >										
+										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:40px;">Rating</label>
+										<div class="col-lg-10">
+                                            <select class="form-control">
+												<option>A</option>
+												<option>B+</option>
+												<option>B</option>
+												<option>C</option>
+												<option>D</option>
+											</select>
+										</div>
+								 </div>
+							</div>
+
+									<span>&nbsp;</span>
+									<div class="form-group">
+												<div style="text-align:center;width:100%;">
+												<input type="button" value="OK" name="Save" id="Save" href="#"
+												class="button btn btn-primary" data-dismiss="modal"
+												onclick=""
+												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+												<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+												<input type="button" value="Cancel" name="Edit" id="Edit" href="#"
+												class="button btn btn-primary" data-dismiss="modal"
+												onclick=""
+												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+												</div>
+										</div>
+
+						    </div>
+						 </div>
 
 
-								<div class="form-group">
-									    <div style="text-align:center;width:100%;">
-									    <input type="button" value="Save" name="Save" id="Save" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-									    <input type="button" value="Edit" name="Edit" id="Edit" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-										<input type="button" value="Submit" name="Submit" id="Submit" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-
-									    </div>
-								</div>
-
-
-                          
-                            </div>        
+	                           </div>  
+							</div>
 						</div>
-				</div>
-				</div>
 
-
-
-		</div>
-	<!-- middle content end -->
+<!-- middle content end -->
+	
+	
 	
 <div class="ch-container ">
 	<c:import url="/service/manage/footer" />

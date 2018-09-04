@@ -34,8 +34,24 @@
 .templateTable thead, .templateTable td { 
 	text-align: center;
 }
-
-
+</style>
+<style type="text/css">
+	a.link{position:relative;}
+	a.link div.tips{
+						border:1px solid black;
+						padding:10px;
+						background-color:#D7E7FC;
+						color:red;
+						position:absolute;
+						width:300px;
+  					    line-height:20px;
+						word-wrap:break-word ;
+						display:none;
+	}
+	a.link:hover{}
+	a.link:hover div.tips{
+						display:inline;
+					}
 </style>
 </head>
 <script>
@@ -55,7 +71,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  历史绩效查询->Search for Documents
+									<i class="glyphicon glyphicon-user"></i>  Management->绩效结果->历史绩效->Page-筛查XXX的历史绩效
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
@@ -64,46 +80,33 @@ var path='<%=path%>';
 
 						<div class="panel panel-default">
 							 <div class="panel-heading" style="background-color:#00688B">
-									<font color="white"> Employee Upgrade Record Query Conditions</font>
+									<font color="white"> Search for Documents</font>
 							 </div>
                              <div class="panel-body">
 
 										<div class="group">
 											<label class="col-sm-2 control-label">E-HR</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" />
+												<input type="text" class="form-control" value="E100093330" />
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">Employee Name</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" />
-											</div>
-										</div>
-										</br></br></br>
-										<div class="group">
-											<label class="col-sm-2 control-label">MSA Role</label>
-											<div class="col-sm-4">
-												<input type="text" class="form-control" />
-											</div>
-										</div>
-										<div class="group">
-											<label class="col-sm-2 control-label">Skills/Technology</label>
-											<div class="col-sm-4">
-												<input type="text" class="form-control" />
+												<input type="text" class="form-control" value="Beuben" />
 											</div>
 										</div>
 										</br></br></br>
 										<div class="group">
 											<label class="col-sm-2 control-label">BU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" />
+												<input type="text" class="form-control" value="投资银行交付部" />
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">DU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" />
+												<input type="text" class="form-control" value="XXX事业部" />
 											</div>
 										</div>
 										</br></br></br>
@@ -114,7 +117,7 @@ var path='<%=path%>';
 										<label class="col-lg-2 control-label">Period Between</label>  
                                         <div class="col-lg-2">
                                         <div class='input-group date' id='datetimepicker1'>  
-                                            <input id="startTime" type='text' class="form-control" />  
+                                            <input id="startTime" type='text' class="form-control" value="2017" />  
                                             <span class="input-group-addon">  
                                              <span class="glyphicon glyphicon-calendar"></span>  
                                             </span>  
@@ -134,7 +137,7 @@ var path='<%=path%>';
 										<label class="col-lg-2 control-label">To</label>  
                                         <div class="col-lg-2">
                                         <div class='input-group date' id='datetimepicker2'>  
-                                            <input id="startTime" type='text' class="form-control" />  
+                                            <input id="startTime" type='text' class="form-control"  value="2018" />  
                                             <span class="input-group-addon">  
                                              <span class="glyphicon glyphicon-calendar"></span>  
                                             </span>  
@@ -156,7 +159,7 @@ var path='<%=path%>';
 		
                           </div>
 
-						  	
+			  	
 								<div class="form-group" >
 									    <div style="text-align:center;width:20%;float:left"   >
 									    <input type="button" value="Search"
@@ -175,82 +178,128 @@ var path='<%=path%>';
 							<span>&nbsp;</span>
 							<!-- result box start -->
 
-
+									<small>
 									<table id="table3" border="1" width="100%" >
 										<tr style="background-color:#00688B">
-										 <td colspan="8"><font color="white"> Performance Documents</font>	 </td>
+										 <td colspan="12"><font color="white"> Performance Documents</font>	 </td>
 										</tr>
 										<tr style="background-color:#d9edf7">
+												<th><input type="checkbox"/></th>
 												<th>SL</th>
-												<th>Year</th>
-												<th>Quarter</th>
+												<th>E-HR</th>
+												<th>Employee Name</th>
 												<th>DU</th>
+												<th>BU</th>
+												<th>Begin Date</th>
+												<th>End Date</th>
 												<th>RM</th>
-												<th>Rating</th>
+												<th>考评结果</th>
 												<th>Comments</th>
 												<th>Detail</th>
 									   </tr>
 									   <tr>
+										 <td><input type="checkbox"/></td>
 										 <td> 1	 </td>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
+										 <td> E100093330	 </td>
+										 <td> Beuben  </td>
 										 <td> 投资银行交付部 </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
+										 <td> XXX事业部 </td>
+										 <td> 01/01/2017  </td>
+										 <td> 31/03/2017 </td>
+										 <td> XXX  </td>
+										 <td> B </td>
 										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+										 <td> <a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
 									   </tr>
 									   <tr>
+										 <td><input type="checkbox"/></td>
 										 <td> 2	 </td>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
+										 <td> E100093330	 </td>
+										 <td> Beuben  </td>
 										 <td> 投资银行交付部 </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
+										 <td> XXX事业部 </td>
+										 <td> 01/04/2017  </td>
+										 <td> 30/06/2017 </td>
+										 <td> XXX  </td>
+										 <td> B </td>
 										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+										 <td> <a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
 									   </tr>
 									   <tr>
+										 <td><input type="checkbox"/></td>
 										 <td> 3	 </td>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
+										 <td> E100093330	 </td>
+										 <td> Beuben  </td>
 										 <td> 投资银行交付部 </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
+										 <td> XXX事业部 </td>
+										 <td> 01/07/2017  </td>
+										 <td> 31/09/2017 </td>
+										 <td> XXX  </td>
+										 <td> B </td>
 										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+										 <td> <a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
 									   </tr>
 									   <tr>
+										 <td><input type="checkbox"/></td>
 										 <td> 4	 </td>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
+										 <td> E100093330	 </td>
+										 <td> Beuben  </td>
 										 <td> 投资银行交付部 </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
+										 <td> XXX事业部 </td>
+										 <td> 01/10/2017  </td>
+										 <td> 31/12/2017 </td>
+										 <td> XXX  </td>
+										 <td> B </td>
 										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+										 <td> <a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
 									   </tr>
 									   <tr>
+										 <td><input type="checkbox"/></td>
 										 <td> 5	 </td>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
+										 <td> E100093330	 </td>
+										 <td> Beuben  </td>
 										 <td> 投资银行交付部 </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
+										 <td> XXX事业部 </td>
+										 <td> 01/01/2018  </td>
+										 <td> 31/03/2017 </td>
+										 <td> XXX  </td>
+										 <td> B </td>
 										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+										 <td> <a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
 									   </tr>
 									   <tr>
+										 <td><input type="checkbox"/></td>
 										 <td> 6	 </td>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
+										 <td> E100093330	 </td>
+										 <td> Beuben  </td>
 										 <td> 投资银行交付部 </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
+										 <td> XXX事业部 </td>
+										 <td> 01/04/2018  </td>
+										 <td> 30/06/2017 </td>
+										 <td> XXX  </td>
+										 <td> B </td>
 										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+										 <td> <a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
 									   </tr>
 									</table>
+									</small>
+									
+									<br/>
+
+									<div class="form-group" >
+									    <div style="text-align:center;width:50%;float:left"   >
+									    <input type="button" value="Select All"
+										name="searchBtn" id="searchBtn" href="#"
+										class="button btn btn-primary" data-dismiss="modal"
+										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+									    </div>
+									    <div style="text-align:left;width:50%;float:left">
+									    <input type="button" value="Export" href="#"
+										class="button btn btn-primary" data-dismiss="modal"
+										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+									    </div>
+								</div>
+
 						     </div>
                              </div>
 							<!-- result box end -->
@@ -258,14 +307,19 @@ var path='<%=path%>';
                             </div>        
 						</div>
 
+
+
 <!-- middle content end -->
-
-
+	
+	
+	
+	
+	
+	
 <div class="ch-container ">
 	<c:import url="/service/manage/footer" />
 </div>
 
-	
 	<!-- CSS引用 -->
     <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.css" type="text/css" />
     <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.min.css" type="text/css" />
@@ -313,11 +367,10 @@ var path='<%=path%>';
 	<!-- application script for Charisma demo -->
 	<script src="<%=path %>/js/charisma.js"></script>
 	
-	<script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="<%=path %>/js/pmo/offlineOpe.js"></script>
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
 	
-		
+	
 </body>
 </html>
 

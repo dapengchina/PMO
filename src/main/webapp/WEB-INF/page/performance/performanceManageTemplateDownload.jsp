@@ -34,9 +34,8 @@
 .templateTable thead, .templateTable td { 
 	text-align: center;
 }
-
-
 </style>
+
 </head>
 <script>
 var path='<%=path%>';
@@ -49,54 +48,102 @@ var path='<%=path%>';
 
 <!-- middle content start -->
 			<div id="content" class="col-lg-10 col-sm-10">
-				<!-- content starts -->
-				
+
+				<div class="row" >	
 				<div class="box col-md-12">
-						<div class="box-inner">
-							<div class="box-header well" data-original-title="">
+						<div class="box-inner" >
+							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  当期绩效
+									<i class="glyphicon glyphicon-user"></i>  Management-> Template Download
 								</h2>
 							</div>
-							<div id="employeeInfo" class="box-content">
+
+							<div id="employeeInfo" class="box-content">					
+
 							
-							<div class="panel panel-default">	
-                              <div class="panel-body">
-
-									<table id="table3" border="1" width="80%" >
-										<thead >
-											<tr style="background-color:#d9edf7">
-												<th>Year</th>
-												<th>Quarter</th>
-												<th>DU</th>
-												<th>RM</th>
-												<th>Rating</th>
-												<th>Comments</th>
-												<th>Detail</th>
-											</tr>
-										</thead>
+							<!-- result box start -->
+									<table id="table3" style="border:1px solid balck"  width="70%" >
+										<tr style="background-color:#00688B">
+										 <td colspan="10"><font color="white"> Template Download</font>	 </td>
+										</tr>
+										<tr style="">
+										 <td colspan="10" >
+												<span style="color:red;font-size:20px">Instruction: </span>
+												<span style="font-size:20px">XXXXXX </span>	 
+										 </td>
+										</tr>
 									   <tr>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
-										 <td> XXX </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
-										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-
+										 <td style="text-align:right;"><input type="checkbox"/></td>
+										 <td> 1.绩效结果表	 </td>
+										 <td style="text-align:right;"> <i class="glyphicon glyphicon-paperclip">	 </td>
+										 <td> Template............ <i class="glyphicon glyphicon-download-alt"></i>  </td>
+										 <td style="text-align:left;"> &nbsp; </td>
+									   </tr>
+									   <tr>
+										 <td style="text-align:right;"><input type="checkbox"/></td>
+										 <td> 2.绩效结果表	 </td>
+										 <td style="text-align:right;"> <i class="glyphicon glyphicon-paperclip">	 </td>
+										 <td> Template............ <i class="glyphicon glyphicon-download-alt"></i>  </td>
+										 <td style="text-align:left;"> &nbsp; </td>
+									   </tr>
+									   <tr>
+										 <td style="text-align:right;"><input type="checkbox"/></td>
+										 <td> 3.绩效结果表	 </td>
+										 <td style="text-align:right;"> <i class="glyphicon glyphicon-paperclip">	 </td>
+										 <td> Template............ <i class="glyphicon glyphicon-download-alt"></i>  </td>
+										 <td style="text-align:left;"> &nbsp; </td>
+									   </tr>
+									   <tr>
+										 <td style="text-align:right;"><input type="checkbox"/></td>
+										 <td> 4.绩效结果表	 </td>
+										 <td style="text-align:right;"> <i class="glyphicon glyphicon-paperclip">	 </td>
+										 <td> Template............ <i class="glyphicon glyphicon-download-alt"></i>  </td>
+										 <td style="text-align:left;"> &nbsp; </td>
+									   </tr>
+									   <tr>
+										 <td style="text-align:right;"><input type="checkbox"/></td>
+										 <td> 5.绩效结果表	 </td>
+										 <td style="text-align:right;"> <i class="glyphicon glyphicon-paperclip">	 </td>
+										 <td> Template............ <i class="glyphicon glyphicon-download-alt"></i>  </td>
+										 <td style="text-align:left;"> &nbsp; </td>
+									   </tr>
+									   <tr>
+										 <td style="text-align:right;"><input type="checkbox"/></td>
+										 <td> 6.绩效结果表	 </td>
+										 <td style="text-align:right;"> <i class="glyphicon glyphicon-paperclip">	 </td>
+										 <td> Template............ <i class="glyphicon glyphicon-download-alt"></i>  </td>
+										 <td style="text-align:left;"> &nbsp; </td>
 									   </tr>
 
 									</table>
-						     </div>
-                             </div>
-                          
-                            </div>        
+									<span>&nbsp;</span>
+									<div class="form-group">
+												<div style="text-align:center;width:100%;">
+												<input type="button" value="Select All" name="Save" id="Save" href="#"
+												class="button btn btn-primary" data-dismiss="modal"
+												onclick=""
+												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+												<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+												<input type="button" value="Download" name="Edit" id="Edit" href="#"
+												class="button btn btn-primary" data-dismiss="modal"
+												onclick=""
+												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+												</div>
+										</div>
+
+						    </div>
+						 </div>
+							<!-- result box end -->
+
+	                           </div>  
+							</div>
 						</div>
-				</div>
-				</div>
+
 
 
 <!-- middle content end -->
+	
+	
 	
 	
 	
@@ -104,8 +151,6 @@ var path='<%=path%>';
 	<c:import url="/service/manage/footer" />
 </div>
 
-
-	
 	<!-- CSS引用 -->
     <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.css" type="text/css" />
     <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.min.css" type="text/css" />
@@ -155,6 +200,8 @@ var path='<%=path%>';
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/offlineOpe.js"></script>
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
+	
+	
 </body>
 </html>
 

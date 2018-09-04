@@ -42,11 +42,13 @@
 var path='<%=path%>';
 </script>
 <body>
-	<c:import url="/service/manage/top" />
-	<div class="ch-container">
-		<div class="row">
-			<c:import url="/service/performance/performanceLeft" />
 
+	<c:import url="/service/manage/top" />
+
+	<c:import url="/service/performance/performanceLeft" />
+
+
+	<!-- middle content start -->
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
 				<div class="row" >					
@@ -115,7 +117,7 @@ var path='<%=path%>';
 							   </thead>
 
                                <tr>
-                                 <td rowspan="5">重点工作</td>
+                                <td rowspan="5" id="leftrowspan">重点工作</td>
                                  <td>1</td>
                                  <td>招聘管理</td>
                                  <td>25%</td>
@@ -155,7 +157,8 @@ var path='<%=path%>';
                                  <td>XX交付经理</td>
                                </tr>
                                <tr>
-                                 <td colspan="6"><div class="text-center">+</div></td>
+                                 <td colspan="6"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr1('table1', -1, 6);")>+</a>
+								 </td>
                                </tr>
                              </table>
 
@@ -174,11 +177,13 @@ var path='<%=path%>';
                                  <td>XX交付经理</td>
                                </tr>
                                <tr>
-                                 <td colspan="7"><div class="text-center">+</div></td>
+                                 <td colspan="7"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr2('table2', -1, 7);")>+</a>
+								 </td>
                                </tr>
 							 </table>
 
 								<br/>
+
 							 <div>个人能力提升计划IDP (IDP不作为考核项目，是个人成长所做出的承诺)</div>
                              <table id="table3" border="1" width="100%" class="templateTable">
 							   <thead>
@@ -204,11 +209,13 @@ var path='<%=path%>';
                                  <td> 2018-12-31 </td>
                                </tr>
 							    <tr>
-                                 <td colspan="4"><div class="text-center">+</div>  </td>
+                                 <td colspan="4"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr2('table3', -1, 4);")>+</a>
+								 </td>
                                </tr>
 							 </table>
 
 							<br>
+							
 							<div class="panel panel-default"  style="border:1px solid black">	
 								 <div class="panel-body" >										
 										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Self-Evaluation</label>
@@ -217,6 +224,10 @@ var path='<%=path%>';
 										</div>
 								 </div>
 							</div>
+		
+			
+
+								<span>&nbsp;</span>
 
 								<div class="form-group">
 									    <div style="text-align:center;width:100%;">
@@ -246,10 +257,15 @@ var path='<%=path%>';
 				</div>
 
 
+
 		</div>
-	</div>
-	<c:import url="/service/manage/footer" />
+	<!-- middle content end -->
 	
+<div class="ch-container ">
+	<c:import url="/service/manage/footer" />
+</div>
+
+
 	<!-- CSS引用 -->
     <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.css" type="text/css" />
     <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.min.css" type="text/css" />
@@ -298,7 +314,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/offlineOpe.js"></script>
-
+    <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
 </body>
 </html>
 

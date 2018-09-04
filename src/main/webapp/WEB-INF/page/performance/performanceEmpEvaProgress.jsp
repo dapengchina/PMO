@@ -42,10 +42,11 @@
 var path='<%=path%>';
 </script>
 <body>
+
 	<c:import url="/service/manage/top" />
-	<div class="ch-container">
-		<div class="row">
-			<c:import url="/service/performance/performanceLeft" />
+
+	<c:import url="/service/performance/performanceLeft" />
+
 
 <!-- middle content start -->
 			<div id="content" class="col-lg-10 col-sm-10">
@@ -108,10 +109,10 @@ var path='<%=path%>';
 
 <!-- middle content end -->
 
-		</div>
-	</div>
-
+<div class="ch-container ">
 	<c:import url="/service/manage/footer" />
+</div>
+
 	
 	<!-- CSS引用 -->
     <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.css" type="text/css" />
@@ -161,7 +162,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/offlineOpe.js"></script>
-
+    <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
 </body>
 </html>
 

@@ -11,113 +11,211 @@
 </head>
 
 <body>
-<small>
-        <!-- left menu starts -->
-        <div class="col-sm-2 col-lg-2">
+
+ <small>
+ <div class="col-sm-2 col-lg-2"  >
+    <link href="https://cdn.bootcss.com/bootstrap-treeview/1.2.0/bootstrap-treeview.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script>
+    
+       <div  >
             <div class="sidebar-nav">
                 <div class="nav-canvas">
-                    <div class="nav-sm nav nav-stacked">
-                    </div>
-                    <ul class="nav nav-pills nav-stacked main-menu">
-                        <li class="nav-header">Performance Evaluation</li>
-                        <c:forEach var="userAuthority" items="${list}" >	
-                           	<c:if test="${userAuthority.menuParentId==null}">			   
-						    <li class="accordion">
-                            <a href="#"><i class="glyphicon glyphicon-tasks"></i><span>&nbsp;&nbsp;${userAuthority.menuName}</span></a>
-                            <ul class="nav nav-pills nav-stacked">                              
-                                 <c:forEach var="userAuthority0" items="${list}" >
-                                  <c:if test="${userAuthority0.menuParentId==userAuthority.menuId}">
-									    <li><a class="ajax-link" href="<%=path %>${userAuthority0.menuUrl}"><i class="glyphicon glyphicon-home"></i><span>&nbsp;&nbsp;${userAuthority0.menuName}</span></a></li>
-								  </c:if>
-                                 </c:forEach>
-                            </ul>
-                           </li> 
-                           </c:if>
-						</c:forEach>
-						
-						
-                        <li class="accordion">
-                            <a href="#"><i class="glyphicon glyphicon-tasks"></i><span>&nbsp;&nbsp;Employee</span></a>
-                            <ul class="nav nav-pills nav-stacked">
-                              <li>
-                              <a class="ajax-link" href="#"><i class="glyphicon glyphicon-stats"></i><span>&nbsp;&nbsp;绩效目标</span></a>
-                                     <ul class="   dropdown">
-		                              	<li>
-		                              		<a class="ajax-link" href="#"><i class="glyphicon glyphicon-folder-open"></i><span>&nbsp;&nbsp;绩效目标设定</span></a>
-                   							<ul class=" dropdown">
-				                              	<li class="active">
-				                              		<a class="ajax-link" href="<%=path %>/service/performance/performanceEmpPBC.html"><i class="glyphicon glyphicon-home"></i><span>PBC绩效目标模板</span></a>
-				                              	</li>
-				                              	<li>
-				                              		<a class="ajax-link" href="#"><i class=""></i><span>第四事业部绩效目标模板</span></a>
-				                              	</li>
-				                            </ul>		                              	
-		                              	</li>
-		                            </ul>
-                              </li>
-                              <li>
-	                              <a class="ajax-link" href="#"><i class="glyphicon glyphicon-stats"></i><span>&nbsp;&nbsp;绩效考评</span></a>
-	                              <ul class="dropdown">
-	                              <li><a class="ajax-link" href="<%=path %>/service/performance/performanceEmpEvaSelf.html"><i class="glyphicon glyphicon-home"></i><span>&nbsp;&nbsp;员工自评</span></a></li>
-	                              <li><a class="ajax-link" href="<%=path %>/service/performance/performanceEmpEvaProgress.html"><i class="glyphicon glyphicon-home"></i><span>&nbsp;&nbsp;考评进度</span></a></li>
-	                              </ul>
-                              </li>
-
-                              <li>
-                              	<a class="ajax-link" href="#"><i class="glyphicon glyphicon-stats"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;绩效结果</span></a>
-	                              <ul class="dropdown">
-	                              <li>
-	                              	<a class="ajax-link" href="<%=path %>/service/performance/performanceEmpEvaCurrentPeriod.html"><i class="glyphicon glyphicon-home"></i><span>&nbsp;&nbsp;当期绩效</span></a>
-                 					  <ul class=" dropdown">
-		                              	<li class="active">
-		                              		<a class="ajax-link" href="<%=path %>/service/performance/performanceEmpEvaCurrentPeriodDetail.html"><i class="glyphicon glyphicon-home"></i><span>Page-Detail</span></a>
-		                              	</li>
-		                            </ul>	
-	                              </li>
-	                              <li>
-	                              	<a class="ajax-link" href="#"><i class="glyphicon glyphicon-folder-open"></i><span>&nbsp;&nbsp;历史绩效查询</span></a>
-                 					  <ul class=" dropdown">
-		                              	<li class="active">
-		                              		<a class="ajax-link" href="<%=path %>/service/performance/performanceEmpEvaHistoryQuery.html"><i class="glyphicon glyphicon-home"></i><span>Page-Performance Doc</span></a>
-		                              	</li>
-		                              	<li>
-		                              		<a class="ajax-link" href="<%=path %>/service/performance/performanceEmpEvaCurrentPeriodDetail.html"><i class="glyphicon glyphicon-home"></i><span>Page-Detail</span></a>
-		                              	</li>
-		                            </ul>
-	                              </li>
-	                              </ul>
-                              </li>
-                            </ul>
-                        </li> 
-                        
-                        <li class="accordion">
-                            <a href="#"><i class="glyphicon glyphicon-tasks"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;Management</span></a>
-                            <ul class="nav nav-pills nav-stacked">
-                              <li><a class="ajax-link" href="<%=path %>/service/resume/input.html"><i class="glyphicon glyphicon-home"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;候选人录入</span></a></li>
-                              <li><a class="ajax-link" href="<%=path %>/service/candidate/getCandidate.html"><i class="glyphicon glyphicon-home"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;候选人列表</span></a></li>
-  						      <li><a class="ajax-link" href="<%=path %>/service/candidate/getMyCandidate.html"><i class="glyphicon glyphicon-home"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;我的候选人</span></a></li>
-  						      <li><a class="ajax-link" href="<%=path %>/service/candidate/getMyWaitEntryCandidate.html"><i class="glyphicon glyphicon-home"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;待入职候选人</span></a></li>
-                            </ul>
-                        </li>
-                        
-                        <li class="accordion">
-                            <a href="#"><i class="glyphicon glyphicon-tasks"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;HR</span></a>
-                            <ul class="nav nav-pills nav-stacked">
-                               <li><a class="ajax-link" href="<%=path %>/service/demand/recruitdemand.html"><i class="glyphicon glyphicon-home"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;招聘需求</span></a></li>
-                               <li><a class="ajax-link" href="<%=path %>/service/demand/demandInfo.html"><i class="glyphicon glyphicon-home"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;招聘需求查询</span></a></li>
-                               <li><a class="ajax-link" href="<%=path %>/service/stayin/stayin.html"><i class="glyphicon glyphicon-home"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;RM待入职员工查看</span></a>
-                               </li>
-                            </ul>
-                        </li>
-                        
-                        <li class="accordion">
-                            <a href="#"><i class="glyphicon glyphicon-tasks"></i><span>&nbsp;&nbsp;&nbsp;&nbsp;LOB</span></a>
-                        </li>
-                    </ul>
+							<div >
+							  <h6>Performance Evalutation</h6>
+							  <div class="row">
+								<div id="treeview">
+							  	</div>
+							  </div>
+							</div> 
                 </div>
             </div>
         </div>
-</small>
+        
+<script type="text/javascript">
+function setCookie(c_name,value,expiredays)
+{
+	var exdate=new Date()
+	exdate.setDate(exdate.getDate()+expiredays)
+	document.cookie=c_name+ "=" +escape(value)+
+	((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
+}
+function getCookie(c_name)
+{
+	if (document.cookie.length>0)
+	  {
+	  c_start=document.cookie.indexOf(c_name + "=")
+	  if (c_start!=-1)
+	    { 
+	    c_start=c_start + c_name.length+1 
+	    c_end=document.cookie.indexOf(";",c_start)
+	    if (c_end==-1) c_end=document.cookie.length
+	    return unescape(document.cookie.substring(c_start,c_end))
+	    } 
+	  }
+	return ""
+}
+</script>
+
+  	<script type="text/javascript">
+  	  var nextNodeId=getCookie('nextNodeId');
+  	  console.log("nextNodeId=========" + nextNodeId);
+      function buildDomTree() {         
+        var data = [];
+		var tree = [ {
+			text: "Employee",
+			state: {expanded: false},
+			nodes: [{
+				  text: "绩效目标",
+				  state: {expanded: true},
+				  nodes: [{
+					text: "绩效目标设定",
+					nodes: [{
+						text: "PBC绩效目标模板",
+						"nodeId":4,
+						href:"performanceEmpPBC.html"
+					},{
+						text: "第四事业部绩效目标模板"
+					}]
+				  }]
+				 },{
+				text: "绩效考评",
+
+				nodes: [{
+					text: "员工自评",
+					href: "performanceEmpEvaSelf.html"
+					}, {
+					text: "考评进度",
+					href: "performanceEmpEvaProgress.html"
+				  }]
+			  },{
+				text: "绩效结果",
+				nodes:[{
+				  text: "当期绩效",
+    			  href: "performanceEmpEvaCurrentPeriod.html",
+				  nodes: [{
+						text: "Page-Detail",
+						href: "performanceEmpEvaCurrentPeriodDetail.html"
+				  }]
+				},{
+				  text: "历史绩效查询",
+				  nodes: [{
+						text: "Page-Performance Doc",
+						href: "performanceEmpEvaHistoryQuery.html"
+				  }, {
+						text: "Page-Detail",
+						href: "performanceEmpEvaCurrentPeriodDetail.html"
+				  }]
+				}]
+		  }]},{
+				text: "Management",
+				state: {expanded: true},
+				nodes: [{
+					  text: "绩效目标",
+					  state: {expanded: true},
+					  nodes: [{
+						text: "审批",
+						nodes: [{
+							text: "Page-下拉列表筛选",
+							href:"performanceManageTargetApproval.html"
+						},{
+							text: "Page-下拉列表选结",
+							href:"performanceManageTargetApprovalFilter.html"
+						},{
+							text: "Page-绩效目标详情审批",
+							href:".html",
+							href:"performanceManageTargetApprovalDetail.html"
+						}]
+					  }]
+					 },{
+					text: "绩效考评",
+					state: {expanded: true},
+					nodes: [{
+						text: "初评",
+						nodes: [{
+							text: "Page-查看客户反馈详情",
+							href: "performanceManageEvaFirstDetail.html"
+						},{
+							text: "Page-绩效评价",
+							href:"performanceManageEvaFirst.html"
+						},{
+							text: "Page-初评结果+绩效事实",
+							href: "performanceManageEvaFirstDetailComments.html"
+						}]
+						}, {
+						text: "审批",
+						nodes: [{
+							text: "Page-交付部审批",
+							href:"performanceManageEvaSecondDU.html"
+						},{
+							text: "Page-点击操作查员工绩效",
+							href:"performanceManageEvaSecondQuery.html"
+						},{
+							text: "Page-事业部审批+事业部",
+							href:"performanceManageEvaSecondBU.html"
+						},{
+							text: "Page-点击操作查看交付部",
+							href: "performanceManageEvaSecondQueryDU.html"
+						}]
+					  }]
+				  },{
+					text: "绩效结果",
+					state: {expanded: true},
+					nodes:[{
+							text: "绩效定稿",
+							href:"performanceManageEvaFinal.html"
+					},{
+					  text: "历史绩效",
+					  href:"performanceManageResultHistoryQuery.html",
+					  nodes: [{
+							text: "Page-历史绩效Detail",
+							href:"performanceManageResultHistory.html"
+					  }, {
+							text: "Page-筛查XXX的历史绩效",
+							href:"performanceManageResultHistoryQuery.html"
+					  }]
+					}]
+				},{
+				  text: "Template Download",
+				  href: "performanceManageTemplateDownload.html"
+				}]
+		  },{
+		  		text: "HR"
+		  },{
+		  		text: "LOB"
+		  }];
+        return tree;
+      }
+      
+
+
+      $(function() {
+        var options = {
+          bootstrap2: false, 
+          showTags: true,
+		  enableLinks: true,
+          levels: 5,
+          selectNode: [ 4, { silent: true } ],
+          onNodeSelected: function(event, data) {
+  		    	console.log("data==" + JSON.stringify(data));
+  		  		console.log("data.nodeid==" + data.nodeId);
+  		  		nextNodeId=data.nodeId;
+  		  		setCookie('nextNodeId',nextNodeId,1);
+  	  		},
+          data: buildDomTree()
+        };
+
+        $('#treeview').treeview(options);
+        
+      });
+      
+  
+  	</script>
+ </div>
+ </small>
+
+
 </body>
 </html>
 
