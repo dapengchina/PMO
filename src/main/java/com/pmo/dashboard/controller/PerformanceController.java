@@ -1,5 +1,6 @@
 package com.pmo.dashboard.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,13 +12,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pmo.dashboard.entity.NewTree;
 import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.entity.UserAuthority;
+import com.pom.dashboard.service.PerformanceService;
 import com.pom.dashboard.service.UserAuthorityService;
+
+/**
+ * Performance 模块的controller
+ * @author Yankui
+ *
+ */
 
 @Controller
 @RequestMapping(value="/performance")
@@ -27,11 +39,51 @@ public class PerformanceController {
 	
     @Resource
 	private UserAuthorityService userAuthorityService;
+    @Resource
+    private PerformanceService performanceService;
     
 	@SuppressWarnings("unused")
 	private ObjectMapper objectMapper = new ObjectMapper();
 	
-	
+    @RequestMapping("/performanceLeft")
+    public ModelAndView left(final HttpServletRequest request,HttpSession session,
+            final HttpServletResponse response)
+    { 	
+    	ModelAndView v =new ModelAndView();    	
+    	v.setViewName("performance/performanceLeft");   	
+        return v;
+    }
+    
+    @RequestMapping("/performanceLeftMenu/{currentPageName}")
+	@ResponseBody
+    public Object performanceLeftMenu(@PathVariable("currentPageName") String currentPageName,final HttpServletRequest request,HttpSession session,
+            final HttpServletResponse response)
+    { 	   	  	
+    	User u=(User)session.getAttribute("loginUser");
+    	List<UserAuthority> list= userAuthorityService.queryUserAuthority(u.getUserType());
+    	List<UserAuthority> performanceList = new ArrayList<>();
+    	for(UserAuthority user : list) {
+    		if (user.getMenuId().indexOf("18") != -1 || user.getMenuId().indexOf("19") != -1) { //18为数据库中employee菜单的id
+    			performanceList.add(user);
+    		}
+    	}   
+    	
+    	List<NewTree> topCateList = performanceService.transferToMenuList(currentPageName, performanceList);
+        
+        ObjectMapper mapper = new ObjectMapper();
+		String resultString = "";
+		try {
+			resultString = mapper.writeValueAsString(topCateList);
+	        System.out.println("left menu= " + resultString);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+        return resultString;
+    }
+
+
+    
 	@RequestMapping("/listPage")
 	public String listPage(HttpServletRequest request,Model model){		
 		return "performance/performanceListPage";
@@ -40,23 +92,10 @@ public class PerformanceController {
 
 	@RequestMapping("/performanceEmpPBC")
 	public String getTMemployee(final HttpServletRequest request, Model model){
+    	System.out.println(request.getRequestURI());
+    	
 		return "performance/performanceEmpPBC";
 	}
-	
-	
-    @RequestMapping("/performanceLeft")
-    public ModelAndView left(final HttpServletRequest request,HttpSession session,
-            final HttpServletResponse response)
-    { 	
-    	ModelAndView v =new ModelAndView();    	
-    	v.setViewName("performance/performanceLeft");
-    	
-    	User u=(User)session.getAttribute("loginUser");
-    	List<UserAuthority> list= userAuthorityService.queryUserAuthority(u.getUserType());    	
-  	   	v.addObject("list", list);
-    	
-        return v;
-    }
     
 	@RequestMapping("/performanceEmpEvaSelf")
 	public String getPerformanceEmpEvaSelf(final HttpServletRequest request, Model model){

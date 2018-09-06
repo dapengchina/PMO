@@ -4,6 +4,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String path = request.getContextPath();
+	String url = request.getRequestURI();
+	String currentPageName = "";
+	if (url != null) {
+		String[] strs = url.split("/");
+		url = strs[strs.length-1];
+		currentPageName = url.substring(0, url.lastIndexOf('.'));
+	}
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +67,9 @@ var path='<%=path%>';
 <body>
 	<c:import url="/service/manage/top" />
 
-	<c:import url="/service/performance/performanceLeft" />
+	<c:import url="/service/performance/performanceLeft">
+	    <c:param name="currentPageName" value="<%=currentPageName%>"/>
+	</c:import> 
 
 
 <!-- middle content start -->
@@ -445,7 +454,6 @@ var path='<%=path%>';
 	<!-- application script for Charisma demo -->
 	<script src="<%=path %>/js/charisma.js"></script>
 	
-    <script type="text/javascript" src="<%=path %>/js/pmo/offlineOpe.js"></script>
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
 	
 	

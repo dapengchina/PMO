@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String path = request.getContextPath();
+	String currentPageName=request.getParameter("currentPageName");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,12 +12,8 @@
 </head>
 
 <body>
-
  <small>
  <div class="col-sm-2 col-lg-2"  >
-    <link href="https://cdn.bootcss.com/bootstrap-treeview/1.2.0/bootstrap-treeview.min.css" rel="stylesheet">
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script>
     
        <div  >
@@ -32,35 +29,37 @@
                 </div>
             </div>
         </div>
-        
-<script type="text/javascript">
-function setCookie(c_name,value,expiredays)
-{
-	var exdate=new Date()
-	exdate.setDate(exdate.getDate()+expiredays)
-	document.cookie=c_name+ "=" +escape(value)+
-	((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
-}
-function getCookie(c_name)
-{
-	if (document.cookie.length>0)
-	  {
-	  c_start=document.cookie.indexOf(c_name + "=")
-	  if (c_start!=-1)
-	    { 
-	    c_start=c_start + c_name.length+1 
-	    c_end=document.cookie.indexOf(";",c_start)
-	    if (c_end==-1) c_end=document.cookie.length
-	    return unescape(document.cookie.substring(c_start,c_end))
-	    } 
-	  }
-	return ""
-}
-</script>
 
   	<script type="text/javascript">
-  	  var nextNodeId=getCookie('nextNodeId');
-  	  console.log("nextNodeId=========" + nextNodeId);
+  	
+  	var currentPageName='<%=currentPageName%>';
+
+  	var urlstr = path+'/service/performance/performanceLeftMenu/' + currentPageName;
+  	var serverdata = [];
+  	$(document).ready(function() {  
+  		$.ajax({
+  			url: urlstr,
+  			dataType:"json",
+  			async:true,
+  			cache:false,
+  			type:"get",
+  			success: function(result){
+  			    //console.log("data==" + JSON.stringify(result));
+  				serverdata=JSON.stringify(result);
+	  			showmenu();
+  			},
+  			 error: function (XMLHttpRequest, textStatus, errorThrown) {
+  	             // 状态码
+  	             console.log(XMLHttpRequest.status);
+  	             // 状态
+  	             console.log(XMLHttpRequest.readyState);
+  	             // 错误信息   
+  	             console.log(textStatus);
+  	         }
+  		});
+  	});	
+  	
+  	
       function buildDomTree() {         
         var data = [];
 		var tree = [ {
@@ -74,6 +73,7 @@ function getCookie(c_name)
 					nodes: [{
 						text: "PBC绩效目标模板",
 						"nodeId":4,
+						state: {selected: false},
 						href:"performanceEmpPBC.html"
 					},{
 						text: "第四事业部绩效目标模板"
@@ -187,28 +187,19 @@ function getCookie(c_name)
 		  }];
         return tree;
       }
-      
 
-
-      $(function() {
+      function showmenu() {
         var options = {
           bootstrap2: false, 
           showTags: true,
 		  enableLinks: true,
           levels: 5,
-          selectNode: [ 4, { silent: true } ],
-          onNodeSelected: function(event, data) {
-  		    	console.log("data==" + JSON.stringify(data));
-  		  		console.log("data.nodeid==" + data.nodeId);
-  		  		nextNodeId=data.nodeId;
-  		  		setCookie('nextNodeId',nextNodeId,1);
-  	  		},
-          data: buildDomTree()
+          data: serverdata//buildDomTree()
         };
-
+   		console.log("serverdata======" + serverdata);
         $('#treeview').treeview(options);
         
-      });
+      };
       
   
   	</script>
