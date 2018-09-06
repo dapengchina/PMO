@@ -26,7 +26,7 @@ import com.pom.dashboard.service.PerformanceService;
 import com.pom.dashboard.service.UserAuthorityService;
 
 /**
- * Performance 模块的controller
+ * Performance 模块的controller, 包含所有的页面跳转，和left slide menu
  * @author Yankui
  *
  */
@@ -54,6 +54,9 @@ public class PerformanceController {
         return v;
     }
     
+    /**
+     * 生成slide menu所需要的符合treeview控件的json
+     */
     @RequestMapping("/performanceLeftMenu/{currentPageName}")
 	@ResponseBody
     public Object performanceLeftMenu(@PathVariable("currentPageName") String currentPageName,final HttpServletRequest request,HttpSession session,
@@ -66,15 +69,14 @@ public class PerformanceController {
     		if (user.getMenuId().indexOf("18") != -1 || user.getMenuId().indexOf("19") != -1) { //18为数据库中employee菜单的id
     			performanceList.add(user);
     		}
-    	}   
-    	
+    	}    	
     	List<NewTree> topCateList = performanceService.transferToMenuList(currentPageName, performanceList);
         
         ObjectMapper mapper = new ObjectMapper();
 		String resultString = "";
 		try {
 			resultString = mapper.writeValueAsString(topCateList);
-	        System.out.println("left menu= " + resultString);
+	        logger.debug("left menu= " + resultString);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -91,9 +93,7 @@ public class PerformanceController {
 
 
 	@RequestMapping("/performanceEmpPBC")
-	public String getTMemployee(final HttpServletRequest request, Model model){
-    	System.out.println(request.getRequestURI());
-    	
+	public String getTMemployee(final HttpServletRequest request, Model model){   	
 		return "performance/performanceEmpPBC";
 	}
     

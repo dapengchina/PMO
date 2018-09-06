@@ -73,6 +73,20 @@ var path='<%=path%>';
 							<div class="panel panel-default">	
                               <div class="panel-body">
 
+									<table id="performancePregressList" class="table table-striped table-bordered" >
+										<thead>
+											<tr style="background-color:#d9edf7">
+												<th>流程名称</th>
+												<th>审核人</th>
+												<th>状态</th>
+												<th>Comments</th>
+											</tr>
+										</thead>										
+										<tbody>
+										
+									    </tbody>
+									</table>
+
 									<table id="table3" border="1" width="80%" >
 										<thead >
 											<tr style="background-color:#d9edf7">
@@ -171,6 +185,8 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
+    <script type="text/javascript" src="<%=path %>/js/pmo/performanceEmpEvaProgress.js"></script>
+    
 </body>
 </html>
 

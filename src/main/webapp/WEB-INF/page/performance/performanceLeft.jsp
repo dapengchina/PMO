@@ -196,7 +196,7 @@
           levels: 5,
           data: serverdata//buildDomTree()
         };
-   		console.log("serverdata======" + serverdata);
+   		//console.log("serverdata======" + serverdata);
         $('#treeview').treeview(options);
         
       };

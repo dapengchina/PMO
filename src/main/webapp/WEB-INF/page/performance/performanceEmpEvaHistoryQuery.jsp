@@ -80,57 +80,55 @@ var path='<%=path%>';
 										<div class="group">
 											<label class="col-sm-2 control-label">E-HR</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" />
+												<input type="text" class="form-control" id="eHr" />
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">Employee Name</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" />
+												<input type="text" class="form-control" id="staffName" />
 											</div>
 										</div>
 										</br></br></br>
 										<div class="group">
 											<label class="col-sm-2 control-label">MSA Role</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" />
+												<input type="text" class="form-control" id="role" />
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">Skills/Technology</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" />
+												<input type="text" class="form-control" id="skill" />
 											</div>
 										</div>
 										</br></br></br>
 										<div class="group">
 											<label class="col-sm-2 control-label">BU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" />
+												<input type="text" class="form-control" name="buName"/>
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">DU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" />
+												<input type="text" class="form-control"  id="du" />
 											</div>
 										</div>
 										</br></br></br>
-
-
 
                                     <div class="group">
 										<label class="col-lg-2 control-label">Period Between</label>  
                                         <div class="col-lg-2">
                                         <div class='input-group date' id='datetimepicker1'>  
-                                            <input id="startTime" type='text' class="form-control" />  
+                                            <input id="startYear" type='text' class="form-control" />  
                                             <span class="input-group-addon">  
                                              <span class="glyphicon glyphicon-calendar"></span>  
                                             </span>  
                                         </div> 
                                         </div> 
 										<div class="col-lg-2">
-                                            <select class="form-control">
+                                            <select class="form-control" id="startQuarter">
 												<option>Q1</option>
 												<option>Q2</option>
 												<option>Q3</option>
@@ -143,14 +141,14 @@ var path='<%=path%>';
 										<label class="col-lg-2 control-label">To</label>  
                                         <div class="col-lg-2">
                                         <div class='input-group date' id='datetimepicker2'>  
-                                            <input id="startTime" type='text' class="form-control" />  
+                                            <input id="endYear" type='text' class="form-control" />  
                                             <span class="input-group-addon">  
                                              <span class="glyphicon glyphicon-calendar"></span>  
                                             </span>  
                                         </div> 
                                         </div> 
 										<div class="col-lg-2">
-                                            <select class="form-control">
+                                            <select class="form-control"  id="endQuarter">
 												<option>Q1</option>
 												<option>Q2</option>
 												<option>Q3</option>
@@ -167,11 +165,12 @@ var path='<%=path%>';
 
 						  	
 								<div class="form-group" >
-									    <div style="text-align:center;width:20%;float:left"   >
+									    <div style="text-align:center;width:20%;float:left"   >												
 									    <input type="button" value="Search"
-										name="searchBtn" id="searchBtn" href="#"
+										name="searchBtn" id="searchBtn"  onClick="search();"
 										class="button btn btn-primary" data-dismiss="modal"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+									    
 									    </div>
 									    <div style="text-align:left;width:80%;float:left">
 									    <input type="button" value="Clear" href="#"
@@ -184,8 +183,17 @@ var path='<%=path%>';
 							<span>&nbsp;</span>
 							<!-- result box start -->
 
-
 									<table id="table3" border="1" width="100%" >
+										<tr style="background-color:#00688B">
+										 <td ><font color="white"> Performance Documents</font>	 </td>
+										</tr>
+									   <tr>
+										 <td> <table id="empHistoryList"></table> </td>									
+									   </tr>
+									</table>
+									
+						<br/>&nbsp;
+									<table id="table3" border="1" width="100%" style="display:none">
 										<tr style="background-color:#00688B">
 										 <td colspan="8"><font color="white"> Performance Documents</font>	 </td>
 										</tr>
@@ -266,7 +274,7 @@ var path='<%=path%>';
 
                             </div>        
 						</div>
-
+						
 <!-- middle content end -->
 
 
@@ -325,8 +333,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-	
-		
+	<script type="text/javascript" src="<%=path %>/js/pmo/performanceEmpEvaHistoryQuery.js"></script>
 </body>
 </html>
 

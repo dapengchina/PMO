@@ -29,7 +29,7 @@ public class PerformanceServiceImpl implements PerformanceService{
 		List<NewTree> topCateList = new ArrayList<NewTree>();
         NewTree twoCate = null;
         for (UserAuthority user :performanceList) {
-        	System.out.println("user:" + user.getMenuId() + "," + user.getMenuName() + ", " + user.getMenuUrl());
+//        	System.out.println("user:" + user.getMenuId() + "," + user.getMenuName() + ", " + user.getMenuUrl());
         	if (null == user.getMenuParentId() || user.getMenuParentId().equals("")) {
         		twoCate = new NewTree(user.getMenuId(), user.getMenuName(), new ArrayList<NewTree>());
         		if (user.getMenuUrl() != null) {
