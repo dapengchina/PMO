@@ -60,6 +60,12 @@
 						display:inline;
 					}
 </style>
+<style>
+    .table-thead-background  thead, th {
+        background-color:#d9edf7;
+        font-color:"white";
+    }
+</style>
 </head>
 <script>
 var path='<%=path%>';
@@ -80,7 +86,7 @@ var path='<%=path%>';
 						<div class="box-inner" >
 							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->审批->Page-点击操作查员工绩效
+									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->审批->Page-点击操作查员工绩效  (从后端取数据)
 								</h2>
 							</div>
 
@@ -102,21 +108,21 @@ var path='<%=path%>';
 										 <td> D <br/>(0-5%) </td>
 										 <td> 参评比例合计 </td>
 									   </tr>
-									   <tr>
-										 <td> 10 </td>
-										 <td> 60  </td>
-										 <td> 30 </td>
-										 <td> 22 </td>
-										 <td> 4  </td>
-										 <td> 76 </td>
+									   <tr>			
+										 <td>  <div id="empA"></div>	 </td>
+										 <td> <div id="empBplus"></div> </td>
+										 <td> <div id="empB"></div> </td>
+										 <td><div id="empC"></div> </td>
+										 <td> <div id="empD"></div> </td>
+										 <td> <div id="empSum"></div> </td>
 									   </tr>
 									   <tr>
-										 <td> 7.9%	 </td>
-										 <td> 47.6%  </td>
-										 <td> 23.8% </td>
-										 <td> 17.5% </td>
-										 <td> 3.2% </td>
-										 <td> 100% </td>
+										 <td>  <div id="percentA"></div>	 </td>
+										 <td> <div id="percentBplus"></div> </td>
+										 <td> <div id="percentB"></div> </td>
+										 <td><div id="percentC"></div> </td>
+										 <td> <div id="percentD"></div> </td>
+										 <td> <div id="percentSum"></div> </td>
 									   </tr>
 									</table>
 
@@ -156,26 +162,26 @@ var path='<%=path%>';
 										<div class="group">
 											<label class="col-sm-2 control-label">E-HR</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" value="" />
+												<input type="text" class="form-control" id="eHr" />
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">Employee Name</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" value="" />
+												<input type="text" class="form-control" id="staffName" />
 											</div>
 										</div>
 										</br></br></br>
 										<div class="group">
 											<label class="col-sm-2 control-label">BU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" value="" />
+												<input type="text" class="form-control" name="buName"/>
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">DU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" value="" />
+												<input type="text" class="form-control"  id="du" />
 											</div>
 										</div>
 										</br></br></br>
@@ -185,7 +191,7 @@ var path='<%=path%>';
 								<div class="form-group" >
 									    <div style="text-align:center;width:20%;float:left"   >
 									    <input type="button" value="Search"
-										name="searchBtn" id="searchBtn" href="#"
+										name="searchBtn" id="searchBtn"  onClick="search();"
 										class="button btn btn-primary" data-dismiss="modal"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 									    </div>
@@ -201,177 +207,7 @@ var path='<%=path%>';
 								<br/><br/><br/>
 
 
-								<small><small>
-									<table id="table2" border="1" width="100%" >
-										<tr style="background-color:#00688B">
-											<th><font color="white"> 绩效目标</font></th>
-											<th><font color="white"> 序号</font></th>
-											<th><font color="white"> EHR编号</font></th>
-											<th><font color="white"> LOB工号</font></th>
-											<th><font color="white"> 姓名</font></th>
-											<th><font color="white"> 入职时间</font></th>
-											<th><font color="white"> 职务</font></th>
-											<th><font color="white"> 业务线</font></th>
-											<th><font color="white"> BU </font></th>
-											<th><font color="white"> 交付部</font></th>
-											<th><font color="white"> 归属地 </font></th>
-											<th><font color="white"> 是否骨干</font></th>
-											<th><font color="white"> 是否参评 </font></th>
-											<th><font color="white"> 直接主管 </font></th>
-											<th><font color="white"> 客户反馈 </font></th>
-											<th><font color="white"> 初评(依据客户反馈)</font></th>
-											<th><font color="white"> 直接主管初评结果 </font></th>
-											<th><font color="white"> 部门集体评议结果 </font></th>
-											<th><font color="white"> 集体评议主管  </font></th>
-											<th><font color="white"> A/C/D人员绩效事实</font></th>
-											<th><font color="white"> 是否绩效跳变</font></th>
-											<th><font color="white"> 备注</font></th>
-											<th><font color="white"> 上季度绩效 </font></th>
-											<th><font color="white"> 上上季度绩效 </font></th>
-											<th><font color="white"> 上上上季度绩效 </font></th>
-										</tr>
-									   <tr>
-										 <td>  <i class="glyphicon glyphicon-edit"></i> 	 </td>
-										 <td> 1  </td>
-										 <td> xxxxx </td>
-										 <td> xxx </td>
-										 <td> Tom  </td>
-										 <td> 2017-10-11 </td>
-										 <td> Developer </td>
-										 <td> HSBC </td>
-										 <td> xxx 事业部 </td>
-										 <td> xxx 交付部 </td>
-										 <td> Xian </td>
-										 <td> 是  </td>
-										 <td> 是 </td>
-										 <td> XXX Rm </td>
-										 <td> 工作认真 </td>
-										 <td> B+ </td>
-										 <td> B+  </td>
-										 <td> B+  </td>
-										 <td> XXX交付部经理 </td>
-										 <td> 工作认真高效  </td>
-										 <td> 否  </td>
-										 <td>   </td>
-										 <td> B+  </td>
-										 <td> b+  </td>
-										 <td> A </td>
-									   </tr>
-									   <tr>
-										 <td>  <i class="glyphicon glyphicon-edit"></i> 	 </td>
-										 <td> 2  </td>
-										 <td> xxxxx </td>
-										 <td> xxx </td>
-										 <td> Beuben  </td>
-										 <td> 2015-1-16 </td>
-										 <td> Developer </td>
-										 <td> HSBC </td>
-										 <td> xxx 事业部 </td>
-										 <td> xxx 交付部 </td>
-										 <td> Xian </td>
-										 <td> 是  </td>
-										 <td> 是 </td>
-										 <td> XXX  </td>
-										 <td> 工作认真 </td>
-										 <td> B </td>
-										 <td> B  </td>
-										 <td> B  </td>
-										 <td> XXX </td>
-										 <td> 工作负责高效  </td>
-										 <td> 否  </td>
-										 <td>   </td>
-										 <td> B+  </td>
-										 <td> A  </td>
-										 <td> A </td>
-									   </tr>
-									   <tr>
-										 <td>   	 </td>
-										 <td> 3  </td>
-										 <td> xxxxx </td>
-										 <td> xxx </td>
-										 <td> William  </td>
-										 <td> 2016-10-11 </td>
-										 <td> Senior Developer </td>
-										 <td> HSBC </td>
-										 <td> xxx 事业部 </td>
-										 <td> xxx 交付部 </td>
-										 <td> Xian </td>
-										 <td> 是  </td>
-										 <td> 是 </td>
-										 <td> XXX Rm </td>
-										 <td> 
-											<a href="#" class="link">该员工平时工
-												<div class="tips">该员工平时工作仔细认真，负责。不但执行力强，而且工作配合度也好，有积极向上的工作态度，能主动协调其他同事工作，并且能及时完成上级领导安排的其他工作</div>
-											</a>
-										 </td>
-										 <td> B+ </td>
-										 <td>   </td>
-										 <td>   </td>
-										 <td> XXX交付部经理 </td>
-										 <td>   </td>
-										 <td>   </td>
-										 <td>   </td>
-										 <td> B  </td>
-										 <td> B+  </td>
-										 <td> B </td>
-									   </tr>
-									   <tr>
-										 <td>  	 </td>
-										 <td> 4  </td>
-										 <td> xxxxx </td>
-										 <td> xxx </td>
-										 <td> Clinton  </td>
-										 <td> 2015-8-14 </td>
-										 <td> Developer </td>
-										 <td> HSBC </td>
-										 <td> xxx 事业部 </td>
-										 <td> xxx 交付部 </td>
-										 <td> Xian </td>
-										 <td> 是  </td>
-										 <td> 是 </td>
-										 <td> XXX Rm </td>
-										 <td> 业务知识扎实 </td>
-										 <td> A </td>
-										 <td>   </td>
-										 <td>   </td>
-										 <td> XXX交付部经理 </td>
-										 <td>   </td>
-										 <td>   </td>
-										 <td>   </td>
-										 <td> A  </td>
-										 <td> B+  </td>
-										 <td> B+ </td>
-									   </tr>
-									   <tr>
-										 <td>  <i class="glyphicon glyphicon-edit"></i> 	 </td>
-										 <td> 5  </td>
-										 <td> xxxxx </td>
-										 <td> xxx </td>
-										 <td> Smith  </td>
-										 <td> 2014-3-7 </td>
-										 <td> Level2 Coach Role </td>
-										 <td> HSBC </td>
-										 <td> xxx 事业部 </td>
-										 <td> xxx 交付部 </td>
-										 <td> Xian </td>
-										 <td> 是  </td>
-										 <td> 是 </td>
-										 <td> XXX Rm </td>
-										 <td> 业绩发展迅速 </td>
-										 <td> A </td>
-										 <td> A  </td>
-										 <td> A  </td>
-										 <td> XXX交付部经理 </td>
-										 <td> 锐意进取  </td>
-										 <td> 是 </td>
-										 <td>   </td>
-										 <td> B  </td>
-										 <td> B  </td>
-										 <td> C </td>
-									   </tr>
-									</table>
-									</small></small>
-
+						<table id="queryManageEvaSecondQueryList" class="table table-thead-background"></table>
 
 						     </div>
                              </div>
@@ -455,7 +291,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-	
+	<script type="text/javascript" src="<%=path %>/js/pmo/performanceManageEvaSecondQuery.js"></script>
 	
 </body>
 </html>

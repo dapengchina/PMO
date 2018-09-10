@@ -7,7 +7,7 @@ function loadPerformanceProgressList(pageState){
 	var pageState = pageState;
 	
 	$.ajax({
-		url:path+"/service/performanceProgress/queryPerformanceProgressList",
+		url:path+"/service/performanceEmpProgress/queryPerformanceEmpProgressList",
 		dataType:"json",
 		async:true,
 		data:{"pageState":pageState},

@@ -24,19 +24,19 @@ import com.pom.dashboard.service.PerformanceProgressService;
  */
 
 @Controller
-@RequestMapping(value="/performanceProgress")
-public class PerformanceProgressController {
-	private static Logger logger = LoggerFactory.getLogger(PerformanceProgressController.class);
+@RequestMapping(value="/performanceEmpProgress")
+public class PerformanceEmpProgressController {
+	private static Logger logger = LoggerFactory.getLogger(PerformanceEmpProgressController.class);
 	
 	@Resource
 	private PerformanceProgressService progressService;
 
-	@RequestMapping("/queryPerformanceProgressList")
+	@RequestMapping("/queryPerformanceEmpProgressList")
     @ResponseBody
-	public Object queryPerformanceProgressList(final HttpServletRequest request, final HttpServletResponse response){
+	public Object queryPerformanceEmpProgressList(final HttpServletRequest request, final HttpServletResponse response){
         
 		Map<String,Object> result = new HashMap<String,Object>();
-		List<PerformanceProgressBean> list = progressService.queryPerformancePregressList();
+		List<PerformanceProgressBean> list = progressService.queryPerformanceProgressList();
 		result.put("data", list);
 		result.put("pageInfo", null);
 		return result;

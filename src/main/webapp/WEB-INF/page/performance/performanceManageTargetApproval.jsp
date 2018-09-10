@@ -41,8 +41,11 @@
 .templateTable thead, .templateTable td { 
 	text-align: center;
 }
-
-
+</style>
+<style>
+    .table-thead-background  thead, th {
+        background-color:#d9edf7;
+    }
 </style>
 </head>
 <script>
@@ -64,7 +67,7 @@ var path='<%=path%>';
 						<div class="box-inner" >
 							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效目标->审批
+									<i class="glyphicon glyphicon-user"></i>  Management->绩效目标->审批  (从后端取数据)
 								</h2>
 							</div>
 
@@ -73,82 +76,14 @@ var path='<%=path%>';
 							<!-- result box start -->
 									<table id="table3" border="1" width="100%" >
 										<tr style="background-color:#00688B">
-										 <td colspan="10"><font color="white"> 绩效目标审批</font>	 </td>
+										 <td ><font color="white"> 绩效目标审批</font>	 </td>
 										</tr>
-										<tr style="background-color:#d9edf7">
-												<th><input type="checkbox"/></th>
-												<th>SL</th>
-												<th>E-HR</th>
-												<th>Employee Name</th>
-												<th>MSA Role</th>
-												<th>Skill/Technology</th>
-												<th>是否提交</th>
-												<th>业务先锋</th>
-												<th>审批状态</th>
-												<th>Detail</th>
-									   </tr>
 									   <tr>
-										 <td><input type="checkbox"/></td>
-										 <td> 1	 </td>
-										 <td> 0090127655	 </td>
-										 <td> XXX  </td>
-										 <td> Senior </td>
-										 <td> HR </td>
-										 <td> 是  </td>
-										 <td> 是 </td>
-										 <td> 已审批 </td>
-										 <td> <a href='performanceManageTargetApprovalDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td><input type="checkbox"/></td>
-										 <td> 2	 </td>
-										 <td> 0090127656	 </td>
-										 <td> XXX  </td>
-										 <td> Junior </td>
-										 <td> HTML </td>
-										 <td> 是  </td>
-										 <td> 是 </td>
-										 <td> 未审批 </td>
-										 <td> <a href='performanceManageTargetApprovalDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td><input type="checkbox"/></td>
-										 <td> 3	 </td>
-										 <td> 0090127657	 </td>
-										 <td> XXX  </td>
-										 <td> Junior Tester </td>
-										 <td> BA </td>
-										 <td> 是  </td>
-										 <td> 是 </td>
-										 <td> 已审批 </td>
-										 <td> <a href='performanceManageTargetApprovalDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td><input type="checkbox"/></td>
-										 <td> 4	 </td>
-										 <td> 0090127658	 </td>
-										 <td> XXX  </td>
-										 <td> AWS </td>
-										 <td> HR </td>
-										 <td> 否  </td>
-										 <td> 是 </td>
-										 <td> 已审批 </td>
-										 <td> <a href='performanceManageTargetApprovalDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td><input type="checkbox"/></td>
-										 <td> 5	 </td>
-										 <td> 0090127659	 </td>
-										 <td> XXX  </td>
-										 <td> Junior Tester </td>
-										 <td> C </td>
-										 <td> 否  </td>
-										 <td> 是 </td>
-										 <td> 已审批 </td>
-										 <td> <a href='performanceManageTargetApprovalDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+										 <td> <table id="manageTargetApprovalList" class="table table-thead-background"></table> </td>									
 									   </tr>
 									</table>
 									<span>&nbsp;</span>
+									
 									<div class="form-group">
 												<div style="text-align:center;width:100%;">
 												<input type="button" value="Select All" name="Save" id="Save" href="#"
@@ -225,7 +160,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-	
+    <script type="text/javascript" src="<%=path %>/js/pmo/performanceManageTargetApproval.js"></script>
 	
 </body>
 </html>

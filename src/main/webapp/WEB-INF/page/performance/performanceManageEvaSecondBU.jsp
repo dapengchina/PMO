@@ -62,7 +62,7 @@ var path='<%=path%>';
 						<div class="box-inner" >
 							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->审批->Page-事业部审批+事业部
+									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->审批->Page-事业部审批+事业部 (从后端取数据)
 								</h2>
 							</div>
 
@@ -77,83 +77,43 @@ var path='<%=path%>';
 										 <td colspan="7" style="text-align:center"><font color="green"> 事业部HRBP绩效审核(参考比例要求控制)</font>	 </td>
 										</tr>
 									   <tr>
-										 <td> A </td>
-										 <td> B+  </td>
-										 <td> B </td>
-										 <td> C </td>
-										 <td> D  </td>
+										 <td> A <br/>(10-15%)</td>
+										 <td> B+ <br/>(30-40%) </td>
+										 <td> B <br/> &nbsp;</td>
+										 <td> C <br/>(5-10%)</td>
+										 <td> D <br/>(0-5%) </td>
 										 <td> 参评比例合计 </td>
 									   </tr>
-									   <tr>
-										 <td> 10 </td>
-										 <td> 60  </td>
-										 <td> 30 </td>
-										 <td> 22 </td>
-										 <td> 4  </td>
-										 <td> 76 </td>
+									   <tr>			
+										 <td>  <div id="empA"></div>	 </td>
+										 <td> <div id="empBplus"></div> </td>
+										 <td> <div id="empB"></div> </td>
+										 <td><div id="empC"></div> </td>
+										 <td> <div id="empD"></div> </td>
+										 <td> <div id="empSum"></div> </td>
 									   </tr>
 									   <tr>
-										 <td> 7.9%	 </td>
-										 <td> 47.6%  </td>
-										 <td> 23.8% </td>
-										 <td> 17.5% </td>
-										 <td> 3.2% </td>
-										 <td> 100% </td>
+										 <td>  <div id="percentA"></div>	 </td>
+										 <td> <div id="percentBplus"></div> </td>
+										 <td> <div id="percentB"></div> </td>
+										 <td><div id="percentC"></div> </td>
+										 <td> <div id="percentD"></div> </td>
+										 <td> <div id="percentSum"></div> </td>
 									   </tr>
 									</table>
 
 									<br/>
 
-									<table id="table2" border="1" width="100%" >
+									
+									<table id="table3" border="1" width="100%" >
 										<tr style="background-color:#00688B">
-										 <td colspan="7"><font color="white"> 当期绩效</font>	 </td>
-										</tr>
-										<tr style="background-color:#d9edf7">
-											<th><input type="checkbox"/></th>
-											<th>SL</th>
-											<th>交付部</th>
-											<th>Year</th>
-											<th>Quarter</th>
-											<th>状态</th>
-											<th>Detail</th>
+										 <td ><font color="white"> 当期绩效</font>	 </td>
 										</tr>
 									   <tr>
-										 <td> <input type="checkbox"/>	 </td>
-										 <td> 1  </td>
-										 <td> 移动 </td>
-										 <td> 2018 </td>
-										 <td> Q2  </td>
-										 <td> 待审批 </td>
-										 <td> <a href='performanceManageEvaSecondQueryDU.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td> <input type="checkbox"/>	 </td>
-										 <td> 2  </td>
-										 <td> 网银 </td>
-										 <td> 2018 </td>
-										 <td> Q2  </td>
-										 <td> 已驳回 </td>
-										 <td> <a href='performanceManageEvaSecondQueryDU.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td> <input type="checkbox"/>	 </td>
-										 <td> 3  </td>
-										 <td> 财富 </td>
-										 <td> 2018 </td>
-										 <td> Q2  </td>
-										 <td> 已审批 </td>
-										 <td> <a href='performanceManageEvaSecondQueryDU.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td> <input type="checkbox"/>	 </td>
-										 <td> 4  </td>
-										 <td> 保险与卡 </td>
-										 <td> 2018 </td>
-										 <td> Q2  </td>
-										 <td> 已审批 </td>
-										 <td> <a href='performanceManageEvaSecondQueryDU.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+										 <td> <table id="manageEvaSeondBUList" class="table table-thead-background"></table> </td>									
 									   </tr>
 									</table>
+									
 						     </div>
                              </div>
                              
@@ -254,7 +214,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-	
+	<script type="text/javascript" src="<%=path %>/js/pmo/performanceManageEvaSecondBU.js"></script>
 	
 </body>
 </html>

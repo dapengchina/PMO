@@ -80,7 +80,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效结果->历史绩效->Page-筛查XXX的历史绩效
+									<i class="glyphicon glyphicon-user"></i>  Management->绩效结果->历史绩效->Page-筛查XXX的历史绩效 (从后端取数据)
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
@@ -96,26 +96,26 @@ var path='<%=path%>';
 										<div class="group">
 											<label class="col-sm-2 control-label">E-HR</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" value="E100093330" />
+												<input type="text" class="form-control" id="eHr" value="E100093330" />
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">Employee Name</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" value="Beuben" />
+												<input type="text" class="form-control" id="staffName" value="Beuben" />
 											</div>
 										</div>
 										</br></br></br>
 										<div class="group">
 											<label class="col-sm-2 control-label">BU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" value="投资银行交付部" />
+												<input type="text" class="form-control" id="bu" value="投资银行交付部" />
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">DU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" value="XXX事业部" />
+												<input type="text" class="form-control" name="du" value="XXX事业部" />
 											</div>
 										</div>
 										</br></br></br>
@@ -126,14 +126,14 @@ var path='<%=path%>';
 										<label class="col-lg-2 control-label">Period Between</label>  
                                         <div class="col-lg-2">
                                         <div class='input-group date' id='datetimepicker1'>  
-                                            <input id="startTime" type='text' class="form-control" value="2017" />  
+                                            <input id="startYear" type='text' class="form-control" value="2017" />  
                                             <span class="input-group-addon">  
                                              <span class="glyphicon glyphicon-calendar"></span>  
                                             </span>  
                                         </div> 
                                         </div> 
 										<div class="col-lg-2">
-                                            <select class="form-control">
+                                            <select class="form-control" id="startQuarter">
 												<option>Q1</option>
 												<option>Q2</option>
 												<option>Q3</option>
@@ -146,14 +146,14 @@ var path='<%=path%>';
 										<label class="col-lg-2 control-label">To</label>  
                                         <div class="col-lg-2">
                                         <div class='input-group date' id='datetimepicker2'>  
-                                            <input id="startTime" type='text' class="form-control"  value="2018" />  
+                                            <input id="startTime" type='text' class="form-control" id="endYear"  value="2018" />  
                                             <span class="input-group-addon">  
                                              <span class="glyphicon glyphicon-calendar"></span>  
                                             </span>  
                                         </div> 
                                         </div> 
 										<div class="col-lg-2">
-                                            <select class="form-control">
+                                            <select class="form-control"  id="endQuarter">
 												<option>Q1</option>
 												<option>Q2</option>
 												<option>Q3</option>
@@ -172,7 +172,7 @@ var path='<%=path%>';
 								<div class="form-group" >
 									    <div style="text-align:center;width:20%;float:left"   >
 									    <input type="button" value="Search"
-										name="searchBtn" id="searchBtn" href="#"
+										name="searchBtn" id="searchBtn" onclick="search();"
 										class="button btn btn-primary" data-dismiss="modal"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 									    </div>
@@ -187,111 +187,14 @@ var path='<%=path%>';
 							<span>&nbsp;</span>
 							<!-- result box start -->
 
-									<small>
 									<table id="table3" border="1" width="100%" >
 										<tr style="background-color:#00688B">
-										 <td colspan="12"><font color="white"> Performance Documents</font>	 </td>
+										 <td ><font color="white"> Performance Documents</font>	 </td>
 										</tr>
-										<tr style="background-color:#d9edf7">
-												<th><input type="checkbox"/></th>
-												<th>SL</th>
-												<th>E-HR</th>
-												<th>Employee Name</th>
-												<th>DU</th>
-												<th>BU</th>
-												<th>Begin Date</th>
-												<th>End Date</th>
-												<th>RM</th>
-												<th>考评结果</th>
-												<th>Comments</th>
-												<th>Detail</th>
-									   </tr>
 									   <tr>
-										 <td><input type="checkbox"/></td>
-										 <td> 1	 </td>
-										 <td> E100093330	 </td>
-										 <td> Beuben  </td>
-										 <td> 投资银行交付部 </td>
-										 <td> XXX事业部 </td>
-										 <td> 01/01/2017  </td>
-										 <td> 31/03/2017 </td>
-										 <td> XXX  </td>
-										 <td> B </td>
-										 <td> OK </td>
-										 <td> <a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td><input type="checkbox"/></td>
-										 <td> 2	 </td>
-										 <td> E100093330	 </td>
-										 <td> Beuben  </td>
-										 <td> 投资银行交付部 </td>
-										 <td> XXX事业部 </td>
-										 <td> 01/04/2017  </td>
-										 <td> 30/06/2017 </td>
-										 <td> XXX  </td>
-										 <td> B </td>
-										 <td> OK </td>
-										 <td> <a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td><input type="checkbox"/></td>
-										 <td> 3	 </td>
-										 <td> E100093330	 </td>
-										 <td> Beuben  </td>
-										 <td> 投资银行交付部 </td>
-										 <td> XXX事业部 </td>
-										 <td> 01/07/2017  </td>
-										 <td> 31/09/2017 </td>
-										 <td> XXX  </td>
-										 <td> B </td>
-										 <td> OK </td>
-										 <td> <a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td><input type="checkbox"/></td>
-										 <td> 4	 </td>
-										 <td> E100093330	 </td>
-										 <td> Beuben  </td>
-										 <td> 投资银行交付部 </td>
-										 <td> XXX事业部 </td>
-										 <td> 01/10/2017  </td>
-										 <td> 31/12/2017 </td>
-										 <td> XXX  </td>
-										 <td> B </td>
-										 <td> OK </td>
-										 <td> <a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td><input type="checkbox"/></td>
-										 <td> 5	 </td>
-										 <td> E100093330	 </td>
-										 <td> Beuben  </td>
-										 <td> 投资银行交付部 </td>
-										 <td> XXX事业部 </td>
-										 <td> 01/01/2018  </td>
-										 <td> 31/03/2017 </td>
-										 <td> XXX  </td>
-										 <td> B </td>
-										 <td> OK </td>
-										 <td> <a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td><input type="checkbox"/></td>
-										 <td> 6	 </td>
-										 <td> E100093330	 </td>
-										 <td> Beuben  </td>
-										 <td> 投资银行交付部 </td>
-										 <td> XXX事业部 </td>
-										 <td> 01/04/2018  </td>
-										 <td> 30/06/2017 </td>
-										 <td> XXX  </td>
-										 <td> B </td>
-										 <td> OK </td>
-										 <td> <a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+										 <td> <table id="manageResultHistoryQueryList" class="table table-thead-background"></table> </td>									
 									   </tr>
 									</table>
-									</small>
 									
 									<br/>
 
@@ -377,8 +280,8 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-	
-	
+	<script type="text/javascript" src="<%=path %>/js/pmo/performanceManageResultHistoryQuery.js"></script>
+	    
 </body>
 </html>
 

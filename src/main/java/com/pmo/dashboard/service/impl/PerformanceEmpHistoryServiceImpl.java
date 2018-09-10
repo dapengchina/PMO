@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.pmo.dashboard.controller.PerformanceProgressController;
+import com.pmo.dashboard.controller.PerformanceEmpProgressController;
 import com.pmo.dashboard.entity.PerformanceEmpHistoryBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
 import com.pom.dashboard.service.PerformanceEmpHistoryService;

@@ -8,6 +8,8 @@ public class PerformanceEmpHistoryBean {
 	private String RM;
 	private String rating;
 	private String comments;
+
+	private String status;
 	
 	public PerformanceEmpHistoryBean() {
 		super();
@@ -59,10 +61,16 @@ public class PerformanceEmpHistoryBean {
 		this.comments = comments;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
 		return "PerformanceEmpHistoryBean [year=" + year + ", quarter=" + quarter + ", DU=" + DU + ", RM=" + RM
-				+ ", rating=" + rating + ", comments=" + comments + "]";
+				+ ", rating=" + rating + ", comments=" + comments + ", status=" + status + "]";
 	}
 	
 	

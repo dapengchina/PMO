@@ -41,8 +41,11 @@
 .templateTable thead, .templateTable td { 
 	text-align: center;
 }
-
-
+</style>
+<style>
+    .table-thead-background  thead, th {
+        background-color:#d9edf7;
+    }
 </style>
 </head>
 <script>
@@ -64,7 +67,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  当期绩效
+									<i class="glyphicon glyphicon-user"></i>  当期绩效 (从后端取数据)
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
@@ -72,30 +75,8 @@ var path='<%=path%>';
 							<div class="panel panel-default">	
                               <div class="panel-body">
 
-									<table id="table3" border="1" width="80%" >
-										<thead >
-											<tr style="background-color:#d9edf7">
-												<th>Year</th>
-												<th>Quarter</th>
-												<th>DU</th>
-												<th>RM</th>
-												<th>Rating</th>
-												<th>Comments</th>
-												<th>Detail</th>
-											</tr>
-										</thead>
-									   <tr>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
-										 <td> XXX </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
-										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+									<table id="empEvaCurrentPeriodList" class="table table-thead-background"></table>
 
-									   </tr>
-
-									</table>
 						     </div>
                              </div>
                           
@@ -163,6 +144,8 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
+	<script type="text/javascript" src="<%=path %>/js/pmo/performanceEmpEvaCurrentPeriod.js"></script>
+	
 </body>
 </html>
 

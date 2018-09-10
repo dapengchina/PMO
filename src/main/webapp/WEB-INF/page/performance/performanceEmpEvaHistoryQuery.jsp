@@ -64,7 +64,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  历史绩效查询->Search for Documents
+									<i class="glyphicon glyphicon-user"></i>  历史绩效查询->Search for Documents (从后端取数据)
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
@@ -193,81 +193,7 @@ var path='<%=path%>';
 									</table>
 									
 						<br/>&nbsp;
-									<table id="table3" border="1" width="100%" style="display:none">
-										<tr style="background-color:#00688B">
-										 <td colspan="8"><font color="white"> Performance Documents</font>	 </td>
-										</tr>
-										<tr style="background-color:#d9edf7">
-												<th>SL</th>
-												<th>Year</th>
-												<th>Quarter</th>
-												<th>DU</th>
-												<th>RM</th>
-												<th>Rating</th>
-												<th>Comments</th>
-												<th>Detail</th>
-									   </tr>
-									   <tr>
-										 <td> 1	 </td>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
-										 <td> 投资银行交付部 </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
-										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td> 2	 </td>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
-										 <td> 投资银行交付部 </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
-										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td> 3	 </td>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
-										 <td> 投资银行交付部 </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
-										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td> 4	 </td>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
-										 <td> 投资银行交付部 </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
-										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td> 5	 </td>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
-										 <td> 投资银行交付部 </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
-										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td> 6	 </td>
-										 <td> 2018	 </td>
-										 <td> Q2  </td>
-										 <td> 投资银行交付部 </td>
-										 <td> XXX </td>
-										 <td> B+  </td>
-										 <td> OK </td>
-										 <td> <a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									</table>
+							
 						     </div>
                              </div>
 							<!-- result box end -->

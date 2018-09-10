@@ -23,13 +23,13 @@ import com.pmo.dashboard.entity.PerformanceQueryCondition;
 import com.pom.dashboard.service.PerformanceEmpHistoryService;
 
 /**
- * Performance Employee History 页面的controller
+ * Performance Employee 绩效结果  页面的controller
  * @author Yankui
  *
  */
 
 @Controller
-@RequestMapping(value="/performanceEmpHistory")
+@RequestMapping(value="/performanceEmpResult")
 public class PerformanceEmpHistoryController {
 	
 	private static Logger logger = LoggerFactory.getLogger(PerformanceEmpHistoryController.class);
@@ -39,23 +39,28 @@ public class PerformanceEmpHistoryController {
 
 	@RequestMapping("/queryPerformanceEmpHistoryList")
     @ResponseBody
-	public String queryPerformanceEmpHistoryList(int pageSize, int pageNumber, PerformanceQueryCondition condition, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException{
+	public String queryPerformanceEmpHistoryList(Integer pageSize, Integer pageNumber, PerformanceQueryCondition condition, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException{
 		logger.debug("PerformanceEmpHistoryController:" + condition);
 		
-		PageHelper.startPage(pageNumber, pageSize);
 		List<PerformanceEmpHistoryBean> data = empHistoryService.queryPerformanceEmpHistoryList(condition);
-        PageInfo<PerformanceEmpHistoryBean> page = new PageInfo<>(data);
-		
 		Map<String,Object> map = new HashMap<String,Object>();
+
+		PageHelper.startPage(pageNumber, pageSize);
+		PageInfo<PerformanceEmpHistoryBean> page = new PageInfo<>(data);		
 		map.put("total", page.getTotal());
 		map.put("rows", data);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		String rtn = objectMapper.writeValueAsString(map);
-
+		logger.debug("rtn:" + rtn);
 		return rtn;
 	}
 
-	
+	@RequestMapping("/queryEmpCurrentPeriodList")
+    @ResponseBody
+	public Object queryPerformanceEmpHistoryList(HttpServletRequest request, HttpServletResponse response) {
+		List<PerformanceEmpHistoryBean> data = empHistoryService.queryPerformanceEmpHistoryList(null);
+		return data;
+	}
 	
 }

@@ -6,6 +6,6 @@ import com.pmo.dashboard.entity.PerformanceProgressBean;
 
 public interface PerformanceProgressService {
 
-	public List<PerformanceProgressBean> queryPerformancePregressList();
+	public List<PerformanceProgressBean> queryPerformanceProgressList();
 
 }

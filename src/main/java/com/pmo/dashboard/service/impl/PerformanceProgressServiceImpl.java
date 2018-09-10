@@ -12,7 +12,7 @@ import com.pom.dashboard.service.PerformanceProgressService;
 public class PerformanceProgressServiceImpl implements PerformanceProgressService {
 	
 	@Override
-	public List<PerformanceProgressBean> queryPerformancePregressList(){
+	public List<PerformanceProgressBean> queryPerformanceProgressList(){
 		List<PerformanceProgressBean> list = new ArrayList<>();
 		
 		PerformanceProgressBean bean1 = new PerformanceProgressBean("绩效目标审核", "XXX", "通过", "OK");

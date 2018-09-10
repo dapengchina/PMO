@@ -65,7 +65,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  绩效考评进度
+									<i class="glyphicon glyphicon-user"></i>  绩效考评进度 (从后端取数据)
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
@@ -85,41 +85,6 @@ var path='<%=path%>';
 										<tbody>
 										
 									    </tbody>
-									</table>
-
-									<table id="table3" border="1" width="80%" >
-										<thead >
-											<tr style="background-color:#d9edf7">
-												<th>流程名称</th>
-												<th>审核人</th>
-												<th>状态</th>
-												<th>Comments</th>
-											</tr>
-										</thead>
-									   <tr>
-										 <td> 绩效目标审核	 </td>
-										 <td> XXX  </td>
-										 <td> 通过 </td>
-										 <td> OK </td>
-									   </tr>
-									   <tr>
-										 <td> 绩效初评	 </td>
-										 <td> XXX  </td>
-										 <td> 通过 </td>
-										 <td> OK </td>
-									   </tr>
-									   <tr>
-										 <td> 绩效集体评议	 </td>
-										 <td> XXX  </td>
-										 <td> 通过 </td>
-										 <td> OK </td>
-									   </tr>
-									   <tr>
-										 <td> 审批	 </td>
-										 <td> XXX  </td>
-										 <td> 通过 </td>
-										 <td> OK </td>
-									   </tr>
 									</table>
 						     </div>
                              </div>

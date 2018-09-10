@@ -1,69 +1,75 @@
 $(function(){
-	loadEmpHistoryList();
+	loadManageResultHistoryQueryList();
+
 });
 
-
-function loadEmpHistoryList(){
-    var queryUrl = path+'/service/performanceEmpResult/queryPerformanceEmpHistoryList';
-    
-	var columns = [
-			        {
+function loadManageResultHistoryQueryList(){
+    var queryUrl = path+'/service/performanceManageResultHistory/queryManageResultHistoryQueryList';
+    var columns = [
+			    	{
 			        	checkbox: true,  
 			            visible: true                 //是否显示复选框  
 			        }, {
 			            title: 'SL',
+			            sortable: true,
 			            formatter:function(value,row,index){
 				           	return "<span>" + (index+1) + "</span>";
 			           }
 			        }, {
-			            field: 'year',
-			            title: 'Year',
+			            field: 'ehr',
+			            title: 'E-HR',
 			            sortable: true
 			        }, {
-			            field: 'quarter',
-			            title: 'Quarter',
+			            field: 'empName',
+			            title: 'Employee Name',
+			            sortable: true
+			        }, {
+			            field: 'bu',
+			            title: 'BU',
 			            sortable: true
 			        }, {
 			            field: 'du',
 			            title: 'DU',
 			            sortable: true
 			        }, {
-			            field: 'rm',
-			            title: 'RM',
-			            sortable: true
+			            field: 'beginDate',
+			            title: 'Begin Date'
 			        }, {
-			            field: 'rating',
-			            title: 'Rating',
-			            sortable: true
+			            field: 'endDate',
+			            title: 'End Date'
+			        }, {
+			            field: 'rm',
+			            title: 'RM'
+			        }, {
+			            field: 'result',
+			            title: '考评结果'
 			        }, {
 			            field: 'comments',
 			            title: 'Comments'
 			        }, {
 			            title: 'Detail',
 			            formatter:function(value,row,index){            	
-			            	return "<a href='performanceEmpEvaCurrentPeriodDetail.html' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>" ;
+			            	return "<a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>" ;
 			            }
 			        }];
 
-    var table = $('#empHistoryList').bootstrapTable({
+    var table = $('#manageResultHistoryQueryList').bootstrapTable({
         url: queryUrl,                      //请求后台的URL（*）
         method: 'GET',                      //请求方式（*）
-        toolbar: '#toolbar',              //工具按钮用哪个容器
+//        toolbar: '#toolbar',              //工具按钮用哪个容器
         striped: true,                      //是否显示行间隔色
-//        fixedColumns: true,
-//        fixedNumber: 6,
         cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-        pagination: true,                   //是否显示分页（*）
+        pagination: false,                   //是否显示分页（*）
         sortable: true,                     //是否启用排序
         sortOrder: "asc",                   //排序方式
-        sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+        sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
         pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
         pageSize: 10,                     //每页的记录行数（*）
         pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
         search: false,                      //是否显示表格搜索
-        strictSearch: true,
+        strictSearch: false,
         showColumns: false,                  //是否显示所有的列（选择显示的列）
-        showRefresh: true,                  //是否显示刷新按钮
+//        showRefresh: true,                  //是否显示刷新按钮
         minimumCountColumns: 2,             //最少允许的列数
         clickToSelect : true, // 是否启用点击选中行
         //height: 500,                      //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
@@ -77,9 +83,7 @@ function loadEmpHistoryList(){
         	//获取查询条件
         	var eHr = $("#eHr").val();
         	var staffName = $("#staffName").val();
-        	var role = $("#role").val();
-        	var skill = $("#skill").val();
-        	var buName = $("#buName").val();
+        	var buName = $("#bu").val();
         	var du = $("#du").val();
         	var startYear = $("#startYear").val();
         	var startQuarter = $("#startQuarter").val();
@@ -90,8 +94,6 @@ function loadEmpHistoryList(){
         		pageNumber: params.offset/params.limit+1,
         		eHr: eHr,
         		staffName: staffName,
-        		role: role,
-        		skill: skill,
         		buName: buName,
         		du: du,
         		startYear: startYear,
@@ -106,7 +108,7 @@ function loadEmpHistoryList(){
 			console.log(JSON.stringify(sta));
         }
         ,onLoadError: function (status, res) { //加载失败时执行
-          console.log("error.res:" + res);
+          console.log( res);
           console.log("error.status:" + status);
         },
         onDblClickRow: function (row, $element) {
@@ -117,14 +119,11 @@ function loadEmpHistoryList(){
 }
 
 
-
 function search(){
 	//获取查询条件
 	var eHr = $("#eHr").val();
 	var staffName = $("#staffName").val();
-	var role = $("#role").val();
-	var skill = $("#skill").val();
-	var buName = $("#buName").val();
+	var buName = $("#bu").val();
 	var du = $("#du").val();
 	var startYear = $("#startYear").val();
 	var startQuarter = $("#startQuarter").val();
@@ -134,8 +133,6 @@ function search(){
 		query: {  
     		eHr: eHr,
     		staffName: staffName,
-    		role: role,
-    		skill: skill,
     		buName: buName,
     		du: du,
     		startYear: startYear,
@@ -145,6 +142,7 @@ function search(){
         }
     }  
 	//刷新表格  
-    $('#empHistoryList').bootstrapTable('refresh',queryParams);  
+    $('#manageResultHistoryQueryList').bootstrapTable('refresh',queryParams);  
 }
+
 

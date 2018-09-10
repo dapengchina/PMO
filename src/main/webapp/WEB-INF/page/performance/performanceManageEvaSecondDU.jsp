@@ -62,7 +62,7 @@ var path='<%=path%>';
 						<div class="box-inner" >
 							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->审批->Page-交付部审批
+									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->审批->Page-交付部审批  (从后端取数据)
 								</h2>
 							</div>
 
@@ -84,76 +84,37 @@ var path='<%=path%>';
 										 <td> D <br/>(0-5%) </td>
 										 <td> 参评比例合计 </td>
 									   </tr>
-									   <tr>
-										 <td> 10 </td>
-										 <td> 60  </td>
-										 <td> 30 </td>
-										 <td> 22 </td>
-										 <td> 4  </td>
-										 <td> 76 </td>
+									   <tr>			
+										 <td>  <div id="empA"></div>	 </td>
+										 <td> <div id="empBplus"></div> </td>
+										 <td> <div id="empB"></div> </td>
+										 <td><div id="empC"></div> </td>
+										 <td> <div id="empD"></div> </td>
+										 <td> <div id="empSum"></div> </td>
 									   </tr>
 									   <tr>
-										 <td> 7.9%	 </td>
-										 <td> 47.6%  </td>
-										 <td> 23.8% </td>
-										 <td> 17.5% </td>
-										 <td> 3.2% </td>
-										 <td> 100% </td>
+										 <td>  <div id="percentA"></div>	 </td>
+										 <td> <div id="percentBplus"></div> </td>
+										 <td> <div id="percentB"></div> </td>
+										 <td><div id="percentC"></div> </td>
+										 <td> <div id="percentD"></div> </td>
+										 <td> <div id="percentSum"></div> </td>
 									   </tr>
 									</table>
 
 									<br/>
-
-									<table id="table2" border="1" width="100%" >
+									
+									<table id="table3" border="1" width="100%" >
 										<tr style="background-color:#00688B">
-										 <td colspan="7"><font color="white"> 当期绩效</font>	 </td>
-										</tr>
-										<tr style="background-color:#d9edf7">
-											<th><input type="checkbox"/></th>
-											<th>SL</th>
-											<th>RM</th>
-											<th>Year</th>
-											<th>Quarter</th>
-											<th>状态</th>
-											<th>Detail</th>
+										 <td ><font color="white"> 当期绩效</font>	 </td>
 										</tr>
 									   <tr>
-										 <td> <input type="checkbox"/>	 </td>
-										 <td> 1  </td>
-										 <td> Abigal </td>
-										 <td> 2018 </td>
-										 <td> Q2  </td>
-										 <td> 待审批 </td>
-										 <td> <a href='performanceManageEvaSecondQuery.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td> <input type="checkbox"/>	 </td>
-										 <td> 2  </td>
-										 <td> Alice </td>
-										 <td> 2018 </td>
-										 <td> Q2  </td>
-										 <td> 已驳回 </td>
-										 <td> <a href='performanceManageEvaSecondQuery.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td> <input type="checkbox"/>	 </td>
-										 <td> 3  </td>
-										 <td> Christy </td>
-										 <td> 2018 </td>
-										 <td> Q2  </td>
-										 <td> 已审批 </td>
-										 <td> <a href='performanceManageEvaSecondQuery.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
-									   </tr>
-									   <tr>
-										 <td> <input type="checkbox"/>	 </td>
-										 <td> 4  </td>
-										 <td> JOY </td>
-										 <td> 2018 </td>
-										 <td> Q2  </td>
-										 <td> 已审批 </td>
-										 <td> <a href='performanceManageEvaSecondQuery.html' class='btn btn-info btn-small'><i class="glyphicon glyphicon-edit"></i></a> </td>
+										 <td> <table id="manageEvaSeondDUList" class="table table-thead-background"></table> </td>									
 									   </tr>
 									</table>
+									
+									
+									
 						     </div>
                              </div>
                              
@@ -254,7 +215,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-	
+	    <script type="text/javascript" src="<%=path %>/js/pmo/performanceManageEvaSecondDU.js"></script>
 	
 </body>
 </html>
