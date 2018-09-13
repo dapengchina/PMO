@@ -47,6 +47,46 @@ public class PerformanceManageEvaBean {
 	private String previous2Quarter;
 	//上上上季度绩效
 	private String previous3Quarter;
+	
+	private String year;
+	private String quarter;
+	private String result;
+	private String resultComments;
+	private String rm;
+	private String role;
+	private String skill;
+	
+	
+	public String getRm() {
+		return rm;
+	}
+	public void setRm(String rm) {
+		this.rm = rm;
+	}
+	public String getQuarter() {
+		return quarter;
+	}
+	public void setQuarter(String quarter) {
+		this.quarter = quarter;
+	}
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
+	}
+	public String getResultComments() {
+		return resultComments;
+	}
+	public void setResultComments(String resultComments) {
+		this.resultComments = resultComments;
+	}
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
 	public String getEhr() {
 		return ehr;
 	}

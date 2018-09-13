@@ -1,17 +1,18 @@
 $("#getEmp").click(function(){
-	window.open(path+"/service/performance/performanceEmpPBC.html?status=1");
+	window.open(path+"/service/performance/performanceEmpPBC.html");
 } );
 
 $("#getManage").click(function(){
-	window.open(path+"/service/employee/getTMemployee.html?status=3");
+	window.open(path+"/service/performance/performanceEmpPBC.html");
 });
 $("#getHR").click(function(){
-	window.open(path+"/service/employee/getTMemployee.html?status=4");
+	window.open(path+"/service/performance/performanceEmpPBC.html");
 });
 $("#getLOB").click(function(){
-	window.open(path+"/service/employee/getTMemployee.html?status=4");
+	window.open(path+"/service/performance/performanceEmpPBC.html");
 });
 if($("#id").length>0){}else{} 
+
 //year drop down list for performanceEmpEvaHistoryQuery.html
 if($("#datetimepicker1").length>0){
 	$('#datetimepicker1').datetimepicker({

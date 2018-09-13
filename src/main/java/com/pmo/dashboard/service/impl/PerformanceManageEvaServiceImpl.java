@@ -3,8 +3,11 @@ package com.pmo.dashboard.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
+import com.pmo.dashboard.dao.PerformanceResultMapper;
 import com.pmo.dashboard.entity.PerformanceEmpHistoryBean;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceManageResultHistoryBean;
@@ -13,6 +16,9 @@ import com.pom.dashboard.service.PerformanceManageEvaService;
 
 @Service
 public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaService {
+	
+	@Resource
+	PerformanceResultMapper mapper;
 
 	@Override
 	public List<PerformanceManageEvaBean> queryManageEvaFirstDetailWithAchieveList(PerformanceQueryCondition condition) {
@@ -139,8 +145,8 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
 	
 	
 	@Override
-	public List<PerformanceManageEvaBean> queryManageEvaSecondQueryDUList(PerformanceQueryCondition condition) {
-		List<PerformanceManageEvaBean> list = queryManageEvaFirstDetailWithAchieveList(condition);
+	public List<PerformanceManageEvaBean> queryManageEvaSecondQueryDUList(PerformanceQueryCondition condition) {		
+		List<PerformanceManageEvaBean> list = mapper.queryManageEvaSecondQueryDUList(condition); //queryManageEvaFirstDetailWithAchieveList(condition);
 		return list;		
 	}
 	
