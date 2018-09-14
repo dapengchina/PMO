@@ -106,7 +106,7 @@ var path='<%=path%>';
 										<div class="group">
 											<label class="col-sm-2 control-label">BU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" name="buName"/>
+												<input type="text" class="form-control" id="bu"/>
 											</div>
 										</div>
 										<div class="group">

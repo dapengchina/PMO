@@ -156,14 +156,14 @@ function loadManageEvaSecondQueryList(){
         	//获取查询条件
         	var eHr = $("#eHr").val();
         	var staffName = $("#staffName").val();
-        	var buName = $("#buName").val();
+        	var bu = $("#bu").val();
         	var du = $("#du").val();        	
         	return {
         		pageSize: params.limit,
         		pageNumber: params.offset/params.limit+1,
         		eHr: eHr,
         		staffName: staffName,
-        		buName: buName,
+        		bu: bu,
         		du: du
             };
         },
@@ -200,13 +200,13 @@ function search(){
 	//获取查询条件
 	var eHr = $("#eHr").val();
 	var staffName = $("#staffName").val();
-	var buName = $("#buName").val();
+	var bu = $("#bu").val();
 	var du = $("#du").val();      
 	var queryParams = { 
 		query: {  
     		eHr: eHr,
     		staffName: staffName,
-    		buName: buName,
+    		bu: bu,
     		du: du
         }
     };

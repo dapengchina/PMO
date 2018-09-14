@@ -57,6 +57,18 @@ public class PerformanceManageEvaBean {
 	private String skill;
 	
 	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public String getSkill() {
+		return skill;
+	}
+	public void setSkill(String skill) {
+		this.skill = skill;
+	}
 	public String getRm() {
 		return rm;
 	}

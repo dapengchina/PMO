@@ -6,8 +6,8 @@ public class PerformanceQueryCondition {
 	private String staffName;
 	private String role;
 	private String skill;
-	private String buName;
 	private String du;
+	private String bu;
 	private String startYear;
 	private String startQuarter;
 	private String endYear;
@@ -35,12 +35,6 @@ public class PerformanceQueryCondition {
 	}
 	public void setSkill(String skill) {
 		this.skill = skill;
-	}
-	public String getBuName() {
-		return buName;
-	}
-	public void setBuName(String buName) {
-		this.buName = buName;
 	}
 	public String getDu() {
 		return du;
@@ -72,10 +66,17 @@ public class PerformanceQueryCondition {
 	public void setEndQuarter(String endQuarter) {
 		this.endQuarter = endQuarter;
 	}
+	
+	public String getBu() {
+		return bu;
+	}
+	public void setBu(String bu) {
+		this.bu = bu;
+	}
 	@Override
 	public String toString() {
 		return "PerformanceQueryCondition [eHr=" + eHr + ", staffName=" + staffName + ", role=" + role + ", skill="
-				+ skill + ", buName=" + buName + ", du=" + du + ", startYear=" + startYear + ", startQuarter="
+				+ skill + ", bu=" + bu + ", du=" + du + ", startYear=" + startYear + ", startQuarter="
 				+ startQuarter + ", endYear=" + endYear + ", endQuarter=" + endQuarter + "]";
 	}
 

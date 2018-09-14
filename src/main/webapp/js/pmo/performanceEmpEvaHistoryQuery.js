@@ -79,7 +79,7 @@ function loadEmpHistoryList(){
         	var staffName = $("#staffName").val();
         	var role = $("#role").val();
         	var skill = $("#skill").val();
-        	var buName = $("#buName").val();
+        	var bu = $("#bu").val();
         	var du = $("#du").val();
         	var startYear = $("#startYear").val();
         	var startQuarter = $("#startQuarter").val();
@@ -92,7 +92,7 @@ function loadEmpHistoryList(){
         		staffName: staffName,
         		role: role,
         		skill: skill,
-        		buName: buName,
+        		bu: bu,
         		du: du,
         		startYear: startYear,
         		startQuarter: startQuarter,
@@ -124,7 +124,7 @@ function search(){
 	var staffName = $("#staffName").val();
 	var role = $("#role").val();
 	var skill = $("#skill").val();
-	var buName = $("#buName").val();
+	var bu = $("#bu").val();
 	var du = $("#du").val();
 	var startYear = $("#startYear").val();
 	var startQuarter = $("#startQuarter").val();
@@ -136,14 +136,14 @@ function search(){
     		staffName: staffName,
     		role: role,
     		skill: skill,
-    		buName: buName,
+    		bu: bu,
     		du: du,
     		startYear: startYear,
     		startQuarter: startQuarter,
     		endYear: endYear,
     		endQuarter: endQuarter
         }
-    }  
+    };
 	//刷新表格  
     $('#empHistoryList').bootstrapTable('refresh',queryParams);  
 }

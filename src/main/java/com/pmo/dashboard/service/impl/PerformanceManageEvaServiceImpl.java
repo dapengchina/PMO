@@ -22,77 +22,81 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
 
 	@Override
 	public List<PerformanceManageEvaBean> queryManageEvaFirstDetailWithAchieveList(PerformanceQueryCondition condition) {
-		List<PerformanceManageEvaBean> list = queryManageEvaFirstDetailList(condition);
-		for (PerformanceManageEvaBean bean : list) {
-			bean.setPmEvalution("B+");
-			bean.setDuEvalution("B");
-			bean.setAchievement("工作负责高效 ");
-			bean.setJump("否");
-		}
-		return list;		
+		List<PerformanceManageEvaBean> list = mapper.queryManageEvaSecondQueryDUList(condition);
+		return list;	
+//		List<PerformanceManageEvaBean> list = queryManageEvaFirstDetailList(condition);
+//		for (PerformanceManageEvaBean bean : list) {
+//			bean.setPmEvalution("B+");
+//			bean.setDuEvalution("B");
+//			bean.setAchievement("工作负责高效 ");
+//			bean.setJump("否");
+//		}
+//		return list;		
 	}
 	
 	@Override
 	public List<PerformanceManageEvaBean> queryManageEvaFirstDetailList(PerformanceQueryCondition condition) {
-		List<PerformanceManageEvaBean> list = new ArrayList<>();
-		
-		for(int i=0; i<5; i++) {
-			PerformanceManageEvaBean bean = new PerformanceManageEvaBean();
-			bean.setEhr("0090127655");
-			bean.setLobNo("45678");
-			bean.setName("William");
-			bean.setHireDate("2017-10-11 ");
-			bean.setPosition("Senior Developer ");
-			bean.setServiceLine("HSBC");
-			bean.setBu("xxx 事业部");
-			bean.setDu("xxx 交付部 ");
-			bean.setLocation("Xian");
-			bean.setKeymember("是");
-			bean.setParticipate("是");
-			bean.setManager("XXX Rm");
-			bean.setCustomerFeedback("该员工平时工作仔细认真，负责。不但执行力强，而且工作配合度也好，有积极向上的工作态度，能主动协调其他同事工作，并且能及时完成上级领导安排的其他工作");
-			bean.setInitialEvalution("B+");
-			bean.setPmEvalution("");
-			bean.setDuEvalution("");
-			bean.setDuEvaManager("XXX交付部经理 ");
-			bean.setAchievement("");
-			bean.setJump("");
-			bean.setComments("");
-			bean.setPrevious1Quarter("B+");
-			bean.setPrevious2Quarter("B+");
-			bean.setPrevious3Quarter("A");
-
-			list.add(bean);
-		}
-		for(int i=0; i<4; i++) {
-			PerformanceManageEvaBean bean = new PerformanceManageEvaBean();
-			bean.setEhr("0090127666");
-			bean.setLobNo("45678");
-			bean.setName("William");
-			bean.setHireDate("2017-10-11 ");
-			bean.setPosition("Senior Developer ");
-			bean.setServiceLine("HSBC");
-			bean.setBu("xxx 事业部");
-			bean.setDu("xxx 交付部 ");
-			bean.setLocation("Xian");
-			bean.setKeymember("是");
-			bean.setParticipate("是");
-			bean.setManager("XXX Rm");
-			bean.setCustomerFeedback("该员工平时工作仔细认真，负责。不但执行力强，而且工作配合度也好，有积极向上的工作态度，能主动协调其他同事工作，并且能及时完成上级领导安排的其他工作");
-			bean.setInitialEvalution("B");
-			bean.setPmEvalution("");
-			bean.setDuEvalution("");
-			bean.setDuEvaManager("XXX交付部经理 ");
-			bean.setAchievement("");
-			bean.setJump("");
-			bean.setComments("");
-			bean.setPrevious1Quarter("B+");
-			bean.setPrevious2Quarter("B+");
-			bean.setPrevious3Quarter("A");
-
-			list.add(bean);
-		}
+		List<PerformanceManageEvaBean> list = mapper.queryManageEvaSecondQueryDUList(condition);
 		return list;
+//		List<PerformanceManageEvaBean> list = new ArrayList<>();
+//		
+//		for(int i=0; i<5; i++) {
+//			PerformanceManageEvaBean bean = new PerformanceManageEvaBean();
+//			bean.setEhr("0090127655");
+//			bean.setLobNo("45678");
+//			bean.setName("William");
+//			bean.setHireDate("2017-10-11 ");
+//			bean.setPosition("Senior Developer ");
+//			bean.setServiceLine("HSBC");
+//			bean.setBu("xxx 事业部");
+//			bean.setDu("xxx 交付部 ");
+//			bean.setLocation("Xian");
+//			bean.setKeymember("是");
+//			bean.setParticipate("是");
+//			bean.setManager("XXX Rm");
+//			bean.setCustomerFeedback("该员工平时工作仔细认真，负责。不但执行力强，而且工作配合度也好，有积极向上的工作态度，能主动协调其他同事工作，并且能及时完成上级领导安排的其他工作");
+//			bean.setInitialEvalution("B+");
+//			bean.setPmEvalution("");
+//			bean.setDuEvalution("");
+//			bean.setDuEvaManager("XXX交付部经理 ");
+//			bean.setAchievement("");
+//			bean.setJump("");
+//			bean.setComments("");
+//			bean.setPrevious1Quarter("B+");
+//			bean.setPrevious2Quarter("B+");
+//			bean.setPrevious3Quarter("A");
+//
+//			list.add(bean);
+//		}
+//		for(int i=0; i<4; i++) {
+//			PerformanceManageEvaBean bean = new PerformanceManageEvaBean();
+//			bean.setEhr("0090127666");
+//			bean.setLobNo("45678");
+//			bean.setName("William");
+//			bean.setHireDate("2017-10-11 ");
+//			bean.setPosition("Senior Developer ");
+//			bean.setServiceLine("HSBC");
+//			bean.setBu("xxx 事业部");
+//			bean.setDu("xxx 交付部 ");
+//			bean.setLocation("Xian");
+//			bean.setKeymember("是");
+//			bean.setParticipate("是");
+//			bean.setManager("XXX Rm");
+//			bean.setCustomerFeedback("该员工平时工作仔细认真，负责。不但执行力强，而且工作配合度也好，有积极向上的工作态度，能主动协调其他同事工作，并且能及时完成上级领导安排的其他工作");
+//			bean.setInitialEvalution("B");
+//			bean.setPmEvalution("");
+//			bean.setDuEvalution("");
+//			bean.setDuEvaManager("XXX交付部经理 ");
+//			bean.setAchievement("");
+//			bean.setJump("");
+//			bean.setComments("");
+//			bean.setPrevious1Quarter("B+");
+//			bean.setPrevious2Quarter("B+");
+//			bean.setPrevious3Quarter("A");
+//
+//			list.add(bean);
+//		}
+//		return list;
 	}
 	
 	

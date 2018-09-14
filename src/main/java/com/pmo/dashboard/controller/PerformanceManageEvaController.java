@@ -175,7 +175,7 @@ public class PerformanceManageEvaController {
 	@RequestMapping("/queryManageEvaSecondQueryDUList")
     @ResponseBody
 	public String queryManageEvaSecondQueryDUList(int pageSize, int pageNumber, PerformanceQueryCondition condition, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException{
-		logger.debug("condition:" + condition);
+		logger.warn("condition-----------:" + condition);
 		List<PerformanceManageEvaBean> data = manageEvaService.queryManageEvaSecondQueryDUList(condition);
 
 		Map<String,Object> map = new HashMap<String,Object>();

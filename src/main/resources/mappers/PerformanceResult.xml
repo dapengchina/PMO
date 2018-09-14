@@ -35,6 +35,25 @@
 		<!-- 查询绩效结果 -->
 	<select id="queryManageEvaSecondQueryDUList"  parameterType="String"   resultMap="PerformanceResultMap">
   select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r, t_employee e where r.E_HR=e.E_HR and  Finalize='true'
+	
+    <if test="eHr != null and eHr != ''">
+		AND e.E_HR = #{eHr}
+	</if>
+    <if test="staffName != null and staffName != ''">
+		AND e.STAFF_NAME = #{staffName}
+	</if>
+    <if test="du != null and du != ''">
+		AND r.du = #{du}
+	</if>
+    <if test="bu != null and bu != ''">
+		AND r.bu = #{bu}
+	</if>
+    <if test="role != null and role != ''">
+		AND r.role = #{role}
+	</if>
+    <if test="skill != null and skill != ''">
+		AND r.skill = #{skill}
+	</if>
 	</select>
 
 </mapper>
@@ -44,7 +63,7 @@
 
 
 insert into p_result(Result_ID,E_HR,Year,Quarter,BU,DU,RM,Role,Skill,Location,Backbone,Assessed,Direct_Supervisor,Result,Client_Feedback,PreAssessment_Result,Direct_Supervisor_Assessment_Result,Group_Assessment_Result,Group_Assessment_Manager,Performance_Facts,Finalize) values('0035e1d99c4d4a49b37f216305dceeww', 'E000850984'
-,'2018','Q1','对公业务事业部','贸易融资交付部','杨万勇','Tester','Automation Testing','Xian','是','Assessed','张三','B+','工作认真','B+', 'B+','A','李四', ' ','True');
+,'2018','Q1','对公业务事业部','贸易融资交付部','杨万勇','Tester','Automation Testing','Xian','是','Assessed','张三','B+','工作认真负责','B+', 'B+','A','李四', ' ','True');
 
 
  -->
