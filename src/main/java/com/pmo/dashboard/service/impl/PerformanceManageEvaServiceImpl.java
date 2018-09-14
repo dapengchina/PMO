@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.pmo.dashboard.dao.PerformanceResultMapper;
@@ -16,6 +18,7 @@ import com.pom.dashboard.service.PerformanceManageEvaService;
 
 @Service
 public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaService {
+	private static final Logger logger = LoggerFactory.getLogger(PerformanceManageEvaServiceImpl.class);
 	
 	@Resource
 	PerformanceResultMapper mapper;
@@ -150,28 +153,48 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
 	
 	@Override
 	public List<PerformanceManageEvaBean> queryManageEvaSecondQueryDUList(PerformanceQueryCondition condition) {		
-		List<PerformanceManageEvaBean> list = mapper.queryManageEvaSecondQueryDUList(condition); //queryManageEvaFirstDetailWithAchieveList(condition);
+		List<PerformanceManageEvaBean> list = mapper.queryManageEvaSecondQueryDUList(condition);
 		return list;		
 	}
 	
 	@Override
 	public List<PerformanceManageResultHistoryBean> queryManageResultHistoryQueryList(PerformanceQueryCondition condition) {
-		List<PerformanceManageResultHistoryBean> list = new ArrayList<>();
+		List<PerformanceManageEvaBean> list0 = mapper.queryManageEvaSecondQueryDUList(condition);
 		
-		for(int i=0; i<5; i++) {
-//			E-HR 	Employee Name 	DU 	BU 	Begin Date 	End Date 	RM 	考评结果 	Comments
+		List<PerformanceManageResultHistoryBean> list = new ArrayList<>();
+		for(PerformanceManageEvaBean b : list0) {
 			PerformanceManageResultHistoryBean bean = new PerformanceManageResultHistoryBean();
-			bean.setEhr("E100093330");
-			bean.setEmpName("Beuben");
-			bean.setDu("投资银行交付部");
-			bean.setBu("XXX事业部");
-			bean.setBeginDate("01/01/2017");
-			bean.setEndDate("31/03/2017");
-			bean.setRm("XXX");
-			bean.setResult("B ");
-			bean.setComments("OK");			
+			bean.setEhr(b.getEhr());
+			bean.setEmpName(b.getName());
+			bean.setDu(b.getDu());
+			bean.setBu(b.getBu());
+			bean.setRm(b.getRm());
+			bean.setResult(b.getResult());
+			bean.setComments(b.getResultComments());
+			
+			String year = b.getYear();
+			String quarter = b.getQuarter();
+			String start = "";
+			String end = "";
+			if (quarter != null && quarter.equalsIgnoreCase("Q1")) {
+				start = "01/01/" + year;  
+				end = "31/03/" + year;  
+			} else if (quarter != null && quarter.equalsIgnoreCase("Q2")) {
+				start = "01/04/" + year;  
+				end = "30/06/" + year;  
+			} else if (quarter != null && quarter.equalsIgnoreCase("Q3")) {
+				start = "01/07/" + year;  
+				end = "30/09/" + year;  
+			} else if (quarter != null && quarter.equalsIgnoreCase("Q4")) {
+				start = "01/10/" + year;  
+				end = "31/12/" + year;  
+			}
+			bean.setBeginDate(start);
+			bean.setEndDate(end);
+			
 			list.add(bean);
 		}
+
 
 		return list;
 	}

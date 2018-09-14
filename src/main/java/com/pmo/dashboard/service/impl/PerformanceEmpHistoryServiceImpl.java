@@ -26,7 +26,6 @@ public class PerformanceEmpHistoryServiceImpl implements PerformanceEmpHistorySe
 	
 	@Override
 	public List<PerformanceEmpHistoryBean> queryPerformanceEmpHistoryList(PerformanceQueryCondition condition) {
-		logger.info("****" + condition);
 		List<PerformanceManageEvaBean> list0 = mapper.queryManageEvaSecondQueryDUList(condition);
 		
 		List<PerformanceEmpHistoryBean> list = new ArrayList<>();

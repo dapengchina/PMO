@@ -96,26 +96,26 @@ var path='<%=path%>';
 										<div class="group">
 											<label class="col-sm-2 control-label">E-HR</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="eHr" value="E100093330" />
+												<input type="text" class="form-control" id="eHr" value="" />
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">Employee Name</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="staffName" value="Beuben" />
+												<input type="text" class="form-control" id="staffName" value="" />
 											</div>
 										</div>
 										</br></br></br>
 										<div class="group">
 											<label class="col-sm-2 control-label">BU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="bu" value="投资银行交付部" />
+												<input type="text" class="form-control" id="bu" value="" />
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">DU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" name="du" value="XXX事业部" />
+												<input type="text" class="form-control" id="du" value="" />
 											</div>
 										</div>
 										</br></br></br>
@@ -126,7 +126,7 @@ var path='<%=path%>';
 										<label class="col-lg-2 control-label">Period Between</label>  
                                         <div class="col-lg-2">
                                         <div class='input-group date' id='datetimepicker1'>  
-                                            <input id="startYear" type='text' class="form-control" value="2017" />  
+                                            <input id="startYear" type='text' class="form-control" value="2010" />  
                                             <span class="input-group-addon">  
                                              <span class="glyphicon glyphicon-calendar"></span>  
                                             </span>  
@@ -146,7 +146,7 @@ var path='<%=path%>';
 										<label class="col-lg-2 control-label">To</label>  
                                         <div class="col-lg-2">
                                         <div class='input-group date' id='datetimepicker2'>  
-                                            <input id="startTime" type='text' class="form-control" id="endYear"  value="2018" />  
+                                            <input type='text' class="form-control" id="endYear"  value="2018" />  
                                             <span class="input-group-addon">  
                                              <span class="glyphicon glyphicon-calendar"></span>  
                                             </span>  
@@ -279,6 +279,7 @@ var path='<%=path%>';
 	<!-- application script for Charisma demo -->
 	<script src="<%=path %>/js/charisma.js"></script>
 	
+		<script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
 	<script type="text/javascript" src="<%=path %>/js/pmo/performanceManageResultHistoryQuery.js"></script>
 	    

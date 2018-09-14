@@ -33,7 +33,7 @@
 </resultMap>
 
 		<!-- 查询绩效结果 -->
-	<select id="queryManageEvaSecondQueryDUList"  parameterType="String"   resultMap="PerformanceResultMap">
+	<select id="queryManageEvaSecondQueryDUList"  parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"   resultMap="PerformanceResultMap">
   select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r, t_employee e where r.E_HR=e.E_HR and  Finalize='true'
 	
     <if test="eHr != null and eHr != ''">
@@ -54,6 +54,13 @@
     <if test="skill != null and skill != ''">
 		AND r.skill = #{skill}
 	</if>
+	<if test="(startYear != null and startYear != '') and ( endYear != null and endQuarter != '') ">
+		AND <![CDATA[ CONCAT(r.year,r.Quarter)  >=   CONCAT(  #{startYear}, #{startQuarter}  ) ]]>
+		AND <![CDATA[ CONCAT(r.year,r.Quarter)  <=   CONCAT(  #{endYear}, #{endQuarter}  ) ]]>
+	</if>
+	
+
+	 
 	</select>
 
 </mapper>

@@ -83,7 +83,7 @@ function loadManageResultHistoryQueryList(){
         	//获取查询条件
         	var eHr = $("#eHr").val();
         	var staffName = $("#staffName").val();
-        	var buName = $("#bu").val();
+        	var bu = $("#bu").val();
         	var du = $("#du").val();
         	var startYear = $("#startYear").val();
         	var startQuarter = $("#startQuarter").val();
@@ -94,7 +94,7 @@ function loadManageResultHistoryQueryList(){
         		pageNumber: params.offset/params.limit+1,
         		eHr: eHr,
         		staffName: staffName,
-        		buName: buName,
+        		bu: bu,
         		du: du,
         		startYear: startYear,
         		startQuarter: startQuarter,
@@ -123,7 +123,7 @@ function search(){
 	//获取查询条件
 	var eHr = $("#eHr").val();
 	var staffName = $("#staffName").val();
-	var buName = $("#bu").val();
+	var bu = $("#bu").val();
 	var du = $("#du").val();
 	var startYear = $("#startYear").val();
 	var startQuarter = $("#startQuarter").val();
@@ -133,7 +133,7 @@ function search(){
 		query: {  
     		eHr: eHr,
     		staffName: staffName,
-    		buName: buName,
+    		bu: bu,
     		du: du,
     		startYear: startYear,
     		startQuarter: startQuarter,
