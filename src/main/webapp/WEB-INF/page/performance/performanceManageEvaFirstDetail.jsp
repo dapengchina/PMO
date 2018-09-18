@@ -87,7 +87,7 @@ var path='<%=path%>';
 						<div class="box-inner" >
 							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->初评->查看客户反馈详情(从后端取数据)
+									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->初评->查看客户反馈详情 
 								</h2>
 							</div>
 

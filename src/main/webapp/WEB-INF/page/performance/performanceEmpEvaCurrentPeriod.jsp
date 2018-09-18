@@ -67,7 +67,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  当期绩效 (从后端取数据)
+									<i class="glyphicon glyphicon-user"></i>  当期绩效  
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">

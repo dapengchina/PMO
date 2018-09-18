@@ -80,7 +80,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效结果->历史绩效->Page-筛查XXX的历史绩效 (从后端取数据)
+									<i class="glyphicon glyphicon-user"></i>  Management->绩效结果->历史绩效->Page-筛查XXX的历史绩效  
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
