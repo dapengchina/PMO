@@ -175,13 +175,13 @@ var path='<%=path%>';
 										<div class="group">
 											<label class="col-sm-2 control-label">BU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="bu"/>
+												<input type="text" class="form-control" id="bu" value="${BU }"/>
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">DU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control"  id="du" />
+												<input type="text" class="form-control"  id="du"  value="${DU }" />
 											</div>
 										</div>
 										</br></br></br>

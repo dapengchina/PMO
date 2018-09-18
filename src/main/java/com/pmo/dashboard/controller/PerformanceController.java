@@ -19,9 +19,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pmo.dashboard.entity.CSDept;
+import com.pmo.dashboard.entity.EmployeeInfo;
+import com.pmo.dashboard.entity.EmployeePageCondition;
+import com.pmo.dashboard.entity.EmployeeSkill;
 import com.pmo.dashboard.entity.NewTree;
+import com.pmo.dashboard.entity.PerformanceQueryCondition;
 import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.entity.UserAuthority;
+import com.pom.dashboard.service.CSDeptService;
+import com.pom.dashboard.service.EmployeeInfoService;
+import com.pom.dashboard.service.EmployeeSkillService;
+import com.pom.dashboard.service.PerformanceEmpHistoryService;
 import com.pom.dashboard.service.PerformanceService;
 import com.pom.dashboard.service.UserAuthorityService;
 
@@ -41,6 +50,15 @@ public class PerformanceController {
 	private UserAuthorityService userAuthorityService;
     @Resource
     private PerformanceService performanceService;
+    @Resource
+    private EmployeeInfoService employeeInfoService;
+	@Resource
+	private PerformanceEmpHistoryService empHistoryService;
+	@Resource
+	private CSDeptService csDeptService;
+	@Resource
+	private EmployeeSkillService employeeSkillService;
+	
     
 	@SuppressWarnings("unused")
 	private ObjectMapper objectMapper = new ObjectMapper();
@@ -119,6 +137,38 @@ public class PerformanceController {
 	
 	@RequestMapping("/performanceEmpEvaHistoryQuery")
 	public String getPerformanceEmpEvaHistoryQuery(final HttpServletRequest request, Model model){
+        User user = (User) request.getSession().getAttribute("loginUser");
+        PerformanceQueryCondition condition = new PerformanceQueryCondition();
+        condition.setUserId(user.getUserId());  
+		String ehr = empHistoryService.queryCurrentLoginUserEhr(condition);
+		
+        EmployeePageCondition employeePageCondition = new EmployeePageCondition();
+        employeePageCondition.setCurrentPage("0");
+        employeePageCondition.setPageRecordsNum(9);
+        employeePageCondition.seteHr(ehr);
+        List<EmployeeInfo> list = employeeInfoService.queryEmployeeList(employeePageCondition);
+        if (list != null && list.size() > 0) {
+        	EmployeeInfo emp = list.get(0);
+        	request.setAttribute("eHr", emp.geteHr());
+        	request.setAttribute("staffName", emp.getStaffName());
+        	request.setAttribute("DU", emp.getCsSubDeptName());
+    		List<CSDept> dus = csDeptService.queryAllCSDept();
+    		for (CSDept du: dus) {
+            	if (du.getCsSubDeptName().equalsIgnoreCase(emp.getCsSubDeptName())) {
+                	request.setAttribute("BU", du.getCsBuName());
+            	}
+    		}    		
+    		EmployeeSkill skillCondition = new EmployeeSkill();
+    		skillCondition.seteHr(emp.geteHr());
+    		List<EmployeeSkill> empSkill = employeeSkillService.query(skillCondition);
+    		for (EmployeeSkill skill: empSkill) {
+            	System.out.println("*************skill= " + skill.getMainAbility());
+            	System.out.println("*************role= " + skill.getRole());
+            	request.setAttribute("skill", skill.getMainAbility());
+            	request.setAttribute("role", skill.getRole());
+    		}
+        }
+        
 		return "performance/performanceEmpEvaHistoryQuery";
 	}
 
@@ -159,7 +209,31 @@ public class PerformanceController {
 
 	@RequestMapping("/performanceManageEvaSecondQuery")
 	public String getPerformanceManageEvaSecondQuery(final HttpServletRequest request, Model model){
+        User user = (User) request.getSession().getAttribute("loginUser");
+        getDUBU(request, user);
+        
 		return "performance/performanceManageEvaSecondQuery";
+	}
+
+	private void getDUBU(final HttpServletRequest request, User user) {
+		PerformanceQueryCondition condition = new PerformanceQueryCondition();
+        condition.setUserId(user.getUserId());  
+		String ehr = empHistoryService.queryCurrentLoginUserEhr(condition);		
+        EmployeePageCondition employeePageCondition = new EmployeePageCondition();
+        employeePageCondition.setCurrentPage("0");
+        employeePageCondition.setPageRecordsNum(9);
+        employeePageCondition.seteHr(ehr);
+        List<EmployeeInfo> list = employeeInfoService.queryEmployeeList(employeePageCondition);
+        if (list != null && list.size() > 0) {
+        	EmployeeInfo emp = list.get(0);
+        	request.setAttribute("DU", emp.getCsSubDeptName());
+    		List<CSDept> dus = csDeptService.queryAllCSDept();
+    		for (CSDept du: dus) {
+            	if (du.getCsSubDeptName().equalsIgnoreCase(emp.getCsSubDeptName())) {
+                	request.setAttribute("BU", du.getCsBuName());
+            	}
+    		}    		
+        }
 	}
 
 	@RequestMapping("/performanceManageEvaSecondBU")
@@ -169,6 +243,8 @@ public class PerformanceController {
 
 	@RequestMapping("/performanceManageEvaSecondQueryDU")
 	public String getPerformanceManageEvaSecondQueryDU(final HttpServletRequest request, Model model){
+        User user = (User) request.getSession().getAttribute("loginUser");
+        getDUBU(request, user);
 		return "performance/performanceManageEvaSecondQueryDU";
 	}
 
@@ -179,6 +255,8 @@ public class PerformanceController {
 	
 	@RequestMapping("/performanceManageResultHistoryQuery")
 	public String getPerformanceManageResultHistoryQuery(final HttpServletRequest request, Model model){
+        User user = (User) request.getSession().getAttribute("loginUser");
+        getDUBU(request, user);
 		return "performance/performanceManageResultHistoryQuery";
 	}
 

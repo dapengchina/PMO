@@ -55,7 +55,7 @@ function loadManageEvaSecondQueryDUList(){
 			            field: 'hireDate',
 			            title: '入职时间'
 			        }, {
-			            field: 'position',
+			            field: 'role',
 			            title: '职务'
 			        }, {
 			            field: 'serviceLine',

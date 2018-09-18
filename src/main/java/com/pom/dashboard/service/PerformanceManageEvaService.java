@@ -20,4 +20,6 @@ public interface PerformanceManageEvaService {
 	public List<PerformanceManageEvaBean> queryManageEvaSecondQueryDUList(PerformanceQueryCondition condition);
 	
 	public List<PerformanceManageResultHistoryBean> queryManageResultHistoryQueryList(PerformanceQueryCondition condition);
+	
+	public List<PerformanceManageEvaBean> queryManageEvaFinalList(PerformanceQueryCondition condition);
 }

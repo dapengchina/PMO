@@ -12,6 +12,14 @@ public class PerformanceQueryCondition {
 	private String startQuarter;
 	private String endYear;
 	private String endQuarter;
+	private String userId;
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public String geteHr() {
 		return eHr;
 	}

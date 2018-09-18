@@ -80,39 +80,39 @@ var path='<%=path%>';
 										<div class="group">
 											<label class="col-sm-2 control-label">E-HR</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="eHr" />
+												<input type="text" class="form-control" id="eHr" value="${eHr}"/>
 											</div>
-										</div>
+										</div>  
 										<div class="group">
 											<label class="col-sm-2 control-label">Employee Name</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="staffName" />
+												<input type="text" class="form-control" id="staffName" value="${staffName}"/>
 											</div>
 										</div>
 										</br></br></br>
 										<div class="group">
 											<label class="col-sm-2 control-label">MSA Role</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="role" />
+												<input type="text" class="form-control" id="role" value="${role}" />
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">Skills/Technology</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="skill" />
+												<input type="text" class="form-control" id="skill" value="${skill}" />
 											</div>
 										</div>
 										</br></br></br>
 										<div class="group">
 											<label class="col-sm-2 control-label">BU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="bu"/>
+												<input type="text" class="form-control" id="bu" value="${BU}" />
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">DU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control"  id="du" />
+												<input type="text" class="form-control"  id="du" value="${DU}" />
 											</div>
 										</div>
 										</br></br></br>

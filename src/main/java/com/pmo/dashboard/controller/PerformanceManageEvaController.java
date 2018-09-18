@@ -65,7 +65,28 @@ public class PerformanceManageEvaController {
 		logger.debug("rtn:" + rtn);
 		return rtn;
 	}
+	
+	@RequestMapping("/queryManageEvaFinalList")
+    @ResponseBody
+	public String queryManageEvaFinalList(int pageSize, int pageNumber, String showAchievement, PerformanceQueryCondition condition, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException{
+		
+		List<PerformanceManageEvaBean> data = manageEvaService.queryManageEvaFinalList(condition);
 
+		Map<String,Object> map = new HashMap<String,Object>();
+	
+		PageHelper.startPage(pageNumber, pageSize);
+        PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);		
+		map.put("total", page.getTotal());
+		map.put("rows", data);
+
+		map.putAll(putPercentage(data));
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String rtn = objectMapper.writeValueAsString(map);
+		logger.debug("rtn:" + rtn);
+		return rtn;
+	}
+	
 	private Map<String,Object> putPercentage(List<?> data) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		int iA = 0;

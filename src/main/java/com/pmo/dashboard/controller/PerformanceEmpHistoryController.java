@@ -1,5 +1,6 @@
 package com.pmo.dashboard.controller;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pmo.dashboard.entity.PerformanceEmpHistoryBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
+import com.pmo.dashboard.entity.User;
 import com.pom.dashboard.service.PerformanceEmpHistoryService;
 
 /**
@@ -41,7 +43,8 @@ public class PerformanceEmpHistoryController {
     @ResponseBody
 	public String queryPerformanceEmpHistoryList(Integer pageSize, Integer pageNumber, PerformanceQueryCondition condition, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException{
 		logger.debug("PerformanceEmpHistoryController:" + condition);
-		
+  
+        
 		List<PerformanceEmpHistoryBean> data = empHistoryService.queryPerformanceEmpHistoryList(condition);
 		Map<String,Object> map = new HashMap<String,Object>();
 
@@ -58,8 +61,12 @@ public class PerformanceEmpHistoryController {
 
 	@RequestMapping("/queryEmpCurrentPeriodList")
     @ResponseBody
-	public Object queryPerformanceEmpHistoryList(HttpServletRequest request, HttpServletResponse response) {
-		List<PerformanceEmpHistoryBean> data = empHistoryService.queryPerformanceEmpHistoryList(null);
+	public Object queryPerformanceEmpHistoryList(PerformanceQueryCondition condition, HttpServletRequest request, HttpServletResponse response) {
+		
+        User user = (User) request.getSession().getAttribute("loginUser");
+        condition.setUserId(user.getUserId());      
+        
+		List<PerformanceEmpHistoryBean> data = empHistoryService.queryPerformanceEmpCurrentList(condition);
 		return data;
 	}
 	

@@ -10,6 +10,10 @@ public class PerformanceEmpHistoryBean {
 	private String comments;
 
 	private String status;
+	private String empName;
+	private String role;
+	private String skill;
+	private String bu;
 	
 	public PerformanceEmpHistoryBean() {
 		super();
@@ -66,6 +70,31 @@ public class PerformanceEmpHistoryBean {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public String getSkill() {
+		return skill;
+	}
+	public void setSkill(String skill) {
+		this.skill = skill;
+	}
+	public String getBu() {
+		return bu;
+	}
+	public void setBu(String bu) {
+		this.bu = bu;
 	}
 	@Override
 	public String toString() {

@@ -6,7 +6,7 @@ $(function(){
 
 
 function loadManageEvaFinalList(){
-    var queryUrl = path+'/service/performanceManageEva/queryManageEvaFirstDetailList';
+    var queryUrl = path+'/service/performanceManageEva/queryManageEvaFinalList';
     var columns = [{
 			        	checkbox: true,  
 			            visible: true                 //是否显示复选框  
@@ -28,7 +28,7 @@ function loadManageEvaFinalList(){
 			            field: 'hireDate',
 			            title: '入职时间'
 			        }, {
-			            field: 'position',
+			            field: 'role',
 			            title: '职务'
 			        }, {
 			            field: 'serviceLine',

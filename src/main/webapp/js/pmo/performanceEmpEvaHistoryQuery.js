@@ -1,4 +1,5 @@
 $(function(){
+	
 	loadEmpHistoryList();
 });
 
@@ -20,8 +21,20 @@ function loadEmpHistoryList(){
 			            title: 'Year',
 			            sortable: true
 			        }, {
+			            field: 'role',
+			            title: 'Role',
+			            sortable: true
+			        }, {
+			            field: 'skill',
+			            title: 'Skill',
+			            sortable: true
+			        }, {
 			            field: 'quarter',
 			            title: 'Quarter',
+			            sortable: true
+			        }, {
+			            field: 'bu',
+			            title: 'BU',
 			            sortable: true
 			        }, {
 			            field: 'du',

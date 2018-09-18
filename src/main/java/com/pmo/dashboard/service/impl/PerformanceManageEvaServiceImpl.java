@@ -1,6 +1,7 @@
 package com.pmo.dashboard.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -25,20 +26,90 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
 
 	@Override
 	public List<PerformanceManageEvaBean> queryManageEvaFirstDetailWithAchieveList(PerformanceQueryCondition condition) {
+		Calendar c = Calendar.getInstance();	
+		condition.setStartYear(c.get(Calendar.YEAR)+ ""); 
+		condition.setStartQuarter("Q"+ PerformanceEmpHistoryServiceImpl.getSeason());
+		
 		List<PerformanceManageEvaBean> list = mapper.queryManageEvaSecondQueryDUList(condition);
+		for (PerformanceManageEvaBean b :list) {
+			String year = b.getYear();
+			String quarter = b.getQuarter();
+			PerformanceManageEvaBean preB = getPreResult(condition.geteHr(), year, quarter);
+			if (preB != null) {
+				b.setPrevious1Quarter(preB.getResult());
+				PerformanceManageEvaBean prePreB = getPreResult(preB.getEhr(), preB.getYear(), preB.getQuarter());
+				if (prePreB != null) {
+					b.setPrevious2Quarter(prePreB.getResult());
+					PerformanceManageEvaBean prePrePreB = getPreResult(prePreB.getEhr(), prePreB.getYear(), prePreB.getQuarter());
+					if (prePrePreB != null) {
+						b.setPrevious3Quarter(prePrePreB.getResult());
+					}
+					
+				}
+			}
+
+		}
 		return list;	
-//		List<PerformanceManageEvaBean> list = queryManageEvaFirstDetailList(condition);
-//		for (PerformanceManageEvaBean bean : list) {
-//			bean.setPmEvalution("B+");
-//			bean.setDuEvalution("B");
-//			bean.setAchievement("工作负责高效 ");
-//			bean.setJump("否");
-//		}
-//		return list;		
+	
+	}
+
+	private PerformanceManageEvaBean getPreResult(String ehr, String year, String quarter) {
+		PerformanceQueryCondition condition2 = new PerformanceQueryCondition();
+		condition2.seteHr(ehr);
+		if ("Q4".equalsIgnoreCase(quarter)) {
+			quarter = "Q3";
+		} else if ("Q3".equalsIgnoreCase(quarter)) {
+			quarter = "Q2";
+		} else if ("Q2".equalsIgnoreCase(quarter)) {
+			quarter = "Q1";
+		} else if ("Q1".equalsIgnoreCase(quarter)) {
+			year = "" + (Integer.parseInt(year) -1 );
+			quarter = "Q4";
+		}						
+		condition2.setStartYear(year);
+		condition2.setStartQuarter(quarter);
+		List<PerformanceManageEvaBean> preList = mapper.queryManageEvaPreviousResult(condition2);
+		for (PerformanceManageEvaBean preB : preList) {
+			return preB;
+		}
+		return null ;
+	}
+	
+	
+	@Override
+	public List<PerformanceManageEvaBean> queryManageEvaFinalList(PerformanceQueryCondition condition) {
+		Calendar c = Calendar.getInstance();	
+		condition.setStartYear(c.get(Calendar.YEAR)+ ""); 
+		condition.setStartQuarter("Q"+ PerformanceEmpHistoryServiceImpl.getSeason());
+		
+		List<PerformanceManageEvaBean> list = mapper.queryManageEvaSecondQueryDUList(condition);
+		for (PerformanceManageEvaBean b :list) {
+			String year = b.getYear();
+			String quarter = b.getQuarter();
+			PerformanceManageEvaBean preB = getPreResult(condition.geteHr(), year, quarter);
+			if (preB != null) {
+				b.setPrevious1Quarter(preB.getResult());
+				PerformanceManageEvaBean prePreB = getPreResult(preB.getEhr(), preB.getYear(), preB.getQuarter());
+				if (prePreB != null) {
+					b.setPrevious2Quarter(prePreB.getResult());
+					PerformanceManageEvaBean prePrePreB = getPreResult(prePreB.getEhr(), prePreB.getYear(), prePreB.getQuarter());
+					if (prePrePreB != null) {
+						b.setPrevious3Quarter(prePrePreB.getResult());
+					}
+					
+				}
+			}
+
+		}
+		return list;	
+	
 	}
 	
 	@Override
 	public List<PerformanceManageEvaBean> queryManageEvaFirstDetailList(PerformanceQueryCondition condition) {
+		Calendar c = Calendar.getInstance();	
+		condition.setStartYear(c.get(Calendar.YEAR)+ ""); 
+		condition.setStartQuarter("Q"+ PerformanceEmpHistoryServiceImpl.getSeason());
 		List<PerformanceManageEvaBean> list = mapper.queryManageEvaSecondQueryDUList(condition);
 		return list;
 //		List<PerformanceManageEvaBean> list = new ArrayList<>();
@@ -138,22 +209,21 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
 
 	@Override
 	public List<PerformanceManageEvaBean> queryManageEvaSecondQueryList(PerformanceQueryCondition condition) {
+		Calendar c = Calendar.getInstance();	
+		condition.setStartYear(c.get(Calendar.YEAR)+ ""); 
+		condition.setStartQuarter("Q"+ PerformanceEmpHistoryServiceImpl.getSeason());
 		List<PerformanceManageEvaBean> list = queryManageEvaFirstDetailWithAchieveList(condition);
-		//为了测试查询，简单添加了ehr过滤条件
-		List<PerformanceManageEvaBean> list2 = new ArrayList<>();
-		String ehr = condition==null?"":condition.geteHr();
-		for (PerformanceManageEvaBean b : list) {
-			if (ehr == null || ehr.equals("") || b.getEhr().contains(ehr)) { 
-				list2.add(b);				
-			}
-		}
-		return list2;		
+		return list;		
 	}
 	
 	
 	@Override
-	public List<PerformanceManageEvaBean> queryManageEvaSecondQueryDUList(PerformanceQueryCondition condition) {		
+	public List<PerformanceManageEvaBean> queryManageEvaSecondQueryDUList(PerformanceQueryCondition condition) {
+		Calendar c = Calendar.getInstance();	
+		condition.setStartYear(c.get(Calendar.YEAR)+ ""); 
+		condition.setStartQuarter("Q"+ PerformanceEmpHistoryServiceImpl.getSeason());
 		List<PerformanceManageEvaBean> list = mapper.queryManageEvaSecondQueryDUList(condition);
+
 		return list;		
 	}
 	
