@@ -313,15 +313,17 @@ var path='<%=path%>';
 									</div>
 								</div>
 								<br/><br/>
-								<div class="form-group">									
+								<div class="form-group">
+									
 									<div class="group">
-										<label class="col-sm-2 control-label">1.绩效结果表</label>
+										<label class="col-sm-2 control-label">Upload Resume</label>
 										<div class="col-sm-4">
 											<input type="hidden" name="resume_path" id="resume_path">
 											<span style="display: block;"><input  type="file" name="file" id="uploadId" style="display: inline;"/>
 											<input style="display: inline;" type="button" id = "upload" value="UPLOAD"/></span>
-									    </div>
-								   </div>									
+										</div>
+									</div>
+									
 								</div>
 								
 								<br/><br/><br/>
@@ -329,8 +331,8 @@ var path='<%=path%>';
 								<div class="form-group">
 									    <div style="text-align:center;width:100%;">
 									    <input type="submit" value="UPDATE"
-										   class="button btn btn-primary" data-dismiss="modal"
-										   style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+										class="button btn btn-primary" data-dismiss="modal"
+										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 									    </div>
 								</div>
 								<br/><br/>
