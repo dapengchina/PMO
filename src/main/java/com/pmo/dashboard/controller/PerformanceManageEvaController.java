@@ -19,9 +19,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.pmo.dashboard.entity.CSDept;
+import com.pmo.dashboard.entity.EmployeeInfo;
+import com.pmo.dashboard.entity.EmployeePageCondition;
 import com.pmo.dashboard.entity.PerformanceEmpHistoryBean;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
+import com.pmo.dashboard.entity.User;
+import com.pom.dashboard.service.CSDeptService;
+import com.pom.dashboard.service.EmployeeInfoService;
+import com.pom.dashboard.service.PerformanceEmpHistoryService;
 import com.pom.dashboard.service.PerformanceManageEvaService;
 
 /**
@@ -38,12 +45,19 @@ public class PerformanceManageEvaController {
 	
 	@Resource
 	private PerformanceManageEvaService manageEvaService;
+	@Resource
+	private PerformanceEmpHistoryService empHistoryService;
+	@Resource
+	private CSDeptService csDeptService;
+    @Resource
+    private EmployeeInfoService employeeInfoService;
 	
 	@RequestMapping("/queryManageEvaFirstDetailList")
     @ResponseBody
 	public String queryManageEvaFirstDetailList(int pageSize, int pageNumber, String showAchievement, PerformanceQueryCondition condition, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException{
 		logger.debug("showAchievement=" + showAchievement);
-			
+        User user = (User) request.getSession().getAttribute("loginUser");
+        getDUBU(request, user, condition);
 		List<PerformanceManageEvaBean> data;
 
 		if ("true".equals(showAchievement)) {
@@ -66,10 +80,40 @@ public class PerformanceManageEvaController {
 		return rtn;
 	}
 	
+	private void getDUBU(final HttpServletRequest request, User user, PerformanceQueryCondition condition) {
+        condition.setUserId(user.getUserId());  
+    	String[] csBuNames = null;
+		if (user.getBu() != null && user.getBu() != "") {
+    		csBuNames = user.getBu().split(",");
+    		String csBuName = csBuNames[0];
+    		request.setAttribute("BU", csBuName);
+    		logger.debug("Get BU from user: " + csBuName);
+    	}
+		String ehr = empHistoryService.queryCurrentLoginUserEhr(condition);		
+        EmployeePageCondition employeePageCondition = new EmployeePageCondition();
+        employeePageCondition.setCurrentPage("0");
+        employeePageCondition.setPageRecordsNum(9);
+        employeePageCondition.seteHr(ehr);
+        List<EmployeeInfo> list = employeeInfoService.queryEmployeeList(employeePageCondition);
+        if (list != null && list.size() > 0) {
+        	EmployeeInfo emp = list.get(0);
+        	request.setAttribute("DU", emp.getCsSubDeptName());
+        	condition.setDu(emp.getCsSubDeptName());
+    		List<CSDept> dus = csDeptService.queryAllCSDept();
+    		for (CSDept du: dus) {
+            	if (du.getCsSubDeptName().equalsIgnoreCase(emp.getCsSubDeptName())) {
+                	request.setAttribute("BU", du.getCsBuName());
+                	condition.setBu(du.getCsBuName());
+            	}
+    		}    		
+        }
+	}
+	
 	@RequestMapping("/queryManageEvaFinalList")
     @ResponseBody
 	public String queryManageEvaFinalList(int pageSize, int pageNumber, String showAchievement, PerformanceQueryCondition condition, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException{
-		
+        User user = (User) request.getSession().getAttribute("loginUser");
+        getDUBU(request, user, condition);
 		List<PerformanceManageEvaBean> data = manageEvaService.queryManageEvaFinalList(condition);
 
 		Map<String,Object> map = new HashMap<String,Object>();

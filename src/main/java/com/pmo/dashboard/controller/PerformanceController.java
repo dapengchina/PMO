@@ -218,6 +218,15 @@ public class PerformanceController {
 	private void getDUBU(final HttpServletRequest request, User user) {
 		PerformanceQueryCondition condition = new PerformanceQueryCondition();
         condition.setUserId(user.getUserId());  
+    	String[] csBuNames = null;
+		if (user.getBu() != null && user.getBu() != "") {
+    		csBuNames = user.getBu().split(",");
+    		String csBuName = csBuNames[0];
+    		request.setAttribute("BU", csBuName);
+    		logger.debug("Get BU from user: " + csBuName);
+    	}
+
+        
 		String ehr = empHistoryService.queryCurrentLoginUserEhr(condition);		
         EmployeePageCondition employeePageCondition = new EmployeePageCondition();
         employeePageCondition.setCurrentPage("0");
