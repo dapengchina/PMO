@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,9 +69,16 @@ public class EmployeeSkillController {
 	@RequestMapping("/query")
 	@ResponseBody
 	public String query(int pageSize, int pageNumber, EmployeeSkill condition, HttpServletRequest request)
-			throws JsonProcessingException {
+			throws JsonProcessingException, UnsupportedEncodingException {
 		PageHelper.startPage(pageNumber, pageSize);
 		User user = (User) request.getSession().getAttribute("loginUser");
+//		if(condition.getStaffName()!=null && !"".equals(condition.getStaffName())){
+//			
+//			//byte[] t_iso = condition.getStaffName().getBytes("ISO8859-1");
+//			condition.setStaffName(new String(condition.getStaffName().getBytes("ISO8859-1")));
+//			System.out.println("condition.getStaffName()字符转换后==="+condition.getStaffName());
+//		}
+		
 		List<EmployeeSkill> data = employeeSkillService.query(condition);
 		PageInfo<OfflineOper> page = new PageInfo(data);
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -199,10 +207,10 @@ public class EmployeeSkillController {
 				skill.setAuthenticationName(getValue(xssfRow.getCell(5)));
 				skill.setWorkExperience(getValue(xssfRow.getCell(6)));
 				String t = skill.getWorkExperience();
-				if(t.indexOf(".")>0) {
-					t = t.substring(0,t.indexOf("."));
-					skill.setWorkExperience(t);
-				}
+//				if(t.indexOf(".")>0) {
+//					t = t.substring(0,t.indexOf("."));
+//					skill.setWorkExperience(t);
+//				}
 				//skill.setMainAbility("1");
 				skill.setOperateId(operateId);
 				list.add(skill);
