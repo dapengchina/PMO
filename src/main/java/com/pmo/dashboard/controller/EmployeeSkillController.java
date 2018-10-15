@@ -84,6 +84,7 @@ public class EmployeeSkillController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", page.getTotal());
 		map.put("rows", data);
+		System.err.println(objectMapper.writeValueAsString(map));
 		return objectMapper.writeValueAsString(map);
 	}
 

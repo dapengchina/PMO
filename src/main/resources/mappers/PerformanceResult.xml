@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pmo.dashboard.dao.PerformanceResultMapper">
+
+<resultMap type="com.pmo.dashboard.entity.PerformanceManageEvaBean" id="PerformanceResultMap">
+
+		<id property="ehr" column="E_HR" javaType="String" />
+		<result property="name" column="STAFF_NAME" javaType="String" />
+		<result property="year" column="Year" javaType="String" />
+		<result property="quarter" column="Quarter" javaType="String" />
+		<result property="bu" column="BU" javaType="String" />
+		<result property="du" column="DU" javaType="String" />
+		<result property="rm" column="RM" javaType="String" />
+		<result property="role" column="Role" javaType="String" />
+		<result property="skill" column="Skill" javaType="String" />
+		<result property="location" column="Location" javaType="String" />
+		<result property="keymember" column="Backbone" javaType="String" />
+		<result property="participate" column="Assessed" javaType="String" />
+		<result property="manager" column="Direct_Supervisor" javaType="String" />
+		<result property="result" column="Result" javaType="String" />
+		<result property="resultComments" column="Result_Comments" javaType="String" />
+		<result property="customerFeedback" column="Client_Feedback" javaType="String" />
+		<result property="initialEvalution" column="PreAssessment_Result" javaType="String" />
+		<result property="pmEvalution" column="Direct_Supervisor_Assessment_Result" javaType="String" />
+		<result property="duEvalution" column="Group_Assessment_Result" javaType="String" />
+		<result property="duEvaManager" column="Group_Assessment_Manager" javaType="String" />
+		<result property="achievement" column="Performance_Facts" javaType="String" />
+		<result property="jump" column="Performance_Skip" javaType="String" />
+		<result property="lobNo" column="lob" javaType="String" />
+		<result property="hireDate" column="ENTRY_DATE" javaType="String" />
+
+</resultMap>
+
+		<!-- 查询绩效结果 -->
+	<select id="queryManageEvaSecondQueryDUList"  parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"   resultMap="PerformanceResultMap">
+  select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r, t_employee e where r.E_HR=e.E_HR and  Finalize='true'
+	
+    <if test="eHr != null and eHr != ''">
+		AND e.E_HR = #{eHr}
+	</if>
+    <if test="staffName != null and staffName != ''">
+		AND e.STAFF_NAME = #{staffName}
+	</if>
+    <if test="du != null and du != ''">
+		AND r.du = #{du}
+	</if>
+    <if test="bu != null and bu != ''">
+		AND r.bu = #{bu}
+	</if>
+    <if test="role != null and role != ''">
+		AND r.role = #{role}
+	</if>
+    <if test="skill != null and skill != ''">
+		AND r.skill = #{skill}
+	</if>
+
+	<if test="startYear != null and startYear != ''  and  ( endYear == null and endQuarter == null)"  >
+		AND r.year = #{startYear}
+	</if>
+	<if test="startQuarter != null and startQuarter != '' and  ( endYear == null and endQuarter == null)">
+		AND r.Quarter = #{startQuarter}
+	</if>
+		
+	<if test="(startYear != null and startYear != '') and ( endYear != null and endQuarter != '') ">
+		AND <![CDATA[ CONCAT(r.year,r.Quarter)  >=   CONCAT(  #{startYear}, #{startQuarter}  ) ]]>
+		AND <![CDATA[ CONCAT(r.year,r.Quarter)  <=   CONCAT(  #{endYear}, #{endQuarter}  ) ]]>
+	</if>
+	</select>
+	
+	<select id="queryManageEvaPreviousResult"  parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"   resultMap="PerformanceResultMap">
+  select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r, t_employee e where r.E_HR=e.E_HR and  Finalize='true'
+	<if test="eHr != null and eHr != ''">
+		AND e.E_HR = #{eHr}
+	</if>
+	<if test="startYear != null and startYear != '' ">
+		AND r.year = #{startYear}
+	</if>
+	<if test="startQuarter != null and startQuarter != '' ">
+		AND r.Quarter = #{startQuarter}
+	</if>
+	</select>
+
+
+
+
+
+
+	<select id="queryPerformanceEmpCurrentList"  parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"   resultMap="PerformanceResultMap">
+
+		  select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r, t_employee e,t_user u
+			where r.E_HR=e.E_HR and u.USER_ID=e.EMPLOYEE_ID 
+	
+    <if test="userId != null and userId != ''">
+		AND u.USER_ID = #{userId}
+	</if>
+	<if test="startYear != null and startYear != ''">
+		AND r.year = #{startYear}
+	</if>
+	<if test="startQuarter != null and startQuarter != ''">
+		AND r.Quarter = #{startQuarter}
+	</if>
+	</select>
+
+	<select id="queryPerformanceEmpHistoryList"  parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"   resultMap="PerformanceResultMap">
+
+		  select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r, t_employee e,t_user u
+			where r.E_HR=e.E_HR and u.USER_ID=e.EMPLOYEE_ID and  Finalize='true'
+	
+    <if test="userId != null and userId != ''">
+		AND u.USER_ID = #{userId}
+	</if>
+    <if test="eHr != null and eHr != ''">
+		AND e.E_HR = #{eHr}
+	</if>
+    <if test="staffName != null and staffName != ''">
+		AND e.STAFF_NAME = #{staffName}
+	</if>
+    <if test="du != null and du != ''">
+		AND r.du = #{du}
+	</if>
+    <if test="bu != null and bu != ''">
+		AND r.bu = #{bu}
+	</if>
+    <if test="role != null and role != ''">
+		AND r.role = #{role}
+	</if>
+    <if test="skill != null and skill != ''">
+		AND r.skill = #{skill}
+	</if>
+	<if test="(startYear != null and startYear != '') and ( endYear != null and endQuarter != '') ">
+		AND <![CDATA[ CONCAT(r.year,r.Quarter)  >=   CONCAT(  #{startYear}, #{startQuarter}  ) ]]>
+		AND <![CDATA[ CONCAT(r.year,r.Quarter)  <=   CONCAT(  #{endYear}, #{endQuarter}  ) ]]>
+	</if>
+	</select>
+	
+	
+	<select id="queryCurrentLoginUserEhr"  parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"   resultMap="PerformanceResultMap">
+		  select e.STAFF_NAME,e.E_HR,u.USER_ID from t_employee e,t_user u
+			where u.USER_ID=e.EMPLOYEE_ID 	
+    <if test="userId != null and userId != ''">
+		AND u.USER_ID = #{userId}
+	</if>
+	</select>
+	
+	
+</mapper>
+
+
+<!-- 测试数据
+
+
+insert into p_result(Result_ID,E_HR,Year,Quarter,BU,DU,RM,Role,Skill,Location,Backbone,Assessed,Direct_Supervisor,Result,Client_Feedback,PreAssessment_Result,Direct_Supervisor_Assessment_Result,Group_Assessment_Result,Group_Assessment_Manager,Performance_Facts,Finalize) values('0035e1d99c4d4a49b37f216305dceeww', 'E100098974'
+,'2018','Q4','数字移动事业部','网银业务交付部','韦玲','Assistant','Automation Testing','Xian','是','Assessed','张三','B+','工作认真负责','B+', 'B+','A','李四', ' ','True');
+
+
+ -->
