@@ -7,6 +7,7 @@ public class Constants
     public final static int TEN = 10;
     public final static String PATH = "D:/Excel/";
     public final static String RESUME_PATH = "D:/Resume/";
+    public final static String TEMPLATE_PATH = "D:/template/";
     public final static int PAGE_DATA_COUNT = 10;
    /* public final static int USER_PASSWORD = 123;*/
     public static final String IS_MAIN_ABILITY ="0";//是主能力
