@@ -1,7 +1,10 @@
 package com.pmo.dashboard.controller;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -14,12 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pmo.dashboard.dao.TemplateMapper;
 import com.pmo.dashboard.entity.CSDept;
 import com.pmo.dashboard.entity.EmployeeInfo;
 import com.pmo.dashboard.entity.EmployeePageCondition;
@@ -33,6 +36,7 @@ import com.pom.dashboard.service.CSDeptService;
 import com.pom.dashboard.service.EmployeeInfoService;
 import com.pom.dashboard.service.EmployeeSkillService;
 import com.pom.dashboard.service.PerformanceEmpHistoryService;
+import com.pom.dashboard.service.PerformanceManageEvaService;
 import com.pom.dashboard.service.PerformanceService;
 import com.pom.dashboard.service.TemplateService;
 import com.pom.dashboard.service.UserAuthorityService;
@@ -63,6 +67,8 @@ public class PerformanceController {
     private EmployeeSkillService         employeeSkillService;
     @Resource
     private TemplateService              templateService;
+    @Resource
+    private PerformanceManageEvaService  performanceManageEvaService;
 
     @SuppressWarnings("unused")
     private ObjectMapper                 objectMapper = new ObjectMapper();
@@ -286,7 +292,7 @@ public class PerformanceController {
      * String
      */
     @RequestMapping("/performanceHRBPGroupEva")
-    public String getPerformanceHRBPGroupEva() {
+    public String getPerformanceHRBPGroupEva(Model model) {
         return "performance/performanceHRBPGroupEva";
     }
 
@@ -331,4 +337,12 @@ public class PerformanceController {
         return "performance/performanceHRBPTemplateUpload";
     }
 
+    @RequestMapping("/performanceHRBPApprovalDetail")
+    public String getPerformanceHRBPApprovalDetail(@RequestParam String bu, Model model) {
+        model.addAttribute("bu", bu);
+        // 根据bu查询审批内容
+        String resultComments = performanceManageEvaService.queryResultComments(bu).getResultComments();
+        model.addAttribute("resultComments", resultComments);
+        return "performance/performanceHRBPApprovalDetail";
+    }
 }
