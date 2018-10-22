@@ -80,7 +80,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>dd Information Maintenance
+									<i class="glyphicon glyphicon-user"></i>Information Maintenance
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
@@ -357,6 +357,7 @@ var path='<%=path%>';
 									<label><input type="checkbox" name="Ch Pro StartDate"/>Ch Pro StartDate&nbsp;&nbsp;</label>
 									<label><input type="checkbox" name="Ch Pro Name"/>Ch Pro Name&nbsp;&nbsp;</label>
 									<label><input type="checkbox" name="EmployeeType"/>EmployeeType&nbsp;&nbsp;</label>
+									<label><input type="checkbox" name="BillRateType"/>BillRateType&nbsp;&nbsp;</label>
 								</tr>
 							</thead>
 							<tbody>
