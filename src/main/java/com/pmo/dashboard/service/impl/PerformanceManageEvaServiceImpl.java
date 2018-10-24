@@ -1,12 +1,16 @@
 package com.pmo.dashboard.service.impl;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -265,9 +269,61 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
         return list;
     }
 
+    private List<Map<String, Object>> groupStatByResult(String bu, String du, String rm, String finalize) {
+        Calendar c = Calendar.getInstance();
+        String startYear = c.get(Calendar.YEAR) + "";
+        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        Map<String, Object> filter = new HashMap<String, Object>();
+        filter.put("startYear", startYear);
+        filter.put("startQuarter", startQuarter);
+        filter.put("bu", bu);
+        filter.put("du", du);
+        filter.put("rm", rm);
+        filter.put("finalize", finalize);// 已定稿
+        List<Map<String, Object>> list = mapper.groupStatByResult(filter);
+        return list;
+    }
+
     @Override
-    public List<Map<String, Object>> groupStatByResult(String bu) {
-        return mapper.groupStatByResult(bu);
+    public List<Map<String, Object>> groupStatByResultBU(String bu) {
+        return groupStatByResult(bu, null, null, null);
+    }
+
+    @Override
+    public List<Map<String, Object>> groupStatByResultDU(String du) {
+        return groupStatByResult(null, du, null, null);
+    }
+
+    @Override
+    public List<Map<String, Object>> groupStatByResultRM(String rm) {
+        return groupStatByResult(null, null, rm, null);
+    }
+
+    @Override
+    public List<Map<String, Object>> groupStatByResultFinalize() {
+        return groupStatByResult(null, null, null, "True");
+    }
+
+    @Override
+    public Map<String, Object> percentage(List<Map<String, Object>> list) {
+        Map<String, Object> rtn = new HashMap<String, Object>();
+        if (list == null || list.size() == 0)
+            return rtn;
+        int sum = 0;
+        for (Map<String, Object> map : list) {
+            sum += Integer.parseInt(map.get("count") + "");
+        }
+        NumberFormat nf = NumberFormat.getPercentInstance();
+        String level = "";
+        int count = 0;
+        for (Map<String, Object> map : list) {
+            level = ((String) map.get("result")).toUpperCase();
+            count = Integer.parseInt(map.get("count") + "");
+            rtn.put(level, count);
+            rtn.put("percent" + level, nf.format((float) count / sum));
+        }
+        rtn.put("sum", sum);
+        return rtn;
     }
 
     @Override

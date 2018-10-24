@@ -143,11 +143,32 @@
 	</if>
 	</select>
 	<!-- 百分比统计 -->
-	<select id="groupStatByResult" resultType="java.util.HashMap" parameterType="java.lang.String">
+	<select id="groupStatByResult" resultType="java.util.HashMap">
 		select Result as result, count(*) as count from p_result 
-		<if test="bu != null and bu != ''">
-			where BU = #{bu}
-		</if>
+		<where>
+			<if test="bu != null and bu != ''">
+				AND BU = #{bu}
+			</if>
+			<if test="du != null and du != ''">
+				AND DU = #{du}
+			</if>
+			<if test="du != null and du != ''">
+				AND RM = #{rm}
+			</if>
+			<if test="startYear != null and startYear != ''  and  ( endYear == null and endQuarter == null)"  >
+				AND Year = #{startYear}
+			</if>
+			<if test="startQuarter != null and startQuarter != '' and  ( endYear == null and endQuarter == null)">
+				AND Quarter = #{startQuarter}
+			</if>
+			<if test="(startYear != null and startYear != '') and ( endYear != null and endQuarter != '') ">
+				AND <![CDATA[ CONCAT(Year,Quarter)  >=   CONCAT(  #{startYear}, #{startQuarter}  ) ]]>
+				AND <![CDATA[ CONCAT(Year,Quarter)  <=   CONCAT(  #{endYear}, #{endQuarter}  ) ]]>
+			</if>
+			<if test="finalize != null and finalize != ''">
+				AND Finalize = #{finalize}
+			</if>
+		</where>
 		group by Result
 	</select>
 	<!-- 审批状态  -->

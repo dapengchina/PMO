@@ -57,8 +57,8 @@ public class PerformanceHRBPEvaController {
     private static String[]             approvalContent      = new String[] { "NO.", "BU", "Year", "Quarter", "State" };
 
     /**
-     * 主管比例统计
-     * 各绩效等级数量（统计所有员工）
+     * 当年当季各绩效等级比例统计
+     * 统计所有员工/指定事业部
      * @author: Song_Lee
      * 2018年10月19日 上午10:05:43
      * @return 
@@ -67,25 +67,10 @@ public class PerformanceHRBPEvaController {
      */
     @RequestMapping("/percentage")
     @ResponseBody
-    public String getPercent(@RequestParam(required = false) String bu) throws JsonProcessingException {
-        List<Map<String, Object>> list = performanceManageEvaService.groupStatByResult(bu);
-        int sum = 0;
-        for (Map<String, Object> map : list) {
-            sum += Integer.parseInt(map.get("count") + "");
-        }
-        Map<String, Object> rtn = new HashMap<String, Object>();
-        NumberFormat nf = NumberFormat.getPercentInstance();
-        String level = "";
-        int count = 0;
-        for (Map<String, Object> map : list) {
-            level = ((String) map.get("result")).toUpperCase();
-            count = Integer.parseInt(map.get("count") + "");
-            rtn.put(level, count);
-            rtn.put("percent" + level, nf.format((float) count / sum));
-        }
-        rtn.put("sum", sum);
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(rtn);
+    public Map<String, Object> getPercent(@RequestParam(required = false) String bu) throws JsonProcessingException {
+        List<Map<String, Object>> list = performanceManageEvaService.groupStatByResultBU(bu);
+        Map<String, Object> rtn = performanceManageEvaService.percentage(list);
+        return rtn;
     }
 
     /**
