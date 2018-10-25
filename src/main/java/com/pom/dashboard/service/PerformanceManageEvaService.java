@@ -86,14 +86,23 @@ public interface PerformanceManageEvaService {
     public Map<String, Object> percentage(List<Map<String, Object>> list);
 
     /**
-     * 获取员工当年当季绩效结果
-     * 根据条件筛选HRBP-绩效考评-集体评议当年-当季数据
+     * 所有员工-当年-当季-绩效列表
+     * 其他筛选条件：bu du staffName eHr
      * @author: xuexuan
      * 2018年10月19日 下午3:46:21
      * @return 
      * List<PerformanceManageEvaBean>
      */
-    public List<PerformanceManageEvaBean> groupEvaList(PerformanceQueryCondition condition);
+    public List<PerformanceManageEvaBean> processingResultList(String bu, String du, String eHr, String staffName);
+
+    /**
+     * 所有员工-当年-当季-最终-绩效列表
+     * @author: xuexuan
+     * 2018年10月25日 上午10:43:17
+     * @return 
+     * List<PerformanceManageEvaBean>
+     */
+    public List<PerformanceManageEvaBean> finalizeResultList();
 
     /**
      * 获取各事业部当年当季审批状态

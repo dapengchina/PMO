@@ -28,7 +28,7 @@ public interface PerformanceResultMapper {
      * @return 
      * Map<String,Integer>
      */
-    List<Map<String, Object>> groupStatByResult(Map<String, Object> map);
+    public List<Map<String, Object>> groupStatByResult(Map<String, Object> map);
 
     /**
      * 获取各事业部审批状态
@@ -38,7 +38,7 @@ public interface PerformanceResultMapper {
      * @return 
      * List<PerformanceManageEvaBean>
      */
-    List<Map<String, Object>> approvalList(PerformanceQueryCondition condition);
+    public List<Map<String, Object>> approvalList(PerformanceQueryCondition condition);
 
     /**
      * 根据事业部名查询一条记录
@@ -48,7 +48,7 @@ public interface PerformanceResultMapper {
      * @return 
      * List<PerformanceManageEvaBean>
      */
-    PerformanceManageEvaBean queryResultComments(@Param("bu") String bu);
+    public PerformanceManageEvaBean queryResultComments(@Param("bu") String bu);
 
     /**
      * 更新审批内容
@@ -56,7 +56,7 @@ public interface PerformanceResultMapper {
      * 2018年10月22日 下午5:24:20 
      * void
      */
-    void updateComments(String comments);
+    public void updateComments(String comments);
 
     /**
      * 更新审批状态
@@ -64,6 +64,14 @@ public interface PerformanceResultMapper {
      * 2018年10月22日 下午5:24:20 
      * void
      */
-    void updateStateByBu(String bu, String state);
+    public void updateStateByBu(String bu, String state);
+
+    /**
+     * @author: xuexuan
+     * 2018年10月25日 上午10:33:30 
+     * @param map 查询key:eHr staffName du bu role skill startYear startQuarter endYear endQuarter finalize
+     * void
+     */
+    public List<PerformanceManageEvaBean> filterQuery(Map<String, Object> map);
 
 }

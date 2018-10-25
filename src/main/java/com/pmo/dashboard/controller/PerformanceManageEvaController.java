@@ -1,5 +1,8 @@
 package com.pmo.dashboard.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -8,13 +11,14 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.HttpMethod;
 
-import org.apache.ibatis.annotations.Param;
-import org.json.HTTP;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Required;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +40,7 @@ import com.pom.dashboard.service.CSDeptService;
 import com.pom.dashboard.service.EmployeeInfoService;
 import com.pom.dashboard.service.PerformanceEmpHistoryService;
 import com.pom.dashboard.service.PerformanceManageEvaService;
+import com.pom.dashboard.service.PerformanceService;
 
 /**
  * Performance Management 绩效考评  页面的controller
@@ -57,6 +62,8 @@ public class PerformanceManageEvaController {
     private CSDeptService                csDeptService;
     @Resource
     private EmployeeInfoService          employeeInfoService;
+    @Resource
+    private PerformanceService           performanceService;
 
     @RequestMapping("/queryManageEvaFirstDetailList")
     @ResponseBody
@@ -129,7 +136,7 @@ public class PerformanceManageEvaController {
         PageHelper.startPage(pageNumber, pageSize);
         PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
         map.put("total", page.getTotal());
-        map.put("rows", data);
+        map.put("rows", page.getList());// update by xuexuan 返回值由data改为page中的list
 
         //map.putAll(putPercentage(data));// update by xuexuan  列表查询与百分比查询分开
 
@@ -266,7 +273,8 @@ public class PerformanceManageEvaController {
     }
 
     /**
-     * 新增百分比计算接口
+     * 新增
+     * 百分比计算接口
      * 统计当年当季已定稿的各绩效数量
      * @author: xuexuan
      * 2018年10月23日 下午8:26:48
@@ -276,7 +284,7 @@ public class PerformanceManageEvaController {
     @RequestMapping("/finalize/percentage")
     @ResponseBody
     public Map<String, Object> percentage() {
-        // 查询当年当季已定稿绩效
+        // 统计当年当季已定稿绩效
         List<Map<String, Object>> list = manageEvaService.groupStatByResultFinalize();
         // 计算百分比
         Map<String, Object> rtn = manageEvaService.percentage(list);
@@ -284,9 +292,9 @@ public class PerformanceManageEvaController {
     }
 
     /**
-     * 新增百分比计算接口
-     * 统计指定时间范围内已定稿的各绩效数量
-     * 未指定时间时默认为当年当季
+     * 新增
+     * 百分比计算接口
+     * 根据登录用户权限-当年-当季-统计各绩效数量
      * @author: xuexuan
      * 2018年10月23日 下午8:26:48
      * @return 
@@ -305,8 +313,7 @@ public class PerformanceManageEvaController {
             list = manageEvaService.groupStatByResultBU(user.getBu());
         }
         if ("3".equals(user.getUserType())) {// 交付部经理
-            // 查询交付部名称
-            CSDept csDept = csDeptService.queryCSDeptById(user.getDu());
+            CSDept csDept = csDeptService.queryCSDeptById(user.getDu());// 查询交付部名称
             list = manageEvaService.groupStatByResultDU(csDept.getCsSubDeptName());
         }
         if ("5".equals(user.getUserType())) {// 登录用户为RM
@@ -315,5 +322,73 @@ public class PerformanceManageEvaController {
         // 计算百分比
         Map<String, Object> rtn = manageEvaService.percentage(list);
         return rtn;
+    }
+
+    /**
+     * 新增
+     * 员工-绩效定稿-导出接口
+     * @author: xuexuan
+     * 2018年10月19日 下午4:21:29
+     * @return 
+     * ResponseEntity<byte[]>
+     * @throws IOException 
+     * @throws IllegalAccessException 
+     * @throws IllegalArgumentException 
+     */
+    @RequestMapping("/finalize/result/export")
+    public ResponseEntity<byte[]> finalizeResultExport(PerformanceQueryCondition condition) throws IOException, IllegalArgumentException, IllegalAccessException {
+        // 查询数据,条件：当年-当季-finalize
+        List<PerformanceManageEvaBean> data = manageEvaService.finalizeResultList();
+        // 创建文件
+        XSSFWorkbook book = new XSSFWorkbook();
+        performanceService.createSheetDetailList(book, "Latest Performancel", data);
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        book.write(os);
+        byte[] body = os.toByteArray();
+        book.close();
+        os.close();
+        // 返回结果
+        String fileName = null;
+        try {
+            fileName = new String("绩效定稿.xlsx".getBytes("UTF-8"), "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+        headers.setContentDispositionFormData("attachment", fileName);// 文件名称
+
+        ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(body, headers, HttpStatus.CREATED);
+
+        return responseEntity;
+    }
+
+    /**
+     * 新增
+     * 分页查询员工-绩效定稿-列表
+     * 默认为当年当季
+     * 其他筛选条件：bu du eHr staffName
+     * @author: xuexuan
+     * 2018年10月25日 上午11:26:10
+     * @param pageSize
+     * @param pageNumber
+     * @return 
+     * Map<String,Object>
+     */
+    @RequestMapping("/finalize/result/list")
+    @ResponseBody
+    public Map<String, Object> finalizeResultList(@RequestParam int pageSize, @RequestParam int pageNumber) {
+        // 分页查询
+        PageHelper.startPage(pageNumber, pageSize);
+        // 查询数据,条件：年-季-finalize-bu/du/ehr/staffName
+        List<PerformanceManageEvaBean> data = manageEvaService.finalizeResultList();
+        PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
+        // 返回数据
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("total", page.getTotal());
+        map.put("rows", page.getList());
+        return map;
     }
 }

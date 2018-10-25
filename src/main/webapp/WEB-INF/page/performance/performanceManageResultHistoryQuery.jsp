@@ -80,7 +80,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效结果->历史绩效->Page-筛查XXX的历史绩效  
+									<i class="glyphicon glyphicon-user"></i>  Management->绩效结果->历史绩效
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
@@ -89,7 +89,7 @@ var path='<%=path%>';
 
 						<div class="panel panel-default">
 							 <div class="panel-heading" style="background-color:#00688B">
-									<font color="white"> Search for Documents</font>
+									<font color="white"> Search for Records</font>
 							 </div>
                              <div class="panel-body">
 
@@ -119,9 +119,6 @@ var path='<%=path%>';
 											</div>
 										</div>
 										</br></br></br>
-
-
-
                                     <div class="group">
 										<label class="col-lg-2 control-label">Period Between</label>  
                                         <div class="col-lg-2">
@@ -161,35 +158,29 @@ var path='<%=path%>';
 											</select>
                                         </div> 
 								   </div>
-
-
+								   </br></br></br></br>
+								   	<div class="form-group" style="border-top: solid 1px #ddd;padding-top: 20px;margin-bottom:0px;">
+									    <div style="text-align:left;width:50%;">
+									    <input type="button" value="Search"
+										name="searchBtn" id="searchBtn" onclick="search();"
+										class="button btn btn-primary" data-dismiss="modal"
+										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 50px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px;">
+									    <input type="button" value="Clear" href="#"
+										class="button btn btn-primary" data-dismiss="modal"
+										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px;">
+									    </div>
+									</div>
 						     </div>
 
 		
                           </div>
-
-			  	
-								<div class="form-group" >
-									    <div style="text-align:center;width:20%;float:left"   >
-									    <input type="button" value="Search"
-										name="searchBtn" id="searchBtn" onclick="search();"
-										class="button btn btn-primary" data-dismiss="modal"
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-									    </div>
-									    <div style="text-align:left;width:80%;float:left">
-									    <input type="button" value="Clear" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-									    </div>
-								</div>
-								        
 							<!-- search box end -->
 							<span>&nbsp;</span>
 							<!-- result box start -->
 
 									<table id="table3" border="1" width="100%" >
 										<tr style="background-color:#00688B">
-										 <td ><font color="white"> Performance Documents</font>	 </td>
+										 <td ><font color="white">Performance Records</font>	 </td>
 										</tr>
 									   <tr>
 										 <td> <table id="manageResultHistoryQueryList" class="table table-thead-background"></table> </td>									
@@ -199,16 +190,14 @@ var path='<%=path%>';
 									<br/>
 
 									<div class="form-group" >
-									    <div style="text-align:center;width:50%;float:left"   >
-									    <input type="button" value="Select All"
-										name="searchBtn" id="searchBtn" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-									    </div>
-									    <div style="text-align:left;width:50%;float:left">
-									    <input type="button" value="Export" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+									    <div style="text-align:center;width:100%;">
+										    <input type="button" value="Select All"
+											name="searchBtn" id="searchBtn" href="#"
+											class="button btn btn-primary" data-dismiss="modal"
+											style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 50px 0px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px;">
+										    <input type="button" value="Export" href="#"
+											class="button btn btn-primary" data-dismiss="modal"
+											style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 0px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px;">
 									    </div>
 								</div>
 

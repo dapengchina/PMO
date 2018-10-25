@@ -327,9 +327,55 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
     }
 
     @Override
-    public List<PerformanceManageEvaBean> groupEvaList(PerformanceQueryCondition condition) {
-        /**业务逻辑相同-暂时调用*/
-        return queryManageEvaSecondQueryList(condition);
+    public List<PerformanceManageEvaBean> processingResultList(String bu, String du, String eHr, String staffName) {
+        Map<String, Object> filter = new HashMap<String, Object>();
+        Calendar c = Calendar.getInstance();
+        String startYear = c.get(Calendar.YEAR) + "";
+        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        filter.put("startYear", startYear);
+        filter.put("startQuarter", startQuarter);// 当年-当季
+        filter.put("bu", bu);
+        filter.put("du", du);
+        filter.put("eHr", eHr);
+        filter.put("staffName", staffName);
+        List<PerformanceManageEvaBean> list = mapper.filterQuery(filter);
+        getPreviousResult(list);
+        return list;
+    }
+
+    @Override
+    public List<PerformanceManageEvaBean> finalizeResultList() {
+        Map<String, Object> filter = new HashMap<String, Object>();
+        Calendar c = Calendar.getInstance();
+        String startYear = c.get(Calendar.YEAR) + "";
+        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        filter.put("startYear", startYear);
+        filter.put("startQuarter", startQuarter);// 当年-当季
+        filter.put("finalize", "True");// 已定稿
+        List<PerformanceManageEvaBean> list = mapper.filterQuery(filter);
+        getPreviousResult(list);
+        return list;
+    }
+
+    private void getPreviousResult(List<PerformanceManageEvaBean> list) {
+        for (PerformanceManageEvaBean b : list) {
+            String year = b.getYear();
+            String quarter = b.getQuarter();
+            PerformanceManageEvaBean preB = getPreResult(b.getEhr(), year, quarter);
+            if (preB != null) {
+                b.setPrevious1Quarter(preB.getResult());
+                PerformanceManageEvaBean prePreB = getPreResult(preB.getEhr(), preB.getYear(), preB.getQuarter());
+                if (prePreB != null) {
+                    b.setPrevious2Quarter(prePreB.getResult());
+                    PerformanceManageEvaBean prePrePreB = getPreResult(prePreB.getEhr(), prePreB.getYear(), prePreB.getQuarter());
+                    if (prePrePreB != null) {
+                        b.setPrevious3Quarter(prePrePreB.getResult());
+                    }
+
+                }
+            }
+
+        }
     }
 
     @Override

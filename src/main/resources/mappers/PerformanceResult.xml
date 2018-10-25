@@ -188,7 +188,7 @@
 		</where>
 		group by BU
 	</select>
-	<!-- 根据事业部查询审批备注 -->
+	<!-- 根据事业部查询-审批备注 -->
 	<select id="queryResultComments" parameterType="java.lang.String" resultMap="PerformanceResultMap">
 		select * from p_result where BU = #{bu} limit 1
 	</select>
@@ -200,6 +200,44 @@
 	<update id="updateStateByBu" parameterType="java.lang.String">
 		update p_result set State = #{state} where BU = #{bu}
 	</update>
+	<!-- 条件查询 -->
+	<select id="filterQuery"  parameterType="hashMap" resultMap="PerformanceResultMap">
+	  	select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r, t_employee e where r.E_HR=e.E_HR 
+	    <if test="eHr != null and eHr != ''">
+			AND e.E_HR = #{eHr}
+		</if>
+	    <if test="staffName != null and staffName != ''">
+			AND e.STAFF_NAME = #{staffName}
+		</if>
+	    <if test="du != null and du != ''">
+			AND r.du = #{du}
+		</if>
+	    <if test="bu != null and bu != ''">
+			AND r.bu = #{bu}
+		</if>
+	    <if test="role != null and role != ''">
+			AND r.role = #{role}
+		</if>
+	    <if test="skill != null and skill != ''">
+			AND r.skill = #{skill}
+		</if>
+		
+		<if test="startYear != null and startYear != ''  and  ( endYear == null and endQuarter == null)"  >
+			AND r.year = #{startYear}
+		</if>
+		<if test="startQuarter != null and startQuarter != '' and  ( endYear == null and endQuarter == null)">
+			AND r.Quarter = #{startQuarter}
+		</if>
+			
+		<if test="(startYear != null and startYear != '') and ( endYear != null and endQuarter != '') ">
+			AND <![CDATA[ CONCAT(r.year,r.Quarter)  >=   CONCAT(  #{startYear}, #{startQuarter}  ) ]]>
+			AND <![CDATA[ CONCAT(r.year,r.Quarter)  <=   CONCAT(  #{endYear}, #{endQuarter}  ) ]]>
+		</if>
+		
+		<if test="finalize != null and finalize != ''">
+			AND  r.Finalize = #{finalize}
+		</if>
+	</select>
 	
 </mapper>
 
