@@ -79,11 +79,11 @@ public class PerformanceHRBPEvaController {
     @RequestMapping("/processing/result/list")
     @ResponseBody
     public Map<String, Object> processingResultList(@RequestParam int pageSize, @RequestParam int pageNumber, @RequestParam(required = false) String bu, @RequestParam(required = false) String du,
-            @RequestParam(required = false) String eHr, @RequestParam(required = false) String staffName) throws JsonProcessingException {
+            @RequestParam(required = false) String eHr, @RequestParam(required = false) String staffName, @RequestParam(required = false) String rm) throws JsonProcessingException {
         // 分页查询
         PageHelper.startPage(pageNumber, pageSize);
         // 查询条件：当年-当季-bu/du/eHr/staffName
-        List<PerformanceManageEvaBean> data = performanceManageEvaService.processingResultList(bu, du, eHr, staffName);
+        List<PerformanceManageEvaBean> data = performanceManageEvaService.processingResultList(bu, du, eHr, staffName, rm);
         PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
         // 返回数据
         Map<String, Object> map = new HashMap<String, Object>();

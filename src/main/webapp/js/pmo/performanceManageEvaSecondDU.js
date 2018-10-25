@@ -68,7 +68,7 @@ function loadManageEvaSecondDUList() {
 	}, {
 		title : 'Detail',
 		formatter : function(value, row, index) {
-			return "<a href='performanceManageEvaSecondQuery.html' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+			return "<a href='performanceManageEvaSecondQuery.html?rm=" + row.rm + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
 		}
 	} ];
 

@@ -152,7 +152,7 @@
 			<if test="du != null and du != ''">
 				AND DU = #{du}
 			</if>
-			<if test="du != null and du != ''">
+			<if test="rm != null and rm != ''">
 				AND RM = #{rm}
 			</if>
 			<if test="startYear != null and startYear != ''  and  ( endYear == null and endQuarter == null)"  >
@@ -214,6 +214,9 @@
 		</if>
 	    <if test="bu != null and bu != ''">
 			AND r.bu = #{bu}
+		</if>
+		<if test="rm != null and rm != ''">
+			AND r.RM = #{rm}
 		</if>
 	    <if test="role != null and role != ''">
 			AND r.role = #{role}

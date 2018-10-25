@@ -69,7 +69,7 @@ public interface PerformanceResultMapper {
     /**
      * @author: xuexuan
      * 2018年10月25日 上午10:33:30 
-     * @param map 查询key:eHr staffName du bu role skill startYear startQuarter endYear endQuarter finalize
+     * @param map 查询key:eHr staffName du bu rm role skill startYear startQuarter endYear endQuarter finalize
      * void
      */
     public List<PerformanceManageEvaBean> filterQuery(Map<String, Object> map);

@@ -87,7 +87,7 @@ var path='<%=path%>';
 							
 							<!-- search box start -->							
 
-						<div class="panel panel-default">
+						<div class="panel panel-default" id="searchPanel">
 							 <div class="panel-heading" style="background-color:#00688B">
 									<font color="white"> Search for Records</font>
 							 </div>
@@ -96,26 +96,26 @@ var path='<%=path%>';
 										<div class="group">
 											<label class="col-sm-2 control-label">E-HR</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="eHr" value="" />
+												<input type="text" class="form-control" id="eHr" name="eHr" value="" />
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">Employee Name</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="staffName" value="" />
+												<input type="text" class="form-control" id="staffName" name="staffName" value="" />
 											</div>
 										</div>
 										</br></br></br>
 										<div class="group">
 											<label class="col-sm-2 control-label">BU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="bu" value="${BU }" />
+												<input type="text" class="form-control" id="bu" name="bu" value="${BU }" />
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">DU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="du" value="${DU }" />
+												<input type="text" class="form-control" id="du" name="du" value="${DU }" />
 											</div>
 										</div>
 										</br></br></br>
@@ -123,14 +123,14 @@ var path='<%=path%>';
 										<label class="col-lg-2 control-label">Period Between</label>  
                                         <div class="col-lg-2">
                                         <div class='input-group date' id='datetimepicker1'>  
-                                            <input id="startYear" type='text' class="form-control" value="2010" />  
+                                            <input id="startYear" name="startYear" type='text' class="form-control" value="2010" />  
                                             <span class="input-group-addon">  
                                              <span class="glyphicon glyphicon-calendar"></span>  
                                             </span>  
                                         </div> 
                                         </div> 
 										<div class="col-lg-2">
-                                            <select class="form-control" id="startQuarter">
+                                            <select class="form-control" id="startQuarter" name="startQuarter">
 												<option>Q1</option>
 												<option>Q2</option>
 												<option>Q3</option>
@@ -143,14 +143,14 @@ var path='<%=path%>';
 										<label class="col-lg-2 control-label">To</label>  
                                         <div class="col-lg-2">
                                         <div class='input-group date' id='datetimepicker2'>  
-                                            <input type='text' class="form-control" id="endYear"  value="2018" />  
+                                            <input type='text' name="endYear" class="form-control" id="endYear"  value="2018" />  
                                             <span class="input-group-addon">  
                                              <span class="glyphicon glyphicon-calendar"></span>  
                                             </span>  
                                         </div> 
                                         </div> 
 										<div class="col-lg-2">
-                                            <select class="form-control"  id="endQuarter">
+                                            <select class="form-control"  id="endQuarter" name="endQuarter">
 												<option>Q1</option>
 												<option>Q2</option>
 												<option>Q3</option>
@@ -162,10 +162,10 @@ var path='<%=path%>';
 								   	<div class="form-group" style="border-top: solid 1px #ddd;padding-top: 20px;margin-bottom:0px;">
 									    <div style="text-align:left;width:50%;">
 									    <input type="button" value="Search"
-										name="searchBtn" id="searchBtn" onclick="search();"
+										name="searchBtn" id="searchBtn" onClick="search();"
 										class="button btn btn-primary" data-dismiss="modal"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 50px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px;">
-									    <input type="button" value="Clear" href="#"
+									    <input type="button" value="Clear" href="#" onClick="clearParams();"
 										class="button btn btn-primary" data-dismiss="modal"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px;">
 									    </div>
@@ -195,7 +195,7 @@ var path='<%=path%>';
 											name="searchBtn" id="searchBtn" href="#"
 											class="button btn btn-primary" data-dismiss="modal"
 											style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 50px 0px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px;">
-										    <input type="button" value="Export" href="#"
+										    <input type="button" value="Export" href="#" onClick="historyResultExport();"
 											class="button btn btn-primary" data-dismiss="modal"
 											style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 0px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px;">
 									    </div>

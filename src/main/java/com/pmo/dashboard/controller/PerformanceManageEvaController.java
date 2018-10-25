@@ -326,6 +326,43 @@ public class PerformanceManageEvaController {
 
     /**
      * 新增
+     * 百分比计算接口
+     * 指定RM-当年-当季-统计各绩效数量
+     * @author: xuexuan
+     * 2018年10月23日 下午8:26:48
+     * @return 
+     * Map<String,Object>
+     */
+    @RequestMapping(value = "/rm/percentage", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> percentageRM(@RequestParam("rm") String rm, HttpServletRequest request) {
+        // 查询数据
+        List<Map<String, Object>> list = manageEvaService.groupStatByResultRM(rm);
+        // 计算百分比
+        Map<String, Object> rtn = manageEvaService.percentage(list);
+        return rtn;
+    }
+
+    /**
+    * 新增
+    * 百分比计算接口
+    * 指定DU-当年-当季-统计各绩效数量
+    * @author: xuexuan
+    * 2018年10月23日 下午8:26:48
+    * @return 
+    * Map<String,Object>
+    */
+    @RequestMapping(value = "/du/percentage", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> percentageDU(@RequestParam("du") String du, HttpServletRequest request) {
+        List<Map<String, Object>> list = manageEvaService.groupStatByResultDU(du);
+        // 计算百分比
+        Map<String, Object> rtn = manageEvaService.percentage(list);
+        return rtn;
+    }
+
+    /**
+     * 新增
      * 员工-绩效定稿-导出接口
      * @author: xuexuan
      * 2018年10月19日 下午4:21:29

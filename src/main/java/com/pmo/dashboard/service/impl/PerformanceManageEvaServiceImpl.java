@@ -327,7 +327,7 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
     }
 
     @Override
-    public List<PerformanceManageEvaBean> processingResultList(String bu, String du, String eHr, String staffName) {
+    public List<PerformanceManageEvaBean> processingResultList(String bu, String du, String eHr, String staffName, String rm) {
         Map<String, Object> filter = new HashMap<String, Object>();
         Calendar c = Calendar.getInstance();
         String startYear = c.get(Calendar.YEAR) + "";
@@ -338,6 +338,7 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
         filter.put("du", du);
         filter.put("eHr", eHr);
         filter.put("staffName", staffName);
+        filter.put("rm", rm);
         List<PerformanceManageEvaBean> list = mapper.filterQuery(filter);
         getPreviousResult(list);
         return list;

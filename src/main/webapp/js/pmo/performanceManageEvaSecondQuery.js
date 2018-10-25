@@ -3,28 +3,27 @@ $(function() {
 	loadManageEvaSecondQueryList();
 
 });
-
+/** 百分比计算方法 * */
 function queryPercentage() {
+	var rm = $("#curRm").val();
 	$.ajax({
-		url : path + '/service/performanceManageEva/queryPercentage',
+		url : path + '/service/performanceManageEva/rm/percentage?rm=' + rm,
 		dataType : "json",
-		data : {},
-		async : true,
 		cache : false,
-		type : "post",
-		success : function(sta) {
-			$("#percentA").html(sta["percentA"]);
-			$("#percentBplus").html(sta["percentBplus"]);
-			$("#percentB").html(sta["percentB"]);
-			$("#percentC").html(sta["percentC"]);
-			$("#percentD").html(sta["percentD"]);
-			$("#percentSum").html(sta["percentSum"]);
-			$("#empA").html(sta["empA"]);
-			$("#empBplus").html(sta["empBplus"]);
-			$("#empB").html(sta["empB"]);
-			$("#empC").html(sta["empC"]);
-			$("#empD").html(sta["empD"]);
-			$("#empSum").html(sta["empSum"]);
+		type : "get",
+		success : function(data) {
+			$("#percentA").html(data["percentA"] == undefined ? 0 : data["percentA"]);
+			$("#percentBplus").html(data["percentB+"] == undefined ? 0 : data["percentB+"]);
+			$("#percentB").html(data["percentB"] == undefined ? 0 : data["percentB"]);
+			$("#percentC").html(data["percentC"] == undefined ? 0 : data["percentC"]);
+			$("#percentD").html(data["percentD"] == undefined ? 0 : data["percentD"]);
+			$("#empA").html(data["A"] == undefined ? 0 : data["A"]);
+			$("#empBplus").html(data["B+"] == undefined ? 0 : data["B+"]);
+			$("#empB").html(data["B"] == undefined ? 0 : data["B"]);
+			$("#empC").html(data["C"] == undefined ? 0 : data["C"]);
+			$("#empD").html(data["D"] == undefined ? 0 : data["D"]);
+			$("#empSum").html(data["sum"] == undefined ? 0 : data["sum"]);
+			$("#percentSum").html("100%");
 		}
 	})
 }
@@ -159,13 +158,15 @@ function loadManageEvaSecondQueryList() {
 			var staffName = $("#staffName").val();
 			var bu = $("#bu").val();
 			var du = $("#du").val();
+			var rm = $("#curRm").val();
 			return {
 				pageSize : params.limit,
 				pageNumber : params.offset / params.limit + 1,
 				eHr : eHr,
 				staffName : staffName,
 				bu : bu,
-				du : du
+				du : du,
+				rm : rm
 			};
 		},
 		columns : columns,
@@ -173,18 +174,18 @@ function loadManageEvaSecondQueryList() {
 			console.log("in onLoadSuccess");
 			console.log(JSON.stringify(sta));
 
-			$("#percentA").html(sta["percentA"]);
-			$("#percentBplus").html(sta["percentBplus"]);
-			$("#percentB").html(sta["percentB"]);
-			$("#percentC").html(sta["percentC"]);
-			$("#percentD").html(sta["percentD"]);
-			$("#percentSum").html(sta["percentSum"]);
-			$("#empA").html(sta["empA"]);
-			$("#empBplus").html(sta["empBplus"]);
-			$("#empB").html(sta["empB"]);
-			$("#empC").html(sta["empC"]);
-			$("#empD").html(sta["empD"]);
-			$("#empSum").html(sta["empSum"]);
+			/*
+			 * $("#percentA").html(sta["percentA"]);
+			 * $("#percentBplus").html(sta["percentBplus"]);
+			 * $("#percentB").html(sta["percentB"]);
+			 * $("#percentC").html(sta["percentC"]);
+			 * $("#percentD").html(sta["percentD"]);
+			 * $("#percentSum").html(sta["percentSum"]);
+			 * $("#empA").html(sta["empA"]);
+			 * $("#empBplus").html(sta["empBplus"]);
+			 * $("#empB").html(sta["empB"]); $("#empC").html(sta["empC"]);
+			 * $("#empD").html(sta["empD"]); $("#empSum").html(sta["empSum"]);
+			 */
 		},
 		onLoadError : function(status, res) { // 加载失败时执行
 			console.log(res);
@@ -202,14 +203,27 @@ function search() {
 	var staffName = $("#staffName").val();
 	var bu = $("#bu").val();
 	var du = $("#du").val();
+	var rm = $("#curRm").val();
 	var queryParams = {
 		query : {
 			eHr : eHr,
 			staffName : staffName,
 			bu : bu,
-			du : du
+			du : du,
+			rm : rm
 		}
 	};
 	// 刷新表格
 	$('#queryManageEvaSecondQueryList').bootstrapTable('refresh', queryParams);
+}
+/** 清除条件 **/
+function duClear() {
+	$("#eHr").val("");
+	$("#staffName").val("");
+	$("#bu").val("");
+	$("#du").val("");
+}
+/** 返回 **/
+function goBack() {
+	window.location.href = path + "/service/performance/performanceManageEvaSecondDU.html";
 }

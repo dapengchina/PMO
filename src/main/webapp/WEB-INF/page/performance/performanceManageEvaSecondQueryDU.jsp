@@ -86,7 +86,8 @@ var path='<%=path%>';
 						<div class="box-inner" >
 							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->审批->Page-点击操作查看交付部  
+									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->审批->${du}
+									<input type="text" value="${du}" id="curDu" class="hidden"></input>
 								</h2>
 							</div>
 
@@ -98,7 +99,7 @@ var path='<%=path%>';
 
 									<table id="table1" border="1" width="100%" borderColor="green" >
 										<tr style="">
-										 <td colspan="7" style="text-align:center"><font color="green"> XXX交付部普员绩效比例统计(参考比例要求控制)</font>	 </td>
+										 <td colspan="7" style="text-align:center"><font color="green"> ${du}普员绩效比例统计(参考比例要求控制)</font>	 </td>
 										</tr>
 									   <tr>
 										 <td> A <br/>(10-15%)</td>
@@ -181,7 +182,7 @@ var path='<%=path%>';
 										<div class="group">
 											<label class="col-sm-2 control-label">DU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control"  id="du"  value="${DU }" />
+												<input type="text" class="form-control"  id="du"  value="${du}" />
 											</div>
 										</div>
 										</br></br></br>
@@ -196,7 +197,7 @@ var path='<%=path%>';
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 									    </div>
 									    <div style="text-align:left;width:80%;float:left">
-									    <input type="button" value="Clear" href="#"
+									    <input type="button" value="Clear" href="#" onClick="duClear();"
 										class="button btn btn-primary" data-dismiss="modal"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 									    </div>
@@ -217,7 +218,7 @@ var path='<%=path%>';
 												<div style="text-align:center;width:100%;">
 												<input type="button" value="OK" name="Save" id="Save" href="#"
 												class="button btn btn-primary" data-dismiss="modal"
-												onclick=""
+												onclick="goBack();"
 												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 												</div>
 										</div>

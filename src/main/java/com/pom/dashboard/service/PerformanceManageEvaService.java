@@ -93,7 +93,7 @@ public interface PerformanceManageEvaService {
      * @return 
      * List<PerformanceManageEvaBean>
      */
-    public List<PerformanceManageEvaBean> processingResultList(String bu, String du, String eHr, String staffName);
+    public List<PerformanceManageEvaBean> processingResultList(String bu, String du, String eHr, String staffName, String rm);
 
     /**
      * 所有员工-当年-当季-最终-绩效列表

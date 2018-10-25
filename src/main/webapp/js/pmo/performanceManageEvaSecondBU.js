@@ -67,7 +67,7 @@ function loadManageEvaSecondDUList() {
 	}, {
 		title : 'Detail',
 		formatter : function(value, row, index) {
-			return "<a href='performanceManageEvaSecondQueryDU.html' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+			return "<a href='performanceManageEvaSecondQueryDU.html?du=" + row.du + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
 		}
 	} ];
 

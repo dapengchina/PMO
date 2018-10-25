@@ -211,10 +211,10 @@ public class PerformanceController {
     }
 
     @RequestMapping("/performanceManageEvaSecondQuery")
-    public String getPerformanceManageEvaSecondQuery(final HttpServletRequest request, Model model) {
+    public String getPerformanceManageEvaSecondQuery(@RequestParam("rm") String rm, final HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("loginUser");
         getDUBU(request, user);
-
+        model.addAttribute("rm", rm);
         return "performance/performanceManageEvaSecondQuery";
     }
 
@@ -253,9 +253,10 @@ public class PerformanceController {
     }
 
     @RequestMapping("/performanceManageEvaSecondQueryDU")
-    public String getPerformanceManageEvaSecondQueryDU(final HttpServletRequest request, Model model) {
+    public String getPerformanceManageEvaSecondQueryDU(@RequestParam("du") String du, final HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("loginUser");
-        getDUBU(request, user);
+        getDUBU(request, user);// TODO xuexuan
+        model.addAttribute("du", du);
         return "performance/performanceManageEvaSecondQueryDU";
     }
 
