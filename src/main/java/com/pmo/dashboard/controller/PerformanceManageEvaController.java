@@ -16,6 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -421,6 +422,32 @@ public class PerformanceManageEvaController {
         PageHelper.startPage(pageNumber, pageSize);
         // 查询数据,条件：年-季-finalize-bu/du/ehr/staffName
         List<PerformanceManageEvaBean> data = manageEvaService.finalizeResultList();
+        PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
+        // 返回数据
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("total", page.getTotal());
+        map.put("rows", page.getList());
+        return map;
+    }
+
+    /**
+     * 新增
+     * 分页查询当前登录RM下员工绩效信息
+     * @author: xuexuan
+     * 2018年10月19日 下午2:19:57
+     * @return 
+     * String
+     * @throws JsonProcessingException 
+     */
+    @RequestMapping("/processing/result/list/rm")
+    @ResponseBody
+    public Map<String, Object> processingResultList(@RequestParam int pageSize, @RequestParam int pageNumber, HttpServletRequest request) throws JsonProcessingException {
+        // 判断登录用户类别
+        User user = (User) request.getSession().getAttribute("loginUser");
+        // 分页查询
+        PageHelper.startPage(pageNumber, pageSize);
+        // 查询条件：当年-当季-bu/du/eHr/staffName/rm
+        List<PerformanceManageEvaBean> data = manageEvaService.processingResultList(null, null, null, null, user.getNickname());
         PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
         // 返回数据
         Map<String, Object> map = new HashMap<String, Object>();

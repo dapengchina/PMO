@@ -87,7 +87,7 @@ public interface PerformanceManageEvaService {
 
     /**
      * 所有员工-当年-当季-绩效列表
-     * 其他筛选条件：bu du staffName eHr
+     * 其他筛选条件：bu du staffName eHr rm
      * @author: xuexuan
      * 2018年10月19日 下午3:46:21
      * @return 
