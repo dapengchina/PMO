@@ -42,7 +42,9 @@ function queryPercentage() {
 }
 
 function loadManageEvaSecondDUList() {
-	var queryUrl = path + '/service/performanceManageEva/queryManageEvaSecondBUList';
+	// var queryUrl = path +
+	// '/service/performanceManageEva/queryManageEvaSecondBUList';
+	var queryUrl = path + '/service/performanceManageEva/assessment/approval';
 	var columns = [ {
 		checkbox : true,
 		visible : true

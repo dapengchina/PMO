@@ -139,4 +139,24 @@ public interface PerformanceManageEvaService {
      * void
      */
     public void updateStateByBu(@Param("bu") String bu, @Param("state") String state);
+
+    /**
+     * 查询指定事业部的审批列表
+     * @author: xuexuan
+     * 2018年10月25日 下午7:51:24
+     * @param bu
+     * @return 
+     * Map<String,Object>
+     */
+    public List<Map<String, Object>> listGroupByBU(String bu);
+
+    /**
+     * 查询指定交付部的审批列表
+     * @author: xuexuan
+     * 2018年10月25日 下午7:51:24
+     * @param bu
+     * @return 
+     * Map<String,Object>
+     */
+    public List<Map<String, Object>> listGroupByRM(String csSubDeptName);
 }

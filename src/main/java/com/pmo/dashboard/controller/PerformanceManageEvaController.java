@@ -307,18 +307,22 @@ public class PerformanceManageEvaController {
         // 判断登录用户类别，根据类别统计
         User user = (User) request.getSession().getAttribute("loginUser");
         List<Map<String, Object>> list = null;
-        if ("0".equals(user.getUserType())) {// 登录用户为管理员  TODO  暂统计所有员工
-            list = manageEvaService.groupStatByResultBU(null);
-        }
-        if ("1".equals(user.getUserType())) {// 事业部经理
-            list = manageEvaService.groupStatByResultBU(user.getBu());
-        }
-        if ("3".equals(user.getUserType())) {// 交付部经理
-            CSDept csDept = csDeptService.queryCSDeptById(user.getDu());// 查询交付部名称
-            list = manageEvaService.groupStatByResultDU(csDept.getCsSubDeptName());
-        }
-        if ("5".equals(user.getUserType())) {// 登录用户为RM
-            list = manageEvaService.groupStatByResultRM(user.getNickname());
+        switch (user.getUserType()) {
+            case "0":// 登录用户为管理员  TODO  暂统计所有员工
+                list = manageEvaService.groupStatByResultBU(null);
+                break;
+            case "1":// 事业部经理
+                list = manageEvaService.groupStatByResultBU(user.getBu());
+                break;
+            case "3":// 交付部经理
+                CSDept csDept = csDeptService.queryCSDeptById(user.getDu());// 查询交付部名称
+                list = manageEvaService.groupStatByResultDU(csDept.getCsSubDeptName());
+                break;
+            case "5":// 登录用户为RM
+                list = manageEvaService.groupStatByResultRM(user.getNickname());
+                break;
+            default:
+                break;
         }
         // 计算百分比
         Map<String, Object> rtn = manageEvaService.percentage(list);
@@ -455,4 +459,29 @@ public class PerformanceManageEvaController {
         map.put("rows", page.getList());
         return map;
     }
+
+    /**
+     * 新增
+     * 绩效考评-审批
+     * @author: xuexuan
+     * 2018年10月19日 下午2:19:57
+     * @return 
+     * String
+     */
+    @RequestMapping("/assessment/approval")
+    @ResponseBody
+    public List<Map<String, Object>> processingResultList(HttpServletRequest request) throws JsonProcessingException {
+        // 判断登录用户类别
+        User user = (User) request.getSession().getAttribute("loginUser");
+        List<Map<String, Object>> list = null;
+        if ("1".equals(user.getUserType())) {// 事业部经理-根据交付部统计
+            list = manageEvaService.listGroupByBU(user.getBu());
+        }
+        if ("3".equals(user.getUserType())) {// 交付部经理-根据RM统计
+            CSDept csDept = csDeptService.queryCSDeptById(user.getDu());// 查询交付部名称
+            list = manageEvaService.listGroupByRM(csDept.getCsSubDeptName());
+        }
+        return list;
+    }
+
 }

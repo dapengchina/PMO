@@ -74,4 +74,24 @@ public interface PerformanceResultMapper {
      */
     public List<PerformanceManageEvaBean> filterQuery(Map<String, Object> map);
 
+    /**
+     * 查询指定事业部的审批列表
+     * @author: xuexuan
+     * 2018年10月25日 下午7:57:34
+     * @param bu
+     * @return 
+     * List<Map<String,Object>>
+     */
+    public List<Map<String, Object>> listGroupByDU(String bu);
+
+    /**
+     * 查询指定交付部的审批列表
+     * @author: xuexuan
+     * 2018年10月25日 下午7:57:34
+     * @param bu
+     * @return 
+     * List<Map<String,Object>>
+     */
+    public List<Map<String, Object>> listGroupByRM(String du);
+
 }

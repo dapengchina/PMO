@@ -404,4 +404,14 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
         mapper.updateStateByBu(bu, state);
     }
 
+    @Override
+    public List<Map<String, Object>> listGroupByBU(String bu) {
+        return mapper.listGroupByDU(bu);
+    }
+
+    @Override
+    public List<Map<String, Object>> listGroupByRM(String csSubDeptName) {
+        return mapper.listGroupByRM(csSubDeptName);
+    }
+
 }
