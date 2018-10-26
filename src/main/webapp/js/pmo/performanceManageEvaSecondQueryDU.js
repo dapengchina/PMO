@@ -216,10 +216,31 @@ function search() {
 function duClear() {
 	$("#eHr").val("");
 	$("#staffName").val("");
-	$("#bu").val("");
-	$("#du").val("");
 }
 /** 返回 * */
 function goBack() {
 	window.location.href = path + "/service/performance/performanceManageEvaSecondBU.html";
+}
+
+/** 审批-指定交付部下所有员工 * */
+function approval(type) {
+	var state = type == 1 ? 6 : 5;// TODO xuexuan
+	var du = $("#du").val();
+	$.ajax({
+		url : path + '/service/performanceManageEva/assessment/approval/du/detail/submit',
+		data : {
+			"du" : du,
+			"state" : state
+		},
+		cache : false,
+		type : "POST",
+		success : function(data) {
+			alert("审批成功");
+			// 返回审批页面
+			window.location.href = path + "/service/performance/performanceManageEvaSecondBU.html";
+		},
+		error : function(error) {
+			alert("审批失败");
+		}
+	});
 }

@@ -132,7 +132,7 @@ var path='<%=path%>';
 								 <div class="panel-body" >										
 										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Comments</label>
 										<div class="col-lg-10">
-											<textarea rows="3" style="border:1px solid black" class="form-control" ></textarea>
+											<textarea rows="3" style="border:1px solid black" class="form-control" readonly>${resultComments}</textarea>
 										</div>
 								 </div>
 							</div>						
@@ -140,12 +140,12 @@ var path='<%=path%>';
 								<div class="form-group" >
 									    <div style="text-align:center;width:20%;float:left"   >
 									    <input type="button" value="Reject"
-										name="searchBtn" id="searchBtn" href="#"
+										name="searchBtn" id="searchBtn" href="#" onClick="approval(-1);"
 										class="button btn btn-primary" data-dismiss="modal"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 									    </div>
 									    <div style="text-align:left;width:80%;float:left">
-									    <input type="button" value="Approve" href="#"
+									    <input type="button" value="Approve" href="#" onClick="approval(1);"
 										class="button btn btn-primary" data-dismiss="modal"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 									    </div>
@@ -176,13 +176,13 @@ var path='<%=path%>';
 										<div class="group">
 											<label class="col-sm-2 control-label">BU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="bu" value="${BU}"/>
+												<input type="text" class="form-control" id="bu" value="${bu}" readonly/>
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">DU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control"  id="du" value="${DU}"/>
+												<input type="text" class="form-control"  id="du" value="${du}" readonly/>
 											</div>
 										</div>
 										</br></br></br>

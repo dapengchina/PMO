@@ -40,11 +40,11 @@ function queryPercentage() {
 		}
 	});
 }
-
+var approvalAllFlag = true;
 function loadManageEvaSecondDUList() {
 	// var queryUrl = path +
 	// '/service/performanceManageEva/queryManageEvaSecondBUList';
-	var queryUrl = path + '/service/performanceManageEva/assessment/approval';
+	var queryUrl = path + '/service/performanceManageEva/assessment/approval/list';
 	var columns = [ {
 		checkbox : true,
 		visible : true
@@ -64,8 +64,19 @@ function loadManageEvaSecondDUList() {
 		field : 'quarter',
 		title : 'Quarter'
 	}, {
-		field : 'status',
-		title : '状态'
+		title : '状态',
+		formatter : function(value, row, index) {
+			var state = "";
+			$.ajax({
+				url : path + "/service/performance/state/" + row.status,
+				async : false,
+				type : "GET",
+				success : function(data) {
+					state = data.stateName;
+				}
+			});
+			return state;
+		}
 	}, {
 		title : 'Detail',
 		formatter : function(value, row, index) {
@@ -106,9 +117,14 @@ function loadManageEvaSecondDUList() {
 			};
 		},
 		columns : columns,
-		onLoadSuccess : function(sta) {
-			console.log("in onLoadSuccess");
-			console.log(JSON.stringify(sta));
+		onLoadSuccess : function(data) {
+			// 判断所有交付部是否均已审批
+			for ( var item in data) {
+				if (data[item].status == 4) {// TODO xuexuan
+					approvalAllFlag = false;
+					return;
+				}
+			}
 		},
 		onLoadError : function(status, res) { // 加载失败时执行
 			console.log(res);
@@ -119,4 +135,38 @@ function loadManageEvaSecondDUList() {
 		}
 
 	});
+}
+/** 事业部经理审批提交 ** */
+function submit() {
+	// 所有交付部都审批才能提交
+	if (!approvalAllFlag) {
+		alert("还有未审批数据，请先审批");
+		return;
+	}
+	// comments不能为空
+	var comments = $("#Comments").val();
+	if (comments == "") {
+		alert("请填写反馈！");
+		return;
+	}
+	var curBu = $("#curBu").val();
+	$.ajax({
+		url : path + '/service/performanceManageEva/assessment/approval/bu/submit',
+		data : {
+			"bu" : curBu,
+			"comments" : comments
+		},
+		cache : false,
+		type : "POST",
+		success : function(data) {
+			alert("审批成功");
+		},
+		error : function(error) {
+			alert("审批失败");
+		}
+	});
+}
+
+function batchExport() {
+	window.location.href = path + "/service/performanceManageEva/assessment/approval/bu/export.html";
 }

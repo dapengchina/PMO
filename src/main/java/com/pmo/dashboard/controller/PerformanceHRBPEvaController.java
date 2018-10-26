@@ -3,15 +3,12 @@ package com.pmo.dashboard.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -160,7 +157,7 @@ public class PerformanceHRBPEvaController {
     @RequestMapping("/approval/detail/submit")
     @ResponseBody
     public String approvalDetailSubmit(@RequestParam String bu, @RequestParam String state) {
-        performanceManageEvaService.updateStateByBu(bu, state);
+        performanceManageEvaService.updateStateByBU(bu, state);
         return "";
     }
 
@@ -175,9 +172,7 @@ public class PerformanceHRBPEvaController {
      */
     @RequestMapping("/approval/submit")
     public String approvalSubmit(@RequestParam String comments) throws JsonProcessingException {
-        if (StringUtils.isNotBlank(comments)) {
-            performanceManageEvaService.updateComments(comments);
-        }
+        performanceManageEvaService.updateComments(comments);
         return "performance/performanceHRBPApproval";
     }
 

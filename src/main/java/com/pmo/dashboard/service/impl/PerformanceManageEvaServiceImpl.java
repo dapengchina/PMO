@@ -9,8 +9,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -327,6 +325,21 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
     }
 
     @Override
+    public List<PerformanceManageEvaBean> processingResultListRM(String rm) {
+        return processingResultList(null, null, null, null, rm);
+    }
+
+    @Override
+    public List<PerformanceManageEvaBean> processingResultListBU(String bu) {
+        return processingResultList(bu, null, null, null, null);
+    }
+
+    @Override
+    public List<PerformanceManageEvaBean> processingResultListDU(String du) {
+        return processingResultList(null, du, null, null, null);
+    }
+
+    @Override
     public List<PerformanceManageEvaBean> processingResultList(String bu, String du, String eHr, String staffName, String rm) {
         Map<String, Object> filter = new HashMap<String, Object>();
         Calendar c = Calendar.getInstance();
@@ -389,29 +402,66 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
     }
 
     @Override
-    public PerformanceManageEvaBean queryResultComments(String bu) {
-        return mapper.queryResultComments(bu);
+    public PerformanceManageEvaBean queryResultCommentsByBU(String bu) {
+        Calendar c = Calendar.getInstance();
+        String startYear = c.get(Calendar.YEAR) + "";
+        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        return mapper.queryResultComments(bu, null, startYear, startQuarter);
+    }
+
+    @Override
+    public PerformanceManageEvaBean queryResultCommentsByDU(String du) {
+        Calendar c = Calendar.getInstance();
+        String startYear = c.get(Calendar.YEAR) + "";
+        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        return mapper.queryResultComments(null, du, startYear, startQuarter);
     }
 
     @Override
     public void updateComments(String comments) {
-        mapper.updateComments(comments);
+        mapper.updateComments(comments, null, null);
 
     }
 
     @Override
-    public void updateStateByBu(String bu, String state) {
-        mapper.updateStateByBu(bu, state);
+    public void updateCommentsByBU(String comments, String bu) {
+        mapper.updateComments(comments, bu, null);
     }
 
     @Override
-    public List<Map<String, Object>> listGroupByBU(String bu) {
-        return mapper.listGroupByDU(bu);
+    public void updateCommentsByDU(String comments, String du) {
+        mapper.updateComments(comments, null, du);
+    }
+
+    @Override
+    public void updateStateByBU(String bu, String state) {
+        mapper.updateState(bu, null, null, state);
+    }
+
+    @Override
+    public void updateStateByDU(String du, String state) {
+        mapper.updateState(null, du, null, state);
+    }
+
+    @Override
+    public void updateStateByRM(String rm, String state) {
+        mapper.updateState(null, null, rm, state);
+    }
+
+    @Override
+    public List<Map<String, Object>> listGroupByDU(String bu) {
+        Calendar c = Calendar.getInstance();
+        String startYear = c.get(Calendar.YEAR) + "";
+        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        return mapper.listGroupByDU(bu, startYear, startQuarter);
     }
 
     @Override
     public List<Map<String, Object>> listGroupByRM(String csSubDeptName) {
-        return mapper.listGroupByRM(csSubDeptName);
+        Calendar c = Calendar.getInstance();
+        String startYear = c.get(Calendar.YEAR) + "";
+        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        return mapper.listGroupByRM(csSubDeptName, startYear, startQuarter);
     }
 
 }

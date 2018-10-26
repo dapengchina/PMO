@@ -217,19 +217,50 @@
 		group by BU
 	</select>
 	<!-- 根据事业部查询-审批备注 -->
-	<select id="queryResultComments" parameterType="java.lang.String"
-		resultMap="PerformanceResultMap">
-		select * from p_result where BU = #{bu} limit 1
+	<select id="queryResultComments" parameterType="java.lang.String" resultMap="PerformanceResultMap">
+		select * from p_result
+		<where>
+			<if test="null != bu and '' != bu">
+				AND BU = #{bu}
+			</if>
+			<if test="null != du and '' != du">
+				AND DU = #{du}
+			</if>
+			<if test="startYear != null and startYear != ''">
+				AND Year = #{startYear}
+			</if>
+			<if test="startQuarter != null and startQuarter != ''">
+				AND Quarter = #{startQuarter}
+			</if>
+		</where> 
+		 limit 1
 	</select>
 	<!-- 更新审批内容 -->
 	<update id="updateComments" parameterType="java.lang.String">
-		update p_result set
-		Result_Comments = #{comments}
+		update p_result set 	Result_Comments = #{comments}
+		<where>
+			<if test="null != bu and '' != bu">
+				and BU = #{bu}
+			</if>
+			<if test="null != du and '' != du">
+				and DU = #{du}
+			</if>
+		</where>
 	</update>
 	<!-- 更新审批状态 -->
-	<update id="updateStateByBu" parameterType="java.lang.String">
-		update p_result set
-		State = #{state} where BU = #{bu}
+	<update id="updateState" parameterType="java.lang.String">
+		update p_result set		State = #{state} 
+		<where>
+			<if test="null != bu and '' != bu">
+				and BU = #{bu}
+			</if>
+			<if test="null != du and '' != du">
+				and DU = #{du}
+			</if>
+			<if test="null != rm and '' != rm">
+				and RM = #{rm}
+			</if>
+		</where>
 	</update>
 	<!-- 条件查询 -->
 	<select id="filterQuery" parameterType="hashMap" resultMap="PerformanceResultMap">
@@ -278,13 +309,35 @@
 	</select>
 
 	<select id="listGroupByDU" parameterType="string" resultType="hashMap">
-		select DU as du, Year as year, Quarter as quarter, State as status
-		from p_result where BU = #{bu} group by DU
+		select DU as du, Year as year, Quarter as quarter, State as status	from p_result 
+		<where>
+			<if test="bu != null and bu != ''">
+				AND BU = #{bu}
+			</if>
+			<if test="startYear != null and startYear != ''">
+				AND Year = #{startYear}
+			</if>
+			<if test="startQuarter != null and startQuarter != ''">
+				AND Quarter = #{startQuarter}
+			</if>
+		</where> 
+		group by DU
 	</select>
 
 	<select id="listGroupByRM" parameterType="string" resultType="hashMap">
-		select RM as rm, Year as year, Quarter as quarter, State as status
-		from p_result where DU = #{du} group by RM
+		select RM as rm, Year as year, Quarter as quarter, State as status	from p_result 
+		<where>
+			<if test="du != null and du != ''">
+				AND DU = #{du}
+			</if>
+			<if test="startYear != null and startYear != ''">
+				AND Year = #{startYear}
+			</if>
+			<if test="startQuarter != null and startQuarter != ''">
+				AND Quarter = #{startQuarter}
+			</if>
+		</where> 
+		group by RM
 	</select>
 
 </mapper>

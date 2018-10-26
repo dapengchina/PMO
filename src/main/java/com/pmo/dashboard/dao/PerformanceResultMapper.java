@@ -41,14 +41,14 @@ public interface PerformanceResultMapper {
     public List<Map<String, Object>> approvalList(PerformanceQueryCondition condition);
 
     /**
-     * 根据事业部名查询一条记录
+     * 根据事业部/交付部查询一条记录
      * @author: xuexuan
      * 2018年10月22日 下午4:47:55
      * @param resultComments
      * @return 
      * List<PerformanceManageEvaBean>
      */
-    public PerformanceManageEvaBean queryResultComments(@Param("bu") String bu);
+    public PerformanceManageEvaBean queryResultComments(@Param("bu") String bu, @Param("du") String du, @Param("startYear") String startYear, @Param("startQuarter") String startQuarter);
 
     /**
      * 更新审批内容
@@ -56,7 +56,7 @@ public interface PerformanceResultMapper {
      * 2018年10月22日 下午5:24:20 
      * void
      */
-    public void updateComments(String comments);
+    public void updateComments(@Param("comments") String comments, @Param("bu") String bu, @Param("du") String du);
 
     /**
      * 更新审批状态
@@ -64,7 +64,7 @@ public interface PerformanceResultMapper {
      * 2018年10月22日 下午5:24:20 
      * void
      */
-    public void updateStateByBu(String bu, String state);
+    public void updateState(@Param("bu") String bu, @Param("du") String du, @Param("rm") String rm, @Param("state") String state);
 
     /**
      * @author: xuexuan
@@ -82,7 +82,7 @@ public interface PerformanceResultMapper {
      * @return 
      * List<Map<String,Object>>
      */
-    public List<Map<String, Object>> listGroupByDU(String bu);
+    public List<Map<String, Object>> listGroupByDU(@Param("bu") String bu, @Param("startYear") String startYear, @Param("startQuarter") String startQuarter);
 
     /**
      * 查询指定交付部的审批列表
@@ -92,6 +92,6 @@ public interface PerformanceResultMapper {
      * @return 
      * List<Map<String,Object>>
      */
-    public List<Map<String, Object>> listGroupByRM(String du);
+    public List<Map<String, Object>> listGroupByRM(@Param("du") String du, @Param("startYear") String startYear, @Param("startQuarter") String startQuarter);
 
 }

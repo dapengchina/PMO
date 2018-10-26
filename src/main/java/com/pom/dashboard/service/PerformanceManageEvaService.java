@@ -3,8 +3,6 @@ package com.pom.dashboard.service;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.pmo.dashboard.entity.PerformanceEmpHistoryBean;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceManageResultHistoryBean;
@@ -96,6 +94,33 @@ public interface PerformanceManageEvaService {
     public List<PerformanceManageEvaBean> processingResultList(String bu, String du, String eHr, String staffName, String rm);
 
     /**
+     * 指定RM下员工-当年-当季-绩效列表
+     * @author: xuexuan
+     * 2018年10月19日 下午3:46:21
+     * @return 
+     * List<PerformanceManageEvaBean>
+     */
+    public List<PerformanceManageEvaBean> processingResultListRM(String rm);
+
+    /**
+     * 指定BU下员工-当年-当季-绩效列表
+     * @author: xuexuan
+     * 2018年10月19日 下午3:46:21
+     * @return 
+     * List<PerformanceManageEvaBean>
+     */
+    public List<PerformanceManageEvaBean> processingResultListBU(String bu);
+
+    /**
+     * 指定DU下员工-当年-当季-绩效列表
+     * @author: xuexuan
+     * 2018年10月19日 下午3:46:21
+     * @return 
+     * List<PerformanceManageEvaBean>
+     */
+    public List<PerformanceManageEvaBean> processingResultListDU(String du);
+
+    /**
      * 所有员工-当年-当季-最终-绩效列表
      * @author: xuexuan
      * 2018年10月25日 上午10:43:17
@@ -122,10 +147,20 @@ public interface PerformanceManageEvaService {
      * @return 
      * List<PerformanceManageEvaBean>
      */
-    public PerformanceManageEvaBean queryResultComments(String bu);
+    public PerformanceManageEvaBean queryResultCommentsByBU(String bu);
 
     /**
-     * 更新审批内容
+     * 根据交付部查询一条记录
+     * @author: xuexuan
+     * 2018年10月22日 下午4:47:55
+     * @param resultComments
+     * @return 
+     * List<PerformanceManageEvaBean>
+     */
+    public PerformanceManageEvaBean queryResultCommentsByDU(String du);
+
+    /**
+     * 更新所有员工的审批内容
      * @author: xuexuan
      * 2018年10月22日 下午5:24:20 
      * void
@@ -133,22 +168,54 @@ public interface PerformanceManageEvaService {
     public void updateComments(String comments);
 
     /**
-     * 更新审批状态
+     * 更新指定事业部的审批内容
      * @author: xuexuan
      * 2018年10月22日 下午5:24:20 
      * void
      */
-    public void updateStateByBu(@Param("bu") String bu, @Param("state") String state);
+    public void updateCommentsByBU(String comments, String bu);
 
     /**
-     * 查询指定事业部的审批列表
+     * 更新指定交付部的审批内容
+     * @author: xuexuan
+     * 2018年10月22日 下午5:24:20 
+     * void
+     */
+    public void updateCommentsByDU(String comments, String du);
+
+    /**
+     * 更新指定事业部审批状态
+     * @author: xuexuan
+     * 2018年10月22日 下午5:24:20 
+     * void
+     */
+    public void updateStateByBU(String bu, String state);
+
+    /**
+     * 更新指定交付部审批状态
+     * @author: xuexuan
+     * 2018年10月22日 下午5:24:20 
+     * void
+     */
+    public void updateStateByDU(String du, String state);
+
+    /**
+     * 更新指定RM审批状态
+     * @author: xuexuan
+     * 2018年10月22日 下午5:24:20 
+     * void
+     */
+    public void updateStateByRM(String rm, String state);
+
+    /**
+     * 查询指定事业部-当年-当季-的审批列表
      * @author: xuexuan
      * 2018年10月25日 下午7:51:24
      * @param bu
      * @return 
      * Map<String,Object>
      */
-    public List<Map<String, Object>> listGroupByBU(String bu);
+    public List<Map<String, Object>> listGroupByDU(String bu);
 
     /**
      * 查询指定交付部的审批列表

@@ -216,14 +216,35 @@ function search() {
 	// 刷新表格
 	$('#queryManageEvaSecondQueryList').bootstrapTable('refresh', queryParams);
 }
-/** 清除条件 **/
+/** 清除条件 * */
 function duClear() {
 	$("#eHr").val("");
 	$("#staffName").val("");
-	$("#bu").val("");
-	$("#du").val("");
 }
-/** 返回 **/
+/** 返回 * */
 function goBack() {
 	window.location.href = path + "/service/performance/performanceManageEvaSecondDU.html";
+}
+
+/** 审批-指定rm下所有员工 * */
+function approval(type) {
+	var state = type == 1 ? 4 : 3;// TODO xuexuan
+	var rm = $("#curRm").val();
+	$.ajax({
+		url : path + '/service/performanceManageEva/assessment/approval/rm/detail/submit',
+		data : {
+			"rm" : rm,
+			"state" : state
+		},
+		cache : false,
+		type : "POST",
+		success : function(data) {
+			alert("审批成功");
+			// 返回审批页面
+			window.location.href = path + "/service/performance/performanceManageEvaSecondDU.html";
+		},
+		error : function(error) {
+			alert("审批失败");
+		}
+	});
 }

@@ -12,11 +12,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,7 @@ import com.pmo.dashboard.entity.PerformanceEmpHistoryBean;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
 import com.pmo.dashboard.entity.User;
+import com.pmo.dashboard.util.Constants;
 import com.pom.dashboard.service.CSDeptService;
 import com.pom.dashboard.service.EmployeeInfoService;
 import com.pom.dashboard.service.PerformanceEmpHistoryService;
@@ -53,7 +56,7 @@ import com.pom.dashboard.service.PerformanceService;
 @RequestMapping(value = "/performanceManageEva")
 public class PerformanceManageEvaController {
 
-    private static Logger                logger = LoggerFactory.getLogger(PerformanceManageEvaController.class);
+    private static Logger                logger            = LoggerFactory.getLogger(PerformanceManageEvaController.class);
 
     @Resource
     private PerformanceManageEvaService  manageEvaService;
@@ -65,6 +68,12 @@ public class PerformanceManageEvaController {
     private EmployeeInfoService          employeeInfoService;
     @Resource
     private PerformanceService           performanceService;
+    /** Management-绩效考评-事业部审批导出文件 **/
+    private static String[]              approvalBUTitle   = new String[] { "NO.", "DU", "Year", "Quarter", "Status" };
+    private static String[]              approvalBUContent = new String[] { "NO.", "du", "year", "quarter", "status" };
+    /** Management-绩效考评-交付部审批导出文件 **/
+    private static String[]              approvalDUTitle   = new String[] { "NO.", "RM", "Year", "Quarter", "Status" };
+    private static String[]              approvalDUContent = new String[] { "NO.", "rm", "year", "quarter", "status" };
 
     @RequestMapping("/queryManageEvaFirstDetailList")
     @ResponseBody
@@ -308,7 +317,7 @@ public class PerformanceManageEvaController {
         User user = (User) request.getSession().getAttribute("loginUser");
         List<Map<String, Object>> list = null;
         switch (user.getUserType()) {
-            case "0":// 登录用户为管理员  TODO  暂统计所有员工
+            case "0":// 登录用户为管理员  TODO xuexuan 暂统计所有员工
                 list = manageEvaService.groupStatByResultBU(null);
                 break;
             case "1":// 事业部经理
@@ -450,8 +459,8 @@ public class PerformanceManageEvaController {
         User user = (User) request.getSession().getAttribute("loginUser");
         // 分页查询
         PageHelper.startPage(pageNumber, pageSize);
-        // 查询条件：当年-当季-bu/du/eHr/staffName/rm
-        List<PerformanceManageEvaBean> data = manageEvaService.processingResultList(null, null, null, null, user.getNickname());
+        // 查询条件：当年-当季-rm
+        List<PerformanceManageEvaBean> data = manageEvaService.processingResultListRM(user.getNickname());
         PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
         // 返回数据
         Map<String, Object> map = new HashMap<String, Object>();
@@ -462,26 +471,211 @@ public class PerformanceManageEvaController {
 
     /**
      * 新增
-     * 绩效考评-审批
+     * 绩效考评-审批列表
      * @author: xuexuan
      * 2018年10月19日 下午2:19:57
      * @return 
      * String
      */
-    @RequestMapping("/assessment/approval")
+    @RequestMapping("/assessment/approval/list")
     @ResponseBody
     public List<Map<String, Object>> processingResultList(HttpServletRequest request) throws JsonProcessingException {
         // 判断登录用户类别
         User user = (User) request.getSession().getAttribute("loginUser");
         List<Map<String, Object>> list = null;
+        //        list = manageEvaService.listGroupByDU("数字移动事业部");
+        list = manageEvaService.listGroupByRM("网银业务交付部");
         if ("1".equals(user.getUserType())) {// 事业部经理-根据交付部统计
-            list = manageEvaService.listGroupByBU(user.getBu());
+            list = manageEvaService.listGroupByDU(user.getBu());
         }
         if ("3".equals(user.getUserType())) {// 交付部经理-根据RM统计
-            CSDept csDept = csDeptService.queryCSDeptById(user.getDu());// 查询交付部名称
+            CSDept csDept = csDeptService.queryCSDeptById(user.getCsdeptId());// 查询交付部名称
             list = manageEvaService.listGroupByRM(csDept.getCsSubDeptName());
         }
         return list;
+    }
+
+    /**
+     * 新增
+     * 绩效考评-事业部审批-审批提交
+     * @author: xuexuan
+     * 2018年10月22日 下午3:00:00
+     * @param bu  审批的部门
+     * @param state 审批状态
+     * @return 
+     * String
+     */
+    @RequestMapping("/assessment/approval/bu/submit")
+    @ResponseBody
+    public String approvalBUSubmit(@RequestParam String bu, @RequestParam String comments) {
+        manageEvaService.updateCommentsByBU(comments, bu);
+        return "";
+    }
+
+    /**
+     * 新增
+     * 绩效考评-交付部审批-审批提交
+     * @author: xuexuan
+     * 2018年10月22日 下午3:00:00
+     * @param bu  审批的部门
+     * @param state 审批状态
+     * @return 
+     * String
+     */
+    @RequestMapping("/assessment/approval/du/submit")
+    @ResponseBody
+    public String approvalDUSubmit(@RequestParam String du, @RequestParam String comments) {
+        manageEvaService.updateCommentsByDU(comments, du);
+        return "";
+    }
+
+    /**
+     * 新增
+     * 绩效考评-事业部审批-详情页-审批提交
+     * @author: xuexuan
+     * 2018年10月22日 下午3:00:00
+     * @param bu  审批的部门
+     * @param state 审批状态
+     * @return 
+     * String
+     */
+    @RequestMapping("/assessment/approval/du/detail/submit")
+    @ResponseBody
+    public String approvalBUDetailSubmit(@RequestParam String du, @RequestParam String state) {
+        manageEvaService.updateStateByDU(du, state);
+        return "";
+    }
+
+    /**
+     * 新增
+     * 绩效考评-交付部审批-详情页-审批提交
+     * @author: xuexuan
+     * 2018年10月22日 下午3:00:00
+     * @param bu  审批的部门
+     * @param state 审批状态
+     * @return 
+     * String
+     */
+    @RequestMapping("/assessment/approval/rm/detail/submit")
+    @ResponseBody
+    public String approvalDUDetailSubmit(@RequestParam String rm, @RequestParam String state) {
+        manageEvaService.updateStateByRM(rm, state);
+        return "";
+    }
+
+    /**
+     * @author: xuexuan
+     * 2018年10月26日 下午2:52:58
+     * @return 
+     * ResponseEntity<byte[]>
+     * @throws IllegalAccessException 
+     * @throws IllegalArgumentException 
+     */
+    @RequestMapping("/assessment/approval/bu/export")
+    public ResponseEntity<byte[]> approvalBUExport(HttpServletRequest request) throws IllegalArgumentException, IllegalAccessException, IOException {
+        // 获取登录用户所在事业部
+        User user = (User) request.getSession().getAttribute("loginUser");
+        // 审批列表
+        List<Map<String, Object>> list = manageEvaService.listGroupByDU(user.getBu());
+        // 员工绩效列表-当年-当季-BU
+        List<PerformanceManageEvaBean> data = manageEvaService.processingResultListBU(user.getBu());
+        // 创建文件
+        XSSFWorkbook book = new XSSFWorkbook();
+        createSheetApproval(book, list, approvalBUTitle, approvalBUContent);
+        performanceService.createSheetDetailList(book, "performance detail", data);
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        book.write(os);
+        byte[] body = os.toByteArray();
+        book.close();
+        os.close();
+        // 返回结果
+        String fileName = null;
+        try {
+            fileName = new String("事业部经理审批.xlsx".getBytes("UTF-8"), "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+        headers.setContentDispositionFormData("attachment", fileName);// 文件名称
+
+        ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(body, headers, HttpStatus.CREATED);
+
+        return responseEntity;
+    }
+
+    /**
+     * @author: xuexuan
+     * 2018年10月26日 下午2:53:00
+     * @return 
+     * ResponseEntity<byte[]>
+     * @throws IllegalAccessException 
+     * @throws IllegalArgumentException 
+     */
+    @RequestMapping("/assessment/approval/du/export")
+    public ResponseEntity<byte[]> approvalDUExport(HttpServletRequest request) throws IllegalArgumentException, IllegalAccessException, IOException {
+        // 获取登录用户所在交付部
+        User user = (User) request.getSession().getAttribute("loginUser");
+        CSDept csDept = csDeptService.queryCSDeptById(user.getCsdeptId());
+        // 审批列表
+        List<Map<String, Object>> list = manageEvaService.listGroupByRM(csDept.getCsSubDeptName());
+        // 员工绩效列表-当年-当季-DU
+        List<PerformanceManageEvaBean> data = manageEvaService.processingResultListDU(csDept.getCsSubDeptName());
+        // 创建文件
+        XSSFWorkbook book = new XSSFWorkbook();
+        createSheetApproval(book, list, approvalDUTitle, approvalDUContent);
+        performanceService.createSheetDetailList(book, "performance detail", data);
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        book.write(os);
+        byte[] body = os.toByteArray();
+        book.close();
+        os.close();
+        // 返回结果
+        String fileName = null;
+        try {
+            fileName = new String("交付部经理审批.xlsx".getBytes("UTF-8"), "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+        headers.setContentDispositionFormData("attachment", fileName);// 文件名称
+
+        ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(body, headers, HttpStatus.CREATED);
+
+        return responseEntity;
+    }
+
+    private void createSheetApproval(XSSFWorkbook book, List<Map<String, Object>> data, String[] titleAry, String[] contentAry) {
+        // 创建工作簿
+        Sheet sheet = book.createSheet("approval list");
+        Row row;
+        Cell cell;
+        // 创建表头
+        row = sheet.createRow(0);
+        for (int c = 0; c < titleAry.length; c++) {
+            cell = row.createCell(c);
+            cell.setCellValue(titleAry[c]);
+        }
+        // 创建表内容
+        for (int r = 0; r < data.size(); r++) {
+            row = sheet.createRow(r + 1);// 从第二行开始
+            cell = row.createCell(0);// 第一列为序号
+            cell.setCellValue(r + 1);
+            for (int c = 1; c < contentAry.length; c++) {
+                cell = row.createCell(c);
+                if ("status".equalsIgnoreCase(contentAry[c])) {
+                    String stateName = Constants.APPROVAL_STATE.get(data.get(r).get(contentAry[c]));
+                    cell.setCellValue(stateName);
+                } else {
+                    cell.setCellValue((String) data.get(r).get(contentAry[c]));
+                }
+            }
+        }
     }
 
 }

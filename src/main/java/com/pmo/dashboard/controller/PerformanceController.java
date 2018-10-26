@@ -1,6 +1,5 @@
 package com.pmo.dashboard.controller;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +31,7 @@ import com.pmo.dashboard.entity.PerformanceQueryCondition;
 import com.pmo.dashboard.entity.Template;
 import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.entity.UserAuthority;
+import com.pmo.dashboard.util.Constants;
 import com.pom.dashboard.service.CSDeptService;
 import com.pom.dashboard.service.EmployeeInfoService;
 import com.pom.dashboard.service.EmployeeSkillService;
@@ -207,14 +207,24 @@ public class PerformanceController {
 
     @RequestMapping("/performanceManageEvaSecondDU")
     public String getPerformanceManageEvaSecondDU(final HttpServletRequest request, Model model) {
+        // add by xuexuan 返回当前登录用户所在的交付部
+        User user = (User) request.getSession().getAttribute("loginUser");
+        CSDept csDept = csDeptService.queryCSDeptById(user.getCsdeptId());
+        model.addAttribute("du", csDept.getCsSubDeptName());
         return "performance/performanceManageEvaSecondDU";
     }
 
     @RequestMapping("/performanceManageEvaSecondQuery")
     public String getPerformanceManageEvaSecondQuery(@RequestParam("rm") String rm, final HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("loginUser");
-        getDUBU(request, user);
+        //getDUBU(request, user);// update by xuexuan 重新计算bu du comments
         model.addAttribute("rm", rm);
+        model.addAttribute("bu", user.getBu());
+        CSDept csDept = csDeptService.queryCSDeptById(user.getCsdeptId());
+        model.addAttribute("du", csDept.getCsSubDeptName());
+        // 根据du查询审批内容
+        String resultComments = performanceManageEvaService.queryResultCommentsByDU(csDept.getCsSubDeptName()).getResultComments();
+        model.addAttribute("resultComments", resultComments);
         return "performance/performanceManageEvaSecondQuery";
     }
 
@@ -249,14 +259,22 @@ public class PerformanceController {
 
     @RequestMapping("/performanceManageEvaSecondBU")
     public String getPerformanceManageEvaSecondBU(final HttpServletRequest request, Model model) {
+        // add by xuexuan 返回当前登录用户所在的事业部
+        User user = (User) request.getSession().getAttribute("loginUser");
+        model.addAttribute("bu", user.getBu());
         return "performance/performanceManageEvaSecondBU";
     }
 
+    /** management-绩效考评-审批-指定交付部审批页面 **/
     @RequestMapping("/performanceManageEvaSecondQueryDU")
     public String getPerformanceManageEvaSecondQueryDU(@RequestParam("du") String du, final HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("loginUser");
-        getDUBU(request, user);// TODO xuexuan
+        //getDUBU(request, user);// update by xuexuan 重新计算bu du comments
         model.addAttribute("du", du);
+        model.addAttribute("bu", user.getBu());
+        // 根据bu查询审批内容
+        String resultComments = performanceManageEvaService.queryResultCommentsByBU(user.getBu()).getResultComments();
+        model.addAttribute("resultComments", resultComments);
         return "performance/performanceManageEvaSecondQueryDU";
     }
 
@@ -268,7 +286,10 @@ public class PerformanceController {
     @RequestMapping("/performanceManageResultHistoryQuery")
     public String getPerformanceManageResultHistoryQuery(final HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("loginUser");
-        getDUBU(request, user);
+        //getDUBU(request, user);// update by xuexuan 重新计算bu du comments
+        model.addAttribute("BU", user.getBu());
+        CSDept csDept = csDeptService.queryCSDeptById(user.getCsdeptId());
+        model.addAttribute("DU", csDept.getCsSubDeptName());
         return "performance/performanceManageResultHistoryQuery";
     }
 
@@ -338,12 +359,27 @@ public class PerformanceController {
         return "performance/performanceHRBPTemplateUpload";
     }
 
+    /**
+     * HRBP - approval - detail
+     * @author: xuexuan
+     * 2018年10月16日 下午12:27:02
+     * @return 
+     * String
+     */
     @RequestMapping("/performanceHRBPApprovalDetail")
     public String getPerformanceHRBPApprovalDetail(@RequestParam String bu, Model model) {
         model.addAttribute("bu", bu);
         // 根据bu查询审批内容
-        String resultComments = performanceManageEvaService.queryResultComments(bu).getResultComments();
+        String resultComments = performanceManageEvaService.queryResultCommentsByBU(bu).getResultComments();
         model.addAttribute("resultComments", resultComments);
         return "performance/performanceHRBPApprovalDetail";
+    }
+
+    @RequestMapping("/state/{stateId}")
+    @ResponseBody
+    public Map<String, String> getStateName(@PathVariable("stateId") String stateId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("stateName", Constants.APPROVAL_STATE.get(stateId));
+        return map;
     }
 }
