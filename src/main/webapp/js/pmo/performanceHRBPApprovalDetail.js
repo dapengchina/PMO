@@ -28,13 +28,13 @@ function queryPercentage() {
 }
 /** 审批当前事业部 * */
 function submit(type) {
+	var state = type == 1 ? 8 : 7;// TODO xuexuan
 	var state_bu = $("#detail_bu").val();
 	$.ajax({
 		url : path + '/service/performanceHRBPEva/approval/detail/submit',
 		data : {
 			"bu" : state_bu,
-			"state" : type
-		// TODO xuexuan type的值怎么写
+			"state" : state
 		},
 		cache : false,
 		type : "POST",
@@ -214,7 +214,6 @@ function search() {
 function clearParams() {
 	$("#eHr").val("");
 	$("#staffName").val("");
-	$("#bu").val("");
 	$("#du").val("");
 }
 

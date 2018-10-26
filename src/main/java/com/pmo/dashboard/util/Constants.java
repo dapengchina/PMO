@@ -42,5 +42,6 @@ public class Constants {
         APPROVAL_STATE.put("5", "事业部经理审批不通过");
         APPROVAL_STATE.put("6", "待LOB总审批");
         APPROVAL_STATE.put("7", "LOB总审批不通过");
+        APPROVAL_STATE.put("8", "LOB总审批通过");
     }
 }

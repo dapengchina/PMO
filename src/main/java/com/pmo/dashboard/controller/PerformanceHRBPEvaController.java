@@ -28,6 +28,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
+import com.pmo.dashboard.util.Constants;
 import com.pom.dashboard.service.PerformanceManageEvaService;
 import com.pom.dashboard.service.PerformanceService;
 
@@ -243,7 +244,11 @@ public class PerformanceHRBPEvaController {
             cell.setCellValue(approval_r + 1);
             for (int c = 1; c < approvalContent.length; c++) {
                 cell = row.createCell(c);
-                cell.setCellValue((String) map.get(approvalContent[c]));
+                if ("State".equals(approvalContent[c])) {
+                    cell.setCellValue(Constants.APPROVAL_STATE.get(map.get(approvalContent[c])));
+                } else {
+                    cell.setCellValue((String) map.get(approvalContent[c]));
+                }
             }
             approval_r++;
         }
