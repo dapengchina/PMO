@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pmo.dashboard.dao.TemplateMapper">
+	<resultMap id="templateMap" type="com.pmo.dashboard.entity.Template">
+		<id property="id" column="ID" javaType="String" />
+		<result property="name" column="NAME" javaType="String" />
+		<result property="url" column="URL" javaType="String" />
+		<result property="time" column="TIME" javaType="String" />
+	</resultMap>
+	
+	<!-- 获取所有模板 -->
+	<select id="list" resultMap="templateMap">
+		select * from t_template;
+	</select>
+	
+	<!-- 根据id集合获取模板  -->
+	<select  id="getByIds" parameterType="java.util.Collection" resultMap="templateMap">
+		select * from t_template where id in 
+		<foreach collection="array" open="(" close=")" separator="," item="id">
+			#{id}
+		</foreach>
+	</select>
+	
+		<!-- 根据id获取模板  -->
+	<select  id="getById" parameterType="java.lang.String" resultMap="templateMap">
+		select * from t_template where id = #{id}
+	</select>
+	
+	<!-- 根据id更新模板属性 -->
+	<update id="update" parameterType="com.pmo.dashboard.entity.Template">
+		update t_template
+		<set>
+			<if test="name!=null">
+				name=#{name},
+			</if>
+			<if test="url!=null">
+				url=#{url},
+			</if>
+			<if test="time!=null">
+				time=#{time},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+</mapper>

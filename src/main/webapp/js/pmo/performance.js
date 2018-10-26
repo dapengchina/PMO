@@ -3,7 +3,7 @@ $("#getEmp").click(function(){
 } );
 
 $("#getManage").click(function(){
-	window.open(path+"/service/performance/performanceEmpPBC.html");
+	window.open(path+"/service/performance/performanceManageTargetApproval.html");
 });
 $("#getHR").click(function(){
 	window.open(path+"/service/performance/performanceEmpPBC.html");
