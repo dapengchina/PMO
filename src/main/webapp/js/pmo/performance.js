@@ -1,5 +1,5 @@
 $("#getEmp").click(function(){
-	window.open(path+"/service/performance/performanceEmpPBC.html");
+	window.open(path+"/service/performance/toEmployee.html");
 } );
 
 $("#getManage").click(function(){
