@@ -10,5 +10,6 @@
         {"key":"8","name":"BA"},
         {"key":"9","name":"AS400"},
         {"key":"10","name":"Design"},
-        {"key":"11","name":"Agile development"}
+        {"key":"11","name":"Agile development"},
+        {"key":"12","name":"Quality"}
 ]
