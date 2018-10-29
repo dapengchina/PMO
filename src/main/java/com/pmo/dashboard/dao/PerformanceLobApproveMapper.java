@@ -1,0 +1,20 @@
+package com.pmo.dashboard.dao;
+
+import com.pmo.dashboard.entity.PerformanceLobApprovePerformances;
+import com.pmo.dashboard.entity.PerformanceLobApproveProportions;
+import com.pmo.dashboard.entity.PerformanceLobDetails;
+import com.pmo.dashboard.entity.PerformanceLobQueryCondition;
+
+import java.util.List;
+
+public interface PerformanceLobApproveMapper {
+	PerformanceLobApproveProportions getPerformanceLobApproveProportions(PerformanceLobQueryCondition performanceLobQueryCondition);
+	List<PerformanceLobApprovePerformances> getPerformanceLobApprovePerformancesList(PerformanceLobQueryCondition performanceLobQueryCondition);
+	String getPerformanceLobApproveFeedback(PerformanceLobQueryCondition performanceLobQueryCondition);
+	int updateResultState(PerformanceLobQueryCondition performanceLobQueryCondition);
+	int updateResultComments(PerformanceLobQueryCondition performanceLobQueryCondition);
+	List<PerformanceLobDetails> getPerformanceLobApproveDetails(PerformanceLobQueryCondition performanceLobQueryCondition);
+	List<String> getDuListByBu(PerformanceLobQueryCondition performanceLobQueryCondition);
+	PerformanceLobApproveProportions getPerformanceLobReportProportions(PerformanceLobQueryCondition performanceLobQueryCondition);
+	int getPerformanceLobApproveDetailsCount(PerformanceLobQueryCondition performanceLobQueryCondition);
+}

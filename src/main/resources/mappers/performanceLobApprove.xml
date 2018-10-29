@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pmo.dashboard.dao.PerformanceLobApproveMapper">
+
+	<resultMap type="com.pmo.dashboard.entity.PerformanceLobDetails" id="performanceLobDetails">
+		<id property="resultId" column="Result_ID" javaType="String" />
+		<result property="pbcId" column="PBC_ID" javaType="String" />
+		<result property="ehr" column="E_HR" javaType="String" />
+		<result property="year" column="Year" javaType="String" />
+		<result property="quarter" column="Quarter" javaType="String" />
+		<result property="bu" column="BU" javaType="String" />
+		<result property="du" column="DU" javaType="String" />
+		<result property="rm" column="RM" javaType="String" />
+		<result property="role" column="Role" javaType="String" />
+		<result property="skill" column="Skill" javaType="String" />
+		<result property="location" column="Location" javaType="String" />
+		<result property="backbone" column="Backbone" javaType="String" />
+		<result property="assessed" column="Assessed" javaType="String" />
+		<result property="directSupervisor" column="Direct_Supervisor" javaType="String" />
+		<result property="result" column="Result" javaType="String" />
+		<result property="resultComments" column="Result_Comments" javaType="String" />
+		<result property="clientFeedback" column="Client_Feedback" javaType="String" />
+		<result property="preAssessmentResult" column="PreAssessment_Result" javaType="String" />
+		<result property="directSupervisorAssessmentResult" column="Direct_Supervisor_Assessment_Result" javaType="String" />
+		<result property="groupAssessmentResult" column="Group_Assessment_Result" javaType="String" />
+		<result property="groupAssessmentManager" column="Group_Assessment_Manager" javaType="String" />
+		<result property="performanceFacts" column="Performance_Facts" javaType="String" />
+		<result property="performanceSkip" column="Performance_Skip" javaType="String" />
+		<result property="finalize" column="Finalize" javaType="String" />
+		<result property="remark" column="Remark" javaType="String" />
+		<result property="state" column="State" javaType="String" />
+		<result property="staffName" column="STAFF_NAME" javaType="String" />
+		<result property="lobId" column="lob" javaType="String" />
+		<result property="lob" column="EMPLOYEE_TYPE" javaType="String" />
+		<result property="onBoardDate" column="ENTRY_DATE" javaType="String" />
+	</resultMap>
+
+	<update id="updateResultState" parameterType="com.pmo.dashboard.entity.PerformanceLobQueryCondition">
+		UPDATE p_result SET State = #{state}, Finalize = '1' WHERE bu = #{bu} and `year` = #{year} and `quarter` = #{quarter}
+	</update>
+
+	<update id="updateResultComments" parameterType="com.pmo.dashboard.entity.PerformanceLobQueryCondition">
+		UPDATE p_result SET Result_Comments = #{resultComments} WHERE bu = #{bu} and `year` = #{year} and `quarter` = #{quarter}
+	</update>
+
+	<select id="getDuListByBu" parameterType="com.pmo.dashboard.entity.PerformanceLobQueryCondition" resultType="java.lang.String">
+		SELECT du from p_result GROUP BY bu, du, `year`, `quarter`
+		HAVING bu = #{bu} and `year` = #{year} and `quarter` = #{quarter}
+	</select>
+
+	<select id="getPerformanceLobApproveFeedback" parameterType="com.pmo.dashboard.entity.PerformanceLobQueryCondition" resultType="java.lang.String">
+		SELECT Result_Comments from p_result GROUP BY bu, `year`, `quarter`, `state`
+		HAVING bu = #{bu} and `year` = #{year} and `quarter` = #{quarter} limit 1
+	</select>
+
+	<select id="getPerformanceLobApprovePerformancesList"  parameterType="com.pmo.dashboard.entity.PerformanceLobQueryCondition" resultType="com.pmo.dashboard.entity.PerformanceLobApprovePerformances">
+		SELECT bu, `year`,`quarter`,`state` from p_result GROUP BY bu, `year`, `quarter`, `state`
+		HAVING `year` = #{year} and `quarter` = #{quarter}
+	</select>
+
+	<select id="getPerformanceLobReportProportions"  parameterType="com.pmo.dashboard.entity.PerformanceLobQueryCondition" resultType="com.pmo.dashboard.entity.PerformanceLobApproveProportions">
+		select
+			count(Result) as total,
+			100 as roundTotal,
+			COUNT(case when Result = 'A' THEN 1 END) as rounda,
+			ROUND((COUNT(case when Result = 'A' THEN 1 END)/COUNT(Result))*100,1) as cola,
+			COUNT(case when Result = 'B+' THEN 1 END) as roundbplus,
+			ROUND((COUNT(case when Result = 'B+' THEN 1 END)/COUNT(Result))*100,1) as colbplus,
+			COUNT(case when Result = 'B' THEN 1 END) as roundb,
+			ROUND((COUNT(case when Result = 'B' THEN 1 END)/COUNT(Result))*100,1) as colb,
+			COUNT(case when Result = 'C' THEN 1 END) as roundc,
+			ROUND((COUNT(case when Result = 'C' THEN 1 END)/COUNT(Result))*100,1) as colc,
+			COUNT(case when Result = 'D' THEN 1 END) as roundd,
+			ROUND((COUNT(case when Result = 'D' THEN 1 END)/COUNT(Result))*100,1) as cold
+		from `p_result`
+		GROUP BY `year`, `quarter`
+		HAVING `year` = #{year} and `quarter` = #{quarter}
+	</select>
+
+	<select id="getPerformanceLobApproveProportions"  parameterType="com.pmo.dashboard.entity.PerformanceLobQueryCondition" resultType="com.pmo.dashboard.entity.PerformanceLobApproveProportions">
+		select
+			count(Result) as total,
+			100 as roundTotal,
+			COUNT(case when Result = 'A' THEN 1 END) as rounda,
+			ROUND((COUNT(case when Result = 'A' THEN 1 END)/COUNT(Result))*100,1) as cola,
+			COUNT(case when Result = 'B+' THEN 1 END) as roundbplus,
+			ROUND((COUNT(case when Result = 'B+' THEN 1 END)/COUNT(Result))*100,1) as colbplus,
+			COUNT(case when Result = 'B' THEN 1 END) as roundb,
+			ROUND((COUNT(case when Result = 'B' THEN 1 END)/COUNT(Result))*100,1) as colb,
+			COUNT(case when Result = 'C' THEN 1 END) as roundc,
+			ROUND((COUNT(case when Result = 'C' THEN 1 END)/COUNT(Result))*100,1) as colc,
+			COUNT(case when Result = 'D' THEN 1 END) as roundd,
+			ROUND((COUNT(case when Result = 'D' THEN 1 END)/COUNT(Result))*100,1) as cold
+		from `p_result`
+		GROUP BY bu, `year`, `quarter`
+		HAVING bu = #{bu} and `year` = #{year} and `quarter` = #{quarter}
+	</select>
+
+	<select id="getPerformanceLobApproveDetailsCount"  parameterType="com.pmo.dashboard.entity.PerformanceLobQueryCondition" resultType="java.lang.Integer">
+		select count(1) from P_result r, t_employee e where r.E_HR=e.E_HR
+		<if test="ehr != null and ehr != ''">
+			AND e.E_HR = #{ehr}
+		</if>
+		<if test="staffName != null and staffName != ''">
+			AND e.STAFF_NAME = #{staffName}
+		</if>
+		<if test="du != null and du != ''">
+			AND r.du = #{du}
+		</if>
+		<if test="bu != null and bu != ''">
+			AND r.bu = #{bu}
+		</if>
+		<if test="year != null and year != ''">
+			AND r.Year = #{year}
+		</if>
+		<if test="quarter != null and quarter != ''">
+			AND r.Quarter = #{quarter}
+		</if>
+	</select>
+
+	<select id="getPerformanceLobApproveDetails"  parameterType="com.pmo.dashboard.entity.PerformanceLobQueryCondition" resultMap="performanceLobDetails">
+		select e.STAFF_NAME,e.lob,e.ENTRY_DATE,e.EMPLOYEE_TYPE, r.* from P_result r, t_employee e where r.E_HR=e.E_HR
+		<if test="ehr != null and ehr != ''">
+			AND e.E_HR = #{ehr}
+		</if>
+		<if test="staffName != null and staffName != ''">
+			AND e.STAFF_NAME = #{staffName}
+		</if>
+		<if test="du != null and du != ''">
+			AND r.du = #{du}
+		</if>
+		<if test="bu != null and bu != ''">
+			AND r.bu = #{bu}
+		</if>
+		<if test="year != null and year != ''">
+			AND r.Year = #{year}
+		</if>
+		<if test="quarter != null and quarter != ''">
+			AND r.Quarter = #{quarter}
+		</if>
+	</select>
+	
+	
+</mapper>
+
+
+<!-- 测试数据
+
+
+insert into p_result(Result_ID,E_HR,Year,Quarter,BU,DU,RM,Role,Skill,Location,Backbone,Assessed,Direct_Supervisor,Result,Client_Feedback,PreAssessment_Result,Direct_Supervisor_Assessment_Result,Group_Assessment_Result,Group_Assessment_Manager,Performance_Facts,Finalize) values('0035e1d99c4d4a49b37f216305dceeww', 'E100098974'
+,'2018','Q4','数字移动事业部','网银业务交付部','韦玲','Assistant','Automation Testing','Xian','是','Assessed','张三','B+','工作认真负责','B+', 'B+','A','李四', ' ','True');
+
+
+ -->

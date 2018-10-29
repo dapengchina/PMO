@@ -67,7 +67,7 @@
 			state: {expanded: false},
 			nodes: [{
 				  text: "绩效目标",
-				  state: {expanded: true},
+				  state: {expanded: false},
 				  nodes: [{
 					text: "绩效目标设定",
 					nodes: [{
@@ -130,7 +130,7 @@
 					  }]
 					 },{
 					text: "绩效考评",
-					state: {expanded: true},
+					state: {expanded: false},
 					nodes: [{
 						text: "初评",
 						nodes: [{
@@ -161,7 +161,7 @@
 					  }]
 				  },{
 					text: "绩效结果",
-					state: {expanded: true},
+					state: {expanded: false},
 					nodes:[{
 							text: "绩效定稿",
 							href:"performanceManageEvaFinal.html"
@@ -183,8 +183,16 @@
 		  },{
 		  		text: "HR"
 		  },{
-		  		text: "LOB"
-		  }];
+            text: "LOB",
+            state: {expanded: true},
+            nodes: [{
+                text: "Approval",
+                href:"performanceLobApprove.html"
+            },{
+                text: "HR Report",
+                href: "performanceLobHRReport.html"
+            }]
+        }];
         return tree;
       }
 

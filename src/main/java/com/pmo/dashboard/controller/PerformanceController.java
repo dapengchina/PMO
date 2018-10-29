@@ -84,7 +84,7 @@ public class PerformanceController {
     	List<UserAuthority> list= userAuthorityService.queryUserAuthority(u.getUserType());
     	List<UserAuthority> performanceList = new ArrayList<>();
     	for(UserAuthority user : list) {
-    		if (user.getMenuId().indexOf("18") != -1 || user.getMenuId().indexOf("19") != -1) { //18为数据库中employee菜单的id
+    		if (user.getMenuId().indexOf("18") != -1 || user.getMenuId().indexOf("19") != -1 || user.getMenuId().indexOf("20") != -1) { //18为数据库中employee菜单的id
     			performanceList.add(user);
     		}
     	}    	
@@ -277,6 +277,22 @@ public class PerformanceController {
 	@RequestMapping("/performanceManageTemplateDownload")
 	public String getPerformanceManageTemplateDownload(final HttpServletRequest request, Model model){
 		return "performance/performanceManageTemplateDownload";
+	}
+
+	@RequestMapping("/performanceLobApprove")
+	public String getPerformanceLobApprove(final HttpServletRequest request, Model model){
+		return "performance/performanceLobApprove";
+	}
+
+	@RequestMapping("/performanceLobApproveDetails")
+	public String getPerformanceLobDetails(final HttpServletRequest request, Model model){
+    	request.setAttribute("bu", request.getParameter("bu"));
+		return "performance/performanceLobApproveDetails";
+	}
+
+	@RequestMapping("/performanceLobHRReport")
+	public String getPerformanceLobHRReport(final HttpServletRequest request, Model model){
+		return "performance/performanceLobHRReport";
 	}
 	
 	
