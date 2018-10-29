@@ -43,6 +43,7 @@ import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.util.Constants;
 import com.pom.dashboard.service.CSDeptService;
 import com.pom.dashboard.service.EmployeeInfoService;
+import com.pom.dashboard.service.EmployeeService;
 import com.pom.dashboard.service.PerformanceEmpHistoryService;
 import com.pom.dashboard.service.PerformanceManageEvaService;
 import com.pom.dashboard.service.PerformanceService;
@@ -57,7 +58,7 @@ import com.pom.dashboard.service.PerformanceService;
 @RequestMapping(value = "/performanceManageEva")
 public class PerformanceManageEvaController {
 
-    private static Logger                logger            = LoggerFactory.getLogger(PerformanceManageEvaController.class);
+    private static Logger                logger              = LoggerFactory.getLogger(PerformanceManageEvaController.class);
 
     @Resource
     private PerformanceManageEvaService  manageEvaService;
@@ -69,12 +70,17 @@ public class PerformanceManageEvaController {
     private EmployeeInfoService          employeeInfoService;
     @Resource
     private PerformanceService           performanceService;
+    @Resource
+    private EmployeeService              employeeService;
     /** Management-绩效考评-事业部审批导出文件 **/
-    private static String[]              approvalBUTitle   = new String[] { "NO.", "DU", "Year", "Quarter", "Status" };
-    private static String[]              approvalBUContent = new String[] { "NO.", "du", "year", "quarter", "status" };
+    private static String[]              approvalBUTitle     = new String[] { "NO.", "DU", "Year", "Quarter", "Status" };
+    private static String[]              approvalBUContent   = new String[] { "NO.", "du", "year", "quarter", "status" };
     /** Management-绩效考评-交付部审批导出文件 **/
-    private static String[]              approvalDUTitle   = new String[] { "NO.", "RM", "Year", "Quarter", "Status" };
-    private static String[]              approvalDUContent = new String[] { "NO.", "rm", "year", "quarter", "status" };
+    private static String[]              approvalDUTitle     = new String[] { "NO.", "RM", "Year", "Quarter", "Status" };
+    private static String[]              approvalDUContent   = new String[] { "NO.", "rm", "year", "quarter", "status" };
+    /** Management-绩效目标-审批导出文件 **/
+    private static String[]              approvalGoalTitle   = new String[] { "NO.", "E-HR", "Employee Name", "MSA Role", "Skill/Technology", "是否提交", "业务先锋", "审批状态" };
+    private static String[]              approvalGoalContent = new String[] { "NO.", "E_HR", "STAFF_NAME", "ROLE", "SKILL", "submit", "backbone", "state" };
 
     @RequestMapping("/queryManageEvaFirstDetailList")
     @ResponseBody
@@ -689,6 +695,117 @@ public class PerformanceManageEvaController {
             manageEvaService.updateStateByIds(list, Constants.APPROVAL_DU);
         }
         return "";
+    }
+
+    /**
+     * 绩效目标审批列表
+     * @author: xuexuan
+     * 2018年10月29日 下午5:07:09
+     * @param pageSize
+     * @param pageNumber
+     * @param submit
+     * @param backbone
+     * @param state
+     * @param request
+     * @return 
+     * Map<String,Object>
+     */
+    @RequestMapping(value = "/assessment/goal/list", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> goalList(@RequestParam("pageSize") int pageSize, @RequestParam("pageNumber") int pageNumber, @RequestParam(value = "submit", required = false) String submit,
+            @RequestParam(value = "backbone", required = false) String backbone, @RequestParam(value = "state", required = false) String state, HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("loginUser");
+        // 分页获取该RM下所有员工
+        PageHelper.startPage(pageNumber, pageSize);
+        //        List<Map<String, Object>> list = employeeService.rmApprovalList(user.getUserId(), submit, backbone, state);
+        List<Map<String, Object>> list = employeeService.rmApprovalList("bbc7bf97fd8448cba96d227e69ecea7e", submit, backbone, state);
+        PageInfo<Map<String, Object>> page = new PageInfo<>(list);
+        Map<String, Object> rtn = new HashMap<String, Object>();
+        rtn.put("total", page.getTotal());
+        rtn.put("rows", page.getList());
+        return rtn;
+    }
+
+    /**
+     * 绩效目标审批列表
+     * @author: xuexuan
+     * 2018年10月29日 下午5:07:09
+     * @param id 员工id
+     * @param state 审批状态
+     * @param comments 评语
+     * @return 
+     * Map<String,Object>
+     */
+    @RequestMapping(value = "/assessment/goal/submit", method = RequestMethod.POST)
+    @ResponseBody
+    public String goalSubmit(@RequestParam("id") String employeeid, @RequestParam("state") String state, @RequestParam("comments") String comments) {
+        // TODO 更新绩process表
+        return "";
+    }
+
+    /**
+     * 绩效目标审批列表-导出
+     * @author: xuexuan
+     * 2018年10月29日 下午6:44:40
+     * @return 
+     * ResponseEntity<byte[]>
+     * @throws IOException 
+     */
+    @RequestMapping("/goal/export")
+    public ResponseEntity<byte[]> goalExport(HttpServletRequest request) throws IOException {
+        User user = (User) request.getSession().getAttribute("loginUser");
+        // 查询数据
+        //      List<Map<String, Object>> list = employeeService.rmApprovalList(user.getUserId(), null, null, null);
+        List<Map<String, Object>> list = employeeService.rmApprovalList("bbc7bf97fd8448cba96d227e69ecea7e", null, null, null);
+        // 创建文件
+        XSSFWorkbook book = new XSSFWorkbook();
+        Row row;
+        Cell cell;
+        Sheet sheet = book.createSheet();
+        // 创建标题
+        row = sheet.createRow(0);
+        for (int c = 0; c < approvalGoalTitle.length; c++) {
+            cell = row.createCell(c);
+            cell.setCellValue(approvalGoalTitle[c]);
+        }
+        // 创建数据
+        for (int r = 0; r < list.size(); r++) {
+            row = sheet.createRow(r + 1);
+            cell = row.createCell(0);
+            cell.setCellValue(r + 1);
+            for (int c = 1; c < approvalGoalContent.length; c++) {
+                cell = row.createCell(c);
+                if ("submit".equals(approvalGoalContent[c])) {
+                    cell.setCellValue("1".equals((String) list.get(r).get(approvalGoalContent[c])) ? "是" : "否");
+                } else if ("state".equals(approvalGoalContent[c])) {
+                    cell.setCellValue("1".equals((String) list.get(r).get(approvalGoalContent[c])) ? "审批通过" : "0".equals((String) list.get(r).get(approvalGoalContent[c])) ? "待审批" : "审批不通过");
+                } else {
+                    cell.setCellValue((String) list.get(r).get(approvalGoalContent[c]));
+                }
+
+            }
+        }
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        book.write(os);
+        byte[] body = os.toByteArray();
+        book.close();
+        os.close();
+        // 返回结果
+        String fileName = null;
+        try {
+            fileName = new String("绩效定稿.xlsx".getBytes("UTF-8"), "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+        headers.setContentDispositionFormData("attachment", fileName);// 文件名称
+
+        ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(body, headers, HttpStatus.CREATED);
+
+        return responseEntity;
     }
 
     private void createSheetApproval(XSSFWorkbook book, List<Map<String, Object>> data, String[] titleAry, String[] contentAry) {
