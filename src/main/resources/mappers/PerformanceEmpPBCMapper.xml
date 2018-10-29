@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pmo.dashboard.dao.PerformanceEmpPBCMapper">
+	<resultMap id="queryPerformanceEmpPBCMap" type="com.pmo.dashboard.entity.PerformanceEmpPBCBean">
+		<id property="TYPE" column="type" javaType="String" />
+		<result property="PBC1" column="description" javaType="String" />
+		<result property="PBC2" column="weightrate" javaType="String" />
+		<result property="PBC3" column="phasegoal" javaType="String" />
+		<result property="PBC4" column="keyaction" javaType="String" />
+		<result property="PBC5" column="department" javaType="String" />
+		<result property="index" column="index" javaType="Integer" />
+	</resultMap>
+	
+	<select id="queryPerformanceEmpPBCList"  resultMap="queryPerformanceEmpPBCMap" >
+	    SELECT u.type, u.description, u.weightrate, u.phasegoal, u.keyaction, u.department,u.index
+		FROM t_performancematrix AS u
+		ORDER BY u.index
+        
+			
+	</select>
+	
+
+	
+</mapper>

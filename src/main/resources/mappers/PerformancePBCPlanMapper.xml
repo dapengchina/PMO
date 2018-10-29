@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pmo.dashboard.dao.PerformanceEmpPBCMapper">
+	<resultMap id="queryPerformancePBCPlanMap" type="com.pmo.dashboard.entity.PerformanceEmpPBCPlanBean">
+<result property="keyability" column="keyability" javaType="String" />
+		<result property="action" column="action" javaType="String" />
+		<result property="supportor" column="supportor" javaType="String" />
+		<result property="dealine" column="dealine" javaType="String" />
+	</resultMap>
+	
+	
+	<select id ="queryPerformanceEmpPlanList"  resultMap="queryPerformancePBCPlanMap">
+		SELECT u.keyability,u.action,u.supportor,u.dealine
+		FROM t_employeeimpplan AS u
+		WHERE employeeid = #{employeeid,jdbcType=VARCHAR}
+	</select>
+	   	 <insert id="savePerformanceEmpPlan" keyProperty="id" parameterType="com.pmo.dashboard.entity.PerformanceEmpPBCPlanBean">
+	insert into t_employeeimpplan (id,employeeid,keyability,action,supportor,dealine,createdate)
+	values
+	(#{id},#{employeeid},#{keyability},#{action},#{supportor},#{dealine},#{createdate})
+	</insert>
+	<delete id="deletePerformanceEmpPlan" parameterType="String">
+	DELETE FROM t_employeeimpplan 
+	WHERE employeeid = #{employeeid,jdbcType=VARCHAR}
+	</delete>
+	
+
+	
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pmo.dashboard.dao.PerformanceEmpPBCMapper">
+	<resultMap id="queryPerformanceEmpStateMap" type="com.pmo.dashboard.entity.Employeeperforgoal">
+		<result property="id" column="id" javaType="String" />
+		<result property="employeeid" column="employeeid" javaType="String" />
+		<result property="staffname" column="staffname" javaType="String" />
+		<result property="staffid" column="staffid" javaType="String" />
+		<result property="ehr" column="ehr" javaType="String" />
+		<result property="department" column="department" javaType="String" />
+		<result property="position" column="position" javaType="String" />
+		<result property="assessmensupervisor" column="assessmensupervisor" javaType="String" />
+		<result property="employeekpoid" column="employeekpoid" javaType="String" />
+		<result property="employeeekeyeventid" column="employeeekeyeventid" javaType="String" />
+		<result property="employeeimpplanid" column="employeeimpplanid" javaType="String" />
+		<result property="createdate" column="createdate" javaType="String" />
+		<result property="state" column="state" javaType="String" />
+	</resultMap>
+	<select id="queryPerformanceEmpState"  resultMap="queryPerformanceEmpStateMap" >
+	    SELECT  u.createdate, u.state
+		FROM t_employeeperforgoal AS u
+		WHERE employeeid = #{employeeid,jdbcType=VARCHAR}
+	</select>
+	<insert id="savePerformanceEmpState" keyProperty="id"  parameterType="com.pmo.dashboard.entity.Employeeperforgoal">
+		INSERT INTO 
+		t_employeeperforgoal(id,employeeid,staffname,staffid,ehr,department,position,assessmensupervisor,employeekpoid,employeeekeyeventid,employeeimpplanid,createdate,state)
+		VALUES
+		(#{id},#{employeeid},#{staffname},#{staffid},#{ehr},#{department},#{position},#{assessmensupervisor},#{employeekpoid},#{employeeekeyeventid},#{employeeimpplanid},#{createdate},#{state})
+	</insert>   
+	<delete id="deletePerformanceEmpState" parameterType="String">
+	DELETE FROM t_employeeperforgoal 
+	WHERE employeeid = #{employeeid,jdbcType=VARCHAR}
+	</delete>
+
+</mapper>
