@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -461,6 +462,8 @@ public class PerformanceManageEvaController {
         PageHelper.startPage(pageNumber, pageSize);
         // 查询条件：当年-当季-rm
         List<PerformanceManageEvaBean> data = manageEvaService.processingResultListRM(user.getNickname());
+        // TODO 测试数据
+        data = manageEvaService.processingResultListRM("韦玲");
         PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
         // 返回数据
         Map<String, Object> map = new HashMap<String, Object>();
@@ -539,7 +542,7 @@ public class PerformanceManageEvaController {
      * @return 
      * String
      */
-    @RequestMapping("/assessment/approval/du/detail/submit")
+    @RequestMapping("/assessment/approval/bu/detail/submit")
     @ResponseBody
     public String approvalBUDetailSubmit(@RequestParam String du, @RequestParam String state) {
         manageEvaService.updateStateByDU(du, state);
@@ -556,7 +559,7 @@ public class PerformanceManageEvaController {
      * @return 
      * String
      */
-    @RequestMapping("/assessment/approval/rm/detail/submit")
+    @RequestMapping("/assessment/approval/du/detail/submit")
     @ResponseBody
     public String approvalDUDetailSubmit(@RequestParam String rm, @RequestParam String state) {
         manageEvaService.updateStateByRM(rm, state);
@@ -564,6 +567,7 @@ public class PerformanceManageEvaController {
     }
 
     /**
+     * 绩效考评-事业部审批导出
      * @author: xuexuan
      * 2018年10月26日 下午2:52:58
      * @return 
@@ -607,6 +611,7 @@ public class PerformanceManageEvaController {
     }
 
     /**
+     * 绩效考评-交付部审批导出
      * @author: xuexuan
      * 2018年10月26日 下午2:53:00
      * @return 
@@ -648,6 +653,42 @@ public class PerformanceManageEvaController {
         ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(body, headers, HttpStatus.CREATED);
 
         return responseEntity;
+    }
+
+    /**
+     * 新增
+     * 绩效考评-初评-RM绩效评级-评级提交
+     * @author: xuexuan
+     * 2018年10月22日 下午3:00:00
+     * @param id  绩效标识
+     * @param grade 绩效等级
+     * @return 
+     * String
+     */
+    @RequestMapping("/assessment/grade/rm/submit")
+    @ResponseBody
+    public String approvalRMSubmit(@RequestParam("id") String resultId, @RequestParam("grade") String preAssessment) {
+        manageEvaService.updatePreAssessmentResult(preAssessment, resultId);
+        return "";
+    }
+
+    /**
+     * 新增
+     * 绩效考评-初评-RM审批-审批提交
+     * @author: xuexuan
+     * 2018年10月22日 下午3:00:00
+     * @param ids  审批ID集合
+     * @return 
+     * String
+     */
+    @RequestMapping("/assessment/approval/rm/submit")
+    @ResponseBody
+    public String approvalRMDetailSubmit(@RequestParam("ids") String ids) {
+        List<String> list = Arrays.asList(ids.split(","));
+        if (list.size() > 0) {
+            manageEvaService.updateStateByIds(list, Constants.APPROVAL_DU);
+        }
+        return "";
     }
 
     private void createSheetApproval(XSSFWorkbook book, List<Map<String, Object>> data, String[] titleAry, String[] contentAry) {

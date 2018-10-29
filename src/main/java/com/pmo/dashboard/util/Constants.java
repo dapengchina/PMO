@@ -33,6 +33,8 @@ public class Constants {
             "getEffectiveSt", "getInvalidSt", "getThinkTotalIncome", "getRealTotalIncome", "getEffectiveNr", "getEffectiveHuman" };
 
     public final static Map<String, String> APPROVAL_STATE             = new HashMap<>();
+
+    public final static String              APPROVAL_DU                = "2";
     static {
         APPROVAL_STATE.put("0", "待RM审批");
         APPROVAL_STATE.put("1", "RM审批不通过");

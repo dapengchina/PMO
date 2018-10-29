@@ -227,7 +227,7 @@ function approval(type) {
 	var state = type == 1 ? 6 : 5;// TODO xuexuan
 	var du = $("#du").val();
 	$.ajax({
-		url : path + '/service/performanceManageEva/assessment/approval/du/detail/submit',
+		url : path + '/service/performanceManageEva/assessment/approval/bu/detail/submit',
 		data : {
 			"du" : du,
 			"state" : state

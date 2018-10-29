@@ -32,11 +32,6 @@ function loadManageEvaFirstDetailList() {
 	// '/service/performanceManageEva/queryManageEvaFirstDetailList';
 	var queryUrl = path + '/service/performanceManageEva/processing/result/list/rm';
 	var columns = [ {
-		title : '绩效<br/>目标',
-		formatter : function(value, row, index) {
-			return "<a href='#' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
-		}
-	}, {
 		title : '序号',
 		formatter : function(value, row, index) {
 			return "<span>" + (index + 1) + "</span>";
@@ -92,7 +87,13 @@ function loadManageEvaFirstDetailList() {
 	}, {
 		field : 'initialEvalution',
 		title : '初评<br/>(依据<br/>客户<br/>反馈)',
-	// sortable : true
+		// sortable : true
+		formatter : function(value, row, index) {
+			if (row.initialEvalution == "" || row.initialEvalution == undefined) {
+				stateSubmitFlag = false;
+			}
+			return value;
+		}
 	}, {
 		field : 'pmEvalution',
 		title : '直接<br/>主管<br/>初评<br/>结果',
@@ -123,6 +124,13 @@ function loadManageEvaFirstDetailList() {
 	}, {
 		field : 'previous3Quarter',
 		title : '上上上<br/>季<br/>度绩效'
+	}, {
+		title : '绩效<br/>目标',
+		formatter : function(value, row, index) {
+			if (row.state == 0) {// 待RM审批状态显示编辑按钮
+				return "<a href='performanceManageEvaFirst.html?resultId=" + row.resultId + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+			}
+		}
 	} ];
 
 	var table = $('#manageEvaFirstDetailList').bootstrapTable({
@@ -160,22 +168,13 @@ function loadManageEvaFirstDetailList() {
 			};
 		},
 		columns : columns,
-		onLoadSuccess : function(sta) {
-			console.log("in onLoadSuccess");
-			console.log(JSON.stringify(sta));
-			/** 刷新列表时百分比不变 * */
-			/*
-			 * $("#percentA").html(sta["percentA"]);
-			 * $("#percentBplus").html(sta["percentBplus"]);
-			 * $("#percentB").html(sta["percentB"]);
-			 * $("#percentC").html(sta["percentC"]);
-			 * $("#percentD").html(sta["percentD"]);
-			 * $("#percentSum").html(sta["percentSum"]);
-			 * $("#empA").html(sta["empA"]);
-			 * $("#empBplus").html(sta["empBplus"]);
-			 * $("#empB").html(sta["empB"]); $("#empC").html(sta["empC"]);
-			 * $("#empD").html(sta["empD"]); $("#empSum").html(sta["empSum"]);
-			 */
+		onLoadSuccess : function(data) {
+			var ary = data.rows;
+			// 保存要审批数据ID
+			for ( var item in ary) {
+				stateSubmitIds.push(ary[item].resultId);
+			}
+			console.log("===" + stateSubmitIds);
 		},
 		onLoadError : function(status, res) { // 加载失败时执行
 			console.log(res);
@@ -186,4 +185,50 @@ function loadManageEvaFirstDetailList() {
 		}
 
 	});
+}
+var stateSubmitFlag = true;
+var stateSubmitIds = new Array();
+function stateSubmit() {
+	// 所有员工评价后才可提交
+	if (!stateSubmitFlag) {
+		alert("还有未评级员工，请先评级");
+		return;
+	}
+	// 审批
+	$.ajax({
+		url : path + "/service/performanceManageEva/assessment/approval/rm/submit",
+		type : "POST",
+		data : {
+			"ids" : stateSubmitIds.join(",")
+		},
+		success : function(data) {
+			alert("审批成功");
+		},
+		error : function() {
+			alert("审批失败");
+		}
+	});
+}
+
+function gradeSubmit() {
+	// 审批
+	$.ajax({
+		url : path + "/service/performanceManageEva/assessment/grade/rm/submit",
+		type : "POST",
+		data : {
+			"id" : "0035e1d99c4d4a49b37f216305dceewe",
+			"grade" : "A"
+		},
+		success : function(data) {
+			alert("评级成功");
+			window.location.href = path + "/service/performance/performanceManageEvaFirstDetailComments.html";
+		},
+		error : function() {
+			alert("评级失败");
+		}
+	});
+}
+
+function gradeCancel() {
+	window.location.href = path + "/service/performance/performanceManageEvaFirstDetailComments.html";
 }

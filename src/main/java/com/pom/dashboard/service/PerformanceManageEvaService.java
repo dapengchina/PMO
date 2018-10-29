@@ -208,6 +208,14 @@ public interface PerformanceManageEvaService {
     public void updateStateByRM(String rm, String state);
 
     /**
+     * 更新ID集合审批状态
+     * @author: xuexuan
+     * 2018年10月22日 下午5:24:20 
+     * void
+     */
+    public void updateStateByIds(List<String> list, String state);
+
+    /**
      * 查询指定事业部-当年-当季-的审批列表
      * @author: xuexuan
      * 2018年10月25日 下午7:51:24
@@ -226,4 +234,12 @@ public interface PerformanceManageEvaService {
      * Map<String,Object>
      */
     public List<Map<String, Object>> listGroupByRM(String csSubDeptName);
+
+    /**
+     * RM绩效初评
+     * @author: xuexuan
+     * 2018年10月26日 下午6:24:35 
+     * void
+     */
+    public void updatePreAssessmentResult(String preAssessment, String id);
 }

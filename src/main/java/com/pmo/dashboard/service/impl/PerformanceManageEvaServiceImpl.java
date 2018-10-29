@@ -435,17 +435,22 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
 
     @Override
     public void updateStateByBU(String bu, String state) {
-        mapper.updateState(bu, null, null, state);
+        mapper.updateState(bu, null, null, null, state);
     }
 
     @Override
     public void updateStateByDU(String du, String state) {
-        mapper.updateState(null, du, null, state);
+        mapper.updateState(null, du, null, null, state);
     }
 
     @Override
     public void updateStateByRM(String rm, String state) {
-        mapper.updateState(null, null, rm, state);
+        mapper.updateState(null, null, rm, null, state);
+    }
+
+    @Override
+    public void updateStateByIds(List<String> list, String state) {
+        mapper.updateState(null, null, null, list, state);
     }
 
     @Override
@@ -462,6 +467,11 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
         String startYear = c.get(Calendar.YEAR) + "";
         String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
         return mapper.listGroupByRM(csSubDeptName, startYear, startQuarter);
+    }
+
+    @Override
+    public void updatePreAssessmentResult(String preAssessment, String id) {
+        mapper.preAssessment(preAssessment, id);
     }
 
 }

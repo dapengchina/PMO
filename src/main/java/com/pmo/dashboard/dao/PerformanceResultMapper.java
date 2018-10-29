@@ -59,12 +59,12 @@ public interface PerformanceResultMapper {
     public void updateComments(@Param("comments") String comments, @Param("bu") String bu, @Param("du") String du);
 
     /**
-     * 更新审批状态
+     * 根据ID集合更新审批状态
      * @author: xuexuan
      * 2018年10月22日 下午5:24:20 
      * void
      */
-    public void updateState(@Param("bu") String bu, @Param("du") String du, @Param("rm") String rm, @Param("state") String state);
+    public void updateState(@Param("bu") String bu, @Param("du") String du, @Param("rm") String rm, @Param("list") List<String> resultIdList, @Param("state") String state);
 
     /**
      * @author: xuexuan
@@ -94,4 +94,11 @@ public interface PerformanceResultMapper {
      */
     public List<Map<String, Object>> listGroupByRM(@Param("du") String du, @Param("startYear") String startYear, @Param("startQuarter") String startQuarter);
 
+    /**
+     * RM绩效初评
+     * @author: xuexuan
+     * 2018年10月26日 下午6:24:35 
+     * void
+     */
+    public void preAssessment(@Param("preAssessment") String preAssessment, @Param("id") String id);
 }

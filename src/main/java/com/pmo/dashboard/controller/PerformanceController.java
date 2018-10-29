@@ -196,7 +196,8 @@ public class PerformanceController {
     }
 
     @RequestMapping("/performanceManageEvaFirst")
-    public String getPerformanceManageEvaFirst(final HttpServletRequest request, Model model) {
+    public String getPerformanceManageEvaFirst(final HttpServletRequest request, Model model, @RequestParam("resultId") String resultId) {
+        model.addAttribute("resultId", resultId);
         return "performance/performanceManageEvaFirst";
     }
 

@@ -37,6 +37,8 @@
 		<result property="jump" column="Performance_Skip" javaType="String" />
 		<result property="lobNo" column="lob" javaType="String" />
 		<result property="hireDate" column="ENTRY_DATE" javaType="String" />
+		<result property="resultId" column="Result_ID" javaType="String" />
+		<result property="state" column="State" javaType="String" />
 
 	</resultMap>
 
@@ -260,7 +262,17 @@
 			<if test="null != rm and '' != rm">
 				and RM = #{rm}
 			</if>
+			<if test="null != list and list.size() > 0">
+				Result_ID in
+				<foreach collection="list" item="item" open="(" separator="," close=")">
+					 #{item}
+				</foreach>
+			</if>
 		</where>
+	</update>
+	<!-- rm绩效初评 -->
+	<update id="preAssessment" parameterType="string" >
+		update p_result set PreAssessment_Result = #{preAssessment} where Result_ID = #{id}
 	</update>
 	<!-- 条件查询 -->
 	<select id="filterQuery" parameterType="hashMap" resultMap="PerformanceResultMap">

@@ -231,7 +231,7 @@ function approval(type) {
 	var state = type == 1 ? 4 : 3;// TODO xuexuan
 	var rm = $("#curRm").val();
 	$.ajax({
-		url : path + '/service/performanceManageEva/assessment/approval/rm/detail/submit',
+		url : path + '/service/performanceManageEva/assessment/approval/du/detail/submit',
 		data : {
 			"rm" : rm,
 			"state" : state
