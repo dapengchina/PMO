@@ -113,9 +113,9 @@ public class PerformanceController {
         return "performance/performanceListPage";
     }
 
-    @RequestMapping("/performanceEmpPBC")
+    @RequestMapping("/toEmployee")
     public String getTMemployee(final HttpServletRequest request, Model model) {
-        return "performance/performanceEmpPBC";
+        return "performance/test";
     }
 
     @RequestMapping("/performanceEmpEvaSelf")
