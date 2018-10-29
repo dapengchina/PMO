@@ -75,32 +75,38 @@ var path='<%=path%>';
 							             	<div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">姓名</span>
-							                        <input class="form-control" type="text" placeholder="XXX">
+							                        <input class="form-control" type="text" placeholder="XXX"
+							                        name="userName" id="userName" value="${ sessionScope.loginUser.nickname}">
 							                    </div>
 							                </div>
 
 							                <div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">工号</span>
-							                        <input class="form-control" type="text" placeholder="XXXXX">
+							                        <input class="form-control" type="text" placeholder="XXXXX"
+							                        name="lob" id="lob" value="${ sessionScope.loginUser.userName}">
+
 							                    </div>
 							                </div>
 							                <div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">所在部门</span>
-							                        <input class="form-control" type="text" placeholder="XX交付部">
+							                        <input class="form-control" type="text" placeholder="XX交付部"
+							                        name="bu" id="bu" value="${ sessionScope.loginUser.bu}">
 							                    </div>
 							                </div>
 							                <div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">职位</span>
-							                        <input class="form-control" type="text" placeholder="PM">
+							                        <input class="form-control" type="text" placeholder="PM"
+							                        name="position" id="position">
 							                    </div>
 							                </div>
 											<div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">考核主管</span>
-							                        <input class="form-control" type="text" placeholder="XXX交付经理">
+							                        <input class="form-control" type="text" placeholder="XXX交付经理"
+							                        name="" id="">
 							                    </div>
 							                </div>
 							            </div>            							
@@ -122,10 +128,12 @@ var path='<%=path%>';
                                  <td>测评部门考核</td>
                                </tr>
 							   </thead>
+							   <tbody>
+							   
+                               </tbody>
 
-                               <tr>
-                                 <td rowspan="5" id="leftrowspan">重点工作</td>
-                                 <td>1</td>
+                               
+                                  <!-- <td>1</td>
                                  <td>招聘管理</td>
                                  <td>25%</td>
                                  <td>Xpod team面试通过率达到30%</td>
@@ -137,7 +145,7 @@ var path='<%=path%>';
                                  <td>XX交付经理</td>
                                </tr>
 
-                               <tr>
+                                <tr>
                                  <td>2</td>
                                  <td>项目质量</td>
                                  <td>30%</td>
@@ -162,7 +170,7 @@ var path='<%=path%>';
                                  <td>XXXXXXXXXXXX</td>
                                  <td>XXXXXXXX</td>
                                  <td>XX交付经理</td>
-                               </tr>
+                               </tr>-->
                                <tr >
                                  <td colspan="6"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr1('table1', -1, 6);")>+</a>
 								 </td>
@@ -172,7 +180,9 @@ var path='<%=path%>';
 								<br/>
 
                              <table id="table2" border="1" width="100%" class="templateTable">
-                               <tr>
+                             <tbody>
+                             </tbody>
+                               <!--  <tr>
                                  <td>关键事件</td>
                                  <td>1</td>
                                  <td>Develop and Support</td>
@@ -182,9 +192,9 @@ var path='<%=path%>';
 								   Organize technology research like POC
 								 </td>
                                  <td>XX交付经理</td>
-                               </tr>
+                               </tr>-->
                                <tr>
-                                 <td colspan="7"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr2('table2', -1, 7);")>+</a>
+                                 <td colspan="7"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr1('table2', -1, 7);")>+</a>
 								 </td>
                                </tr>
 							 </table>
@@ -209,12 +219,8 @@ var path='<%=path%>';
 								 </td>
                                </tr>
 							   </thead>
-                               <tr>
-                                 <td> Spring Boot	 </td>
-                                 <td> Pass exam </td>
-                                 <td> Pim </td>
-                                 <td> 2018-12-31 </td>
-                               </tr>
+							   <tbody>
+							   </tbody>
 							    <tr>
                                  <td colspan="4"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr2('table3', -1, 4);")>+</a>
 								 </td>
@@ -228,17 +234,17 @@ var path='<%=path%>';
 									    <div style="text-align:center;width:100%;">
 									    <input type="button" value="Save" name="Save" id="Save" href="#"
 										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
+										onclick="save()"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 									    <input type="button" value="Edit" name="Edit" id="Edit" href="#"
 										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
+										onclick="edit()"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 										<input type="button" value="Submit" name="Submit" id="Submit" href="#"
 										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
+										onclick="submit()"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 
 									    </div>
@@ -308,6 +314,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
+    <script type="text/javascript" src="<%=path %>/js/pmo/performanceEmpPBC.js"></script>
 	
 	
 </body>

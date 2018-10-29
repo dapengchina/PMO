@@ -16,20 +16,8 @@
  <div class="col-sm-2 col-lg-2"  >
     <script src="https://cdn.bootcss.com/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script>
     
-       <div  >
-            <div class="sidebar-nav">
-                <div class="nav-canvas">
-							<div >
-							  <h6>Performance Evalutation</h6>
-							  <div class="row">
-								<div id="treeview">
+       <div id="treeview">
 							  	</div>
-							  </div>
-							</div> 
-                </div>
-            </div>
-        </div>
-
   	<script type="text/javascript">
   	
   	var currentPageName='<%=currentPageName%>';
@@ -64,124 +52,146 @@
         var data = [];
 		var tree = [ {
 			text: "Employee",
+			icon:"glyphicon glyphicon-stop",
+			selectedIcon:"glyphicon glyphicon-stop",
+			color:"#2FA4E7",
+			backColor:"#FFFFFF",
 			state: {expanded: false},
 			nodes: [{
 				  text: "绩效目标",
+				  icon:"glyphicon glyphicon-stop",
+				  selectedIcon:"glyphicon glyphicon-stop",
+				  color:"#2FA4E7",
+				  backColor:"#FFFFFF",
 				  state: {expanded: false},
 				  nodes: [{
 					text: "绩效目标设定",
-					nodes: [{
-						text: "PBC绩效目标模板",
-						"nodeId":4,
-						state: {selected: false},
-						href:"performanceEmpPBC.html"
-					},{
-						text: "第四事业部绩效目标模板"
-					}]
+					icon:"glyphicon glyphicon-stop",
+				    selectedIcon:"glyphicon glyphicon-stop",
+				    color:"#2FA4E7",
+				    backColor:"#FFFFFF",
+					href:"performanceEmpPBC.html"
 				  }]
 				 },{
 				text: "绩效考评",
-
+				icon:"glyphicon glyphicon-stop",
+				selectedIcon:"glyphicon glyphicon-stop",
+				color:"#2FA4E7",
+				backColor:"#FFFFFF",
+				state: {expanded: false},
 				nodes: [{
 					text: "员工自评",
+					icon:"glyphicon glyphicon-stop",
+				    selectedIcon:"glyphicon glyphicon-stop",
+				    color:"#2FA4E7",
+				    backColor:"#FFFFFF",
 					href: "performanceEmpEvaSelf.html"
 					}, {
 					text: "考评进度",
+					icon:"glyphicon glyphicon-stop",
+				    selectedIcon:"glyphicon glyphicon-stop",
+				    color:"#2FA4E7",
+				    backColor:"#FFFFFF",
 					href: "performanceEmpEvaProgress.html"
 				  }]
 			  },{
 				text: "绩效结果",
+				icon:"glyphicon glyphicon-stop",
+				selectedIcon:"glyphicon glyphicon-stop",
+				color:"#2FA4E7",
+				backColor:"#FFFFFF",
+				state: {expanded: false},
 				nodes:[{
 				  text: "当期绩效",
-    			  href: "performanceEmpEvaCurrentPeriod.html",
-				  nodes: [{
-						text: "Page-Detail",
-						href: "performanceEmpEvaCurrentPeriodDetail.html"
-				  }]
+				  icon:"glyphicon glyphicon-stop",
+				  selectedIcon:"glyphicon glyphicon-stop",
+				  color:"#2FA4E7",
+				  backColor:"#FFFFFF",
+    			  href: "performanceEmpEvaCurrentPeriod.html"
 				},{
 				  text: "历史绩效查询",
-				  nodes: [{
-						text: "Page-Performance Doc",
-						href: "performanceEmpEvaHistoryQuery.html"
-				  }, {
-						text: "Page-Detail",
-						href: "performanceEmpEvaCurrentPeriodDetail.html"
-				  }]
+				  icon:"glyphicon glyphicon-stop",
+				  selectedIcon:"glyphicon glyphicon-stop",
+				  color:"#2FA4E7",
+				  backColor:"#FFFFFF"
 				}]
 		  }]},{
 				text: "Management",
-				state: {expanded: true},
+				icon:"glyphicon glyphicon-stop",
+				selectedIcon:"glyphicon glyphicon-stop",
+				color:"#2FA4E7",
+				backColor:"#FFFFFF",
+				state: {expanded: false},
 				nodes: [{
 					  text: "绩效目标",
-					  state: {expanded: true},
+					  icon:"glyphicon glyphicon-stop",
+					  selectedIcon:"glyphicon glyphicon-stop",
+					  color:"#2FA4E7",
+					  backColor:"#FFFFFF",
+					  state: {expanded: false},
 					  nodes: [{
 						text: "审批",
-						nodes: [{
-							text: "Page-下拉列表筛选",
-							href:"performanceManageTargetApproval.html"
-						},{
-							text: "Page-下拉列表选结",
-							href:"performanceManageTargetApprovalFilter.html"
-						},{
-							text: "Page-绩效目标详情审批",
-							href:".html",
-							href:"performanceManageTargetApprovalDetail.html"
-						}]
+						icon:"glyphicon glyphicon-stop",
+						selectedIcon:"glyphicon glyphicon-stop",
+						color:"#2FA4E7",
+						backColor:"#FFFFFF"
 					  }]
 					 },{
 					text: "绩效考评",
+					icon:"glyphicon glyphicon-stop",
+					selectedIcon:"glyphicon glyphicon-stop",
+					color:"#2FA4E7",
+					backColor:"#FFFFFF",
 					state: {expanded: false},
 					nodes: [{
 						text: "初评",
-						nodes: [{
-							text: "Page-查看客户反馈详情",
-							href: "performanceManageEvaFirstDetail.html"
-						},{
-							text: "Page-绩效评价",
-							href:"performanceManageEvaFirst.html"
-						},{
-							text: "Page-初评结果+绩效事实",
-							href: "performanceManageEvaFirstDetailComments.html"
-						}]
+						icon:"glyphicon glyphicon-stop",
+						selectedIcon:"glyphicon glyphicon-stop",
+						color:"#2FA4E7",
+						backColor:"#FFFFFF"
 						}, {
 						text: "审批",
-						nodes: [{
-							text: "Page-交付部审批",
-							href:"performanceManageEvaSecondDU.html"
-						},{
-							text: "Page-点击操作查员工绩效",
-							href:"performanceManageEvaSecondQuery.html"
-						},{
-							text: "Page-事业部审批+事业部",
-							href:"performanceManageEvaSecondBU.html"
-						},{
-							text: "Page-点击操作查看交付部",
-							href: "performanceManageEvaSecondQueryDU.html"
-						}]
+						icon:"glyphicon glyphicon-stop",
+						selectedIcon:"glyphicon glyphicon-stop",
+						color:"#2FA4E7",
+						backColor:"#FFFFFF"
 					  }]
 				  },{
 					text: "绩效结果",
+					icon:"glyphicon glyphicon-stop",
+					selectedIcon:"glyphicon glyphicon-stop",
+					color:"#2FA4E7",
+					backColor:"#FFFFFF",
 					state: {expanded: false},
 					nodes:[{
 							text: "绩效定稿",
+							icon:"glyphicon glyphicon-stop",
+							selectedIcon:"glyphicon glyphicon-stop",
+							color:"#2FA4E7",
+							backColor:"#FFFFFF",
 							href:"performanceManageEvaFinal.html"
 					},{
 					  text: "历史绩效",
-					  href:"performanceManageResultHistoryQuery.html",
-					  nodes: [{
-							text: "Page-历史绩效Detail",
-							href:"performanceManageResultHistory.html"
-					  }, {
-							text: "Page-筛查XXX的历史绩效",
-							href:"performanceManageResultHistoryQuery.html"
-					  }]
+					  icon:"glyphicon glyphicon-stop",
+					  selectedIcon:"glyphicon glyphicon-stop",
+					  color:"#2FA4E7",
+					  backColor:"#FFFFFF",
+					  href:"performanceManageResultHistoryQuery.html"
 					}]
 				},{
 				  text: "Template Download",
+				  icon:"glyphicon glyphicon-stop",
+				  selectedIcon:"glyphicon glyphicon-stop",
+				  color:"#2FA4E7",
+				  backColor:"#FFFFFF",
 				  href: "performanceManageTemplateDownload.html"
 				}]
 		  },{
-		  		text: "HR"
+		  		text: "HR",
+		  		icon:"glyphicon glyphicon-stop",
+			    selectedIcon:"glyphicon glyphicon-stop",
+			    color:"#2FA4E7",
+			    backColor:"#FFFFFF"
 		  },{
             text: "LOB",
             state: {expanded: true},
@@ -193,6 +203,12 @@
                 href: "performanceLobHRReport.html"
             }]
         }];
+		  		text: "LOB",
+		  		icon:"glyphicon glyphicon-stop",
+				selectedIcon:"glyphicon glyphicon-stop",
+				color:"#2FA4E7",
+				backColor:"#FFFFFF"
+		  }];
         return tree;
       }
 
@@ -202,7 +218,7 @@
           showTags: true,
 		  enableLinks: true,
           levels: 5,
-          data: serverdata//buildDomTree()
+          data: buildDomTree()
         };
    		//console.log("serverdata======" + serverdata);
         $('#treeview').treeview(options);

@@ -1,3 +1,4 @@
+
 package com.pmo.dashboard.controller;
 
 import java.text.NumberFormat;
@@ -345,8 +346,8 @@ public class PerformanceController {
         model.addAttribute("resultComments", resultComments);
         return "performance/performanceHRBPApprovalDetail";
     }
-  
-    @RequestMapping("/performanceLobApprove")
+	
+	@RequestMapping("/performanceLobApprove")
     public String getPerformanceLobApprove(final HttpServletRequest request, Model model){
         return "performance/performanceLobApprove";
     }
@@ -356,3 +357,4 @@ public class PerformanceController {
         return "performance/performanceLobHRReport";
     }
 }
+
