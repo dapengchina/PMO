@@ -41,14 +41,44 @@
 	text-align: center;
 }
 </style>
+<style>
+.table-thead-background  thead, th {
+	background-color: #d9edf7;
+	font-color: "white";
+}
+</style>
+<style type="text/css">
+a.link {
+	position: relative;
+}
 
+a.link div.tips {
+	border: 1px solid black;
+	padding: 2px;
+	background-color: #D7E7FC;
+	color: red;
+	position: absolute;
+	width: 300px;
+	line-height: 20px;
+	word-wrap: break-word;
+	display: none;
+}
+
+a.link:hover {
+	
+}
+
+a.link:hover div.tips {
+	display: inline;
+}
+</style>
 </head>
 <script>
 var path='<%=path%>';
-var currentPageName = '<%=currentPageName%>'
 </script>
 <body>
 	<c:import url="/service/manage/top" />
+
 
 	<c:import url="/service/performance/performanceLeft">
 		<c:param name="currentPageName" value="<%=currentPageName%>" />
@@ -62,51 +92,94 @@ var currentPageName = '<%=currentPageName%>'
 			<div class="box col-md-12">
 				<div class="box-inner">
 					<div class="box-header well" data-original-title="">
-					<input type="text" value="${type}" id="displayType" class="hidden"></input>
-						<h2 id="managementH2" style="display:none">
-							<i class="glyphicon glyphicon-user"></i> Management-> Template Download
-						</h2>
-						<h2 id="HRBPH2" style="display:true">
-							<i class="glyphicon glyphicon-briefcase"></i> HRBP-> Template Download
+						<h2>
+							<i class="glyphicon glyphicon-briefcase"></i> HRBP->绩效考评->集体评议
 						</h2>
 					</div>
 
 					<div id="employeeInfo" class="box-content">
 
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<table id="table1" border="1" width="100%" borderColor="green">
+									<tr style="">
+										<td rowspan="4" width="55%">说明：<br /> 1.<font color="red">比例控制：A 10-15%; B+ 30-40%; B 30-40%; C 5-10%; D 0-5%; A未使用比例可用于B+, 但A&B+ &lt; 55%; </font><br />
+											2.考评周期内在岗时间不足一个月的长假员工，不参与考评，请各部门在备注中注明原因，HRBP部会从OA系统取数据 进行统一复核;<br /> 3.标蓝色行的异动和借阅人员，考评部门需参考有监督权交付部的建议，HRBP做复核，以确保这部分人员的绩效考核被合理对待。<br />
+										</td>
+										<td colspan="7" style="text-align:center"><font color="green"> 主管比例统计(参考比例要求控制)</font></td>
+									</tr>
+									<tr>
+										<td>A <br />(10-15%)
+										</td>
+										<td>B+ <br />(30-40%)
+										</td>
+										<td>B <br /> &nbsp;
+										</td>
+										<td>C <br />(5-10%)
+										</td>
+										<td>D <br />(0-5%)
+										</td>
+										<td>参评比例合计</td>
+									</tr>
+									<tr>
+										<td>
+											<div id="empA"></div>
+										</td>
+										<td>
+											<div id="empBplus"></div>
+										</td>
+										<td>
+											<div id="empB"></div>
+										</td>
+										<td><div id="empC"></div></td>
+										<td>
+											<div id="empD"></div>
+										</td>
+										<td>
+											<div id="empSum"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div id="percentA"></div>
+										</td>
+										<td>
+											<div id="percentBplus"></div>
+										</td>
+										<td>
+											<div id="percentB"></div>
+										</td>
+										<td><div id="percentC"></div></td>
+										<td>
+											<div id="percentD"></div>
+										</td>
+										<td>
+											<div id="percentSum">100%</div>
+										</td>
+									</tr>
+								</table>
 
-						<!-- result box start -->
-						<table id="table3" style="border:1px solid balck" width="70%">
-							<tr style="background-color:#00688B">
-								<td colspan="10"><font color="white"> Template Download</font></td>
-							</tr>
-							<tr style="">
-								<td colspan="10"><span style="color:red;font-size:20px">Instruction: </span> <span style="font-size:20px">XXXXXX </span></td>
-							</tr>
-							<c:forEach items="${list}" var="item" varStatus="status">
-								<tr>
-									<td style="text-align:right;"><input type="checkbox" name="template" value="${item.id}"/></td>
-									<td>${status.index+1}.${item.name}</td>
-									<td style="text-align:right;"><i class="glyphicon glyphicon-paperclip"></td>
-									<td>Template............ <i class="glyphicon glyphicon-download-alt" style="cursor:pointer;" onclick="download(${item.id})" href="javascript:void(0);"></i>
-									</td>
-									<td style="text-align:left;">&nbsp;</td>
-								</tr>
-							</c:forEach>
-						</table>
+								<br />
+
+								<table id="HRBPGroupEvaList" class="table table-thead-background"></table>
+
+
+							</div>
+						</div>
+
 						<span>&nbsp;</span>
 						<div class="form-group">
 							<div style="text-align:center;width:100%;">
-								<input type="button" value="Select All" name="Save" id="Save" href="#" class="button btn btn-primary" data-dismiss="modal" onclick="selectAll()"
+								<input type="button" value="Export" name="Export" id="Export" href="#" class="button btn btn-primary" data-dismiss="modal" onclick="groupEvaExport()"
 									style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-								<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="button" value="Download" name="Edit" id="Edit" href="#" class="button btn btn-primary" data-dismiss="modal"
-									onclick="download()"
-									style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+								<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+								
 							</div>
 						</div>
 
 					</div>
 				</div>
-				<!-- result box end -->
+
 
 			</div>
 		</div>
@@ -115,7 +188,6 @@ var currentPageName = '<%=currentPageName%>'
 
 
 	<!-- middle content end -->
-
 
 
 
@@ -172,9 +244,7 @@ var currentPageName = '<%=currentPageName%>'
 	<script src="<%=path%>/js/charisma.js"></script>
 
 	<script type="text/javascript" src="<%=path%>/js/pmo/performance.js"></script>
-	<script type="text/javascript" src="<%=path%>/js/pmo/performanceManageTemplateDownload.js"></script>
-
-
+	<script type="text/javascript" src="<%=path%>/js/pmo/performanceHRBPGroupEva.js"></script>
 </body>
 </html>
 

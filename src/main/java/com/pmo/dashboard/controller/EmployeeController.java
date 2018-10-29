@@ -925,6 +925,12 @@ public class EmployeeController {
                        Label label= new Label(++j, i, listE.get(i-1).getEmployeeType());
                        ws.addCell(label);
                    }
+                   
+                   //员工billrate类型
+                   if(conditionList.contains("BillRateType")){
+                       Label label= new Label(++j, i, listE.get(i-1).getBillRateType());
+                       ws.addCell(label);
+                   }
 
                }
 

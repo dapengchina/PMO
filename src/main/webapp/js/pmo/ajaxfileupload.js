@@ -28,7 +28,7 @@ jQuery.extend({
 
         return io;
     },
-    createUploadForm: function(id, fileElementId)
+    createUploadForm: function(id, fileElementId,data)
     {
         //create form
         var formId = 'jUploadForm' + id;
@@ -44,6 +44,13 @@ jQuery.extend({
         jQuery(form).css('top', '-1200px');
         jQuery(form).css('left', '-1200px');
         jQuery(form).appendTo('body');
+        /* - ajaxFileUpload 增加对data属性的支持 可携带额外参数- */
+        if(data){
+            for(var i in data){
+                $('<input type="hidden" name="'+i+'" value="'+data[i]+'"/>').appendTo(form);
+            }
+      }
+        /*----------*/
         return form;
     },
 
@@ -51,7 +58,7 @@ jQuery.extend({
         // TODO introduce global settings, allowing the client to modify them for all requests, not only timeout  
         s = jQuery.extend({}, jQuery.ajaxSettings, s);
         var id = s.fileElementId;
-        var form = jQuery.createUploadForm(id, s.fileElementId);
+        var form = jQuery.createUploadForm(id, s.fileElementId,s.data);
         var io = jQuery.createUploadIframe(id, s.secureuri);
         var frameId = 'jUploadFrame' + id;
         var formId = 'jUploadForm' + id;

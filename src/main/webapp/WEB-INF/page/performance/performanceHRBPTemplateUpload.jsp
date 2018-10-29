@@ -40,12 +40,21 @@
 .templateTable thead, .templateTable td {
 	text-align: center;
 }
-</style>
+.fileInput{
+        height:256px;
+        font-size: 300px;
+        position:absolute;
+        right:0;
+        top:0;
+        opacity: 0;
+        filter:alpha(opacity=0);
+        cursor:pointer;
+    }
 
+</style>
 </head>
 <script>
 var path='<%=path%>';
-var currentPageName = '<%=currentPageName%>'
 </script>
 <body>
 	<c:import url="/service/manage/top" />
@@ -62,53 +71,66 @@ var currentPageName = '<%=currentPageName%>'
 			<div class="box col-md-12">
 				<div class="box-inner">
 					<div class="box-header well" data-original-title="">
-					<input type="text" value="${type}" id="displayType" class="hidden"></input>
-						<h2 id="managementH2" style="display:none">
-							<i class="glyphicon glyphicon-user"></i> Management-> Template Download
-						</h2>
-						<h2 id="HRBPH2" style="display:true">
-							<i class="glyphicon glyphicon-briefcase"></i> HRBP-> Template Download
+						<h2>
+							<i class="glyphicon glyphicon-briefcase"></i> HRBP->Template->Data Upload
 						</h2>
 					</div>
-
-					<div id="employeeInfo" class="box-content">
-
-
-						<!-- result box start -->
-						<table id="table3" style="border:1px solid balck" width="70%">
+					<div class="box-content">
+						<table id="table1" border="1" width="100%">
 							<tr style="background-color:#00688B">
-								<td colspan="10"><font color="white"> Template Download</font></td>
+								<td><font color="white"> Data Upload</font></td>
 							</tr>
-							<tr style="">
-								<td colspan="10"><span style="color:red;font-size:20px">Instruction: </span> <span style="font-size:20px">XXXXXX </span></td>
+							<tr>
+								<td class="text-center">
+									<table id="table2" border="1" width="60%" class="templateTable" style="margin:0 auto;">
+										<thead>
+											<tr style="background-color:#d9edf7">
+												<td>Name</td>
+												<td>Operate</td>
+											</tr>
+										</thead>
+										<c:forEach items="${list}" var="item" varStatus="status">
+											<tr>
+												<td >${item.name}</td>
+												<td>
+													<input type="button" value="Upload" class="button btn btn-primary" data-dismiss="modal"
+													onclick="showModal(${item.id})"
+													style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+												</td>
+											</tr>
+										</c:forEach>
+									</table>
+								</td>
 							</tr>
-							<c:forEach items="${list}" var="item" varStatus="status">
-								<tr>
-									<td style="text-align:right;"><input type="checkbox" name="template" value="${item.id}"/></td>
-									<td>${status.index+1}.${item.name}</td>
-									<td style="text-align:right;"><i class="glyphicon glyphicon-paperclip"></td>
-									<td>Template............ <i class="glyphicon glyphicon-download-alt" style="cursor:pointer;" onclick="download(${item.id})" href="javascript:void(0);"></i>
-									</td>
-									<td style="text-align:left;">&nbsp;</td>
-								</tr>
-							</c:forEach>
 						</table>
-						<span>&nbsp;</span>
-						<div class="form-group">
-							<div style="text-align:center;width:100%;">
-								<input type="button" value="Select All" name="Save" id="Save" href="#" class="button btn btn-primary" data-dismiss="modal" onclick="selectAll()"
-									style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-								<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="button" value="Download" name="Edit" id="Edit" href="#" class="button btn btn-primary" data-dismiss="modal"
-									onclick="download()"
-									style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-							</div>
-						</div>
-
 					</div>
 				</div>
-				<!-- result box end -->
-
 			</div>
+		</div>
+		<!-- 上传文件模态框（Modal） -->
+		<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header" style="background-color:#00688B">
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		                <font color="white"> Data Upload</font>
+		            </div>
+		            <div class="modal-body" style="height: 200px;text-align: center;padding: 75px 20px;">
+		            <form id="uploadForm">
+			            <span>Choose a file</span>
+			            <input type="text" id="templateUploadInput" class="form-control" style="display: inline;width: 300px;"></input>
+			            <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
+					        <button class="btn btn-default fileinput-button" type="button">Browse...</button>
+					        <input type="file" id="upload" name="upload" onchange="loadFile(this.files[0])" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+					    </div>
+		            </form>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-primary" onclick="upload()">Upload</button>
+		                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		            </div>
+		        </div><!-- /.modal-content -->
+		    </div><!-- /.modal -->
 		</div>
 	</div>
 
@@ -170,10 +192,10 @@ var currentPageName = '<%=currentPageName%>'
 	<script src="<%=path%>/js/jquery.history.js"></script>
 	<!-- application script for Charisma demo -->
 	<script src="<%=path%>/js/charisma.js"></script>
+	<script type="text/javascript" src="<%=path %>/js/pmo/ajaxfileupload.js"></script>
 
 	<script type="text/javascript" src="<%=path%>/js/pmo/performance.js"></script>
-	<script type="text/javascript" src="<%=path%>/js/pmo/performanceManageTemplateDownload.js"></script>
-
+	<script type="text/javascript" src="<%=path%>/js/pmo/performanceHRBPDataUpload.js"></script>
 
 </body>
 </html>
