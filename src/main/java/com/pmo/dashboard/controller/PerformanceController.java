@@ -1,3 +1,4 @@
+
 package com.pmo.dashboard.controller;
 
 import java.text.NumberFormat;
@@ -113,9 +114,9 @@ public class PerformanceController {
         return "performance/performanceListPage";
     }
 
-    @RequestMapping("/toEmployee")
+    @RequestMapping("/performanceEmpPBC")
     public String getTMemployee(final HttpServletRequest request, Model model) {
-        return "performance/test";
+        return "performance/performanceEmpPBC";
     }
 
     @RequestMapping("/performanceEmpEvaSelf")
@@ -345,4 +346,15 @@ public class PerformanceController {
         model.addAttribute("resultComments", resultComments);
         return "performance/performanceHRBPApprovalDetail";
     }
+	
+	@RequestMapping("/performanceLobApprove")
+    public String getPerformanceLobApprove(final HttpServletRequest request, Model model){
+        return "performance/performanceLobApprove";
+    }
+
+    @RequestMapping("/performanceLobHRReport")
+    public String getPerformanceLobHRReport(final HttpServletRequest request, Model model){
+        return "performance/performanceLobHRReport";
+    }
 }
+

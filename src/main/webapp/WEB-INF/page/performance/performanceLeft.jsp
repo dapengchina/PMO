@@ -193,6 +193,16 @@
 			    color:"#2FA4E7",
 			    backColor:"#FFFFFF"
 		  },{
+            text: "LOB",
+            state: {expanded: true},
+            nodes: [{
+                text: "Approval",
+                href:"performanceLobApprove.html"
+            },{
+                text: "HR Report",
+                href: "performanceLobHRReport.html"
+            }]
+        }];
 		  		text: "LOB",
 		  		icon:"glyphicon glyphicon-stop",
 				selectedIcon:"glyphicon glyphicon-stop",
