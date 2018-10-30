@@ -1,6 +1,8 @@
 package com.pom.dashboard.service;
 
 import java.util.List;
+import java.util.Map;
+
 
 import com.pmo.dashboard.entity.Employee;
 import com.pmo.dashboard.entity.EmployeePageCondition;
@@ -25,4 +27,17 @@ public interface EmployeeService
 	String saveForOtherEmployee(Employee employee);
 	
 	int updateForOtherEmployee(Employee employee);
+	
+	/**
+     * 绩效目标审批列表
+     * @author: xuexuan
+     * 2018年10月29日 下午5:01:34
+     * @param rmUserId
+     * @param submit
+     * @param backbone
+     * @param state
+     * @return 
+     * List<Map<String,Object>>
+     */
+	public List<Map<String, Object>> rmApprovalList(String rmUserId, String submit, String backbone, String state);
 }

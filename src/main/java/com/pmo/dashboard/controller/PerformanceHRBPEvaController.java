@@ -3,15 +3,12 @@ package com.pmo.dashboard.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -31,7 +28,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
+import com.pmo.dashboard.util.Constants;
 import com.pom.dashboard.service.PerformanceManageEvaService;
+import com.pom.dashboard.service.PerformanceService;
 
 /**
  * HRBP模块 -- 绩效考评控制器
@@ -44,22 +43,16 @@ import com.pom.dashboard.service.PerformanceManageEvaService;
 public class PerformanceHRBPEvaController {
     @Resource
     private PerformanceManageEvaService performanceManageEvaService;
-    /** HRBP-绩效考评-集体评议导出文件 **/
-    private static String[]             groupEvaExcelTitle   = new String[] { "NO.", "EHR ID", "LOB ID", "Name", "Date on-board", "MSA Role", "LOB", "BU", "DU", "Location", "BackBone", "Assessed",
-            "Direct Supervisor", "Client Feedback", "Pre-Assessment(Refer Client Feedback)", "Pre-Assessment", "Group Assessment Result", "Group Assessment Result", "Performance Facts(A/C/D)",
-            "Reformance Skip", "Remarks", "Last Q", "2 Qs ago", "3 Qs ago" };
-
-    private static String[]             groupEvaExcelContent = new String[] { "NO.", "ehr", "lobNo", "name", "hireDate", "position", "serviceLine", "bu", "du", "location", "keymember", "participate",
-            "manager", "customerFeedback", "initialEvalution", "pmEvalution", "duEvalution", "duEvaManager", "achievement", "jump", "comments", "previous1Quarter", "previous2Quarter",
-            "previous3Quarter"                              };
+    @Resource
+    private PerformanceService          performanceService;
     /** HRBP-绩效考评-审批导出文件 **/
-    private static String[]             approvalTitle        = new String[] { "NO.", "Bu", "Year", "Quarter", "Status" };
-    private static String[]             approvalContent      = new String[] { "NO.", "BU", "Year", "Quarter", "State" };
+    private static String[]             approvalTitle   = new String[] { "NO.", "Bu", "Year", "Quarter", "Status" };
+    private static String[]             approvalContent = new String[] { "NO.", "BU", "Year", "Quarter", "State" };
 
     /**
-     * 主管比例统计
-     * 各绩效等级数量（统计所有员工）
-     * @author: Song_Lee
+     * 当年当季各绩效等级比例统计
+     * 统计所有员工/指定事业部
+     * @author: xuexuan
      * 2018年10月19日 上午10:05:43
      * @return 
      * String
@@ -67,53 +60,39 @@ public class PerformanceHRBPEvaController {
      */
     @RequestMapping("/percentage")
     @ResponseBody
-    public String getPercent(@RequestParam(required = false) String bu) throws JsonProcessingException {
-        List<Map<String, Object>> list = performanceManageEvaService.groupStatByResult(bu);
-        int sum = 0;
-        for (Map<String, Object> map : list) {
-            sum += Integer.parseInt(map.get("count") + "");
-        }
-        Map<String, Object> rtn = new HashMap<String, Object>();
-        NumberFormat nf = NumberFormat.getPercentInstance();
-        String level = "";
-        int count = 0;
-        for (Map<String, Object> map : list) {
-            level = ((String) map.get("result")).toUpperCase();
-            count = Integer.parseInt(map.get("count") + "");
-            rtn.put(level, count);
-            rtn.put("percent" + level, nf.format((float) count / sum));
-        }
-        rtn.put("sum", sum);
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(rtn);
+    public Map<String, Object> getPercent(@RequestParam(required = false) String bu) throws JsonProcessingException {
+        List<Map<String, Object>> list = performanceManageEvaService.groupStatByResultBU(bu);
+        Map<String, Object> rtn = performanceManageEvaService.percentage(list);
+        return rtn;
     }
 
     /**
      * 根据筛选条件分页查询员工绩效信息
-     * @author: Song_Lee
+     * @author: xuexuan
      * 2018年10月19日 下午2:19:57
      * @return 
      * String
      * @throws JsonProcessingException 
      */
-    @RequestMapping("/groupEva/list")
+    @RequestMapping("/processing/result/list")
     @ResponseBody
-    public String groupEvaList(@RequestParam int pageSize, @RequestParam int pageNumber, PerformanceQueryCondition condition) throws JsonProcessingException {
+    public Map<String, Object> processingResultList(@RequestParam int pageSize, @RequestParam int pageNumber, @RequestParam(required = false) String bu, @RequestParam(required = false) String du,
+            @RequestParam(required = false) String eHr, @RequestParam(required = false) String staffName, @RequestParam(required = false) String rm) throws JsonProcessingException {
         // 分页查询
         PageHelper.startPage(pageNumber, pageSize);
-        List<PerformanceManageEvaBean> data = performanceManageEvaService.queryManageEvaSecondQueryList(condition);
+        // 查询条件：当年-当季-bu/du/eHr/staffName
+        List<PerformanceManageEvaBean> data = performanceManageEvaService.processingResultList(bu, du, eHr, staffName, rm);
         PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
         // 返回数据
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("total", page.getTotal());
         map.put("rows", page.getList());
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(map);
+        return map;
     }
 
     /**
      * 导出员工绩效信息
-     * @author: Song_Lee
+     * @author: xuexuan
      * 2018年10月19日 下午4:21:29
      * @return 
      * ResponseEntity<byte[]>
@@ -121,13 +100,13 @@ public class PerformanceHRBPEvaController {
      * @throws IllegalAccessException 
      * @throws IllegalArgumentException 
      */
-    @RequestMapping("/groupEva/export")
-    public ResponseEntity<byte[]> groupEvaExport(PerformanceQueryCondition condition) throws IOException, IllegalArgumentException, IllegalAccessException {
+    @RequestMapping("/processing/result/export")
+    public ResponseEntity<byte[]> processingResultExport(PerformanceQueryCondition condition) throws IOException, IllegalArgumentException, IllegalAccessException {
         // 查询数据
         List<PerformanceManageEvaBean> data = performanceManageEvaService.queryManageEvaSecondQueryList(condition);
         // 创建文件
         XSSFWorkbook book = new XSSFWorkbook();
-        groupEvaSheet(book, data);
+        performanceService.createSheetDetailList(book, "group assessment", data);
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         book.write(os);
         byte[] body = os.toByteArray();
@@ -153,7 +132,7 @@ public class PerformanceHRBPEvaController {
 
     /**
      * 审批列表
-     * @author: Song_Lee
+     * @author: xuexuan
      * 2018年10月22日 上午11:20:32
      * @return 
      * String
@@ -169,7 +148,7 @@ public class PerformanceHRBPEvaController {
 
     /**
      * 审批详情页-审批提交
-     * @author: Song_Lee
+     * @author: xuexuan
      * 2018年10月22日 下午3:00:00
      * @param bu  审批的部门
      * @param state 审批状态
@@ -179,13 +158,13 @@ public class PerformanceHRBPEvaController {
     @RequestMapping("/approval/detail/submit")
     @ResponseBody
     public String approvalDetailSubmit(@RequestParam String bu, @RequestParam String state) {
-        performanceManageEvaService.updateStateByBu(bu, state);
+        performanceManageEvaService.updateStateByBU(bu, state);
         return "";
     }
 
     /**
      * 审批页-审批提交
-     * @author: Song_Lee
+     * @author: xuexuan
      * 2018年10月22日 下午3:01:07
      * @return 
      * String
@@ -194,15 +173,13 @@ public class PerformanceHRBPEvaController {
      */
     @RequestMapping("/approval/submit")
     public String approvalSubmit(@RequestParam String comments) throws JsonProcessingException {
-        if (StringUtils.isNotBlank(comments)) {
-            performanceManageEvaService.updateComments(comments);
-        }
+        performanceManageEvaService.updateComments(comments);
         return "performance/performanceHRBPApproval";
     }
 
     /**
      * 审批页面批量导出
-     * @author: Song_Lee
+     * @author: xuexuan
      * 2018年10月22日 下午3:04:46
      * @return 
      * ResponseEntity<byte[]>
@@ -218,7 +195,7 @@ public class PerformanceHRBPEvaController {
         // 创建文件
         XSSFWorkbook book = new XSSFWorkbook();
         approvalSheet(book, data_approval);
-        groupEvaSheet(book, data_groupEva);
+        performanceService.createSheetDetailList(book, "performance detail", data_groupEva);
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         book.write(os);
         byte[] body = os.toByteArray();
@@ -244,50 +221,8 @@ public class PerformanceHRBPEvaController {
     }
 
     /**
-     * 创建集体评议工作簿
-     * @author: Song_Lee
-     * 2018年10月22日 下午3:28:13
-     * @param book
-     * @param data
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException 
-     * void
-     */
-    private void groupEvaSheet(XSSFWorkbook book, List<PerformanceManageEvaBean> data) throws IllegalArgumentException, IllegalAccessException {
-        // 集体评议工作簿
-        Sheet sheet_groupEva = book.createSheet("group assessment");
-        Row row;
-        Cell cell;
-        // 创建表头
-        row = sheet_groupEva.createRow(0);
-        for (int c = 0; c < groupEvaExcelTitle.length; c++) {
-            cell = row.createCell(c);// 创建数据各列
-            cell.setCellValue(groupEvaExcelTitle[c]);// 赋值
-        }
-        // 创建表格内容
-        for (int r = 0; r < data.size(); r++) {
-            row = sheet_groupEva.createRow(r + 1);// 从第二行开始
-            cell = row.createCell(0);// 第一列为序号
-            cell.setCellValue(r + 1);
-            for (int c = 1; c < groupEvaExcelContent.length; c++) {
-                cell = row.createCell(c);// 创建数据各列
-                Class clazz = data.get(r).getClass();
-                Field field;
-                try {
-                    field = clazz.getDeclaredField(groupEvaExcelContent[c]);
-                    field.setAccessible(true);
-                    cell.setCellValue((String) field.get(data.get(r)));// 赋值
-                } catch (NoSuchFieldException | SecurityException e) {
-                    e.printStackTrace();
-                    cell.setCellValue("");
-                }
-            }
-        }
-    }
-
-    /**
      * 创建审批工作簿
-     * @author: Song_Lee
+     * @author: xuexuan
      * 2018年10月22日 下午3:28:17
      * @param book
      * @param data 
@@ -309,7 +244,11 @@ public class PerformanceHRBPEvaController {
             cell.setCellValue(approval_r + 1);
             for (int c = 1; c < approvalContent.length; c++) {
                 cell = row.createCell(c);
-                cell.setCellValue((String) map.get(approvalContent[c]));
+                if ("State".equals(approvalContent[c])) {
+                    cell.setCellValue(Constants.APPROVAL_STATE.get(map.get(approvalContent[c])));
+                } else {
+                    cell.setCellValue((String) map.get(approvalContent[c]));
+                }
             }
             approval_r++;
         }

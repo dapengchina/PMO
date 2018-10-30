@@ -122,4 +122,9 @@ public class EmployeeServiceImpl implements EmployeeService
 	public int updateForOtherEmployee(Employee employee) {
 		return employeeMapper.updateForOtherEmployee(employee);
 	}
+
+    @Override
+    public List<Map<String, Object>> rmApprovalList(String rmUserId, String submit, String backbone, String state) {
+        return employeeMapper.rmApprovalList(rmUserId, submit, backbone, state);
+    }
 }

@@ -21,19 +21,20 @@ function queryPercentage() {
 			$("#empB").html(data["B"] == undefined ? 0 : data["B"]);
 			$("#empC").html(data["C"] == undefined ? 0 : data["C"]);
 			$("#empD").html(data["D"] == undefined ? 0 : data["D"]);
-			$("#empSum").html(data["sum"]);
+			$("#empSum").html(data["sum"] == undefined ? 0 : data["sum"]);
+			$("#percentSum").html("100%");
 		}
 	});
 }
 /** 审批当前事业部 * */
 function submit(type) {
+	var state = type == 1 ? 8 : 7;// TODO xuexuan
 	var state_bu = $("#detail_bu").val();
 	$.ajax({
 		url : path + '/service/performanceHRBPEva/approval/detail/submit',
 		data : {
 			"bu" : state_bu,
-			"state" : type
-		// TODO xuexuan type的值怎么写
+			"state" : state
 		},
 		cache : false,
 		type : "POST",
@@ -47,6 +48,7 @@ function submit(type) {
 		}
 	});
 }
+var pageSize = 2;
 /** 获取所有员工当年当季表格* */
 function loadHRBPGroupEvaList() {
 	var columns = [ {
@@ -138,9 +140,8 @@ function loadHRBPGroupEvaList() {
 			return "<a href='performanceManageTargetApprovalDetail.html' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
 		}
 	} ];
-	// TODO 加入查询条件
 	var table = $('#HRBPGroupEvaList').bootstrapTable({
-		url : path + '/service/performanceHRBPEva/groupEva/list', // 请求后台的URL（*）
+		url : path + '/service/performanceHRBPEva/processing/result/list', // 请求后台的URL（*）
 		method : 'GET', // 请求方式（*）
 		// toolbar: '#toolbar', //工具按钮用哪个容器
 		striped : true, // 是否显示行间隔色
@@ -150,7 +151,7 @@ function loadHRBPGroupEvaList() {
 		sortOrder : "asc", // 排序方式
 		sidePagination : "server", // 分页方式：client客户端分页，server服务端分页（*）
 		pageNumber : 1, // 初始化加载第一页，默认第一页,并记录
-		pageSize : 2, // 每页的记录行数（*）
+		pageSize : pageSize, // 每页的记录行数（*）
 		pageList : [ 10, 25, 50, 100 ], // 可供选择的每页的行数（*）
 		search : false, // 是否显示表格搜索
 		strictSearch : false,
@@ -173,8 +174,8 @@ function loadHRBPGroupEvaList() {
 			var bu = $("#bu").val();
 			var du = $("#du").val();
 			return {
-				pageSize : params.limit,
-				pageNumber : params.offset / params.limit + 1,
+				pageSize : pageSize,
+				pageNumber : 1,
 				eHr : eHr,
 				staffName : staffName,
 				bu : bu,
@@ -195,7 +196,7 @@ function loadHRBPGroupEvaList() {
 
 	});
 }
-
+/** search ** */
 function search() {
 	// 获取查询条件
 	var queryParams = {
@@ -209,11 +210,10 @@ function search() {
 	// 刷新表格
 	$('#HRBPGroupEvaList').bootstrapTable('refresh', queryParams);
 }
-
+/** clear * */
 function clearParams() {
 	$("#eHr").val("");
 	$("#staffName").val("");
-	$("#bu").val("");
 	$("#du").val("");
 }
 

@@ -745,5 +745,21 @@
     </set>
     where EMPLOYEE_ID = #{employeeId,jdbcType=VARCHAR}
   </update>
+  
+  <select id="rmApprovalList" resultType="hashMap">
+  	select e.E_HR, e.STAFF_NAME, e.ROLE, e.SKILL, goal.state as submit, process.state from t_employee e, t_employeeperforgoal goal, t_employeeperforprocess process 
+  	where e.EMPLOYEE_ID = goal.employeeid and e.EMPLOYEE_ID = process.employeeid
+  	<if test="rmUserId != null and rmUserId != ''">
+  		and e.RM_USER_ID = #{rmUserId}
+  	</if>
+  	<if test="submit != null and submit != ''">
+  		and goal.state = #{submit}
+  	</if>
+  	<if test="state != null and state != ''">
+  		and process.state = #{state}
+  	</if>
+  	<!-- backbone -->
+  	
+  </select>
 	
 </mapper>

@@ -47,7 +47,20 @@ function loadHRBPApprovalList() {
 		title : 'Quarter'
 	}, {
 		field : 'State',
-		title : 'Status'
+		title : 'Status',
+		formatter : function(value, row, index) {
+			var state = "";
+			$.ajax({
+				url : path + "/service/performance/state/" + row.State,
+				async : false,
+				type : "GET",
+				success : function(data) {
+					state = data.stateName;
+				}
+			});
+			return state;
+		}
+
 	}, {
 		title : 'Detail',
 		formatter : function(value, row, index) {
@@ -94,10 +107,9 @@ function loadHRBPApprovalList() {
 			// 判断是否都已经审批
 			approvalAllFlag = true;
 			for ( var item in data) {
-				if (data[item].State.indexOf("待") > -1) {// TODO xuexuan
-															// 如何判断审批状态
+				if (data[item].State == 6) {
 					approvalAllFlag = false;
-					break;
+					return;
 				}
 			}
 		},
@@ -117,26 +129,32 @@ function approvalExport() {
 	window.location.href = url;
 }
 /** 提交审批 * */
-var approvalAllFlag = false;
+var approvalAllFlag = true;
 function submit() {
 	// 所有事业部均处理后才可提交
-	var comments = $("#approval_feedback").val();
-	if (approvalAllFlag) {
-		$.ajax({
-			url : path + '/service/performanceHRBPEva/approval/submit',
-			data : {
-				"comments" : comments
-			},
-			cache : false,
-			type : "POST",
-			success : function(data) {
-				alert("审批成功");
-			},
-			error : function(error) {
-				alert("审批失败");
-			}
-		});
-	} else {
-		alert("请先审批");
+	if (!approvalAllFlag) {
+		alert("还有未审批数据，请先审批");
+		return;
 	}
+
+	var comments = $("#approval_feedback").val();
+	// comments不能为空
+	if (comments == "") {
+		alert("请填写反馈！");
+		return;
+	}
+	$.ajax({
+		url : path + '/service/performanceHRBPEva/approval/submit',
+		data : {
+			"comments" : comments
+		},
+		cache : false,
+		type : "POST",
+		success : function(data) {
+			alert("审批成功");
+		},
+		error : function(error) {
+			alert("审批失败");
+		}
+	});
 }
