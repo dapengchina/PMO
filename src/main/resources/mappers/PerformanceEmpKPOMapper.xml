@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pmo.dashboard.dao.PerformanceEmpPBCMapper">
+	<resultMap id="queryPerformanceEmpKPOMap" type="com.pmo.dashboard.entity.PerformanceEmpKPOBean">
+		<result property="index" column="index" javaType="String" />
+		<result property="description" column="description" javaType="String" />
+		<result property="weightrate" column="weightrate" javaType="String" />
+		<result property="phasegoal" column="phasegoal" javaType="String" />
+		<result property="keyaction" column="keyaction" javaType="String" />
+	</resultMap>
+	
+	<select id="queryPerformanceEmpKPOList"  resultMap="queryPerformanceEmpKPOMap" >
+	    SELECT u.index, u.description, u.weightrate, u.phasegoal, u.keyaction
+		FROM t_employeekpo AS u
+		WHERE employeeid = #{employeeid,jdbcType=VARCHAR}
+		ORDER BY u.index
+    </select>
+	 <insert id="savePerformanceEmpKPO" keyProperty="id" parameterType="com.pmo.dashboard.entity.PerformanceEmpKPOBean">
+	insert into t_employeekpo (id,employeeid,`index`,description,weightrate,phasegoal,keyaction,createdate)
+	values
+	(#{id},#{employeeid},#{index},#{description},#{weightrate},#{phasegoal},#{keyaction},#{createdate})
+	</insert>
+	
+	<delete id="deletePerformanceEmpKPO" parameterType="String">
+	DELETE FROM t_employeekpo 
+	WHERE employeeid = #{employeeid,jdbcType=VARCHAR}
+	</delete>
+
+	
+</mapper>

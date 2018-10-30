@@ -1,5 +1,6 @@
 package com.pmo.dashboard.controller;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -196,8 +197,7 @@ public class PerformanceController {
     }
 
     @RequestMapping("/performanceManageEvaFirst")
-    public String getPerformanceManageEvaFirst(final HttpServletRequest request, Model model, @RequestParam("resultId") String resultId) {
-        model.addAttribute("resultId", resultId);
+    public String getPerformanceManageEvaFirst(final HttpServletRequest request, Model model) {
         return "performance/performanceManageEvaFirst";
     }
 
@@ -266,7 +266,6 @@ public class PerformanceController {
         return "performance/performanceManageEvaSecondBU";
     }
 
-    /** management-绩效考评-审批-指定交付部审批页面 **/
     @RequestMapping("/performanceManageEvaSecondQueryDU")
     public String getPerformanceManageEvaSecondQueryDU(@RequestParam("du") String du, final HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("loginUser");
@@ -360,13 +359,6 @@ public class PerformanceController {
         return "performance/performanceHRBPTemplateUpload";
     }
 
-    /**
-     * HRBP - approval - detail
-     * @author: xuexuan
-     * 2018年10月16日 下午12:27:02
-     * @return 
-     * String
-     */
     @RequestMapping("/performanceHRBPApprovalDetail")
     public String getPerformanceHRBPApprovalDetail(@RequestParam String bu, Model model) {
         model.addAttribute("bu", bu);
@@ -374,6 +366,16 @@ public class PerformanceController {
         String resultComments = performanceManageEvaService.queryResultCommentsByBU(bu).getResultComments();
         model.addAttribute("resultComments", resultComments);
         return "performance/performanceHRBPApprovalDetail";
+    }
+
+    @RequestMapping("/performanceLobApprove")
+    public String getPerformanceLobApprove(final HttpServletRequest request, Model model) {
+        return "performance/performanceLobApprove";
+    }
+
+    @RequestMapping("/performanceLobHRReport")
+    public String getPerformanceLobHRReport(final HttpServletRequest request, Model model) {
+        return "performance/performanceLobHRReport";
     }
 
     @RequestMapping("/state/{stateId}")

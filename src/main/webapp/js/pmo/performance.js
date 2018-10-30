@@ -3,7 +3,7 @@ $("#getEmp").click(function(){
 } );
 
 $("#getManage").click(function(){
-	window.open(path+"/service/performance/performanceManageTargetApproval.html");
+	window.open(path+"/service/performance/performanceEmpPBC.html");
 });
 $("#getHR").click(function(){
 	window.open(path+"/service/performance/performanceEmpPBC.html");
@@ -52,11 +52,22 @@ function addTr(tableId, row, trHtml) {
 	$tr.before(trHtml);
 }
 function addTr1(tableId, row, cols) {
-	var tr0 = $("<tr></tr>");
-	for (var i = 0; i < cols; i++) {
-		var td0 = $("<td>"	+ "&nbsp;"	+ "</td>");
-		td0.appendTo(tr0);
-	}
+	var tr0 = $("<tr id='tr1'></tr>");
+	
+	var td0 = $("<td >"	+ "&nbsp;"	+ "</td>");
+	var td1 = $("<td name='index'>"	+ "</td>");
+	var td2 = $("<td name='description'>"+ "</td>");
+	var td3 = $("<td name='weightrate'>"+ "</td>");
+	var td4 = $("<td name='phasegoal'>"	+ "</td>");
+	var td5 = $("<td name='keyaction'>"	+ "</td>");
+	var td6 = $("<td>"	+ "&nbsp;"	+ "</td>");
+	td0.appendTo(tr0);
+	td1.appendTo(tr0);
+	td2.appendTo(tr0);
+	td3.appendTo(tr0);
+	td4.appendTo(tr0);
+	td5.appendTo(tr0);
+	td6.appendTo(tr0);
 	addTr(tableId, row, tr0);
 	
 	//更新“重点工作”列的rowspan参数，使其加1
@@ -65,10 +76,18 @@ function addTr1(tableId, row, cols) {
 	$("#leftrowspan").attr("rowspan", newRowspan);
 }
 function addTr2(tableId, row, cols) {
-	var tr0 = $("<tr></tr>");
-	for (var i = 0; i < cols; i++) {
-		var td0 = $("<td>"	+ "&nbsp;"	+ "</td>");
-		td0.appendTo(tr0);
-	}
+	var tr0 = $("<tr id='tr1' height=39px></tr>");
+	var td0 = $("<td name='keyability'>" + "</td>");
+	var td1 = $("<td name='action'>" + "</td>");
+	var td2 = $("<td name='supportor'>" + "</td>");
+	var td3 = $("<td name='dealine'>" + "</td>");
+	td0.appendTo(tr0);
+	td1.appendTo(tr0);
+	td2.appendTo(tr0);
+	td3.appendTo(tr0);
+	
 	addTr(tableId, row, tr0);
+}
+function edit(){
+	$("tbody #tr1 td").attr("contenteditable","true");
 }
