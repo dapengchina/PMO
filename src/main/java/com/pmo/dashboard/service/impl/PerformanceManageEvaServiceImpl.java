@@ -1,7 +1,9 @@
 package com.pmo.dashboard.service.impl;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -265,15 +267,129 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
         return list;
     }
 
-    @Override
-    public List<Map<String, Object>> groupStatByResult(String bu) {
-        return mapper.groupStatByResult(bu);
+    private List<Map<String, Object>> groupStatByResult(String bu, String du, String rm, String finalize) {
+        Calendar c = Calendar.getInstance();
+        String startYear = c.get(Calendar.YEAR) + "";
+        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        Map<String, Object> filter = new HashMap<String, Object>();
+        filter.put("startYear", startYear);
+        filter.put("startQuarter", startQuarter);
+        filter.put("bu", bu);
+        filter.put("du", du);
+        filter.put("rm", rm);
+        filter.put("finalize", finalize);// 已定稿
+        List<Map<String, Object>> list = mapper.groupStatByResult(filter);
+        return list;
     }
 
     @Override
-    public List<PerformanceManageEvaBean> groupEvaList(PerformanceQueryCondition condition) {
-        /**业务逻辑相同-暂时调用*/
-        return queryManageEvaSecondQueryList(condition);
+    public List<Map<String, Object>> groupStatByResultBU(String bu) {
+        return groupStatByResult(bu, null, null, null);
+    }
+
+    @Override
+    public List<Map<String, Object>> groupStatByResultDU(String du) {
+        return groupStatByResult(null, du, null, null);
+    }
+
+    @Override
+    public List<Map<String, Object>> groupStatByResultRM(String rm) {
+        return groupStatByResult(null, null, rm, null);
+    }
+
+    @Override
+    public List<Map<String, Object>> groupStatByResultFinalize() {
+        return groupStatByResult(null, null, null, "True");
+    }
+
+    @Override
+    public Map<String, Object> percentage(List<Map<String, Object>> list) {
+        Map<String, Object> rtn = new HashMap<String, Object>();
+        if (list == null || list.size() == 0)
+            return rtn;
+        int sum = 0;
+        for (Map<String, Object> map : list) {
+            sum += Integer.parseInt(map.get("count") + "");
+        }
+        NumberFormat nf = NumberFormat.getPercentInstance();
+        String level = "";
+        int count = 0;
+        for (Map<String, Object> map : list) {
+            level = ((String) map.get("result")).toUpperCase();
+            count = Integer.parseInt(map.get("count") + "");
+            rtn.put(level, count);
+            rtn.put("percent" + level, nf.format((float) count / sum));
+        }
+        rtn.put("sum", sum);
+        return rtn;
+    }
+
+    @Override
+    public List<PerformanceManageEvaBean> processingResultListRM(String rm) {
+        return processingResultList(null, null, null, null, rm);
+    }
+
+    @Override
+    public List<PerformanceManageEvaBean> processingResultListBU(String bu) {
+        return processingResultList(bu, null, null, null, null);
+    }
+
+    @Override
+    public List<PerformanceManageEvaBean> processingResultListDU(String du) {
+        return processingResultList(null, du, null, null, null);
+    }
+
+    @Override
+    public List<PerformanceManageEvaBean> processingResultList(String bu, String du, String eHr, String staffName, String rm) {
+        Map<String, Object> filter = new HashMap<String, Object>();
+        Calendar c = Calendar.getInstance();
+        String startYear = c.get(Calendar.YEAR) + "";
+        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        filter.put("startYear", startYear);
+        filter.put("startQuarter", startQuarter);// 当年-当季
+        filter.put("bu", bu);
+        filter.put("du", du);
+        filter.put("eHr", eHr);
+        filter.put("staffName", staffName);
+        filter.put("rm", rm);
+        List<PerformanceManageEvaBean> list = mapper.filterQuery(filter);
+        getPreviousResult(list);
+        return list;
+    }
+
+    @Override
+    public List<PerformanceManageEvaBean> finalizeResultList() {
+        Map<String, Object> filter = new HashMap<String, Object>();
+        Calendar c = Calendar.getInstance();
+        String startYear = c.get(Calendar.YEAR) + "";
+        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        filter.put("startYear", startYear);
+        filter.put("startQuarter", startQuarter);// 当年-当季
+        filter.put("finalize", "True");// 已定稿
+        List<PerformanceManageEvaBean> list = mapper.filterQuery(filter);
+        getPreviousResult(list);
+        return list;
+    }
+
+    private void getPreviousResult(List<PerformanceManageEvaBean> list) {
+        for (PerformanceManageEvaBean b : list) {
+            String year = b.getYear();
+            String quarter = b.getQuarter();
+            PerformanceManageEvaBean preB = getPreResult(b.getEhr(), year, quarter);
+            if (preB != null) {
+                b.setPrevious1Quarter(preB.getResult());
+                PerformanceManageEvaBean prePreB = getPreResult(preB.getEhr(), preB.getYear(), preB.getQuarter());
+                if (prePreB != null) {
+                    b.setPrevious2Quarter(prePreB.getResult());
+                    PerformanceManageEvaBean prePrePreB = getPreResult(prePreB.getEhr(), prePreB.getYear(), prePreB.getQuarter());
+                    if (prePrePreB != null) {
+                        b.setPrevious3Quarter(prePrePreB.getResult());
+                    }
+
+                }
+            }
+
+        }
     }
 
     @Override
@@ -286,19 +402,76 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
     }
 
     @Override
-    public PerformanceManageEvaBean queryResultComments(String bu) {
-        return mapper.queryResultComments(bu);
+    public PerformanceManageEvaBean queryResultCommentsByBU(String bu) {
+        Calendar c = Calendar.getInstance();
+        String startYear = c.get(Calendar.YEAR) + "";
+        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        return mapper.queryResultComments(bu, null, startYear, startQuarter);
+    }
+
+    @Override
+    public PerformanceManageEvaBean queryResultCommentsByDU(String du) {
+        Calendar c = Calendar.getInstance();
+        String startYear = c.get(Calendar.YEAR) + "";
+        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        return mapper.queryResultComments(null, du, startYear, startQuarter);
     }
 
     @Override
     public void updateComments(String comments) {
-        mapper.updateComments(comments);
+        mapper.updateComments(comments, null, null);
 
     }
 
     @Override
-    public void updateStateByBu(String bu, String state) {
-        mapper.updateStateByBu(bu, state);
+    public void updateCommentsByBU(String comments, String bu) {
+        mapper.updateComments(comments, bu, null);
+    }
+
+    @Override
+    public void updateCommentsByDU(String comments, String du) {
+        mapper.updateComments(comments, null, du);
+    }
+
+    @Override
+    public void updateStateByBU(String bu, String state) {
+        mapper.updateState(bu, null, null, null, state);
+    }
+
+    @Override
+    public void updateStateByDU(String du, String state) {
+        mapper.updateState(null, du, null, null, state);
+    }
+
+    @Override
+    public void updateStateByRM(String rm, String state) {
+        mapper.updateState(null, null, rm, null, state);
+    }
+
+    @Override
+    public void updateStateByIds(List<String> list, String state) {
+        mapper.updateState(null, null, null, list, state);
+    }
+
+    @Override
+    public List<Map<String, Object>> listGroupByDU(String bu) {
+        Calendar c = Calendar.getInstance();
+        String startYear = c.get(Calendar.YEAR) + "";
+        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        return mapper.listGroupByDU(bu, startYear, startQuarter);
+    }
+
+    @Override
+    public List<Map<String, Object>> listGroupByRM(String csSubDeptName) {
+        Calendar c = Calendar.getInstance();
+        String startYear = c.get(Calendar.YEAR) + "";
+        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        return mapper.listGroupByRM(csSubDeptName, startYear, startQuarter);
+    }
+
+    @Override
+    public void updatePreAssessmentResult(String preAssessment, String id) {
+        mapper.preAssessment(preAssessment, id);
     }
 
 }

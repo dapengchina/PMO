@@ -27,9 +27,8 @@ function queryPercentage() {
 }
 /** 导出集体评议数据 */
 function groupEvaExport() {
-	var url = path + '/service/performanceHRBPEva/groupEva/export';
+	var url = path + '/service/performanceHRBPEva/processing/result/export';
 	window.location.href = url;
-
 }
 /** 获取所有员工当年当季表格* */
 function loadHRBPGroupEvaList() {
@@ -124,7 +123,7 @@ function loadHRBPGroupEvaList() {
 	} ];
 
 	var table = $('#HRBPGroupEvaList').bootstrapTable({
-		url : path + '/service/performanceHRBPEva/groupEva/list', // 请求后台的URL（*）
+		url : path + '/service/performanceHRBPEva/processing/result/list', // 请求后台的URL（*）
 		method : 'GET', // 请求方式（*）
 		// toolbar: '#toolbar', //工具按钮用哪个容器
 		striped : true, // 是否显示行间隔色
@@ -151,18 +150,9 @@ function loadHRBPGroupEvaList() {
 		// 得到查询的参数
 		queryParams : function(params) {
 			console.log("params");
-			// 获取查询条件
-			var eHr = $("#eHr").val();
-			var staffName = $("#staffName").val();
-			var bu = $("#bu").val();
-			var du = $("#du").val();
 			return {
 				pageSize : params.limit,
 				pageNumber : params.offset / params.limit + 1,
-				eHr : eHr,
-				staffName : staffName,
-				bu : bu,
-				du : du
 			};
 		},
 		columns : columns,
@@ -178,22 +168,4 @@ function loadHRBPGroupEvaList() {
 		}
 
 	});
-}
-
-function search() {
-	// 获取查询条件
-	var eHr = $("#eHr").val();
-	var staffName = $("#staffName").val();
-	var bu = $("#bu").val();
-	var du = $("#du").val();
-	var queryParams = {
-		query : {
-			eHr : eHr,
-			staffName : staffName,
-			bu : bu,
-			du : du
-		}
-	};
-	// 刷新表格
-	$('#queryManageEvaSecondQueryList').bootstrapTable('refresh', queryParams);
 }

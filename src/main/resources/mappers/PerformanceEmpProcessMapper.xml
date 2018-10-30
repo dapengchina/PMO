@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pmo.dashboard.dao.PerformanceEmpPBCMapper">
+	<resultMap id="queryPerformanceEmpProcessMap" type="com.pmo.dashboard.entity.PerformanceEmpProcessBean">
+		<result property="processid" column="processid" javaType="String" />
+		<result property="owner" column="owner" javaType="String" />
+		<result property="createdate" column="createdate" javaType="String" />
+		<result property="state" column="state" javaType="String" />
+		<result property="remark" column="remark" javaType="String" />
+	</resultMap>
+	<insert id="savePerformanceEmpProcess" keyProperty="id"  parameterType="com.pmo.dashboard.entity.PerformanceEmpProcessBean">
+		INSERT INTO t_employeeperforprocess(id,employeeid,processid,owner,createdate,state,remark)
+		VALUES
+		(#{id},#{employeeid},#{processid},#{owner},#{createdate},#{state},#{remark})
+	</insert>
+
+	
+</mapper>

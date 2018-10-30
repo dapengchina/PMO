@@ -3,7 +3,8 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pmo.dashboard.dao.PerformanceResultMapper">
 
-<resultMap type="com.pmo.dashboard.entity.PerformanceManageEvaBean" id="PerformanceResultMap">
+	<resultMap type="com.pmo.dashboard.entity.PerformanceManageEvaBean"
+		id="PerformanceResultMap">
 
 		<id property="ehr" column="E_HR" javaType="String" />
 		<result property="name" column="STAFF_NAME" javaType="String" />
@@ -19,175 +20,342 @@
 		<result property="participate" column="Assessed" javaType="String" />
 		<result property="manager" column="Direct_Supervisor" javaType="String" />
 		<result property="result" column="Result" javaType="String" />
-		<result property="resultComments" column="Result_Comments" javaType="String" />
-		<result property="customerFeedback" column="Client_Feedback" javaType="String" />
-		<result property="initialEvalution" column="PreAssessment_Result" javaType="String" />
-		<result property="pmEvalution" column="Direct_Supervisor_Assessment_Result" javaType="String" />
-		<result property="duEvalution" column="Group_Assessment_Result" javaType="String" />
-		<result property="duEvaManager" column="Group_Assessment_Manager" javaType="String" />
-		<result property="achievement" column="Performance_Facts" javaType="String" />
+		<result property="resultComments" column="Result_Comments"
+			javaType="String" />
+		<result property="customerFeedback" column="Client_Feedback"
+			javaType="String" />
+		<result property="initialEvalution" column="PreAssessment_Result"
+			javaType="String" />
+		<result property="pmEvalution" column="Direct_Supervisor_Assessment_Result"
+			javaType="String" />
+		<result property="duEvalution" column="Group_Assessment_Result"
+			javaType="String" />
+		<result property="duEvaManager" column="Group_Assessment_Manager"
+			javaType="String" />
+		<result property="achievement" column="Performance_Facts"
+			javaType="String" />
 		<result property="jump" column="Performance_Skip" javaType="String" />
 		<result property="lobNo" column="lob" javaType="String" />
 		<result property="hireDate" column="ENTRY_DATE" javaType="String" />
+		<result property="resultId" column="Result_ID" javaType="String" />
+		<result property="state" column="State" javaType="String" />
 
-</resultMap>
+	</resultMap>
 
-		<!-- 查询绩效结果 -->
-	<select id="queryManageEvaSecondQueryDUList"  parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"   resultMap="PerformanceResultMap">
-  select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r, t_employee e where r.E_HR=e.E_HR and  Finalize='true'
-	
-    <if test="eHr != null and eHr != ''">
-		AND e.E_HR = #{eHr}
-	</if>
-    <if test="staffName != null and staffName != ''">
-		AND e.STAFF_NAME = #{staffName}
-	</if>
-    <if test="du != null and du != ''">
-		AND r.du = #{du}
-	</if>
-    <if test="bu != null and bu != ''">
-		AND r.bu = #{bu}
-	</if>
-    <if test="role != null and role != ''">
-		AND r.role = #{role}
-	</if>
-    <if test="skill != null and skill != ''">
-		AND r.skill = #{skill}
-	</if>
+	<!-- 查询绩效结果 -->
+	<select id="queryManageEvaSecondQueryDUList" parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"
+		resultMap="PerformanceResultMap">
+		select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r,
+		t_employee e where r.E_HR=e.E_HR and Finalize='true'
 
-	<if test="startYear != null and startYear != ''  and  ( endYear == null and endQuarter == null)"  >
-		AND r.year = #{startYear}
-	</if>
-	<if test="startQuarter != null and startQuarter != '' and  ( endYear == null and endQuarter == null)">
-		AND r.Quarter = #{startQuarter}
-	</if>
-		
-	<if test="(startYear != null and startYear != '') and ( endYear != null and endQuarter != '') ">
-		AND <![CDATA[ CONCAT(r.year,r.Quarter)  >=   CONCAT(  #{startYear}, #{startQuarter}  ) ]]>
-		AND <![CDATA[ CONCAT(r.year,r.Quarter)  <=   CONCAT(  #{endYear}, #{endQuarter}  ) ]]>
-	</if>
-	</select>
-	
-	<select id="queryManageEvaPreviousResult"  parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"   resultMap="PerformanceResultMap">
-  select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r, t_employee e where r.E_HR=e.E_HR and  Finalize='true'
-	<if test="eHr != null and eHr != ''">
-		AND e.E_HR = #{eHr}
-	</if>
-	<if test="startYear != null and startYear != '' ">
-		AND r.year = #{startYear}
-	</if>
-	<if test="startQuarter != null and startQuarter != '' ">
-		AND r.Quarter = #{startQuarter}
-	</if>
+		<if test="eHr != null and eHr != ''">
+			AND e.E_HR = #{eHr}
+		</if>
+		<if test="staffName != null and staffName != ''">
+			AND e.STAFF_NAME = #{staffName}
+		</if>
+		<if test="du != null and du != ''">
+			AND r.du = #{du}
+		</if>
+		<if test="bu != null and bu != ''">
+			AND r.bu = #{bu}
+		</if>
+		<if test="role != null and role != ''">
+			AND r.role = #{role}
+		</if>
+		<if test="skill != null and skill != ''">
+			AND r.skill = #{skill}
+		</if>
+
+		<if
+			test="startYear != null and startYear != ''  and  ( endYear == null and endQuarter == null)">
+			AND r.year = #{startYear}
+		</if>
+		<if
+			test="startQuarter != null and startQuarter != '' and  ( endYear == null and endQuarter == null)">
+			AND r.Quarter = #{startQuarter}
+		</if>
+
+		<if
+			test="(startYear != null and startYear != '') and ( endYear != null and endQuarter != '') ">
+			AND <![CDATA[ CONCAT(r.year,r.Quarter)  >=   CONCAT(  #{startYear}, #{startQuarter}  ) ]]>
+			AND <![CDATA[ CONCAT(r.year,r.Quarter)  <=   CONCAT(  #{endYear}, #{endQuarter}  ) ]]>
+		</if>
 	</select>
 
-
-
-
-
-
-	<select id="queryPerformanceEmpCurrentList"  parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"   resultMap="PerformanceResultMap">
-
-		  select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r, t_employee e,t_user u
-			where r.E_HR=e.E_HR and u.USER_ID=e.EMPLOYEE_ID 
-	
-    <if test="userId != null and userId != ''">
-		AND u.USER_ID = #{userId}
-	</if>
-	<if test="startYear != null and startYear != ''">
-		AND r.year = #{startYear}
-	</if>
-	<if test="startQuarter != null and startQuarter != ''">
-		AND r.Quarter = #{startQuarter}
-	</if>
+	<select id="queryManageEvaPreviousResult" parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"
+		resultMap="PerformanceResultMap">
+		select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r,
+		t_employee e where r.E_HR=e.E_HR and Finalize='true'
+		<if test="eHr != null and eHr != ''">
+			AND e.E_HR = #{eHr}
+		</if>
+		<if test="startYear != null and startYear != '' ">
+			AND r.year = #{startYear}
+		</if>
+		<if test="startQuarter != null and startQuarter != '' ">
+			AND r.Quarter = #{startQuarter}
+		</if>
 	</select>
 
-	<select id="queryPerformanceEmpHistoryList"  parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"   resultMap="PerformanceResultMap">
 
-		  select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r, t_employee e,t_user u
-			where r.E_HR=e.E_HR and u.USER_ID=e.EMPLOYEE_ID and  Finalize='true'
-	
-    <if test="userId != null and userId != ''">
-		AND u.USER_ID = #{userId}
-	</if>
-    <if test="eHr != null and eHr != ''">
-		AND e.E_HR = #{eHr}
-	</if>
-    <if test="staffName != null and staffName != ''">
-		AND e.STAFF_NAME = #{staffName}
-	</if>
-    <if test="du != null and du != ''">
-		AND r.du = #{du}
-	</if>
-    <if test="bu != null and bu != ''">
-		AND r.bu = #{bu}
-	</if>
-    <if test="role != null and role != ''">
-		AND r.role = #{role}
-	</if>
-    <if test="skill != null and skill != ''">
-		AND r.skill = #{skill}
-	</if>
-	<if test="(startYear != null and startYear != '') and ( endYear != null and endQuarter != '') ">
-		AND <![CDATA[ CONCAT(r.year,r.Quarter)  >=   CONCAT(  #{startYear}, #{startQuarter}  ) ]]>
-		AND <![CDATA[ CONCAT(r.year,r.Quarter)  <=   CONCAT(  #{endYear}, #{endQuarter}  ) ]]>
-	</if>
+
+
+
+
+	<select id="queryPerformanceEmpCurrentList" parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"
+		resultMap="PerformanceResultMap">
+
+		select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r,
+		t_employee e,t_user u
+		where r.E_HR=e.E_HR and u.USER_ID=e.EMPLOYEE_ID
+
+		<if test="userId != null and userId != ''">
+			AND u.USER_ID = #{userId}
+		</if>
+		<if test="startYear != null and startYear != ''">
+			AND r.year = #{startYear}
+		</if>
+		<if test="startQuarter != null and startQuarter != ''">
+			AND r.Quarter = #{startQuarter}
+		</if>
 	</select>
-	
-	
-	<select id="queryCurrentLoginUserEhr"  parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"   resultMap="PerformanceResultMap">
-		  select e.STAFF_NAME,e.E_HR,u.USER_ID from t_employee e,t_user u
-			where u.USER_ID=e.EMPLOYEE_ID 	
-    <if test="userId != null and userId != ''">
-		AND u.USER_ID = #{userId}
-	</if>
+
+	<select id="queryPerformanceEmpHistoryList" parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"
+		resultMap="PerformanceResultMap">
+
+		select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r,
+		t_employee e,t_user u
+		where r.E_HR=e.E_HR and u.USER_ID=e.EMPLOYEE_ID and Finalize='true'
+
+		<if test="userId != null and userId != ''">
+			AND u.USER_ID = #{userId}
+		</if>
+		<if test="eHr != null and eHr != ''">
+			AND e.E_HR = #{eHr}
+		</if>
+		<if test="staffName != null and staffName != ''">
+			AND e.STAFF_NAME = #{staffName}
+		</if>
+		<if test="du != null and du != ''">
+			AND r.du = #{du}
+		</if>
+		<if test="bu != null and bu != ''">
+			AND r.bu = #{bu}
+		</if>
+		<if test="role != null and role != ''">
+			AND r.role = #{role}
+		</if>
+		<if test="skill != null and skill != ''">
+			AND r.skill = #{skill}
+		</if>
+		<if
+			test="(startYear != null and startYear != '') and ( endYear != null and endQuarter != '') ">
+			AND <![CDATA[ CONCAT(r.year,r.Quarter)  >=   CONCAT(  #{startYear}, #{startQuarter}  ) ]]>
+			AND <![CDATA[ CONCAT(r.year,r.Quarter)  <=   CONCAT(  #{endYear}, #{endQuarter}  ) ]]>
+		</if>
+	</select>
+
+
+	<select id="queryCurrentLoginUserEhr" parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"
+		resultMap="PerformanceResultMap">
+		select e.STAFF_NAME,e.E_HR,u.USER_ID from t_employee e,t_user u
+		where u.USER_ID=e.EMPLOYEE_ID
+		<if test="userId != null and userId != ''">
+			AND u.USER_ID = #{userId}
+		</if>
 	</select>
 	<!-- 百分比统计 -->
-	<select id="groupStatByResult" resultType="java.util.HashMap" parameterType="java.lang.String">
-		select Result as result, count(*) as count from p_result 
-		<if test="bu != null and bu != ''">
-			where BU = #{bu}
-		</if>
-		group by Result
-	</select>
-	<!-- 审批状态  -->
-	<select id="approvalList" parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition" resultType="java.util.HashMap">
-		select BU,Year,Quarter,State from p_result 
+	<select id="groupStatByResult" resultType="java.util.HashMap">
+		select Result as result, count(*) as count from p_result
 		<where>
-			<if test="startYear != null and startYear != ''  and  ( endYear == null and endQuarter == null)"  >
+			<if test="bu != null and bu != ''">
+				AND BU = #{bu}
+			</if>
+			<if test="du != null and du != ''">
+				AND DU = #{du}
+			</if>
+			<if test="rm != null and rm != ''">
+				AND RM = #{rm}
+			</if>
+			<if
+				test="startYear != null and startYear != ''  and  ( endYear == null and endQuarter == null)">
 				AND Year = #{startYear}
 			</if>
-			<if test="startQuarter != null and startQuarter != '' and  ( endYear == null and endQuarter == null)">
+			<if
+				test="startQuarter != null and startQuarter != '' and  ( endYear == null and endQuarter == null)">
 				AND Quarter = #{startQuarter}
 			</if>
-			<if test="(startYear != null and startYear != '') and ( endYear != null and endQuarter != '') ">
+			<if
+				test="(startYear != null and startYear != '') and ( endYear != null and endQuarter != '') ">
+				AND <![CDATA[ CONCAT(Year,Quarter)  >=   CONCAT(  #{startYear}, #{startQuarter}  ) ]]>
+				AND <![CDATA[ CONCAT(Year,Quarter)  <=   CONCAT(  #{endYear}, #{endQuarter}  ) ]]>
+			</if>
+			<if test="finalize != null and finalize != ''">
+				AND Finalize = #{finalize}
+			</if>
+		</where>
+		group by Result
+	</select>
+	<!-- 审批状态 -->
+	<select id="approvalList" parameterType="com.pmo.dashboard.entity.PerformanceQueryCondition"
+		resultType="java.util.HashMap">
+		select BU,Year,Quarter,State from p_result
+		<where>
+			<if
+				test="startYear != null and startYear != ''  and  ( endYear == null and endQuarter == null)">
+				AND Year = #{startYear}
+			</if>
+			<if
+				test="startQuarter != null and startQuarter != '' and  ( endYear == null and endQuarter == null)">
+				AND Quarter = #{startQuarter}
+			</if>
+			<if
+				test="(startYear != null and startYear != '') and ( endYear != null and endQuarter != '') ">
 				AND <![CDATA[ CONCAT(Year,Quarter)  >=   CONCAT(  #{startYear}, #{startQuarter}  ) ]]>
 				AND <![CDATA[ CONCAT(Year,Quarter)  <=   CONCAT(  #{endYear}, #{endQuarter}  ) ]]>
 			</if>
 		</where>
 		group by BU
 	</select>
-	<!-- 根据事业部查询审批备注 -->
+	<!-- 根据事业部查询-审批备注 -->
 	<select id="queryResultComments" parameterType="java.lang.String" resultMap="PerformanceResultMap">
-		select * from p_result where BU = #{bu} limit 1
+		select * from p_result
+		<where>
+			<if test="null != bu and '' != bu">
+				AND BU = #{bu}
+			</if>
+			<if test="null != du and '' != du">
+				AND DU = #{du}
+			</if>
+			<if test="startYear != null and startYear != ''">
+				AND Year = #{startYear}
+			</if>
+			<if test="startQuarter != null and startQuarter != ''">
+				AND Quarter = #{startQuarter}
+			</if>
+		</where> 
+		 limit 1
 	</select>
 	<!-- 更新审批内容 -->
 	<update id="updateComments" parameterType="java.lang.String">
-		update p_result set Result_Comments = #{comments}
+		update p_result set 	Result_Comments = #{comments}
+		<where>
+			<if test="null != bu and '' != bu">
+				and BU = #{bu}
+			</if>
+			<if test="null != du and '' != du">
+				and DU = #{du}
+			</if>
+		</where>
 	</update>
 	<!-- 更新审批状态 -->
-	<update id="updateStateByBu" parameterType="java.lang.String">
-		update p_result set State = #{state} where BU = #{bu}
+	<update id="updateState" parameterType="java.lang.String">
+		update p_result set		State = #{state} 
+		<where>
+			<if test="null != bu and '' != bu">
+				and BU = #{bu}
+			</if>
+			<if test="null != du and '' != du">
+				and DU = #{du}
+			</if>
+			<if test="null != rm and '' != rm">
+				and RM = #{rm}
+			</if>
+			<if test="null != list and list.size() > 0">
+				Result_ID in
+				<foreach collection="list" item="item" open="(" separator="," close=")">
+					 #{item}
+				</foreach>
+			</if>
+		</where>
 	</update>
-	
+	<!-- rm绩效初评 -->
+	<update id="preAssessment" parameterType="string" >
+		update p_result set PreAssessment_Result = #{preAssessment} where Result_ID = #{id}
+	</update>
+	<!-- 条件查询 -->
+	<select id="filterQuery" parameterType="hashMap" resultMap="PerformanceResultMap">
+		select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r,
+		t_employee e where r.E_HR=e.E_HR
+		<if test="eHr != null and eHr != ''">
+			AND e.E_HR = #{eHr}
+		</if>
+		<if test="staffName != null and staffName != ''">
+			AND e.STAFF_NAME = #{staffName}
+		</if>
+		<if test="du != null and du != ''">
+			AND r.du = #{du}
+		</if>
+		<if test="bu != null and bu != ''">
+			AND r.bu = #{bu}
+		</if>
+		<if test="rm != null and rm != ''">
+			AND r.RM = #{rm}
+		</if>
+		<if test="role != null and role != ''">
+			AND r.role = #{role}
+		</if>
+		<if test="skill != null and skill != ''">
+			AND r.skill = #{skill}
+		</if>
+
+		<if
+			test="startYear != null and startYear != ''  and  ( endYear == null and endQuarter == null)">
+			AND r.year = #{startYear}
+		</if>
+		<if
+			test="startQuarter != null and startQuarter != '' and  ( endYear == null and endQuarter == null)">
+			AND r.Quarter = #{startQuarter}
+		</if>
+
+		<if
+			test="(startYear != null and startYear != '') and ( endYear != null and endQuarter != '') ">
+			AND <![CDATA[ CONCAT(r.year,r.Quarter)  >=   CONCAT(  #{startYear}, #{startQuarter}  ) ]]>
+			AND <![CDATA[ CONCAT(r.year,r.Quarter)  <=   CONCAT(  #{endYear}, #{endQuarter}  ) ]]>
+		</if>
+
+		<if test="finalize != null and finalize != ''">
+			AND r.Finalize = #{finalize}
+		</if>
+	</select>
+
+	<select id="listGroupByDU" parameterType="string" resultType="hashMap">
+		select DU as du, Year as year, Quarter as quarter, State as status	from p_result 
+		<where>
+			<if test="bu != null and bu != ''">
+				AND BU = #{bu}
+			</if>
+			<if test="startYear != null and startYear != ''">
+				AND Year = #{startYear}
+			</if>
+			<if test="startQuarter != null and startQuarter != ''">
+				AND Quarter = #{startQuarter}
+			</if>
+		</where> 
+		group by DU
+	</select>
+
+	<select id="listGroupByRM" parameterType="string" resultType="hashMap">
+		select RM as rm, Year as year, Quarter as quarter, State as status	from p_result 
+		<where>
+			<if test="du != null and du != ''">
+				AND DU = #{du}
+			</if>
+			<if test="startYear != null and startYear != ''">
+				AND Year = #{startYear}
+			</if>
+			<if test="startQuarter != null and startQuarter != ''">
+				AND Quarter = #{startQuarter}
+			</if>
+		</where> 
+		group by RM
+	</select>
+
 </mapper>
 
 
-<!-- 测试数据
-
-
-insert into p_result(Result_ID,E_HR,Year,Quarter,BU,DU,RM,Role,Skill,Location,Backbone,Assessed,Direct_Supervisor,Result,Client_Feedback,PreAssessment_Result,Direct_Supervisor_Assessment_Result,Group_Assessment_Result,Group_Assessment_Manager,Performance_Facts,Finalize) values('0035e1d99c4d4a49b37f216305dceeww', 'E100098974'
-,'2018','Q4','数字移动事业部','网银业务交付部','韦玲','Assistant','Automation Testing','Xian','是','Assessed','张三','B+','工作认真负责','B+', 'B+','A','李四', ' ','True');
-
-
- -->
+<!-- 测试数据 insert into p_result(Result_ID,E_HR,Year,Quarter,BU,DU,RM,Role,Skill,Location,Backbone,Assessed,Direct_Supervisor,Result,Client_Feedback,PreAssessment_Result,Direct_Supervisor_Assessment_Result,Group_Assessment_Result,Group_Assessment_Manager,Performance_Facts,Finalize) 
+	values('0035e1d99c4d4a49b37f216305dceeww', 'E100098974' ,'2018','Q4','数字移动事业部','网银业务交付部','韦玲','Assistant','Automation 
+	Testing','Xian','是','Assessed','张三','B+','工作认真负责','B+', 'B+','A','李四', ' 
+	','True'); -->
