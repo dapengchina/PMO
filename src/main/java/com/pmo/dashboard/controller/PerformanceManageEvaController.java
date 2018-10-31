@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -24,6 +25,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,10 +36,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.pmo.dashboard.dao.PerformanceEmpPBCMapper;
 import com.pmo.dashboard.entity.CSDept;
 import com.pmo.dashboard.entity.EmployeeInfo;
 import com.pmo.dashboard.entity.EmployeePageCondition;
 import com.pmo.dashboard.entity.PerformanceEmpHistoryBean;
+import com.pmo.dashboard.entity.PerformanceEmpKPOBean;
+import com.pmo.dashboard.entity.PerformanceEmpKeyEventBean;
+import com.pmo.dashboard.entity.PerformanceEmpPBCPlanBean;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
 import com.pmo.dashboard.entity.User;
@@ -72,6 +79,8 @@ public class PerformanceManageEvaController {
     private PerformanceService           performanceService;
     @Resource
     private EmployeeService              employeeService;
+    @Resource
+    public PerformanceEmpPBCMapper       performanceEmpPBCMapper;
     /** Management-绩效考评-事业部审批导出文件 **/
     private static String[]              approvalBUTitle     = new String[] { "NO.", "DU", "Year", "Quarter", "Status" };
     private static String[]              approvalBUContent   = new String[] { "NO.", "du", "year", "quarter", "status" };
@@ -492,8 +501,9 @@ public class PerformanceManageEvaController {
         // 判断登录用户类别
         User user = (User) request.getSession().getAttribute("loginUser");
         List<Map<String, Object>> list = null;
-        //        list = manageEvaService.listGroupByDU("数字移动事业部");
-        list = manageEvaService.listGroupByRM("网银业务交付部");
+        // TODO 测试数据
+        list = manageEvaService.listGroupByDU("数字移动事业部");
+        //        list = manageEvaService.listGroupByRM("网银业务交付部");
         if ("1".equals(user.getUserType())) {// 事业部经理-根据交付部统计
             list = manageEvaService.listGroupByDU(user.getBu());
         }
@@ -739,7 +749,7 @@ public class PerformanceManageEvaController {
     @RequestMapping(value = "/assessment/goal/submit", method = RequestMethod.POST)
     @ResponseBody
     public String goalSubmit(@RequestParam("id") String employeeid, @RequestParam("state") String state, @RequestParam("comments") String comments) {
-        // TODO 更新绩process表
+        manageEvaService.updateByEmployeeId(employeeid, state, comments);
         return "";
     }
 
@@ -793,7 +803,7 @@ public class PerformanceManageEvaController {
         // 返回结果
         String fileName = null;
         try {
-            fileName = new String("绩效定稿.xlsx".getBytes("UTF-8"), "ISO-8859-1");
+            fileName = new String("绩效目标.xlsx".getBytes("UTF-8"), "ISO-8859-1");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -806,6 +816,89 @@ public class PerformanceManageEvaController {
         ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(body, headers, HttpStatus.CREATED);
 
         return responseEntity;
+    }
+
+    /**
+     * 绩效目标详情页面
+     * @author: xuexuan
+     * 2018年10月31日 上午11:31:32
+     * @param employeeId
+     * @param resultId
+     * @param title
+     * @param type
+     * @param model
+     * @return 
+     * String
+     */
+    @RequestMapping("/goal/detail")
+    public String getGoalDetailPage(@RequestParam(value = "employeeId", required = false) String employeeId, @RequestParam(value = "resultId", required = false) String resultId,
+            @RequestParam("title") String title, @RequestParam("type") String type, Model model) {
+        model.addAttribute("title", title);
+        model.addAttribute("type", type);
+        if (StringUtils.isNotBlank(resultId)) {
+            Map<String, String> map = manageEvaService.queryEmployeeIdByResultId(resultId);
+            model.addAttribute("resultId", resultId);
+            model.addAttribute("employeeId", map.get("employeeId"));
+            model.addAttribute("result", map.get("result"));
+        } else {
+            model.addAttribute("employeeId", employeeId);
+        }
+        return "performance/performanceDetail";
+    }
+
+    /**
+     * 绩效设定总表
+     * @author: xuexuan
+     * 2018年10月30日 上午11:44:34
+     * @param id 绩效设定目标总表员工id
+     * void
+     */
+    @RequestMapping("/goal/{id}")
+    @ResponseBody
+    public Map<String, Object> queryGoal(@PathVariable("id") String id) {
+        return manageEvaService.queryGoalById(id);
+    }
+
+    /**
+     * 员工重点工作
+     * @author: xuexuan
+     * 2018年10月30日 上午11:44:34
+     * @param employeeId 员工重点工作employeeId 
+     * void
+     */
+    @RequestMapping("/kpo/{employeeId}")
+    @ResponseBody
+    public List<PerformanceEmpKPOBean> queryKPO(@PathVariable("employeeId") String employeeId) {
+        List<PerformanceEmpKPOBean> list = performanceEmpPBCMapper.queryPerformanceEmpKPOList(employeeId);
+        return list;
+    }
+
+    /**
+     * 员工关键事件
+     * @author: xuexuan
+     * 2018年10月30日 上午11:44:34
+     * @param employeeId 员工重点工作employeeId 
+     * void
+     */
+    @RequestMapping("/keyevent/{employeeId}")
+    @ResponseBody
+    public List<PerformanceEmpKeyEventBean> queryKeyEvent(@PathVariable("employeeId") String employeeId) {
+        List<PerformanceEmpKeyEventBean> list = performanceEmpPBCMapper.queryPerformanceEmpEventList(employeeId);
+        return list;
+    }
+
+    /**
+     * 员工个人能力
+     * @author: xuexuan
+     * 2018年10月30日 上午11:44:34
+     * @param employeeId 员工重点工作employeeId 
+     * void
+     */
+    @RequestMapping("/plan/{employeeId}")
+    @ResponseBody
+    public List<PerformanceEmpPBCPlanBean> queryPlan(@PathVariable("employeeId") String employeeId) {
+        List<PerformanceEmpPBCPlanBean> list = performanceEmpPBCMapper.queryPerformanceEmpPlanList(employeeId);
+        return list;
     }
 
     private void createSheetApproval(XSSFWorkbook book, List<Map<String, Object>> data, String[] titleAry, String[] contentAry) {

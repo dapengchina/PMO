@@ -33,11 +33,6 @@ function loadManageEvaSecondQueryList() {
 	// path+'/service/performanceManageEva/queryManageEvaSecondQueryList';
 	var queryUrl = path + '/service/performanceHRBPEva/processing/result/list';
 	var columns = [ {
-		title : '绩效<br/>目标',
-		formatter : function(value, row, index) {
-			return "<a href='#' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
-		}
-	}, {
 		title : '序号',
 		formatter : function(value, row, index) {
 			return "<span>" + (index + 1) + "</span>";
@@ -124,7 +119,12 @@ function loadManageEvaSecondQueryList() {
 	}, {
 		field : 'previous3Quarter',
 		title : '上上上<br/>季<br/>度绩效'
-	} ];
+	}, {
+		title : '绩效<br/>目标',
+		formatter : function(value, row, index) {
+			return "<a href='javascript:void(0);' onClick='detail(\"" + row.resultId + "\")' " + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+		}
+	}, ];
 
 	var table = $('#queryManageEvaSecondQueryList').bootstrapTable({
 		url : queryUrl, // 请求后台的URL（*）
@@ -195,6 +195,26 @@ function loadManageEvaSecondQueryList() {
 		}
 
 	});
+}
+
+function detail(resultId) {
+	// 页面跳转post提交
+	$("#detailForm").remove();
+	var url = path + '/service/performanceManageEva/goal/detail.html';
+	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
+	$eleForm.attr("action", url);
+	$(document.body).append($eleForm);
+
+	var idInput = $("<input type='text' name='resultId' class='hidden'></input>");
+	var titleInput = $("<input type='text' name='title' class='hidden'></input>");
+	var typeInput = $("<input type='text' name='type' class='hidden'></input>");
+	idInput.attr("value", resultId);
+	titleInput.attr("value", "Management->绩效考评->审批");
+	typeInput.attr("value", "3");
+	$("#detailForm").append(idInput);
+	$("#detailForm").append(titleInput);
+	$("#detailForm").append(typeInput);
+	$eleForm.submit();
 }
 
 function search() {

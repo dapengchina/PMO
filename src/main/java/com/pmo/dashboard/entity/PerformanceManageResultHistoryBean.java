@@ -10,7 +10,15 @@ public class PerformanceManageResultHistoryBean {
 	private String rm;
 	private String result;
 	private String comments;
-	public String getEhr() {
+	private String resultId;// add by xuexuan
+	
+	public String getResultId() {
+        return resultId;
+    }
+    public void setResultId(String resultId) {
+        this.resultId = resultId;
+    }
+    public String getEhr() {
 		return ehr;
 	}
 	public void setEhr(String ehr) {

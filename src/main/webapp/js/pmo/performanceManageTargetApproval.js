@@ -50,7 +50,7 @@ function loadManageTargetApprovalList() {
 		title : 'Detail',
 		formatter : function(value, row, index) {
 			if (row.submit == 1 && row.state == 0) {
-				return "<a href='#' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+				return "<a href='javascript:void(0);' onClick='detail(\"" + row.EMPLOYEE_ID + "\");' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
 			}
 		}
 	} ];
@@ -100,6 +100,26 @@ function loadManageTargetApprovalList() {
 
 		}
 	});
+}
+
+function detail(employeeId) {
+	// 页面跳转post提交
+	$("#detailForm").remove();
+	var url = path + '/service/performanceManageEva/goal/detail.html';
+	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
+	$eleForm.attr("action", url);
+	$(document.body).append($eleForm);
+
+	var idInput = $("<input type='text' name='employeeId' class='hidden'></input>");
+	var titleInput = $("<input type='text' name='title' class='hidden'></input>");
+	var typeInput = $("<input type='text' name='type' class='hidden'></input>");
+	idInput.attr("value", employeeId);
+	titleInput.attr("value", "Management->绩效目标->审批");
+	typeInput.attr("value", "1");
+	$("#detailForm").append(idInput);
+	$("#detailForm").append(titleInput);
+	$("#detailForm").append(typeInput);
+	$eleForm.submit();
 }
 
 function download() {

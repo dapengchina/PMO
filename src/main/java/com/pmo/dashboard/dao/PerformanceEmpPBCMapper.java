@@ -1,7 +1,8 @@
 package com.pmo.dashboard.dao;
 
 import java.util.List;
-
+import java.util.Map;
+import org.apache.ibatis.annotations.Param;
 import com.pmo.dashboard.entity.PerformanceEmpPBCBean;
 import com.pmo.dashboard.entity.PerformanceEmpPBCPlanBean;
 import com.pmo.dashboard.entity.PerformanceEmpProcessBean;
@@ -24,4 +25,21 @@ public interface PerformanceEmpPBCMapper{
 	 int deletePerformanceEmpState(String employeeid);
 	 boolean savePerformanceEmpState(Employeeperforgoal employeeperforgoal);
 	 boolean savePerformanceEmpProcess(PerformanceEmpProcessBean performanceEmpProcessBean);
+	 
+	 /**
+	  * 根据id查询绩效目标总表
+	 * @author: xuexuan
+	 * 2018年10月30日 上午11:29:03
+	 * @param id
+	 * @return 
+	 */
+	public Map<String,Object> queryById(String employeeId);
+	
+	/**
+     * 更新绩效目标流程表
+    * @author: xuexuan
+    * 2018年10月30日 上午11:29:03
+    * @return 
+    */
+	public void updateByEmployeeId(@Param("employeeid") String employeeid, @Param("state") String state, @Param("remark") String remark);
 }

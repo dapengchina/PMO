@@ -351,6 +351,10 @@
 		</where> 
 		group by RM
 	</select>
+	
+	<select id="queryEmployeeIdByResultId" parameterType="string"  resultType="hashMap">
+		select r.PreAssessment_Result as result, e.EMPLOYEE_ID as employeeId from p_result r left join t_employee e on r.E_HR = e.E_HR where r.Result_ID = #{id}
+	</select>
 
 </mapper>
 
