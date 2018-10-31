@@ -1,8 +1,8 @@
 var employeeId = "";
 var type = "";
 $().ready(function() {
-	employeeId = "0a4ee79e206f418f9eb9cfe6735535ed";
-	// employeeId = $("#employeeId").val();
+	// employeeId = "0a4ee79e206f418f9eb9cfe6735535ed";
+	employeeId = $("#employeeId").val();
 	type = $("#type").val();
 	// 显示标题
 	$("#title_" + type).removeClass("hidden");
@@ -12,12 +12,12 @@ $().ready(function() {
 	}
 	// feefback显示状态
 	if (type == "1") {
-		$("#feedback").readonly = false;// 只有绩效目标审批可编辑
+		$("#feedback")[0].readOnly = false;// 只有绩效目标审批可编辑
 		$("#ratingDiv").attr("style", "display:none");// 只有绩效目标审批不显示
 	}
 	// rating显示状态
 	if (type == "2") {// 只有rm初评可编辑
-		$("#rating").readyonly = false;
+		$("#rating").removeAttr("disabled");
 	}
 	if ($("#result").val() != "") {
 		$("#rating").val($("#result").val());
@@ -44,9 +44,6 @@ function getGoal() {
 			supervisor = data.assessmensupervisor;
 			$("#selfAssessment").val(data.SelfAssessment);
 			$("#feedback").val(data.remark);
-			if (data.remark != "") {
-				$("#feedback").attr("readonly", "false");
-			}
 		},
 		error : function() {
 
@@ -103,7 +100,7 @@ function getPlan() {
 		cache : false, // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
 		columns : columns_plan,
 		onLoadSuccess : function(data) {
-			console.log(data);
+
 		},
 		onLoadError : function(status, res) { // 加载失败时执行
 			console.log(res);

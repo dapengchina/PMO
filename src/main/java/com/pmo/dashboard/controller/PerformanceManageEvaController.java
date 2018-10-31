@@ -476,9 +476,9 @@ public class PerformanceManageEvaController {
         // 分页查询
         PageHelper.startPage(pageNumber, pageSize);
         // 查询条件：当年-当季-rm
-        List<PerformanceManageEvaBean> data = manageEvaService.processingResultListRM(user.getNickname());
+        //        List<PerformanceManageEvaBean> data = manageEvaService.processingResultListRM(user.getNickname());
         // TODO 测试数据
-        data = manageEvaService.processingResultListRM("韦玲");
+        List<PerformanceManageEvaBean> data = manageEvaService.processingResultListRM("韦玲");
         PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
         // 返回数据
         Map<String, Object> map = new HashMap<String, Object>();
@@ -727,8 +727,9 @@ public class PerformanceManageEvaController {
         User user = (User) request.getSession().getAttribute("loginUser");
         // 分页获取该RM下所有员工
         PageHelper.startPage(pageNumber, pageSize);
+        // TODO 测试数据
         //        List<Map<String, Object>> list = employeeService.rmApprovalList(user.getUserId(), submit, backbone, state);
-        List<Map<String, Object>> list = employeeService.rmApprovalList("bbc7bf97fd8448cba96d227e69ecea7e", submit, backbone, state);
+        List<Map<String, Object>> list = employeeService.rmApprovalList("cf527b21ab304c05b56a4096f6e389b5", submit, backbone, state);
         PageInfo<Map<String, Object>> page = new PageInfo<>(list);
         Map<String, Object> rtn = new HashMap<String, Object>();
         rtn.put("total", page.getTotal());
@@ -765,8 +766,9 @@ public class PerformanceManageEvaController {
     public ResponseEntity<byte[]> goalExport(HttpServletRequest request) throws IOException {
         User user = (User) request.getSession().getAttribute("loginUser");
         // 查询数据
+        // TODO 测试数据
         //      List<Map<String, Object>> list = employeeService.rmApprovalList(user.getUserId(), null, null, null);
-        List<Map<String, Object>> list = employeeService.rmApprovalList("bbc7bf97fd8448cba96d227e69ecea7e", null, null, null);
+        List<Map<String, Object>> list = employeeService.rmApprovalList("cf527b21ab304c05b56a4096f6e389b5", null, null, null);
         // 创建文件
         XSSFWorkbook book = new XSSFWorkbook();
         Row row;

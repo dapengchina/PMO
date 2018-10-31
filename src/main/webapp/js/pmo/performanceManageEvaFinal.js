@@ -30,103 +30,6 @@ function queryPercentage() {
 
 function loadManageEvaFinalList() {
 	var queryUrl = path + '/service/performanceManageEva/finalize/result/list';
-	var columns = [ {
-		checkbox : true,
-		visible : true
-	// 是否显示复选框
-	}, {
-		title : '序号',
-		formatter : function(value, row, index) {
-			return "<span>" + (index + 1) + "</span>";
-		}
-	}, {
-		field : 'ehr',
-		title : 'E-HR编号'
-	}, {
-		field : 'lobNo',
-		title : 'LOB工号'
-	}, {
-		field : 'name',
-		title : '姓名'
-	}, {
-		field : 'hireDate',
-		title : '入职时间'
-	}, {
-		field : 'role',
-		title : '职务'
-	}, {
-		field : 'serviceLine',
-		title : '业务线'
-	}, {
-		field : 'bu',
-		title : 'BU'
-	}, {
-		field : 'du',
-		title : '交付部'
-	}, {
-		field : 'location',
-		title : '归属地'
-	}, {
-		field : 'keymember',
-		title : '是否<br/>骨干'
-	}, {
-		field : 'participate',
-		title : '是否<br/>参评'
-	}, {
-		field : 'manager',
-		title : '直接主管'
-	}, {
-		field : 'customerFeedback',
-		title : '客户反馈',
-		formatter : function(value, row, index) {
-			var substr = "";
-			if (value.length > 5) {
-				substr = value.substring(0, 5);
-				return "<a href='#' class='link'>" + substr + "<div class='tips'>" + value + "</div></a>";
-			} else {
-				return value;
-			}
-		}
-	}, {
-		field : 'initialEvalution',
-		title : '初评<br/>(依<br/>据客<br/>户反<br/>馈)',
-	// sortable : true
-	}, {
-		field : 'pmEvalution',
-		title : '直接<br/>主管<br/>初评<br/>结果',
-	// sortable : true
-	}, {
-		field : 'duEvalution',
-		title : '部门<br/>集体<br/>评议<br/>结果',
-	// sortable : true
-	}, {
-		field : 'duEvaManager',
-		title : '集体<br/>评议<br/>主管'
-	}, {
-		field : 'achievement',
-		title : 'A/C/D<br/>人员<br/>绩效<br/>事实'
-	}, {
-		field : 'jump',
-		title : '是否<br/>绩效<br/>跳变'
-	}, {
-		field : 'comments',
-		title : '备注',
-	// sortable : true
-	}, {
-		field : 'previous1Quarter',
-		title : '上<br/>季度<br/>绩效'
-	}, {
-		field : 'previous2Quarter',
-		title : '上上<br/>季度<br/>绩效'
-	}, {
-		field : 'previous3Quarter',
-		title : '上上上<br/>季<br/>度绩效'
-	}, {
-		title : 'Detail',
-		formatter : function(value, row, index) {
-			return "<a href='javascript:void(0);' onClick='detail(\"" + row.resultId + "\")' " + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
-		}
-	} ];
 
 	var table = $('#manageEvaFirstDetailList').bootstrapTable({
 		url : queryUrl, // 请求后台的URL（*）
@@ -147,7 +50,7 @@ function loadManageEvaFinalList() {
 		// showRefresh: true, //是否显示刷新按钮
 		minimumCountColumns : 2, // 最少允许的列数
 		clickToSelect : true, // 是否启用点击选中行
-		//height : 500, // 行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+		// height : 500, // 行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 		uniqueId : "id", // 每一行的唯一标识，一般为主键列
 		showToggle : false, // 是否显示详细视图和列表视图的切换按钮
 		cardView : false, // 是否显示详细视图
