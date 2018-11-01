@@ -373,16 +373,24 @@ public class PerformanceController {
         return "performance/performanceLobApprove";
     }
 
-    @RequestMapping("/performanceLobHRReport")
-    public String getPerformanceLobHRReport(final HttpServletRequest request, Model model) {
-        return "performance/performanceLobHRReport";
-    }
+	@RequestMapping("/performanceLobApproveDetails")
+	public String getPerformanceLobDetails(final HttpServletRequest request, Model model){
+    	request.setAttribute("bu", request.getParameter("bu"));
+		return "performance/performanceLobApproveDetails";
+	}
 
-    @RequestMapping("/state/{stateId}")
-    @ResponseBody
-    public Map<String, String> getStateName(@PathVariable("stateId") String stateId) {
-        Map<String, String> map = new HashMap<>();
-        map.put("stateName", Constants.APPROVAL_STATE.get(stateId));
-        return map;
-    }
+	@RequestMapping("/performanceLobHRReport")
+	public String getPerformanceLobHRReport(final HttpServletRequest request, Model model){
+		return "performance/performanceLobHRReport";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
