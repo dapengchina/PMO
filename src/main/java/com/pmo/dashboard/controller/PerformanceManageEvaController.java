@@ -725,11 +725,15 @@ public class PerformanceManageEvaController {
     public Map<String, Object> goalList(@RequestParam("pageSize") int pageSize, @RequestParam("pageNumber") int pageNumber, @RequestParam(value = "submit", required = false) String submit,
             @RequestParam(value = "backbone", required = false) String backbone, @RequestParam(value = "state", required = false) String state, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("loginUser");
+        String[] stateAry = null;
+        if (StringUtils.isNotBlank(state)) {
+            stateAry = state.split(",");
+        }
         // 分页获取该RM下所有员工
         PageHelper.startPage(pageNumber, pageSize);
         // TODO 测试数据
-        //        List<Map<String, Object>> list = employeeService.rmApprovalList(user.getUserId(), submit, backbone, state);
-        List<Map<String, Object>> list = employeeService.rmApprovalList("cf527b21ab304c05b56a4096f6e389b5", submit, backbone, state);
+        //        List<Map<String, Object>> list = employeeService.rmApprovalList(user.getUserId(), submit, backbone, stateAry);
+        List<Map<String, Object>> list = employeeService.rmApprovalList("cf527b21ab304c05b56a4096f6e389b5", submit, backbone, stateAry);
         PageInfo<Map<String, Object>> page = new PageInfo<>(list);
         Map<String, Object> rtn = new HashMap<String, Object>();
         rtn.put("total", page.getTotal());
@@ -858,7 +862,11 @@ public class PerformanceManageEvaController {
     @RequestMapping("/goal/{id}")
     @ResponseBody
     public Map<String, Object> queryGoal(@PathVariable("id") String id) {
-        return manageEvaService.queryGoalById(id);
+        Map<String, Object> map = manageEvaService.queryGoalById(id);
+        if (map == null) {
+            logger.error("=====绩效目标总表无该员工信息，请检查！员工employeeid=" + id);
+        }
+        return map;
     }
 
     /**

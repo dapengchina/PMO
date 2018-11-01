@@ -26,7 +26,8 @@ function queryPercentage() {
 		}
 	});
 }
-var RmEvaFlag = true;
+RmEvaFlag = true;// 标识该页面为RM评级页面，反馈给performancTable.js
+tableId = "manageEvaFirstDetailList";
 function loadManageEvaFirstDetailList() {
 	// var queryUrl = path +
 	// '/service/performanceManageEva/queryManageEvaFirstDetailList';

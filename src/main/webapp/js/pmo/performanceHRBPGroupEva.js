@@ -1,7 +1,6 @@
 $().ready(function() {
 	queryPercentage();
 	loadHRBPGroupEvaList();
-
 });
 /** 获取主管比例统计* */
 function queryPercentage() {
@@ -31,6 +30,7 @@ function groupEvaExport() {
 	window.location.href = url;
 }
 /** 获取所有员工当年当季表格* */
+tableId = "HRBPGroupEvaList";
 function loadHRBPGroupEvaList() {
 	var table = $('#HRBPGroupEvaList').bootstrapTable({
 		url : path + '/service/performanceHRBPEva/processing/result/list', // 请求后台的URL（*）
@@ -69,6 +69,11 @@ function loadHRBPGroupEvaList() {
 		onLoadSuccess : function(sta) {
 			console.log("in onLoadSuccess");
 			console.log(sta);
+			var options = $('#HRBPGroupEvaList').bootstrapTable('getOptions');
+			pageNumber = options.pageNumber;
+			pageSize = options.pageSize;
+			// pageNumber = 2;
+			// pageSize = 10;
 		},
 		onLoadError : function(status, res) { // 加载失败时执行
 			console.log(res);

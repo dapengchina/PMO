@@ -48,7 +48,8 @@ function submit(type) {
 		}
 	});
 }
-var pageSize = 2;
+var pageSize = 10;
+tableId = "HRBPGroupEvaList";
 /** 获取所有员工当年当季表格* */
 function loadHRBPGroupEvaList() {
 	var table = $('#HRBPGroupEvaList').bootstrapTable({
@@ -78,15 +79,14 @@ function loadHRBPGroupEvaList() {
 		singleSelect : false, // 禁止多选_____
 		// 得到查询的参数
 		queryParams : function(params) {
-			console.log("params");
 			// 获取查询条件
 			var eHr = $("#eHr").val();
 			var staffName = $("#staffName").val();
 			var bu = $("#bu").val();
 			var du = $("#du").val();
 			return {
-				pageSize : pageSize,
-				pageNumber : 1,
+				pageSize : params.limit,
+				pageNumber : params.offset / params.limit + 1,
 				eHr : eHr,
 				staffName : staffName,
 				bu : bu,

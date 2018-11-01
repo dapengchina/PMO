@@ -27,7 +27,7 @@ function queryPercentage() {
 		}
 	})
 }
-
+tableId = "queryManageEvaSecondQueryDUList";
 function loadManageEvaSecondQueryDUList() {
 	// var queryUrl =
 	// path+'/service/performanceManageEva/queryManageEvaSecondQueryDUList';

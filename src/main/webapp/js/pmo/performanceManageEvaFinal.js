@@ -27,7 +27,7 @@ function queryPercentage() {
 		}
 	});
 }
-
+tableId = "manageEvaFirstDetailList";
 function loadManageEvaFinalList() {
 	var queryUrl = path + '/service/performanceManageEva/finalize/result/list';
 

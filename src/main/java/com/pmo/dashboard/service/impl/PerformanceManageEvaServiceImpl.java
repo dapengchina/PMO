@@ -320,6 +320,9 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
         String level = "";
         int count = 0;
         for (Map<String, Object> map : list) {
+            if (map.get("result") == null) {
+                continue;
+            }
             level = ((String) map.get("result")).toUpperCase();
             count = Integer.parseInt(map.get("count") + "");
             rtn.put(level, count);

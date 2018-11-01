@@ -81,7 +81,9 @@ function loadManageEvaSecondDUList() {
 	}, {
 		title : 'Detail',
 		formatter : function(value, row, index) {
-			return "<a href='performanceManageEvaSecondQuery.html?rm=" + row.rm + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+			if (row.status == 2) {// 待交付部经理审批
+				return "<a href='performanceManageEvaSecondQuery.html?rm=" + row.rm + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+			}
 		}
 	} ];
 
@@ -121,7 +123,7 @@ function loadManageEvaSecondDUList() {
 		onLoadSuccess : function(data) {
 			// 判断所有RM是否均已审批
 			for ( var item in data) {
-				if (data[item].status == 2) {// TODO xuexuan
+				if (data[item].status <= 2) {// TODO xuexuan
 					approvalAllFlag = false;
 					return;
 				}
@@ -162,6 +164,7 @@ function submit() {
 		type : "POST",
 		success : function(data) {
 			alert("审批成功");
+			history.go(0);
 		},
 		error : function(error) {
 			alert("审批失败");

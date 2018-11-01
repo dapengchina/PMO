@@ -64,7 +64,9 @@ function loadHRBPApprovalList() {
 	}, {
 		title : 'Detail',
 		formatter : function(value, row, index) {
-			return "<a href='performanceHRBPApprovalDetail.html?bu=" + row.BU + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+			if (row.State == 6) {
+				return "<a href='performanceHRBPApprovalDetail.html?bu=" + row.BU + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+			}
 		}
 	} ];
 
@@ -107,7 +109,7 @@ function loadHRBPApprovalList() {
 			// 判断是否都已经审批
 			approvalAllFlag = true;
 			for ( var item in data) {
-				if (data[item].State == 6) {
+				if (data[item].State <= 6) {// TODO xuexuan
 					approvalAllFlag = false;
 					return;
 				}

@@ -59,7 +59,7 @@ function loadManageResultHistoryQueryList() {
 		// toolbar: '#toolbar', //工具按钮用哪个容器
 		striped : true, // 是否显示行间隔色
 		cache : false, // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-		pagination : false, // 是否显示分页（*）
+		pagination : true, // 是否显示分页（*）
 		sortable : true, // 是否启用排序
 		sortOrder : "asc", // 排序方式
 		sidePagination : "client", // 分页方式：client客户端分页，server服务端分页（*）
@@ -118,26 +118,6 @@ function loadManageResultHistoryQueryList() {
 	});
 }
 
-function detail(resultId) {
-	// 页面跳转post提交
-	$("#detailForm").remove();
-	var url = path + '/service/performanceManageEva/goal/detail.html';
-	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
-	$eleForm.attr("action", url);
-	$(document.body).append($eleForm);
-
-	var idInput = $("<input type='text' name='resultId' class='hidden'></input>");
-	var titleInput = $("<input type='text' name='title' class='hidden'></input>");
-	var typeInput = $("<input type='text' name='type' class='hidden'></input>");
-	idInput.attr("value", resultId);
-	titleInput.attr("value", "Management->绩效结果->历史绩效");
-	typeInput.attr("value", "6");
-	$("#detailForm").append(idInput);
-	$("#detailForm").append(titleInput);
-	$("#detailForm").append(typeInput);
-	$eleForm.submit();
-}
-
 function search() {
 	// 获取查询条件
 	var eHr = $("#eHr").val();
@@ -162,6 +142,25 @@ function search() {
 	}
 	// 刷新表格
 	$('#manageResultHistoryQueryList').bootstrapTable('refresh', queryParams);
+}
+function detail(resultId) {
+	// 页面跳转post提交
+	$("#detailForm").remove();
+	var url = path + '/service/performanceManageEva/goal/detail.html';
+	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
+	$eleForm.attr("action", url);
+	$(document.body).append($eleForm);
+
+	var idInput = $("<input type='text' name='resultId' class='hidden'></input>");
+	var titleInput = $("<input type='text' name='title' class='hidden'></input>");
+	var typeInput = $("<input type='text' name='type' class='hidden'></input>");
+	idInput.attr("value", resultId);
+	titleInput.attr("value", "Management->绩效结果->历史绩效");
+	typeInput.attr("value", "6");
+	$("#detailForm").append(idInput);
+	$("#detailForm").append(titleInput);
+	$("#detailForm").append(typeInput);
+	$eleForm.submit();
 }
 
 /** 历史绩效导出 * */

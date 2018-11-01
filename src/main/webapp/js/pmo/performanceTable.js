@@ -1,12 +1,18 @@
 /** 查看详情的列表 */
-var stateSubmitFlag = true;
-var RmEvaFlag = false;
+var RmEvaFlag = false;// 由引入页面传入，RM初评页面传入true以便决定detail显示情况
+var stateSubmitFlag = true;// 返回给RM初评页面以便决定是否可以提交
+
+// 分页参数
+var tableId = "";// 由引入页面传入以便计算序号值
+var pageNumber = 1;
+var pageSize = 10;
 var columns = [ {
 	title : '序<br/>号',
 	formatter : function(value, row, index) {
-		return "<span>" + (index + 1) + "</span>";
+		var options = $('#' + tableId).bootstrapTable("getOptions");
+		return "<span>" + (1 + index + (options.pageNumber - 1) * options.pageSize) + "</span>";
 	},
-	width : "2%",
+	width : "2.5%",
 }, {
 	field : 'ehr',
 	title : 'E-HR<br/>编号'
@@ -27,7 +33,8 @@ var columns = [ {
 	title : '业务线'
 }, {
 	field : 'bu',
-	title : '事<br/>业<br/>部'
+	title : '事<br/>业<br/>部',
+	showSelectTitle : true
 }, {
 	field : 'du',
 	title : '交<br/>付<br/>部'
@@ -50,6 +57,9 @@ var columns = [ {
 	title : '客户<br/>反馈',
 	formatter : function(value, row, index) {
 		var substr = "";
+		if (value == null) {
+			return "";
+		}
 		if (value.length > 5) {
 			substr = value.substring(0, 5);
 			return "<a href='#' class='link'>" + substr + "<div class='tips'>" + value + "</div></a>";
@@ -63,7 +73,7 @@ var columns = [ {
 	width : "4%",
 	formatter : function(value, row, index) {
 		if (row.initialEvalution == "" || row.initialEvalution == undefined) {
-			stateSubmitFlag = false;
+			stateSubmitFlag = false;// RM初评页面，所有员工评级完成才可提交
 		}
 		return value;
 	}
@@ -106,7 +116,7 @@ var columns = [ {
 	formatter : function(value, row, index) {
 		if (!RmEvaFlag) {
 			return "<a href='javascript:void(0);' onClick='detail(\"" + row.resultId + "\");' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
-		} else if (row.state == 0) {// 待RM审批状态显示编辑按钮
+		} else if (row.state == 0 || row.state == null) {// 待RM审批状态显示编辑按钮
 			return "<a href='javascript:void(0);' onClick='detail(\"" + row.resultId + "\")' " + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
 		}
 	}

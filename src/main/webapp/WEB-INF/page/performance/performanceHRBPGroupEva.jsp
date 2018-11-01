@@ -72,6 +72,20 @@ a.link:hover {
 a.link:hover div.tips {
 	display: inline;
 }
+div .DUTips{
+	border: 1px solid #9a9898;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: white;
+    position: absolute;
+    width: 170px;
+    line-height: 20px;
+    word-wrap: break-word;
+    margin-top: -30px;
+    margin-left: 12px;
+    z-index: 1000;
+    display: none;
+}
 </style>
 </head>
 <script>
@@ -190,7 +204,18 @@ var path='<%=path%>';
 
 	<!-- middle content end -->
 
-
+	<div id="DUFilterDiv" class="hidden">
+		<span style="color:#006633;font-size: 16px;">DU</span>
+		<div style="border-bottom:1px solid #0e5b87;margin: 10px 0px 20px 0px;"></div>
+		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
+			<input type="checkbox" id="yes" name="backboneCheckbox" value="1" checked> <label for="yes">Yes</label>
+		</div>
+		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
+			<input type="checkbox" id="no" name="backboneCheckbox" value="0" checked> <label for="no">No</label>
+		</div>
+		<button type="button" class="btn btn-default" onClick="search()" style="margin-right:5px;">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
+		<button type="button" class="btn btn-default" onClick="cancelFilter()">Cancel</button>
+	</div>
 
 
 	<div class="ch-container ">

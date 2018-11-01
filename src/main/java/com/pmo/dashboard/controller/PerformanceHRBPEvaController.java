@@ -101,9 +101,9 @@ public class PerformanceHRBPEvaController {
      * @throws IllegalArgumentException 
      */
     @RequestMapping("/processing/result/export")
-    public ResponseEntity<byte[]> processingResultExport(PerformanceQueryCondition condition) throws IOException, IllegalArgumentException, IllegalAccessException {
+    public ResponseEntity<byte[]> processingResultExport() throws IOException, IllegalArgumentException, IllegalAccessException {
         // 查询数据
-        List<PerformanceManageEvaBean> data = performanceManageEvaService.queryManageEvaSecondQueryList(condition);
+        List<PerformanceManageEvaBean> data = performanceManageEvaService.processingResultList(null, null, null, null, null);
         // 创建文件
         XSSFWorkbook book = new XSSFWorkbook();
         performanceService.createSheetDetailList(book, "group assessment", data);
@@ -190,7 +190,7 @@ public class PerformanceHRBPEvaController {
     @RequestMapping("/approval/export")
     public ResponseEntity<byte[]> approvalExport() throws IllegalArgumentException, IllegalAccessException, IOException {
         // 查询数据
-        List<PerformanceManageEvaBean> data_groupEva = performanceManageEvaService.queryManageEvaSecondQueryList(new PerformanceQueryCondition());
+        List<PerformanceManageEvaBean> data_groupEva = performanceManageEvaService.processingResultList(null, null, null, null, null);
         List<Map<String, Object>> data_approval = performanceManageEvaService.approvalList();
         // 创建文件
         XSSFWorkbook book = new XSSFWorkbook();

@@ -1,7 +1,6 @@
 var employeeId = "";
 var type = "";
 $().ready(function() {
-	// employeeId = "0a4ee79e206f418f9eb9cfe6735535ed";
 	employeeId = $("#employeeId").val();
 	type = $("#type").val();
 	// 显示标题

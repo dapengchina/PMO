@@ -1,8 +1,8 @@
 $(function() {
 	loadManageTargetApprovalList();
-
 });
-
+var pageNumber = 1;
+var pageSize = 10;
 function loadManageTargetApprovalList() {
 	var queryUrl = path + '/service/performanceManageEva/assessment/goal/list';
 	var columns = [ {
@@ -12,7 +12,9 @@ function loadManageTargetApprovalList() {
 	}, {
 		title : 'SL',
 		formatter : function(value, row, index) {
-			return "<span>" + (index + 1) + "</span>";
+			// 保存分页信息
+			var options = $('#manageTargetApprovalList').bootstrapTable("getOptions");
+			return "<span>" + (index + 1 + (options.pageNumber - 1) * options.pageSize) + "</span>";
 		}
 	}, {
 		field : 'E_HR',
@@ -28,23 +30,23 @@ function loadManageTargetApprovalList() {
 		title : 'Skill/Technology',
 	}, {
 		field : 'submit',
-		title : '是否提交',
+		title : '是否提交&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(1);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="submitTips"></div> ',
 		formatter : function(value, row, index) {
-			return row.submit == 1 ? "是" : "否";
+			return row.submit == "submit" ? "是" : "否";
 		}
 	}, {
 		field : 'pioneer',
-		title : '业务先锋'
+		title : '业务先锋&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(2);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="backboneTips"></div>'
 	}, {
 		field : 'state',
-		title : '审批状态',
+		title : '审批状态&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(3);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="stateTips"></div>',
 		formatter : function(value, row, index) {
-			return row.state == 1 ? "审批通过" : row.state == 0 ? "待审批" : "审批不通过";
+			return row.submit == "save" ? "未提交" : row.state == 0 ? "未审批" : row.state == 1 ? "审批通过" : "审批不通过";
 		}
 	}, {
 		title : 'Detail',
 		formatter : function(value, row, index) {
-			if (row.submit == 1 && row.state == 0) {
+			if (row.submit == "submit" && row.state == 0) {
 				return "<a href='javascript:void(0);' onClick='detail(\"" + row.EMPLOYEE_ID + "\");' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
 			}
 		}
@@ -84,8 +86,13 @@ function loadManageTargetApprovalList() {
 		},
 		columns : columns,
 		onLoadSuccess : function(sta) {
-			console.log("in onLoadSuccess");
-			console.log(JSON.stringify(sta));
+			/* 添加过滤div * */
+			$(".submitTips").append($("#submitFilterDiv"));
+			$("#submitFilterDiv").removeClass("hidden");
+			$(".backboneTips").append($("#backboneFilterDiv"));
+			$("#backboneFilterDiv").removeClass("hidden");
+			$(".stateTips").append($("#stateFilterDiv"));
+			$("#stateFilterDiv").removeClass("hidden");
 		},
 		onLoadError : function(status, res) { // 加载失败时执行
 			console.log(res);
@@ -121,16 +128,56 @@ function download() {
 	window.location.href = path + "/service/performanceManageEva/goal/export";
 }
 
-function search() {
+function search(type) {
 	var queryParams = {
-		query : {
-			pageSize : 10,
-			pageNumber : 1,
-			submit : "1",
-			state : "1",
-			bockbone : "1",
-		}
+		query : {}
+	}
+	var submitAry = $("input[name='submitCheckbox']:checked");
+	if (submitAry.length == 1) {
+		queryParams.query.submit = $("input[name='submitCheckbox']:checked")[0].value;
+	}
+	var backboneAry = $("input[name='backboneCheckbox']:checked");
+	if (backboneAry.length == 1) {
+		queryParams.query.backbone = $("input[name='backboneCheckbox']:checked")[0].value;
+	}
+	var stateAry = $("input[name='stateCheckbox']:checked");
+
+	if (stateAry.length > 0) {
+		var state = new Array();
+		$("input[name='stateCheckbox']:checked").each(function(index, element) {
+			state.push(element.value);
+		});
+		queryParams.query.state = state.join(",");
 	}
 	// 刷新表格
 	$('#manageTargetApprovalList').bootstrapTable('refresh', queryParams);
+	cancelAll();
+}
+
+function showFilter(type) {
+	cancelAll();
+	if (type == 1) {
+		$(".submitTips").attr("style", "display:inline-block!important");
+	} else if (type == 2) {
+		$(".backboneTips").attr("style", "display:inline-block!important");
+	} else if (type == 3) {
+		$(".stateTips").attr("style", "display:inline-block!important");
+	}
+
+}
+/** 关闭所有筛选框 */
+function cancelAll() {
+	$(".submitTips").attr("style", "display:none");
+	$(".backboneTips").attr("style", "display:none");
+	$(".stateTips").attr("style", "display:none");
+}
+
+function cancelFilter(type) {
+	if (type == 1) {
+		$(".submitTips").attr("style", "display:none");
+	} else if (type == 2) {
+		$(".backboneTips").attr("style", "display:none");
+	} else if (type == 3) {
+		$(".stateTips").attr("style", "display:none");
+	}
 }
