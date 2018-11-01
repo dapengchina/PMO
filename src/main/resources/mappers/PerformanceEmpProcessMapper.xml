@@ -14,6 +14,10 @@
 		VALUES
 		(#{id},#{employeeid},#{processid},#{owner},#{createdate},#{state},#{remark})
 	</insert>
+	
+	<update id="updateByEmployeeId">
+		update t_employeeperforprocess set state = #{state}, remark = #{remark} where employeeid = #{employeeid}
+	</update>
 
 	
 </mapper>

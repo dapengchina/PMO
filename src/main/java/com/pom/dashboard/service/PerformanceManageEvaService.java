@@ -242,4 +242,30 @@ public interface PerformanceManageEvaService {
      * void
      */
     public void updatePreAssessmentResult(String preAssessment, String id);
+
+    /**
+     * 根据id查询绩效目标设定总表
+    * @author: xuexuan
+    * 2018年10月30日 上午11:29:03
+    * @param id
+    * @return 
+    */
+    public Map<String, Object> queryGoalById(String id);
+
+    /**
+     * 更新绩效目标流程表
+    * @author: xuexuan
+    * 2018年10月30日 上午11:29:03
+    * @return 
+    */
+    public void updateByEmployeeId(String employeeId, String state, String remark);
+
+    /**
+     * 根据resultId获取employeeId、PreAssessment_Result
+     * @author: xuexuan
+     * 2018年10月26日 下午6:24:35 
+     * void
+     */
+    public Map<String, String> queryEmployeeIdByResultId(String resultId);
+
 }

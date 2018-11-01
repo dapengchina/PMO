@@ -49,7 +49,7 @@ function loadManageResultHistoryQueryList() {
 	}, {
 		title : 'Detail',
 		formatter : function(value, row, index) {
-			return "<a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+			return "<a href='javascript:void(0);' onClick='detail(\"" + row.resultId + "\")' " + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
 		}
 	} ];
 
@@ -116,6 +116,26 @@ function loadManageResultHistoryQueryList() {
 		}
 
 	});
+}
+
+function detail(resultId) {
+	// 页面跳转post提交
+	$("#detailForm").remove();
+	var url = path + '/service/performanceManageEva/goal/detail.html';
+	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
+	$eleForm.attr("action", url);
+	$(document.body).append($eleForm);
+
+	var idInput = $("<input type='text' name='resultId' class='hidden'></input>");
+	var titleInput = $("<input type='text' name='title' class='hidden'></input>");
+	var typeInput = $("<input type='text' name='type' class='hidden'></input>");
+	idInput.attr("value", resultId);
+	titleInput.attr("value", "Management->绩效结果->历史绩效");
+	typeInput.attr("value", "6");
+	$("#detailForm").append(idInput);
+	$("#detailForm").append(titleInput);
+	$("#detailForm").append(typeInput);
+	$eleForm.submit();
 }
 
 function search() {

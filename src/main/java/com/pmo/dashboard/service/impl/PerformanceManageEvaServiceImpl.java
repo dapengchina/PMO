@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.pmo.dashboard.dao.PerformanceEmpPBCMapper;
 import com.pmo.dashboard.dao.PerformanceResultMapper;
 import com.pmo.dashboard.entity.PerformanceEmpHistoryBean;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
@@ -26,6 +27,9 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
 
     @Resource
     PerformanceResultMapper     mapper;
+
+    @Resource
+    PerformanceEmpPBCMapper     pbcMapper;
 
     @Override
     public List<PerformanceManageEvaBean> queryManageEvaFirstDetailWithAchieveList(PerformanceQueryCondition condition) {
@@ -240,6 +244,7 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
             bean.setRm(b.getRm());
             bean.setResult(b.getResult());
             bean.setComments(b.getResultComments());
+            bean.setResultId(b.getResultId());// update by xuexuan 返回resultId
 
             String year = b.getYear();
             String quarter = b.getQuarter();
@@ -472,6 +477,21 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
     @Override
     public void updatePreAssessmentResult(String preAssessment, String id) {
         mapper.preAssessment(preAssessment, id);
+    }
+
+    @Override
+    public Map<String, Object> queryGoalById(String id) {
+        return pbcMapper.queryById(id);
+    }
+
+    @Override
+    public void updateByEmployeeId(String employeeId, String state, String remark) {
+        pbcMapper.updateByEmployeeId(employeeId, state, remark);
+    }
+
+    @Override
+    public Map<String, String> queryEmployeeIdByResultId(String resultId) {
+        return mapper.queryEmployeeIdByResultId(resultId);
     }
 
 }

@@ -101,4 +101,12 @@ public interface PerformanceResultMapper {
      * void
      */
     public void preAssessment(@Param("preAssessment") String preAssessment, @Param("id") String id);
+
+    /**
+     * 根据resultId获取employeeId、PreAssessment_Result
+     * @author: xuexuan
+     * 2018年10月26日 下午6:24:35 
+     * void
+     */
+    public Map<String, String> queryEmployeeIdByResultId(String resultId);
 }
