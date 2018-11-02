@@ -384,7 +384,21 @@ public class PerformanceController {
 		return "performance/performanceLobHRReport";
 	}
 	
-	
+	/**
+	 * 获取绩效审批状态名称
+	 * @author: xuexuan
+	 * 2018年11月1日 下午6:07:07
+	 * @param stateId
+	 * @return 
+	 * Map<String,String>
+	 */
+	@RequestMapping("/state/{stateId}")
+    @ResponseBody
+    public Map<String, String> getStateName(@PathVariable("stateId") String stateId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("stateName", Constants.APPROVAL_STATE.get(stateId));
+        return map;
+    }
 	
 	
 	

@@ -28,7 +28,7 @@ function queryPercentage() {
 }
 /** 审批当前事业部 * */
 function submit(type) {
-	var state = type == 1 ? 8 : 7;// TODO xuexuan
+	var state = type == 1 ? 8 : 7;// TODO xuexuan need to confirm state value
 	var state_bu = $("#detail_bu").val();
 	$.ajax({
 		url : path + '/service/performanceHRBPEva/approval/detail/submit',

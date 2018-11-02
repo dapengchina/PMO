@@ -335,6 +335,7 @@ public class PerformanceManageEvaController {
         switch (user.getUserType()) {
             case "0":// 登录用户为管理员  TODO xuexuan 暂统计所有员工
                 list = manageEvaService.groupStatByResultBU(null);
+                logger.error("登录用户未管理员，统计所有员工");
                 break;
             case "1":// 事业部经理
                 list = manageEvaService.groupStatByResultBU(user.getBu());
@@ -449,7 +450,7 @@ public class PerformanceManageEvaController {
     public Map<String, Object> finalizeResultList(@RequestParam int pageSize, @RequestParam int pageNumber) {
         // 分页查询
         PageHelper.startPage(pageNumber, pageSize);
-        // 查询数据,条件：年-季-finalize-bu/du/ehr/staffName
+        // 查询数据,条件：年-季-finalize
         List<PerformanceManageEvaBean> data = manageEvaService.finalizeResultList();
         PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
         // 返回数据
@@ -473,12 +474,14 @@ public class PerformanceManageEvaController {
     public Map<String, Object> processingResultList(@RequestParam int pageSize, @RequestParam int pageNumber, HttpServletRequest request) throws JsonProcessingException {
         // 判断登录用户类别
         User user = (User) request.getSession().getAttribute("loginUser");
+        if (!"5".equals(user.getUserType())) {
+            logger.error("当前登录用户不是RM");
+        }
         // 分页查询
         PageHelper.startPage(pageNumber, pageSize);
         // 查询条件：当年-当季-rm
-        //        List<PerformanceManageEvaBean> data = manageEvaService.processingResultListRM(user.getNickname());
-        // TODO 测试数据
-        List<PerformanceManageEvaBean> data = manageEvaService.processingResultListRM("韦玲");
+        List<PerformanceManageEvaBean> data = manageEvaService.processingResultListRM(user.getNickname());
+        //List<PerformanceManageEvaBean> data = manageEvaService.processingResultListRM("韦玲");
         PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
         // 返回数据
         Map<String, Object> map = new HashMap<String, Object>();
@@ -501,8 +504,7 @@ public class PerformanceManageEvaController {
         // 判断登录用户类别
         User user = (User) request.getSession().getAttribute("loginUser");
         List<Map<String, Object>> list = null;
-        // TODO 测试数据
-        list = manageEvaService.listGroupByDU("数字移动事业部");
+        //        list = manageEvaService.listGroupByDU("数字移动事业部");
         //        list = manageEvaService.listGroupByRM("网银业务交付部");
         if ("1".equals(user.getUserType())) {// 事业部经理-根据交付部统计
             list = manageEvaService.listGroupByDU(user.getBu());
@@ -510,6 +512,8 @@ public class PerformanceManageEvaController {
         if ("3".equals(user.getUserType())) {// 交付部经理-根据RM统计
             CSDept csDept = csDeptService.queryCSDeptById(user.getCsdeptId());// 查询交付部名称
             list = manageEvaService.listGroupByRM(csDept.getCsSubDeptName());
+        } else {
+            logger.error("当前登录用户不是事业部经理/交付部经理");
         }
         return list;
     }
@@ -725,15 +729,17 @@ public class PerformanceManageEvaController {
     public Map<String, Object> goalList(@RequestParam("pageSize") int pageSize, @RequestParam("pageNumber") int pageNumber, @RequestParam(value = "submit", required = false) String submit,
             @RequestParam(value = "backbone", required = false) String backbone, @RequestParam(value = "state", required = false) String state, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("loginUser");
+        if (!"5".equals(user.getUserType())) {
+            logger.error("当前登录用户不是RM");
+        }
         String[] stateAry = null;
         if (StringUtils.isNotBlank(state)) {
             stateAry = state.split(",");
         }
         // 分页获取该RM下所有员工
         PageHelper.startPage(pageNumber, pageSize);
-        // TODO 测试数据
-        //        List<Map<String, Object>> list = employeeService.rmApprovalList(user.getUserId(), submit, backbone, stateAry);
-        List<Map<String, Object>> list = employeeService.rmApprovalList("cf527b21ab304c05b56a4096f6e389b5", submit, backbone, stateAry);
+        List<Map<String, Object>> list = employeeService.rmApprovalList(user.getUserId(), submit, backbone, stateAry);
+        //List<Map<String, Object>> list = employeeService.rmApprovalList("cf527b21ab304c05b56a4096f6e389b5", submit, backbone, stateAry);
         PageInfo<Map<String, Object>> page = new PageInfo<>(list);
         Map<String, Object> rtn = new HashMap<String, Object>();
         rtn.put("total", page.getTotal());
@@ -769,10 +775,12 @@ public class PerformanceManageEvaController {
     @RequestMapping("/goal/export")
     public ResponseEntity<byte[]> goalExport(HttpServletRequest request) throws IOException {
         User user = (User) request.getSession().getAttribute("loginUser");
+        if (!"5".equals(user.getUserType())) {
+            logger.error("当前登录用户不是RM");
+        }
         // 查询数据
-        // TODO 测试数据
-        //      List<Map<String, Object>> list = employeeService.rmApprovalList(user.getUserId(), null, null, null);
-        List<Map<String, Object>> list = employeeService.rmApprovalList("cf527b21ab304c05b56a4096f6e389b5", null, null, null);
+        List<Map<String, Object>> list = employeeService.rmApprovalList(user.getUserId(), null, null, null);
+        //List<Map<String, Object>> list = employeeService.rmApprovalList("cf527b21ab304c05b56a4096f6e389b5", null, null, null);
         // 创建文件
         XSSFWorkbook book = new XSSFWorkbook();
         Row row;

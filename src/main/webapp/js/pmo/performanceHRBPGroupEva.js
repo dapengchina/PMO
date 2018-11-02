@@ -26,6 +26,11 @@ function queryPercentage() {
 }
 /** 导出集体评议数据 */
 function groupEvaExport() {
+	var tableData = $('#HRBPGroupEvaList').bootstrapTable("getData");
+	if (tableData.length == 0) {
+		alert("暂无数据导出");
+		return;
+	}
 	var url = path + '/service/performanceHRBPEva/processing/result/export';
 	window.location.href = url;
 }

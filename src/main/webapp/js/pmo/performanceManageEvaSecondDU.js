@@ -142,6 +142,11 @@ function loadManageEvaSecondDUList() {
 
 /** 交付部经理审批提交 ** */
 function submit() {
+	var tableData = $('#manageEvaSeondDUList').bootstrapTable("getData");
+	if (tableData.length == 0) {
+		alert("暂无数据审批");
+		return;
+	}
 	// 所有交付部都审批才能提交
 	if (!approvalAllFlag) {
 		alert("还有未审批数据，请先审批");
@@ -173,5 +178,10 @@ function submit() {
 }
 
 function batchExport() {
+	var tableData = $('#manageEvaSeondDUList').bootstrapTable("getData");
+	if (tableData.length == 0) {
+		alert("暂无数据导出");
+		return;
+	}
 	window.location.href = path + "/service/performanceManageEva/assessment/approval/du/export.html";
 }

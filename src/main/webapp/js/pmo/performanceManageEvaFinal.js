@@ -116,6 +116,11 @@ function detail(resultId) {
 
 /** 导出绩效定稿数据 */
 function finalizeResultExport() {
+	var tableData = $('#manageEvaFirstDetailList').bootstrapTable("getData");
+	if (tableData.length == 0) {
+		alert("暂无数据导出");
+		return;
+	}
 	var url = path + '/service/performanceManageEva/finalize/result/export';
 	window.location.href = url;
 }

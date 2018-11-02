@@ -127,12 +127,22 @@ function loadHRBPApprovalList() {
 }
 /** 导出审批列表和集体评议 * */
 function approvalExport() {
+	var tableData = $('#HRBPApprovalList').bootstrapTable("getData");
+	if (tableData.length == 0) {
+		alert("暂无数据导出");
+		return;
+	}
 	var url = path + '/service/performanceHRBPEva/approval/export';
 	window.location.href = url;
 }
 /** 提交审批 * */
 var approvalAllFlag = true;
 function submit() {
+	var tableData = $('#HRBPApprovalList').bootstrapTable("getData");
+	if (tableData.length == 0) {
+		alert("暂无数据审批");
+		return;
+	}
 	// 所有事业部均处理后才可提交
 	if (!approvalAllFlag) {
 		alert("还有未审批数据，请先审批");

@@ -86,12 +86,15 @@ function loadManageEvaFirstDetailList() {
 
 	});
 }
-var stateSubmitFlag = true;
 var stateSubmitIds = new Array();
 function stateSubmit() {
 	// 所有员工评价后才可提交
 	if (!stateSubmitFlag) {
 		alert("还有未评级员工，请先评级");
+		return;
+	}
+	if (stateSubmitIds.length == 0) {
+		alert("暂无数据审批！");
 		return;
 	}
 	// 审批

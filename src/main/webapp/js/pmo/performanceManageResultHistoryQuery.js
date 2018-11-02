@@ -165,6 +165,11 @@ function detail(resultId) {
 
 /** 历史绩效导出 * */
 function historyResultExport() {
+	var tableData = $('#manageResultHistoryQueryList').bootstrapTable("getData");
+	if (tableData.length == 0) {
+		alert("暂无数据导出");
+		return;
+	}
 	$("#downloadForm").remove();
 	var url = path + '/service/performanceManageResultHistory/result/export';
 	var $eleForm = $("<form method='post'></form>");
