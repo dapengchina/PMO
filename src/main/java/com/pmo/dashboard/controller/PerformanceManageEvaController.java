@@ -832,33 +832,6 @@ public class PerformanceManageEvaController {
         return responseEntity;
     }
 
-    /**
-     * 绩效目标详情页面
-     * @author: xuexuan
-     * 2018年10月31日 上午11:31:32
-     * @param employeeId
-     * @param resultId
-     * @param title
-     * @param type
-     * @param model
-     * @return 
-     * String
-     */
-    @RequestMapping("/goal/detail")
-    public String getGoalDetailPage(@RequestParam(value = "employeeId", required = false) String employeeId, @RequestParam(value = "resultId", required = false) String resultId,
-            @RequestParam("title") String title, @RequestParam("type") String type, Model model) {
-        model.addAttribute("title", title);
-        model.addAttribute("type", type);
-        if (StringUtils.isNotBlank(resultId)) {
-            Map<String, String> map = manageEvaService.queryEmployeeIdByResultId(resultId);
-            model.addAttribute("resultId", resultId);
-            model.addAttribute("employeeId", map.get("employeeId"));
-            model.addAttribute("result", map.get("result"));
-        } else {
-            model.addAttribute("employeeId", employeeId);
-        }
-        return "performance/performanceDetail";
-    }
 
     /**
      * 绩效设定总表

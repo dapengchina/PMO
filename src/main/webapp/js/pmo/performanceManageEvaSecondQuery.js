@@ -109,7 +109,7 @@ function loadManageEvaSecondQueryList() {
 function detail(resultId) {
 	// 页面跳转post提交
 	$("#detailForm").remove();
-	var url = path + '/service/performanceManageEva/goal/detail.html';
+	var url = path + '/service/performance/goalDetail.html';
 	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
 	$eleForm.attr("action", url);
 	$(document.body).append($eleForm);
