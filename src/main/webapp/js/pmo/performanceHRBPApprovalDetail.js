@@ -141,7 +141,10 @@ function search() {
 		}
 	};
 	// 刷新表格
-	$('#HRBPGroupEvaList').bootstrapTable('refresh', queryParams);
+	$('#HRBPGroupEvaList').bootstrapTable('refreshOptions', {
+		pageSize : 10,
+		pageNumber : 1
+	});
 }
 /** clear * */
 function clearParams() {

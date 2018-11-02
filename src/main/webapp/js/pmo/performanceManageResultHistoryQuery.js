@@ -103,6 +103,7 @@ function loadManageResultHistoryQueryList() {
 		singleSelect : false, // 禁止多选_____
 		// 得到查询的参数
 		queryParams : function(params) {
+			console.log(params);
 			// 获取查询条件
 			var eHr = $("#eHr").val();
 			var staffName = $("#staffName").val();
@@ -164,7 +165,12 @@ function search() {
 		}
 	}
 	// 刷新表格
-	$('#manageResultHistoryQueryList').bootstrapTable('refresh', queryParams);
+	$('#manageResultHistoryQueryList').bootstrapTable('refreshOptions', {
+		pageSize : 10,
+		pageNumber : 1
+	});
+	// $('#manageResultHistoryQueryList').bootstrapTable('refresh',
+	// queryParams);
 }
 function detail(resultId) {
 	// 页面跳转post提交

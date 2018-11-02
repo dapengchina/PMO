@@ -139,7 +139,10 @@ function search() {
 		}
 	};
 	// 刷新表格
-	$('#queryManageEvaSecondQueryDUList').bootstrapTable('refresh', queryParams);
+	$('#queryManageEvaSecondQueryDUList').bootstrapTable('refreshOptions', {
+		pageSize : 10,
+		pageNumber : 1
+	});
 }
 /** 清除条件 * */
 function duClear() {

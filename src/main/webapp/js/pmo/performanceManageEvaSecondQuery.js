@@ -143,7 +143,10 @@ function search() {
 		}
 	};
 	// 刷新表格
-	$('#queryManageEvaSecondQueryList').bootstrapTable('refresh', queryParams);
+	$('#queryManageEvaSecondQueryList').bootstrapTable('refreshOptions', {
+		pageSize : 10,
+		pageNumber : 1
+	});
 }
 /** 清除条件 * */
 function duClear() {
