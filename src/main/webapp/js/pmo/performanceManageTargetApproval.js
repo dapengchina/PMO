@@ -79,20 +79,44 @@ function loadManageTargetApprovalList() {
 		singleSelect : false, // 禁止多选_____
 		// 得到查询的参数
 		queryParams : function(params) {
+			var submitAry = $("input[name='submitCheckbox']:checked");
+			var submit = "";
+			if (submitAry.length == 1) {
+				submit = submitAry[0].value;
+			}
+			var backboneAry = $("input[name='backboneCheckbox']:checked");
+			var backbone = "";
+			if (backboneAry.length == 1) {
+				backbone = backboneAry[0].value;
+			}
+			var stateAry = $("input[name='stateCheckbox']:checked");
+			var state = "";
+			if (stateAry.length > 0) {
+				var state = new Array();
+				stateAry.each(function(index, element) {
+					state.push(element.value);
+				});
+				state = state.join(",");
+			}
 			return {
 				pageSize : params.limit,
 				pageNumber : params.offset / params.limit + 1,
+				submit : submit,
+				backbone : backbone,
+				state : state
 			};
 		},
 		columns : columns,
 		onLoadSuccess : function(sta) {
 			/* 添加过滤div * */
-			$(".submitTips").append($("#submitFilterDiv"));
-			$("#submitFilterDiv").removeClass("hidden");
-			$(".backboneTips").append($("#backboneFilterDiv"));
-			$("#backboneFilterDiv").removeClass("hidden");
-			$(".stateTips").append($("#stateFilterDiv"));
-			$("#stateFilterDiv").removeClass("hidden");
+			if ($(".submitTips").html() == "") {
+				$(".submitTips").append($("#submitFilterDiv"));
+				$("#submitFilterDiv").removeClass("hidden");
+				$(".backboneTips").append($("#backboneFilterDiv"));
+				$("#backboneFilterDiv").removeClass("hidden");
+				$(".stateTips").append($("#stateFilterDiv"));
+				$("#stateFilterDiv").removeClass("hidden");
+			}
 		},
 		onLoadError : function(status, res) { // 加载失败时执行
 			console.log(res);
@@ -130,28 +154,13 @@ function download() {
 
 function search(type) {
 	var queryParams = {
-		query : {
-			pageNumber : pageNumber,
-			pageSize : pageSize
-		}
+		pageNumber : pageNumber,
+		pageSize : pageSize
 	}
-	var submitAry = $("input[name='submitCheckbox']:checked");
-	if (submitAry.length == 1) {
-		queryParams.query.submit = $("input[name='submitCheckbox']:checked")[0].value;
-	}
-	var backboneAry = $("input[name='backboneCheckbox']:checked");
-	if (backboneAry.length == 1) {
-		queryParams.query.backbone = $("input[name='backboneCheckbox']:checked")[0].value;
-	}
-	var stateAry = $("input[name='stateCheckbox']:checked");
-
-	if (stateAry.length > 0) {
-		var state = new Array();
-		$("input[name='stateCheckbox']:checked").each(function(index, element) {
-			state.push(element.value);
-		});
-		queryParams.query.state = state.join(",");
-	}
+	// refreshOptions会摧毁表格,将选中的条件保存
+	$("body").append($("#submitFilterDiv").addClass("hidden"));
+	$("body").append($("#backboneFilterDiv").addClass("hidden"));
+	$("body").append($("#stateFilterDiv").addClass("hidden"));
 	// 刷新表格
 	$('#manageTargetApprovalList').bootstrapTable('refreshOptions', queryParams);
 	cancelAll();
