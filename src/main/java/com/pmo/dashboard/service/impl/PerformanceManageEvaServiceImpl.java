@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -245,7 +244,6 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
             bean.setRm(b.getRm());
             bean.setResult(b.getResult());
             bean.setComments(b.getResultComments());
-            bean.setResultId(b.getResultId());// update by xuexuan 返回resultId
 
             String year = b.getYear();
             String quarter = b.getQuarter();
@@ -387,6 +385,22 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
         filter.put("finalize", "True");// 已定稿
         List<PerformanceManageEvaBean> list = mapper.filterQuery(filter);
         getPreviousResult(list);
+        return list;
+    }
+
+    @Override
+    public List<PerformanceManageEvaBean> finalizeResultList(PerformanceQueryCondition condition) {
+        Map<String, Object> filter = new HashMap<String, Object>();
+        filter.put("eHr", condition.geteHr());
+        filter.put("staffName", condition.getStaffName());
+        filter.put("bu", condition.getBu());
+        filter.put("du", condition.getDu());
+        filter.put("startYear", condition.getStartYear());
+        filter.put("startQuarter", condition.getStartQuarter());
+        filter.put("endYear", condition.getEndYear());
+        filter.put("endQuarter", condition.getEndQuarter());
+        filter.put("finalize", "True");
+        List<PerformanceManageEvaBean> list = mapper.filterQuery(filter);
         return list;
     }
 

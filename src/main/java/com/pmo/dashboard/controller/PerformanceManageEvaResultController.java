@@ -4,7 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +24,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceManageResultHistoryBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
 import com.pom.dashboard.service.PerformanceManageEvaService;
@@ -50,10 +56,17 @@ public class PerformanceManageEvaResultController {
 
     @RequestMapping("/queryManageResultHistoryQueryList")
     @ResponseBody
-    public Object queryManageResultHistoryQueryList(PerformanceQueryCondition condition, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+    public Object queryManageResultHistoryQueryList(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize, PerformanceQueryCondition condition,
+            HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
         logger.debug("query condition:" + condition);
-        List<PerformanceManageResultHistoryBean> data = manageEvaService.queryManageResultHistoryQueryList(condition);
-        return data;
+        // update by xuexuan 客户端分页改为服务器端分页
+        PageHelper.startPage(pageNumber, pageSize);
+        List<PerformanceManageEvaBean> data = manageEvaService.finalizeResultList(condition);
+        PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
+        Map<String, Object> map = new HashMap<>();
+        map.put("total", page.getTotal());
+        map.put("rows", data);
+        return map;
     }
 
     /**
@@ -90,7 +103,7 @@ public class PerformanceManageEvaResultController {
             cell.setCellValue(r + 1);
             for (int c = 1; c < historyExcelContent.length; c++) {
                 cell = row.createCell(c);// 创建数据各列
-                Class clazz = data.get(r).getClass();
+                Class<? extends PerformanceManageResultHistoryBean> clazz = data.get(r).getClass();
                 Field field;
                 try {
                     field = clazz.getDeclaredField(historyExcelContent[c]);
