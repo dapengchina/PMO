@@ -25,7 +25,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -110,9 +109,9 @@ public class PerformanceManageEvaController {
         PageHelper.startPage(pageNumber, pageSize);
         PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
         map.put("total", page.getTotal());
-        map.put("rows", page.getList());// update by xuexuan 返回值由data改为page中的list
+        map.put("rows", data);
 
-        //map.putAll(putPercentage(data));// update by xuexuan  列表查询与百分比查询分开 
+        map.putAll(putPercentage(data));
 
         ObjectMapper objectMapper = new ObjectMapper();
         String rtn = objectMapper.writeValueAsString(map);
@@ -162,9 +161,9 @@ public class PerformanceManageEvaController {
         PageHelper.startPage(pageNumber, pageSize);
         PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
         map.put("total", page.getTotal());
-        map.put("rows", page.getList());// update by xuexuan 返回值由data改为page中的list
+        map.put("rows", data);
 
-        //map.putAll(putPercentage(data));// update by xuexuan  列表查询与百分比查询分开
+        map.putAll(putPercentage(data));
 
         ObjectMapper objectMapper = new ObjectMapper();
         String rtn = objectMapper.writeValueAsString(map);
@@ -297,6 +296,8 @@ public class PerformanceManageEvaController {
         logger.debug("rtn:" + rtn);
         return rtn;
     }
+
+    /** 原版本接口均为使用 **/
 
     /**
      * 新增
@@ -892,6 +893,12 @@ public class PerformanceManageEvaController {
         return list;
     }
 
+    /**
+     * 导出excel
+     * @author: xuexuan
+     * 2018年10月30日 上午11:44:34
+     * void
+     */
     private void createSheetApproval(XSSFWorkbook book, List<Map<String, Object>> data, String[] titleAry, String[] contentAry) {
         // 创建工作簿
         Sheet sheet = book.createSheet("approval list");
