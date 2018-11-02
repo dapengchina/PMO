@@ -20,7 +20,10 @@ function queryPercentage() {
 			$("#empB").html(data["B"] == undefined ? 0 : data["B"]);
 			$("#empC").html(data["C"] == undefined ? 0 : data["C"]);
 			$("#empD").html(data["D"] == undefined ? 0 : data["D"]);
-			$("#empSum").html(data["sum"]);
+			$("#empSum").html(data["sum"] == undefined ? 0 : data["sum"]);
+			if (data["sum"] == 0) {
+				$("#percentSum").html("0%");
+			}
 		}
 	});
 }

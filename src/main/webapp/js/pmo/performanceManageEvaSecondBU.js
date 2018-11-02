@@ -36,7 +36,9 @@ function queryPercentage() {
 			$("#empC").html(data["C"] == undefined ? 0 : data["C"]);
 			$("#empD").html(data["D"] == undefined ? 0 : data["D"]);
 			$("#empSum").html(data["sum"] == undefined ? 0 : data["sum"]);
-			$("#percentSum").html("100%");
+			if (data["sum"] == 0) {
+				$("#percentSum").html("0%");
+			}
 		}
 	});
 }

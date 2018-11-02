@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -312,15 +313,25 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
         Map<String, Object> rtn = new HashMap<String, Object>();
         if (list == null || list.size() == 0)
             return rtn;
+        // 计算总数
         int sum = 0;
         for (Map<String, Object> map : list) {
-            sum += Integer.parseInt(map.get("count") + "");
+            if (map.get("result") == null || "".equals(map.get("result"))) {// 空值不统计
+                continue;
+            }
+            sum += Integer.parseInt(map.get("count") + ""); 
         }
+        // 总数为0直接返回
+        if (sum == 0) {
+            rtn.put("sum", sum);
+            return rtn;
+        }
+        // 计算百分比
         NumberFormat nf = NumberFormat.getPercentInstance();
         String level = "";
         int count = 0;
         for (Map<String, Object> map : list) {
-            if (map.get("result") == null) {
+            if (map.get("result") == null || "".equals(map.get("result"))) {
                 continue;
             }
             level = ((String) map.get("result")).toUpperCase();
