@@ -37,6 +37,7 @@
 <link href='<%=path %>/css/animate.min.css' rel='stylesheet'/>
 <link href='<%=path%>/css/bootstrap-datetimepicker.css' rel='stylesheet'/>
 <link href='<%=path%>/css/bootstrap-datetimepicker.min.css' rel='stylesheet'/>
+<link href='<%=path%>/css/style.css' rel='stylesheet'>
 <style type="text/css">
 .templateTable thead, .templateTable td { 
 	text-align: center;
@@ -292,6 +293,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/pmo/performanceTable.js"></script>
 	<script type="text/javascript" src="<%=path %>/js/pmo/performanceManageEvaSecondQuery.js"></script>
 	
 </body>

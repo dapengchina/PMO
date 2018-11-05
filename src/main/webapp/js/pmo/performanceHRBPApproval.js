@@ -20,7 +20,10 @@ function queryPercentage() {
 			$("#empB").html(data["B"] == undefined ? 0 : data["B"]);
 			$("#empC").html(data["C"] == undefined ? 0 : data["C"]);
 			$("#empD").html(data["D"] == undefined ? 0 : data["D"]);
-			$("#empSum").html(data["sum"]);
+			$("#empSum").html(data["sum"] == undefined ? 0 : data["sum"]);
+			if (data["sum"] == 0) {
+				$("#percentSum").html("0%");
+			}
 		}
 	});
 }
@@ -64,7 +67,9 @@ function loadHRBPApprovalList() {
 	}, {
 		title : 'Detail',
 		formatter : function(value, row, index) {
-			return "<a href='performanceHRBPApprovalDetail.html?bu=" + row.BU + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+			if (row.State == 6) {
+				return "<a href='performanceHRBPApprovalDetail.html?bu=" + row.BU + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+			}
 		}
 	} ];
 
@@ -107,7 +112,7 @@ function loadHRBPApprovalList() {
 			// 判断是否都已经审批
 			approvalAllFlag = true;
 			for ( var item in data) {
-				if (data[item].State == 6) {
+				if (data[item].State <= 6) {// TODO xuexuan
 					approvalAllFlag = false;
 					return;
 				}
@@ -125,12 +130,22 @@ function loadHRBPApprovalList() {
 }
 /** 导出审批列表和集体评议 * */
 function approvalExport() {
+	var tableData = $('#HRBPApprovalList').bootstrapTable("getData");
+	if (tableData.length == 0) {
+		alert("暂无数据导出");
+		return;
+	}
 	var url = path + '/service/performanceHRBPEva/approval/export';
 	window.location.href = url;
 }
 /** 提交审批 * */
 var approvalAllFlag = true;
 function submit() {
+	var tableData = $('#HRBPApprovalList').bootstrapTable("getData");
+	if (tableData.length == 0) {
+		alert("暂无数据审批");
+		return;
+	}
 	// 所有事业部均处理后才可提交
 	if (!approvalAllFlag) {
 		alert("还有未审批数据，请先审批");

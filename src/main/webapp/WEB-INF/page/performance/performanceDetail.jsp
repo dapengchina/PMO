@@ -142,7 +142,7 @@ var path='<%=path%>';
 							<div class="panel-body">
 								<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Supervisor Feedback</label>
 								<div class="col-lg-10">
-									<textarea rows="3" style="border:1px solid black" class="form-control" id="feedback" readyonly></textarea>
+									<textarea rows="3" style="border:1px solid black" class="form-control" id="feedback" readonly></textarea>
 								</div>
 							</div>
 						</div>
@@ -151,7 +151,7 @@ var path='<%=path%>';
 							<div class="panel-body">
 								<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:40px;">Rating</label>
 								<div class="col-lg-10">
-									<select class="form-control" id="rating" readonly>
+									<select class="form-control" id="rating" disabled>
 										<option value="A">A</option>
 										<option value="B+">B+</option>
 										<option value="B">B</option>

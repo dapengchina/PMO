@@ -124,7 +124,7 @@ public class EmployeeServiceImpl implements EmployeeService
 	}
 
     @Override
-    public List<Map<String, Object>> rmApprovalList(String rmUserId, String submit, String backbone, String state) {
+    public List<Map<String, Object>> rmApprovalList(String rmUserId, String submit, String backbone, String[] state) {
         return employeeMapper.rmApprovalList(rmUserId, submit, backbone, state);
     }
 }

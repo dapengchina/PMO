@@ -29,6 +29,7 @@ function downloads() {
 	});
 	if (templateIds.length == 0) {
 		alert("请勾选下载模板");
+		return;
 	}
 	// 发送请求
 	var url = path + '/service/performanceTemplate/downloads?templateIds=' + templateIds;

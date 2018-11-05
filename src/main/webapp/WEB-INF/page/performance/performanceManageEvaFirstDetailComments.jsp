@@ -37,6 +37,7 @@
 <link href='<%=path %>/css/animate.min.css' rel='stylesheet'/>
 <link href='<%=path%>/css/bootstrap-datetimepicker.css' rel='stylesheet'/>
 <link href='<%=path%>/css/bootstrap-datetimepicker.min.css' rel='stylesheet'/>
+<link href='<%=path%>/css/style.css' rel='stylesheet'>
 <style type="text/css">
 .templateTable thead, .templateTable td { 
 	text-align: center;
@@ -89,7 +90,7 @@ var path='<%=path%>';
 							<div style="display:none">跟performanceManageEvaFirstDetail.jsp页面几乎一样的内容， 只是下面的参数和标题不同</div>
 							<input type="hidden" id="showAchievement" value="true"></input>
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>   Management->绩效考评->初评->初评结果+绩效事实 
+									<i class="glyphicon glyphicon-user"></i>   Management->绩效考评->初评
 								</h2>
 							</div>
 
@@ -224,6 +225,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/pmo/performanceTable.js"></script>
 	<script type="text/javascript" src="<%=path %>/js/pmo/performanceManageEvaFirstDetail.js"></script>
 </body>
 </html>

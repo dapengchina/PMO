@@ -755,8 +755,11 @@
   	<if test="submit != null and submit != ''">
   		and goal.state = #{submit}
   	</if>
-  	<if test="state != null and state != ''">
-  		and process.state = #{state}
+  	<if test="state != null and state.length > 0">
+  		and process.state in
+  		<foreach collection="state" item="item" open="(" close=")" separator=",">
+  			#{item}
+  		</foreach>
   	</if>
   	<!-- backbone -->
   	
