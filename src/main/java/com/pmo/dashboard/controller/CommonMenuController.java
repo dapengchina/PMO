@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pmo.dashboard.constant.SysConstant;
 import com.pmo.dashboard.entity.CommonMenu;
 import com.pmo.dashboard.entity.vo.CommonMenuVo;
 import com.pom.dashboard.service.CommonMenuService;
@@ -71,7 +72,7 @@ public class CommonMenuController {
 				   cv.setIcon("glyphicon glyphicon-stop");
 				   cv.setSelectedIcon("glyphicon glyphicon-stop");
 				   cv.setColor("#2FA4E7");
-				   cv.setHref(childList.get(i).getMenuUrl());
+				   cv.setHref(SysConstant.serverurl+"service/performance/"+childList.get(i).getMenuUrl());
 				   //cv.setNodes(handleChildMenu(childList.get(i).getMenuid()));
 			   }
 			   returnChildList.add(cv);

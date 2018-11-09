@@ -119,19 +119,37 @@ public class PerformanceController {
         return "performance/performanceEmpPBC";
     }
 
+    /**
+     * Employee-绩效考评-员工自评页面
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceEmpEvaSelf")
     public String getPerformanceEmpEvaSelf(final HttpServletRequest request, Model model) {
-        return "performance/performanceEmpEvaSelf";
+        return "performance/employee/performanceEmpEvaSelf";
     }
 
+    /**
+     * Employee-绩效考评-考评进度页面
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceEmpEvaProgress")
     public String getPerformanceEmpEvaProgress(final HttpServletRequest request, Model model) {
         return "performance/performanceEmpEvaProgress";
     }
 
+    /**
+     * Employee-绩效结果-当期绩效页面
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceEmpEvaCurrentPeriod")
     public String getPerformanceEmpEvaCurrentPeriod(final HttpServletRequest request, Model model) {
-        return "performance/performanceEmpEvaCurrentPeriod";
+        return "performance/employee/performanceEmpEvaCurrentPeriod";
     }
 
     @RequestMapping("/performanceEmpEvaCurrentPeriodDetail")
@@ -139,6 +157,12 @@ public class PerformanceController {
         return "performance/performanceEmpEvaCurrentPeriodDetail";
     }
 
+    /**
+     * Employee-绩效结果-历史绩效页面
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceEmpEvaHistoryQuery")
     public String getPerformanceEmpEvaHistoryQuery(final HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("loginUser");
@@ -173,7 +197,7 @@ public class PerformanceController {
             }
         }
 
-        return "performance/performanceEmpEvaHistoryQuery";
+        return "performance/employee/performanceEmpEvaHistoryQuery";
     }
 
     @RequestMapping("/performanceManageTargetApproval")

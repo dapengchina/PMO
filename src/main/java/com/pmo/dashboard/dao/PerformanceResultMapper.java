@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
+import com.pmo.dashboard.entity.vo.PresultVo;
 
 public interface PerformanceResultMapper {
 
@@ -109,4 +110,18 @@ public interface PerformanceResultMapper {
      * void
      */
     public Map<String, String> queryEmployeeIdByResultId(String resultId);
+    
+    /**
+     * Employee-绩效结果-当期绩效
+     * @param pmb
+     * @return
+     */
+    public PresultVo queryCurrentYearQuarter(PerformanceManageEvaBean pmb);
+    
+    /**
+     * Employee-绩效结果-历史绩效
+     * @param pmb
+     * @return
+     */
+    public List<PresultVo> queryPerformanceList(PerformanceManageEvaBean pmb);
 }

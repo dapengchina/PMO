@@ -1,0 +1,207 @@
+package com.pmo.dashboard.controller;
+
+
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.json.JSONArray;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pmo.dashboard.constant.SysConstant;
+import com.pmo.dashboard.entity.CSDept;
+import com.pmo.dashboard.entity.EmployeeImpplan;
+import com.pmo.dashboard.entity.EmployeeKeyevent;
+import com.pmo.dashboard.entity.EmployeeKpo;
+import com.pmo.dashboard.entity.Employeeperforgoal;
+import com.pmo.dashboard.entity.Performancematrix;
+import com.pmo.dashboard.entity.User;
+import com.pmo.dashboard.entity.vo.EmployeePerforGoalVo;
+import com.pmo.dashboard.util.DateUtils;
+import com.pom.dashboard.service.CSDeptService;
+import com.pom.dashboard.service.EmployeeImpplanService;
+import com.pom.dashboard.service.EmployeeKeyeventService;
+import com.pom.dashboard.service.EmployeeKpoService;
+import com.pom.dashboard.service.EmployeeperforgoalService;
+import com.pom.dashboard.service.PerformanceMatrixService;
+
+@Controller
+@RequestMapping(value="/empPerforGoal")
+public class EmployeePerforGoalController {
+	
+	
+	private ObjectMapper objectMapper = new ObjectMapper();
+	
+	@Resource
+	private EmployeeperforgoalService employeeperforgoalService;
+	
+	@Resource
+	private PerformanceMatrixService performanceMatrixService;
+	
+	@Resource
+	private EmployeeKpoService employeeKpoService;
+	
+	@Resource
+	private EmployeeKeyeventService employeeKeyeventService;
+	
+	@Resource
+	private EmployeeImpplanService employeeImpplanService;
+	
+	@Resource
+	private CSDeptService cSDeptService;
+	
+	private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+	
+	
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("/getEmployeePerformance")
+    @ResponseBody
+	public String getEmployeePerformance(final HttpServletRequest request, final HttpServletResponse response,Model model) throws JsonProcessingException{
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("loginUser");
+		String employeeid = user.getUserId();
+		Map<String,Object> map = new HashMap<String,Object>();
+		//查询中软部门信息
+		CSDept csdept = cSDeptService.queryCSDeptById(user.getCsdeptId());
+		session.setAttribute("department", csdept!=null?csdept.getCsSubDeptName():"");
+		/**
+		 * 查询员工绩效目标设定总表(查询当年当季度的数据)
+		 */
+		Employeeperforgoal epg = new Employeeperforgoal();
+		//获取当年当季度的开始日期并赋值
+		epg.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		//获取当年当季度的结束日期并赋值
+		epg.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		//员工ID
+		epg.setEmployeeid(employeeid);
+		Employeeperforgoal employperforgoal = employeeperforgoalService.getEmpPerforgoal(epg);
+
+		/**
+		 * 如果查不到员工当年当季度的数据，
+		 * 则表示员工还没有设定绩效目标
+		 */
+		if(employperforgoal==null){
+			Performancematrix pm = new Performancematrix();
+			List<Performancematrix> basePerforList = performanceMatrixService.getBasePerforTemplate(pm);
+		    map.put("data", basePerforList);
+			map.put("plan", new ArrayList());
+			map.put("state", SysConstant.PERFOR_DRAFT_STATE);
+		}else{
+			//查询重点工作表
+			EmployeeKpo eo = new EmployeeKpo();
+			eo.setEmployeeid(employeeid);//员工ID
+			eo.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+			eo.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+			List<EmployeeKpo> kpoList = employeeKpoService.getEmployeeKpo(eo);
+			
+			//查询关键事件表
+			EmployeeKeyevent ek = new EmployeeKeyevent();
+			ek.setEmployeeid(employeeid);//员工ID
+			ek.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+			ek.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+			List<EmployeeKeyevent> keyeventList = employeeKeyeventService.getEmployeeKeyEvent(ek);
+			
+			/**
+			 * 重点工作数据和关键事件数据整合
+			 */
+			List<EmployeePerforGoalVo> data1 = new ArrayList<EmployeePerforGoalVo>();
+			if(kpoList!=null && kpoList.size()>0){
+				for(int i=0;i<kpoList.size();i++){
+					EmployeePerforGoalVo perforgoal = new EmployeePerforGoalVo();
+					perforgoal.setId(kpoList.get(i).getId());
+					perforgoal.setIndex(kpoList.get(i).getIndex());
+					perforgoal.setKeyaction(kpoList.get(i).getKeyaction());
+					perforgoal.setPhasegoal(kpoList.get(i).getPhasegoal());
+					perforgoal.setWeightrate(kpoList.get(i).getWeightrate());
+					perforgoal.setEmployeeid(kpoList.get(i).getEmployeeid());
+					perforgoal.setDescription(kpoList.get(i).getDescription());
+					perforgoal.setCreatedate(kpoList.get(i).getCreatedate());
+					perforgoal.setDepartment(csdept!=null?csdept.getCsSubDeptName():"");
+					perforgoal.setType(SysConstant.PRIORITY_WORK);//重点工作
+					
+					data1.add(perforgoal);
+				}
+			}
+			if(keyeventList!=null && keyeventList.size()>0){
+				for(int j=0;j<keyeventList.size();j++){
+					EmployeePerforGoalVo perforgoal = new EmployeePerforGoalVo();
+					perforgoal.setId(keyeventList.get(j).getId());
+					perforgoal.setIndex(keyeventList.get(j).getIndex());
+					perforgoal.setKeyaction(keyeventList.get(j).getKeyaction());
+					perforgoal.setPhasegoal(keyeventList.get(j).getPhasegoal());
+					perforgoal.setWeightrate(keyeventList.get(j).getWeightrate());
+					perforgoal.setEmployeeid(keyeventList.get(j).getEmployeeid());
+					perforgoal.setDescription(keyeventList.get(j).getDescription());
+					perforgoal.setCreatedate(keyeventList.get(j).getCreatedate());
+					perforgoal.setDepartment(csdept!=null?csdept.getCsSubDeptName():"");
+					perforgoal.setType(SysConstant.KEY_EVENTS);//关键事件
+					
+					data1.add(perforgoal);
+				}
+			}
+			
+			//查询个人能力提升计划表
+			EmployeeImpplan el = new EmployeeImpplan();
+			el.setEmployeeid(employeeid);//员工ID
+			el.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+			el.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+			List<EmployeeImpplan> planList = employeeImpplanService.getEmployeeImpplan(el);
+		    if(planList!=null && planList.size()>0){
+		    	for(int k=0;k<planList.size();k++){
+		    		if(planList.get(k).getDealine()!=null && !"".equals(planList.get(k).getDealine())){
+		    			planList.get(k).setDealineString(sf.format(planList.get(k).getDealine()));
+		    		}
+			    }
+		    }
+			
+			map.put("data", data1);
+			map.put("plan", planList);
+			map.put("state", employperforgoal.getState());
+		}
+		return objectMapper.writeValueAsString(map);
+	}
+	
+	
+	@RequestMapping("/saveEmployeePerformance")
+    @ResponseBody
+	public String saveEmployeePerformance(final HttpServletRequest request, final HttpServletResponse response) throws JsonProcessingException{
+		HttpSession session = request.getSession(); 
+		User user = (User) session.getAttribute("loginUser");
+		String employeeid = user.getUserId();
+		String data1[] = request.getParameterValues("data1");//重点工作数据
+		String data2[] = request.getParameterValues("data2");//关键事件数据
+		String data3[] = request.getParameterValues("data3");//个人能力提升计划数据
+		String state = request.getParameter("data4");//状态
+		
+		JSONArray jsonArray1 = new JSONArray(data1[0]);//重点工作数据
+		JSONArray jsonArray2 = new JSONArray(data2[0]);//关键事件数据
+		JSONArray jsonArray3 = new JSONArray(data3[0]);//个人能力提升计划数据
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		try{
+			employeeperforgoalService.saveEmpPerforgoal(employeeid,jsonArray1, jsonArray2, jsonArray3,state);
+			map.put("msg", "保存成功");
+		    map.put("code", "1");
+		    return objectMapper.writeValueAsString(map);
+		}catch(ParseException e) {
+			map.put("msg", "保存失败");
+		    map.put("code", "0");
+		    return objectMapper.writeValueAsString(map);
+		}
+	}
+
+}

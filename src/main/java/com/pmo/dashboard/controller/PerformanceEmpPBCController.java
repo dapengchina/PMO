@@ -34,7 +34,7 @@ import com.pom.dashboard.service.PerformanceEmpPBCService;
 @Controller
 @RequestMapping(value="/performanceEmpPBC")
 public class PerformanceEmpPBCController {
-	private static Logger logger = LoggerFactory.getLogger(PerformanceEmpPBCController.class);
+	
 	
 	@Resource
 	private PerformanceEmpPBCService performanceEmpPBCService;
@@ -90,20 +90,21 @@ public class PerformanceEmpPBCController {
 	@RequestMapping("/savePerformanceEmpProcess")
 	@ResponseBody
 	public boolean savePerformanceEmpProcess(final HttpServletRequest request, final HttpServletResponse response) {
-		HttpSession session = request.getSession(); 
-		User user = (User) session.getAttribute("loginUser");
-		String employeeid = user.getUserId();
-		String id = Utils.getUUID();
-		String processid = Utils.getUUID();
-		String owner = "Pim";
-		Date date = new Date();
-		SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String createdate = dateFormat.format(date);
-		String state = "待审批";
-		String remark = "";
-		PerformanceEmpProcessBean performanceEmpProcessBean = new PerformanceEmpProcessBean(processid, owner, createdate, state, remark, processid, employeeid);
-		boolean a = performanceEmpPBCService.savePerformanceEmpProcess(performanceEmpProcessBean);
-		return a;
+//		HttpSession session = request.getSession(); 
+//		User user = (User) session.getAttribute("loginUser");
+//		String employeeid = user.getUserId();
+//		String id = Utils.getUUID();
+//		String processid = Utils.getUUID();
+//		String owner = "Pim";
+//		Date date = new Date();
+//		SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		String createdate = dateFormat.format(date);
+//		String state = "待审批";
+//		String remark = "";
+//		PerformanceEmpProcessBean performanceEmpProcessBean = new PerformanceEmpProcessBean(processid, owner, createdate, state, remark, processid, employeeid);
+//		boolean a = performanceEmpPBCService.savePerformanceEmpProcess(performanceEmpProcessBean);
+//		return a;
+		return false;
 		
 	}
 	@RequestMapping("/deletePerformanceEmpState")
@@ -138,9 +139,9 @@ public class PerformanceEmpPBCController {
 		SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String createdate = dateFormat.format(date);
 		String state = request.getParameter("data");
-		Employeeperforgoal employeeperforgoal = new Employeeperforgoal(id,employeeid,staffname,staffid,ehr,department,position,assessmensupervisor,employeekpoid,employeeekeyeventid,employeeimpplanid,createdate,state);
-		boolean a = performanceEmpPBCService.savePerformanceEmpState(employeeperforgoal) ;
-		return a;
+		//Employeeperforgoal employeeperforgoal = new Employeeperforgoal(id,employeeid,staffname,staffid,ehr,department,position,assessmensupervisor,employeekpoid,employeeekeyeventid,employeeimpplanid,createdate,state);
+		//boolean a = performanceEmpPBCService.savePerformanceEmpState(employeeperforgoal) ;
+		return false;
 	}
 	@RequestMapping("/queryPerformanceEmpKPOList")
     @ResponseBody

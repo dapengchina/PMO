@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pmo.dashboard.dao.EmployeeperforgoalMapper" >
+  <resultMap id="BaseResultMap" type="com.pmo.dashboard.entity.Employeeperforgoal" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="employeeid" property="employeeid" jdbcType="VARCHAR" />
+    <result column="staffname" property="staffname" jdbcType="VARCHAR" />
+    <result column="staffid" property="staffid" jdbcType="VARCHAR" />
+    <result column="ehr" property="ehr" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="assessmensupervisor" property="assessmensupervisor" jdbcType="VARCHAR" />
+    <result column="employeekpoid" property="employeekpoid" jdbcType="VARCHAR" />
+    <result column="employeeekeyeventid" property="employeeekeyeventid" jdbcType="VARCHAR" />
+    <result column="employeeimpplanid" property="employeeimpplanid" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="SelfAssessment" property="selfassessment" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="selectEmpPerforgoal" resultType="com.pmo.dashboard.entity.Employeeperforgoal" parameterType="com.pmo.dashboard.entity.Employeeperforgoal" >
+    select * from t_employeeperforgoal
+    where 1=1
+    <if test="employeeid != null and employeeid != ''" >
+       and employeeid = #{employeeid}
+    </if>
+    <if test="state != null and state != ''" >
+       and state = #{state}
+    </if>
+    <if test="currentQuarterStartDate != null and currentQuarterStartDate != ''" >
+       and DATE_FORMAT(createdate, '%Y-%m-%d') &gt;= #{currentQuarterStartDate}
+    </if>
+    <if test="currentQuarterEndDate != null and currentQuarterEndDate != ''" >
+       and DATE_FORMAT(createdate, '%Y-%m-%d') &lt;= #{currentQuarterEndDate}
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from t_employeeperforgoal
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.pmo.dashboard.entity.Employeeperforgoal" >
+    insert into t_employeeperforgoal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="employeeid != null" >
+        employeeid,
+      </if>
+      <if test="staffname != null" >
+        staffname,
+      </if>
+      <if test="staffid != null" >
+        staffid,
+      </if>
+      <if test="ehr != null" >
+        ehr,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="assessmensupervisor != null" >
+        assessmensupervisor,
+      </if>
+      <if test="employeekpoid != null" >
+        employeekpoid,
+      </if>
+      <if test="employeeekeyeventid != null" >
+        employeeekeyeventid,
+      </if>
+      <if test="employeeimpplanid != null" >
+        employeeimpplanid,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="selfassessment != null" >
+        SelfAssessment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeid != null" >
+        #{employeeid,jdbcType=VARCHAR},
+      </if>
+      <if test="staffname != null" >
+        #{staffname,jdbcType=VARCHAR},
+      </if>
+      <if test="staffid != null" >
+        #{staffid,jdbcType=VARCHAR},
+      </if>
+      <if test="ehr != null" >
+        #{ehr,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="assessmensupervisor != null" >
+        #{assessmensupervisor,jdbcType=VARCHAR},
+      </if>
+      <if test="employeekpoid != null" >
+        #{employeekpoid,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeekeyeventid != null" >
+        #{employeeekeyeventid,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeimpplanid != null" >
+        #{employeeimpplanid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="selfassessment != null" >
+        #{selfassessment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.pmo.dashboard.entity.Employeeperforgoal" >
+    update t_employeeperforgoal
+    <set >
+      <if test="employeeid != null" >
+        employeeid = #{employeeid,jdbcType=VARCHAR},
+      </if>
+      <if test="staffname != null" >
+        staffname = #{staffname,jdbcType=VARCHAR},
+      </if>
+      <if test="staffid != null" >
+        staffid = #{staffid,jdbcType=VARCHAR},
+      </if>
+      <if test="ehr != null" >
+        ehr = #{ehr,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="assessmensupervisor != null" >
+        assessmensupervisor = #{assessmensupervisor,jdbcType=VARCHAR},
+      </if>
+      <if test="employeekpoid != null" >
+        employeekpoid = #{employeekpoid,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeekeyeventid != null" >
+        employeeekeyeventid = #{employeeekeyeventid,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeimpplanid != null" >
+        employeeimpplanid = #{employeeimpplanid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="selfassessment != null" >
+        SelfAssessment = #{selfassessment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateState" parameterType="com.pmo.dashboard.entity.Employeeperforgoal" >
+    update t_employeeperforgoal
+    <set >
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="selfassessment != null" >
+        SelfAssessment = #{selfassessment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where 1=1
+    <if test="employeeid != null and employeeid != ''" >
+       and employeeid = #{employeeid}
+    </if>
+    <if test="currentQuarterStartDate != null and currentQuarterStartDate != ''" >
+       and DATE_FORMAT(createdate, '%Y-%m-%d') &gt;= #{currentQuarterStartDate}
+    </if>
+    <if test="currentQuarterEndDate != null and currentQuarterEndDate != ''" >
+       and DATE_FORMAT(createdate, '%Y-%m-%d') &lt;= #{currentQuarterEndDate}
+    </if>
+  </update>
+  
+</mapper>

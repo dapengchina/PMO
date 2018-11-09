@@ -5,6 +5,7 @@
 <%
 	String path = request.getContextPath();
 	String url = request.getRequestURI();
+	
 	String currentPageName = "";
 	if (url != null) {
 		String[] strs = url.split("/");
@@ -63,7 +64,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  PCB绩效目标模板
+									<i class="glyphicon glyphicon-user"></i>Employee-绩效目标-绩效目标设定
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
@@ -75,7 +76,7 @@ var path='<%=path%>';
 							             	<div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">姓名</span>
-							                        <input class="form-control" type="text" placeholder="XXX"
+							                        <input readonly="readonly" class="form-control" type="text"
 							                        name="userName" id="userName" value="${ sessionScope.loginUser.nickname}">
 							                    </div>
 							                </div>
@@ -83,7 +84,7 @@ var path='<%=path%>';
 							                <div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">工号</span>
-							                        <input class="form-control" type="text" placeholder="XXXXX"
+							                        <input readonly="readonly" class="form-control" type="text" 
 							                        name="lob" id="lob" value="${ sessionScope.loginUser.userName}">
 
 							                    </div>
@@ -91,21 +92,21 @@ var path='<%=path%>';
 							                <div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">所在部门</span>
-							                        <input class="form-control" type="text" placeholder="XX交付部"
-							                        name="bu" id="bu" value="${ sessionScope.loginUser.bu}">
+							                        <input style="width:150px;" readonly="readonly" class="form-control" type="text" 
+							                        name="bu" id="bu" value="${ sessionScope.department}">
 							                    </div>
 							                </div>
-							                <div class="form-group col-md-2">
+							                <div style="margin-left:83px;" class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">职位</span>
-							                        <input class="form-control" type="text" placeholder="PM"
+							                        <input style="width:100px;" readonly="readonly" class="form-control" type="text"
 							                        name="position" id="position">
 							                    </div>
 							                </div>
 											<div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">考核主管</span>
-							                        <input class="form-control" type="text" placeholder="XXX交付经理"
+							                        <input readonly="readonly" class="form-control" type="text" 
 							                        name="" id="">
 							                    </div>
 							                </div>
@@ -131,77 +132,24 @@ var path='<%=path%>';
 							   <tbody>
 							   
                                </tbody>
-
-                               
-                                  <!-- <td>1</td>
-                                 <td>招聘管理</td>
-                                 <td>25%</td>
-                                 <td>Xpod team面试通过率达到30%</td>
-                                 <td>
-								 1.举办2次面试官培训，面试官认证通过3名人选，权重5%
-								 <Br/>
-								 2.增加内推量，下限50份简历资源，权重5%
-								 </td>
-                                 <td>XX交付经理</td>
-                               </tr>
-
-                                <tr>
-                                 <td>2</td>
-                                 <td>项目质量</td>
-                                 <td>30%</td>
-                                 <td>XXXXXXXXXXXX</td>
-                                 <td>XXXXXXXX</td>
-                                 <td>XX交付经理</td>
-                               </tr>
-
+                                  
                                <tr>
-                                 <td>3</td>
-                                 <td>技术分享</td>
-                                 <td>20%</td>
-                                 <td>XXXXXXXXXXXX</td>
-                                 <td>XXXXXXXX</td>
-                                 <td>XX交付经理</td>
-                               </tr>
-
-                               <tr>
-                                 <td>4</td>
-                                 <td>新人培养</td>
-                                 <td>10%</td>
-                                 <td>XXXXXXXXXXXX</td>
-                                 <td>XXXXXXXX</td>
-                                 <td>XX交付经理</td>
-                               </tr>-->
-                               <tr >
-                                 <td colspan="6"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr1('table1', -1, 6);")>+</a>
+                                 <td colspan="8"><button id="button1" href='javascript:void(0);' class='btn btn-info btn-sm' onclick="addTr1('table1', -1, 7);")><span class="glyphicon glyphicon-plus"></span> Plus</button>
 								 </td>
                                </tr>
                              </table>
-
-								<br/>
-
+							 <br/>
                              <table id="table2" border="1" width="100%" class="templateTable">
                              <tbody>
                              </tbody>
-                               <!--  <tr>
-                                 <td>关键事件</td>
-                                 <td>1</td>
-                                 <td>Develop and Support</td>
-                                 <td>15%</td>
-                                 <td>Xpod team面试通过率达到30%</td>
-                                 <td>
-								   Organize technology research like POC
-								 </td>
-                                 <td>XX交付经理</td>
-                               </tr>-->
                                <tr>
-                                 <td colspan="7"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr1('table2', -1, 7);")>+</a>
+                                 <td colspan="8"><button id="button2" href='javascript:void(0);' class='btn btn-info btn-sm' onclick="addTr3('table2', -1, 7);")><span class="glyphicon glyphicon-plus"></span> Plus</button>
 								 </td>
                                </tr>
 							 </table>
+							 <br/>
 
-								<br/>
-
-							  <div>个人能力提升计划IDP (IDP不作为考核项目，是个人成长所做出的承诺)</div>
+							 <div>个人能力提升计划IDP (IDP不作为考核项目，是个人成长所做出的承诺)</div>
                              <table id="table3" border="1" width="100%" class="templateTable">
 							   <thead>
                                <tr  style="background-color:#d9edf7">
@@ -222,7 +170,7 @@ var path='<%=path%>';
 							   <tbody>
 							   </tbody>
 							    <tr>
-                                 <td colspan="4"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr2('table3', -1, 4);")>+</a>
+                                 <td colspan="4"><button id="button3" href='javascript:void(0);' class='btn btn-info btn-sm' onclick="addTr2('table3', -1, 4);")><span class="glyphicon glyphicon-plus"></span> Plus</button>
 								 </td>
                                </tr>
 							 </table>

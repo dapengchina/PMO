@@ -49,12 +49,11 @@
 var path='<%=path%>';
 </script>
 <body>
-
 	<c:import url="/service/manage/top" />
 
 	<c:import url="/service/performance/performanceLeft">
 	    <c:param name="currentPageName" value="<%=currentPageName%>"/>
-	</c:import>
+	</c:import> 
 
 
 <!-- middle content start -->
@@ -65,37 +64,145 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Employee-绩效考评-考评进度  
+									<i class="glyphicon glyphicon-user"></i>  Employee-绩效结果-历史绩效  
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
 							
-							<div class="panel panel-default">	
-                              <div class="panel-body">
+							<!-- search box start -->							
 
-									<table id="performancePregressList" class="table table-striped table-bordered" >
-										<thead>
-											<tr style="background-color:#d9edf7">
-												<th>流程名称</th>
-												<th>审核人</th>
-												<th>状态</th>
-												<th>Comments</th>
-											</tr>
-										</thead>										
-										<tbody>
-										
-									    </tbody>
+						<div class="panel panel-default">
+							 <div class="panel-heading" style="background-color:#00688B">
+									<font color="white"> Search</font>
+							 </div>
+                             <div class="panel-body">
+
+										<div class="group">
+											<label class="col-sm-2 control-label">E-HR</label>
+											<div class="col-sm-4">
+												<input type="text" class="form-control" id="eHr" value="${eHr}"/>
+											</div>
+										</div>  
+										<div class="group">
+											<label class="col-sm-2 control-label">Employee Name</label>
+											<div class="col-sm-4">
+												<input type="text" class="form-control" id="staffName" value="${staffName}"/>
+											</div>
+										</div>
+										</br></br></br>
+										<div class="group">
+											<label class="col-sm-2 control-label">MSA Role</label>
+											<div class="col-sm-4">
+												<input type="text" class="form-control" id="role" value="${role}" />
+											</div>
+										</div>
+										<div class="group">
+											<label class="col-sm-2 control-label">Skills/Technology</label>
+											<div class="col-sm-4">
+												<input type="text" class="form-control" id="skill" value="${skill}" />
+											</div>
+										</div>
+										</br></br></br>
+										<div class="group">
+											<label class="col-sm-2 control-label">BU</label>
+											<div class="col-sm-4">
+												<input type="text" class="form-control" id="bu" value="${BU}" />
+											</div>
+										</div>
+										<div class="group">
+											<label class="col-sm-2 control-label">DU</label>
+											<div class="col-sm-4">
+												<input type="text" class="form-control"  id="du" value="${DU}" />
+											</div>
+										</div>
+										</br></br></br>
+
+                                    <div class="group">
+										<label class="col-lg-2 control-label">Period Between</label>  
+                                        <div class="col-lg-2">
+                                        <div class='input-group date' id='datetimepicker1'>  
+                                            <input id="startYear" type='text' class="form-control" />  
+                                            <span class="input-group-addon">  
+                                             <span class="glyphicon glyphicon-calendar"></span>  
+                                            </span>  
+                                        </div> 
+                                        </div> 
+										<div class="col-lg-2">
+                                            <select class="form-control" id="startQuarter">
+												<option>Q1</option>
+												<option>Q2</option>
+												<option>Q3</option>
+												<option>Q4</option>
+											</select>
+                                        </div> 
+								   </div>
+
+                                    <div class="group">
+										<label class="col-lg-2 control-label">To</label>  
+                                        <div class="col-lg-2">
+                                        <div class='input-group date' id='datetimepicker2'>  
+                                            <input id="endYear" type='text' class="form-control" />  
+                                            <span class="input-group-addon">  
+                                             <span class="glyphicon glyphicon-calendar"></span>  
+                                            </span>  
+                                        </div> 
+                                        </div> 
+										<div class="col-lg-2">
+                                            <select class="form-control"  id="endQuarter">
+												<option>Q1</option>
+												<option>Q2</option>
+												<option>Q3</option>
+												<option>Q4</option>
+											</select>
+                                        </div> 
+								   </div>
+
+
+						     </div>
+
+		
+                          </div>
+
+						  	
+								<div class="form-group" >
+									    <div style="text-align:center;width:20%;float:left"   >												
+									    <input type="button" value="Search"
+										name="searchBtn" id="searchBtn"  onClick="search();"
+										class="button btn btn-primary" data-dismiss="modal"
+										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+									    
+									    </div>
+									    <div style="text-align:left;width:80%;float:left">
+									    <input type="button" value="Clear" href="#"
+										class="button btn btn-primary" data-dismiss="modal"
+										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+									    </div>
+								</div>
+								        
+							<!-- search box end -->
+							<span>&nbsp;</span>
+							<!-- result box start -->
+
+									<table id="table3" border="1" width="100%" >
+										<tr style="background-color:#00688B">
+										 <td ><font color="white"> Performance History</font>	 </td>
+										</tr>
+									   <tr>
+										 <td> <table id="empHistoryList"></table> </td>									
+									   </tr>
 									</table>
+									
+						<br/>&nbsp;
+							
 						     </div>
                              </div>
-                          
+							<!-- result box end -->
+
                             </div>        
 						</div>
-				</div>
-				</div>
-
-
+						
 <!-- middle content end -->
+
 
 <div class="ch-container ">
 	<c:import url="/service/manage/footer" />
@@ -149,9 +256,10 @@ var path='<%=path%>';
 	<!-- application script for Charisma demo -->
 	<script src="<%=path %>/js/charisma.js"></script>
 	
+	<script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
+
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-    <script type="text/javascript" src="<%=path %>/js/pmo/performanceEmpEvaProgress.js"></script>
-    
+	<script type="text/javascript" src="<%=path %>/js/pmo/performance/performanceEmpEvaHistoryQuery.js"></script>
 </body>
 </html>
 

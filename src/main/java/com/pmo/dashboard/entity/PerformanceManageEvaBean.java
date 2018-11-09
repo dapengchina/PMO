@@ -58,8 +58,25 @@ public class PerformanceManageEvaBean {
 
     private String resultId;         // add by xuexan
     private String state;
+    
+    
+    /**
+     * 不匹配字段
+     * @return
+     */
+    private String e_hr;
+    
+    
 
-    public String getResultId() {
+    public String getE_hr() {
+		return e_hr;
+	}
+
+	public void setE_hr(String e_hr) {
+		this.e_hr = e_hr;
+	}
+
+	public String getResultId() {
         return resultId;
     }
 
