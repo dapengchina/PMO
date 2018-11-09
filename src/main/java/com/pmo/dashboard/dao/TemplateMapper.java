@@ -13,7 +13,7 @@ public interface TemplateMapper {
 
     /**
      * 获取所有模板文件
-     * @author: Song_Lee
+     * @author: xuexuan
      * 2018年10月18日 下午2:01:24
      * @return 
      * List<Template>
@@ -22,7 +22,7 @@ public interface TemplateMapper {
 
     /**
      * 根据ID集合获取模板
-     * @author: Song_Lee
+     * @author: xuexuan
      * 2018年10月18日 下午3:45:14
      * @param ids
      * @return 
@@ -32,7 +32,7 @@ public interface TemplateMapper {
 
     /**
      * 根据ID获取模板
-     * @author: Song_Lee
+     * @author: xuexuan
      * 2018年10月18日 下午3:45:14
      * @param ids
      * @return 
@@ -42,7 +42,7 @@ public interface TemplateMapper {
 
     /**
      * 根据id更新模板属性
-     * @author: Song_Lee
+     * @author: xuexuan
      * 2018年10月18日 下午4:16:26
      * @param template 
      * void

@@ -39,5 +39,5 @@ public interface EmployeeService
      * @return 
      * List<Map<String,Object>>
      */
-	public List<Map<String, Object>> rmApprovalList(String rmUserId, String submit, String backbone, String state);
+	public List<Map<String, Object>> rmApprovalList(String rmUserId, String submit, String backbone, String[] state);
 }

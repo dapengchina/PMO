@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -408,10 +409,50 @@ public class PerformanceController {
 		return "performance/performanceLobHRReport";
 	}
 	
+	/**
+	 * 获取绩效审批状态名称
+	 * @author: xuexuan
+	 * 2018年11月1日 下午6:07:07
+	 * @param stateId
+	 * @return 
+	 * Map<String,String>
+	 */
+	@RequestMapping("/state/{stateId}")
+    @ResponseBody
+    public Map<String, String> getStateName(@PathVariable("stateId") String stateId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("stateName", Constants.APPROVAL_STATE.get(stateId));
+        return map;
+    }
 	
 	
-	
-	
+	/**
+     * 绩效目标详情页面
+     * @author: xuexuan
+     * 2018年10月31日 上午11:31:32
+     * @param employeeId
+     * @param resultId
+     * @param title
+     * @param type
+     * @param model
+     * @return 
+     * String
+     */
+    @RequestMapping("/goalDetail")
+    public String getGoalDetailPage(@RequestParam(value = "employeeId", required = false) String employeeId, @RequestParam(value = "resultId", required = false) String resultId,
+            @RequestParam("title") String title, @RequestParam("type") String type, Model model) {
+        model.addAttribute("title", title);
+        model.addAttribute("type", type);
+        if (StringUtils.isNotBlank(resultId)) {
+            Map<String, String> map = performanceManageEvaService.queryEmployeeIdByResultId(resultId);
+            model.addAttribute("resultId", resultId);
+            model.addAttribute("employeeId", map.get("employeeId"));
+            model.addAttribute("result", map.get("result"));
+        } else {
+            model.addAttribute("employeeId", employeeId);
+        }
+        return "performance/performanceDetail";
+    }
 	
 	
 	

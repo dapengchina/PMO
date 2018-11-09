@@ -130,6 +130,17 @@ public interface PerformanceManageEvaService {
     public List<PerformanceManageEvaBean> finalizeResultList();
 
     /**
+     * 条件筛选最终绩效列表
+     * @author: xuexuan
+     * 2018年11月2日 下午1:01:06
+     * @param condition
+     * @return 
+     * List<PerformanceManageEvaBean>
+     * 
+     */
+    public List<PerformanceManageEvaBean> finalizeResultList(PerformanceQueryCondition condition);
+
+    /**
      * 获取各事业部当年当季审批状态
      * HRBP-绩效考评-审批列表
      * @author: xuexuan

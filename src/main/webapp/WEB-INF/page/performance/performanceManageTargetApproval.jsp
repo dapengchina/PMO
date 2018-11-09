@@ -43,13 +43,60 @@
 }
 </style>
 <style>
-    .table-thead-background  thead, th {
-        background-color:#d9edf7;
-    }
+.table-thead-background  thead, th {
+	background-color: #d9edf7;
+}
+
+a.link {
+	position: relative;
+}
+
+div.submitTips {
+	border: 1px solid #9a9898;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: white;
+    position: absolute;
+    width: 170px;
+    line-height: 20px;
+    word-wrap: break-word;
+    margin-top: -30px;
+    margin-left: 12px;
+    z-index: 1000;
+    display: none;
+}
+div.backboneTips{
+	border: 1px solid #9a9898;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: white;
+    position: absolute;
+    width: 170px;
+    line-height: 20px;
+    word-wrap: break-word;
+    margin-top: -30px;
+    margin-left: 12px;
+    z-index: 1000;
+    display: none;
+}
+div .stateTips{
+	border: 1px solid #9a9898;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: white;
+    position: absolute;
+    width: 170px;
+    line-height: 20px;
+    word-wrap: break-word;
+    margin-top: -30px;
+    margin-left: 12px;
+    z-index: 1000;
+    display: none;
+}
 </style>
 </head>
 <script>
-var path='<%=path%>';
+	var path = '<%=path%>';
 </script>
 <body>
 	<c:import url="/service/manage/top" />
@@ -83,7 +130,6 @@ var path='<%=path%>';
 									   </tr>
 									</table>
 									<span>&nbsp;</span>
-									
 									<div class="form-group">
 												<div style="text-align:center;width:100%;">
 												<input type="button" value="Select All" name="Save" id="Save" href="#"
@@ -105,15 +151,53 @@ var path='<%=path%>';
 	                           </div>  
 							</div>
 						</div>
-<!-- middle content end -->
-	
-	
-<div class="ch-container ">
-	<c:import url="/service/manage/footer" />
-</div>
+	<!-- middle content end -->
+	<div id="submitFilterDiv" class="hidden">
+		<span style="color:#006633;font-size: 16px;">Submited</span>
+		<div style="border-bottom:1px solid #0e5b87;margin: 10px 0px 20px 0px;"></div>
+		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
+			<input type="checkbox" id="yes" name="submitCheckbox" value="submit" checked> <label for="yes">Yes</label>
+		</div>
+		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
+			<input type="checkbox" id="no" name="submitCheckbox" value="save" checked> <label for="no">No</label>
+		</div>
+		<button type="button" class="btn btn-default" onClick="search(1)" style="margin-right:5px;">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
+		<button type="button" class="btn btn-default" onClick="cancelFilter(1)">Cancel</button>
+	</div>
+	<div id="backboneFilterDiv" class="hidden">
+		<span style="color:#006633;font-size: 16px;">Backbone</span>
+		<div style="border-bottom:1px solid #0e5b87;margin: 10px 0px 20px 0px;"></div>
+		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
+			<input type="checkbox" id="yes" name="backboneCheckbox" value="1" checked> <label for="yes">Yes</label>
+		</div>
+		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
+			<input type="checkbox" id="no" name="backboneCheckbox" value="0" checked> <label for="no">No</label>
+		</div>
+		<button type="button" class="btn btn-default" onClick="search(2)" style="margin-right:5px;">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
+		<button type="button" class="btn btn-default" onClick="cancelFilter(2)">Cancel</button>
+	</div>
+	<div id="stateFilterDiv" class="hidden">
+		<span style="color:#006633;font-size: 16px;">State</span>
+		<div style="border-bottom:1px solid #0e5b87;margin: 10px 0px 20px 0px;"></div>
+		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
+			<input type="checkbox" id="yes" name="stateCheckbox" value="0" checked> <label for="yes">未审批</label>
+		</div>
+		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
+			<input type="checkbox" id="no" name="stateCheckbox" value="1" checked> <label for="no">审批通过</label>
+		</div>
+		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
+			<input type="checkbox" id="no" name="stateCheckbox" value="-1" checked> <label for="no">审批未通过</label>
+		</div>
+		<button type="button" class="btn btn-default" onClick="search(3)" style="margin-right:5px;">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
+		<button type="button" class="btn btn-default" onClick="cancelFilter(3)">Cancel</button>
+	</div>
+
+	<div class="ch-container ">
+		<c:import url="/service/manage/footer" />
+	</div>
 
 	<!-- CSS引用 -->
-    <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.css" type="text/css" />
+    <link rel="stylesheet" href="<%=path%>/extensioncss/bootstarp-table/bootstrap-table.css" type="text/css" />
     <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.min.css" type="text/css" />
 	<link rel="stylesheet" href="<%=path %>/extensionjs/bootstrap3-editable/css/bootstrap-editable.css" type="text/css" />
 	<link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table-fixed-columns.css" type="text/css" />      

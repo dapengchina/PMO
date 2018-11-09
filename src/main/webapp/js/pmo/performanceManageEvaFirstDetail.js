@@ -22,141 +22,18 @@ function queryPercentage() {
 			$("#empC").html(data["C"] == undefined ? 0 : data["C"]);
 			$("#empD").html(data["D"] == undefined ? 0 : data["D"]);
 			$("#empSum").html(data["sum"] == undefined ? 0 : data["sum"]);
-			$("#percentSum").html("100%");
+			if (data["sum"] == 0) {
+				$("#percentSum").html("0%");
+			}
 		}
 	});
 }
-
+RmEvaFlag = true;// 标识该页面为RM评级页面，反馈给performancTable.js
+tableId = "manageEvaFirstDetailList";
 function loadManageEvaFirstDetailList() {
 	// var queryUrl = path +
 	// '/service/performanceManageEva/queryManageEvaFirstDetailList';
 	var queryUrl = path + '/service/performanceManageEva/processing/result/list/rm';
-	var columns = [ {
-		title : '序号',
-		formatter : function(value, row, index) {
-			return "<span>" + (index + 1) + "</span>";
-		},
-		valign : "middle"
-	}, {
-		field : 'ehr',
-		title : 'E-HR编号',
-		valign : "middle"
-	}, {
-		field : 'lobNo',
-		title : 'LOB工号',
-		valign : "middle"
-	}, {
-		field : 'name',
-		title : '姓名',
-		valign : "middle"
-	}, {
-		field : 'hireDate',
-		title : '入职时间',
-		valign : "middle"
-	}, {
-		field : 'position',
-		title : '职务',
-		valign : "middle"
-	}, {
-		field : 'serviceLine',
-		title : '业务线',
-		valign : "middle"
-	}, {
-		field : 'bu',
-		title : 'BU',
-		valign : "middle"
-	}, {
-		field : 'du',
-		title : '交付部',
-		valign : "middle"
-	}, {
-		field : 'location',
-		title : '归属地',
-		valign : "middle"
-	}, {
-		field : 'keymember',
-		title : '是否<br/>骨干',
-		valign : "middle"
-	}, {
-		field : 'participate',
-		title : '是否<br/>参评',
-		valign : "middle"
-	}, {
-		field : 'manager',
-		title : '直接主管',
-		valign : "middle"
-	}, {
-		field : 'customerFeedback',
-		title : '客户反馈',
-		formatter : function(value, row, index) {
-			var substr = "";
-			if (value.length > 5) {
-				substr = value.substring(0, 5);
-				return "<a href='#' class='link'>" + substr + "<div class='tips'>" + value + "</div></a>";
-			} else {
-				return value;
-			}
-		},
-		valign : "middle"
-	}, {
-		field : 'initialEvalution',
-		title : '初评<br/>(依据<br/>客户<br/>反馈)',
-		// sortable : true
-		formatter : function(value, row, index) {
-			if (row.initialEvalution == "" || row.initialEvalution == undefined) {
-				stateSubmitFlag = false;
-			}
-			return value;
-		},
-		valign : "middle"
-	}, {
-		field : 'pmEvalution',
-		title : '直接<br/>主管<br/>初评<br/>结果',
-		// sortable : true,
-		valign : "middle"
-	}, {
-		field : 'duEvalution',
-		title : '部门<br/>集体<br/>评议<br/>结果',
-		// sortable : true,
-		valign : "middle"
-	}, {
-		field : 'duEvaManager',
-		title : '集体<br/>评议<br/>主管',
-		valign : "middle"
-	}, {
-		field : 'achievement',
-		title : 'A/C/D<br/>人员<br/>绩效<br/>事实',
-		valign : "middle"
-	}, {
-		field : 'jump',
-		title : '是否<br/>绩效<br/>跳变',
-		valign : "middle"
-	}, {
-		field : 'comments',
-		title : '备注',
-		// sortable : true,
-		valign : "middle"
-	}, {
-		field : 'previous1Quarter',
-		title : '上<br/>季度<br/>绩效',
-		valign : "middle"
-	}, {
-		field : 'previous2Quarter',
-		title : '上上<br/>季度<br/>绩效',
-		valign : "middle"
-	}, {
-		field : 'previous3Quarter',
-		title : '上上上<br/>季<br/>度绩效',
-		valign : "middle"
-	}, {
-		title : '绩效<br/>目标',
-		formatter : function(value, row, index) {
-			if (row.state == 0) {// 待RM审批状态显示编辑按钮
-				return "<a href='javascript:void(0);' onClick='detail(\"" + row.resultId + "\");' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
-			}
-		},
-		valign : "middle"
-	} ];
 
 	var table = $('#manageEvaFirstDetailList').bootstrapTable({
 		url : queryUrl, // 请求后台的URL（*）
@@ -211,12 +88,15 @@ function loadManageEvaFirstDetailList() {
 
 	});
 }
-var stateSubmitFlag = true;
 var stateSubmitIds = new Array();
 function stateSubmit() {
 	// 所有员工评价后才可提交
 	if (!stateSubmitFlag) {
 		alert("还有未评级员工，请先评级");
+		return;
+	}
+	if (stateSubmitIds.length == 0) {
+		alert("暂无数据审批！");
 		return;
 	}
 	// 审批
@@ -228,6 +108,7 @@ function stateSubmit() {
 		},
 		success : function(data) {
 			alert("审批成功");
+			history.go(0);
 		},
 		error : function() {
 			alert("审批失败");
@@ -238,7 +119,7 @@ function stateSubmit() {
 function detail(resultId) {
 	// 页面跳转post提交
 	$("#detailForm").remove();
-	var url = path + '/service/performanceManageEva/goal/detail.html';
+	var url = path + '/service/performance/goalDetail.html';
 	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
 	$eleForm.attr("action", url);
 	$(document.body).append($eleForm);

@@ -1,8 +1,8 @@
 $(function() {
 	loadManageTargetApprovalList();
-
 });
-
+var pageNumber = 1;
+var pageSize = 10;
 function loadManageTargetApprovalList() {
 	var queryUrl = path + '/service/performanceManageEva/assessment/goal/list';
 	var columns = [ {
@@ -11,45 +11,42 @@ function loadManageTargetApprovalList() {
 	// 是否显示复选框
 	}, {
 		title : 'SL',
-		sortable : true,
 		formatter : function(value, row, index) {
-			return "<span>" + (index + 1) + "</span>";
+			// 保存分页信息
+			var options = $('#manageTargetApprovalList').bootstrapTable("getOptions");
+			return "<span>" + (index + 1 + (options.pageNumber - 1) * options.pageSize) + "</span>";
 		}
 	}, {
 		field : 'E_HR',
 		title : 'E-HR',
-		sortable : true
 	}, {
 		field : 'STAFF_NAME',
 		title : 'Employee Name',
-		sortable : true
 	}, {
 		field : 'ROLE',
 		title : 'MSA Role',
-		sortable : true
 	}, {
 		field : 'SKILL',
 		title : 'Skill/Technology',
-		sortable : true
 	}, {
 		field : 'submit',
-		title : '是否提交',
+		title : '是否提交&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(1);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="submitTips"></div> ',
 		formatter : function(value, row, index) {
-			return row.submit == 1 ? "是" : "否";
+			return row.submit == "submit" ? "是" : "否";
 		}
 	}, {
 		field : 'pioneer',
-		title : '业务先锋'
+		title : '业务先锋&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(2);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="backboneTips"></div>'
 	}, {
 		field : 'state',
-		title : '审批状态',
+		title : '审批状态&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(3);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="stateTips"></div>',
 		formatter : function(value, row, index) {
-			return row.state == 1 ? "审批通过" : row.state == 0 ? "待审批" : "审批不通过";
+			return row.submit == "save" ? "未提交" : row.state == 0 ? "未审批" : row.state == 1 ? "审批通过" : "审批不通过";
 		}
 	}, {
 		title : 'Detail',
 		formatter : function(value, row, index) {
-			if (row.submit == 1 && row.state == 0) {
+			if (row.submit == "submit" && row.state == 0) {
 				return "<a href='javascript:void(0);' onClick='detail(\"" + row.EMPLOYEE_ID + "\");' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
 			}
 		}
@@ -62,11 +59,11 @@ function loadManageTargetApprovalList() {
 		striped : true, // 是否显示行间隔色
 		cache : false, // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
 		pagination : true, // 是否显示分页（*）
-		sortable : true, // 是否启用排序
+		sortable : false, // 是否启用排序
 		sortOrder : "asc", // 排序方式
 		sidePagination : "server", // 分页方式：client客户端分页，server服务端分页（*）
-		pageNumber : 1, // 初始化加载第一页，默认第一页,并记录
-		pageSize : 10, // 每页的记录行数（*）
+		pageNumber : pageNumber, // 初始化加载第一页，默认第一页,并记录
+		pageSize : pageSize, // 每页的记录行数（*）
 		pageList : [ 10, 25, 50, 100 ], // 可供选择的每页的行数（*）
 		search : false, // 是否显示表格搜索
 		strictSearch : false,
@@ -82,15 +79,44 @@ function loadManageTargetApprovalList() {
 		singleSelect : false, // 禁止多选_____
 		// 得到查询的参数
 		queryParams : function(params) {
+			var submitAry = $("input[name='submitCheckbox']:checked");
+			var submit = "";
+			if (submitAry.length == 1) {
+				submit = submitAry[0].value;
+			}
+			var backboneAry = $("input[name='backboneCheckbox']:checked");
+			var backbone = "";
+			if (backboneAry.length == 1) {
+				backbone = backboneAry[0].value;
+			}
+			var stateAry = $("input[name='stateCheckbox']:checked");
+			var state = "";
+			if (stateAry.length > 0) {
+				var state = new Array();
+				stateAry.each(function(index, element) {
+					state.push(element.value);
+				});
+				state = state.join(",");
+			}
 			return {
 				pageSize : params.limit,
 				pageNumber : params.offset / params.limit + 1,
+				submit : submit,
+				backbone : backbone,
+				state : state
 			};
 		},
 		columns : columns,
 		onLoadSuccess : function(sta) {
-			console.log("in onLoadSuccess");
-			console.log(JSON.stringify(sta));
+			/* 添加过滤div * */
+			if ($(".submitTips").html() == "") {
+				$(".submitTips").append($("#submitFilterDiv"));
+				$("#submitFilterDiv").removeClass("hidden");
+				$(".backboneTips").append($("#backboneFilterDiv"));
+				$("#backboneFilterDiv").removeClass("hidden");
+				$(".stateTips").append($("#stateFilterDiv"));
+				$("#stateFilterDiv").removeClass("hidden");
+			}
 		},
 		onLoadError : function(status, res) { // 加载失败时执行
 			console.log(res);
@@ -105,7 +131,7 @@ function loadManageTargetApprovalList() {
 function detail(employeeId) {
 	// 页面跳转post提交
 	$("#detailForm").remove();
-	var url = path + '/service/performanceManageEva/goal/detail.html';
+	var url = path + '/service/performance/goalDetail.html';
 	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
 	$eleForm.attr("action", url);
 	$(document.body).append($eleForm);
@@ -126,16 +152,44 @@ function download() {
 	window.location.href = path + "/service/performanceManageEva/goal/export";
 }
 
-function search() {
+function search(type) {
 	var queryParams = {
-		query : {
-			pageSize : 10,
-			pageNumber : 1,
-			submit : "1",
-			state : "1",
-			bockbone : "1",
-		}
+		pageNumber : pageNumber,
+		pageSize : pageSize
 	}
+	// refreshOptions会摧毁表格,将选中的条件保存
+	$("body").append($("#submitFilterDiv").addClass("hidden"));
+	$("body").append($("#backboneFilterDiv").addClass("hidden"));
+	$("body").append($("#stateFilterDiv").addClass("hidden"));
 	// 刷新表格
-	$('#manageTargetApprovalList').bootstrapTable('refresh', queryParams);
+	$('#manageTargetApprovalList').bootstrapTable('refreshOptions', queryParams);
+	cancelAll();
+}
+
+function showFilter(type) {
+	cancelAll();
+	if (type == 1) {
+		$(".submitTips").attr("style", "display:inline-block!important");
+	} else if (type == 2) {
+		$(".backboneTips").attr("style", "display:inline-block!important");
+	} else if (type == 3) {
+		$(".stateTips").attr("style", "display:inline-block!important");
+	}
+
+}
+/** 关闭所有筛选框 */
+function cancelAll() {
+	$(".submitTips").attr("style", "display:none");
+	$(".backboneTips").attr("style", "display:none");
+	$(".stateTips").attr("style", "display:none");
+}
+
+function cancelFilter(type) {
+	if (type == 1) {
+		$(".submitTips").attr("style", "display:none");
+	} else if (type == 2) {
+		$(".backboneTips").attr("style", "display:none");
+	} else if (type == 3) {
+		$(".stateTips").attr("style", "display:none");
+	}
 }
