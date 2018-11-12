@@ -12,6 +12,9 @@ function loadEmployeePerforgoal(){
 		type:"post",
 		success:function(result){
 			//console.log("data==" + JSON.stringify(result));
+			$("#du").val(result.department);
+			$("#position").val(result.role);
+			$("#assessmentSupervisor").val(result.assessmentSupervisor);
 			if(result.state=="1"){
 				document.getElementById("Save").setAttribute("disabled", true);
 				document.getElementById("Edit").setAttribute("disabled", true);

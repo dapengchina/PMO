@@ -16,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pmo.dashboard.dao.EmployeeImpplanMapper;
 import com.pmo.dashboard.dao.EmployeeKeyeventMapper;
 import com.pmo.dashboard.dao.EmployeeKpoMapper;
+import com.pmo.dashboard.dao.EmployeeMapper;
 import com.pmo.dashboard.dao.EmployeeperforgoalMapper;
+import com.pmo.dashboard.entity.Employee;
 import com.pmo.dashboard.entity.EmployeeImpplan;
 import com.pmo.dashboard.entity.EmployeeKeyevent;
 import com.pmo.dashboard.entity.EmployeeKpo;
@@ -41,6 +43,9 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 	
 	@Resource
 	private EmployeeImpplanMapper employeeImpplanMapper;
+	
+	@Resource
+    private EmployeeMapper employeeMapper;
 	
 	private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -171,10 +176,17 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 			epg.setEmployeeid(employeeid);
 			Employeeperforgoal employperforgoal = employeeperforgoalMapper.selectEmpPerforgoal(epg);
 			if(employperforgoal==null){
+				Employee emp = employeeMapper.queryEmployeeById(employeeid);
 				//保存员工绩效总表，当年当季度的数据
 				Employeeperforgoal per1 = new Employeeperforgoal();
 				per1.setId(Utils.getUUID());
 				per1.setEmployeeid(employeeid);
+				per1.setStaffname(emp.getStaffName());
+				per1.setStaffid(emp.getHsbcStaffId());
+				per1.setEhr(emp.geteHr());
+				per1.setDepartment(emp.getCsSubDept());
+				per1.setPosition(emp.getRole());
+				per1.setAssessmensupervisor(emp.getRmUserId());
 				per1.setCreatedate(new Date());
 				per1.setState(state);
 				employeeperforgoalMapper.insert(per1);

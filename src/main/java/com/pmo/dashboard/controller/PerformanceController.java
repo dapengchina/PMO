@@ -169,6 +169,12 @@ public class PerformanceController {
         return "performance/employee/performanceEmpEvaHistoryQuery";
     }
 
+    /**
+     * Management-绩效目标-审批页面
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceManageTargetApproval")
     public String getPerformanceManageTargetApproval(final HttpServletRequest request, Model model) {
         return "performance/performanceManageTargetApproval";
