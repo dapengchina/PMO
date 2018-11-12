@@ -26,4 +26,10 @@ public class PerformanceProgressServiceImpl implements PerformanceProgressServic
 	}
 
 
+	@Override
+	public int saveProcess(PerformanceEmpProcessBean pb) {
+		return performanceProgressMapper.savePerformanceEmpProcess(pb);
+	}
+
+
 }

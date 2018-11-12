@@ -36,6 +36,30 @@ public class SysConstant {
 		   return map;
 	   }
 	   
+	   /**
+	    * 员工考评进度(流程)
+	    */
+	   public static final String PENDING_APPROVAL="1";//员工绩效目标待RM审批
+	   public static Map<String,Object> getEvaProgressStateMap(){
+		   Map<String,Object> map = new HashMap<String,Object>();
+		   
+		   map.put(PENDING_APPROVAL, "待审批");
+		   
+		   return map;
+	   }
+	   
+	   /**
+	    * 员工考评流程类型
+	    */
+	   public static final String PROCESS_TYPE1="1";//绩效目标审批
+	   public static Map<String,Object> getPerforProcessTypeMap(){
+		   Map<String,Object> map = new HashMap<String,Object>();
+		   
+		   map.put(PROCESS_TYPE1, "绩效目标审批");
+		   
+		   return map;
+	   }
+	   
 	   //本地服务器地址
 	   public static final String serverurl="http://localhost:8082/Pmo/";
 

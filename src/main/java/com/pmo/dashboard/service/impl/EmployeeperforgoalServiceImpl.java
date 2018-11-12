@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import com.pmo.dashboard.constant.SysConstant;
 import com.pmo.dashboard.dao.EmployeeImpplanMapper;
 import com.pmo.dashboard.dao.EmployeeKeyeventMapper;
 import com.pmo.dashboard.dao.EmployeeKpoMapper;
@@ -23,9 +23,11 @@ import com.pmo.dashboard.entity.EmployeeImpplan;
 import com.pmo.dashboard.entity.EmployeeKeyevent;
 import com.pmo.dashboard.entity.EmployeeKpo;
 import com.pmo.dashboard.entity.Employeeperforgoal;
+import com.pmo.dashboard.entity.PerformanceEmpProcessBean;
 import com.pmo.dashboard.util.DateUtils;
 import com.pmo.dashboard.util.Utils;
 import com.pom.dashboard.service.EmployeeperforgoalService;
+import com.pom.dashboard.service.PerformanceProgressService;
 
 
 @Service
@@ -46,6 +48,9 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 	
 	@Resource
     private EmployeeMapper employeeMapper;
+	
+	@Resource
+	private PerformanceProgressService performanceProgressService;
 	
 	private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -175,8 +180,8 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 			//员工ID
 			epg.setEmployeeid(employeeid);
 			Employeeperforgoal employperforgoal = employeeperforgoalMapper.selectEmpPerforgoal(epg);
+			Employee emp = employeeMapper.queryEmployeeById(employeeid);
 			if(employperforgoal==null){
-				Employee emp = employeeMapper.queryEmployeeById(employeeid);
 				//保存员工绩效总表，当年当季度的数据
 				Employeeperforgoal per1 = new Employeeperforgoal();
 				per1.setId(Utils.getUUID());
@@ -199,6 +204,19 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 				per2.setState(state);//状态
 				employeeperforgoalMapper.updateState(per2);
 			}
+			
+			/**
+			 * 保存员工考评进度
+			 */
+			PerformanceEmpProcessBean pb = new PerformanceEmpProcessBean();
+			Employee emp2 = employeeMapper.queryEmployeeById(emp.getRmUserId());
+			pb.setId(Utils.getUUID());
+			pb.setEmployeeid(employeeid);
+			pb.setProcessid(SysConstant.PROCESS_TYPE1);
+			pb.setOwner(emp2.getStaffName());
+			pb.setCreatedate(new Date());
+			pb.setState(SysConstant.PENDING_APPROVAL);
+			performanceProgressService.saveProcess(pb);
 			return 1;
 		}catch(Exception e){
 			return 0;

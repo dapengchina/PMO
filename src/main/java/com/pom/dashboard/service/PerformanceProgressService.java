@@ -9,4 +9,5 @@ public interface PerformanceProgressService {
 
 	public List<PerformanceEmpProcessBean> queryPerformanceProgressList(PerformanceEmpProcessBean pb);
 
+	public int saveProcess(PerformanceEmpProcessBean pb);
 }
