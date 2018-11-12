@@ -385,6 +385,24 @@
 		<if test="quarter != null and quarter != ''">
 			AND Quarter = #{quarter}
 		</if>
+		<if test="role != null and role != ''">
+			AND Role = #{role}
+		</if>
+		<if test="skill != null and skill != ''">
+			AND Skill = #{skill}
+		</if>
+		<if test="bu != null and bu != ''">
+			AND BU = #{bu}
+		</if>
+		<if test="du != null and du != ''">
+			AND DU = #{du}
+		</if>
+		<if test="startYear != null and startYear != ''">
+			AND Year &gt;= #{startYear}
+		</if>
+		<if test="endYear != null and endYear != ''">
+			AND Year &lt;= #{endYear}
+		</if>
 	</select>
 
 </mapper>

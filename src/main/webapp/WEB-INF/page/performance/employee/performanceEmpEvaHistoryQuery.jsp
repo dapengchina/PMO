@@ -80,39 +80,51 @@ var path='<%=path%>';
 										<div class="group">
 											<label class="col-sm-2 control-label">E-HR</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="eHr" value="${eHr}"/>
+												<input readonly="readonly" type="text" class="form-control" id="eHr" value="${ sessionScope.loginUser.userName}"/>
 											</div>
 										</div>  
 										<div class="group">
 											<label class="col-sm-2 control-label">Employee Name</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="staffName" value="${staffName}"/>
+												<input readonly="readonly" type="text" class="form-control" id="staffName" value="${ sessionScope.loginUser.nickname}"/>
 											</div>
 										</div>
 										</br></br></br>
 										<div class="group">
 											<label class="col-sm-2 control-label">MSA Role</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="role" value="${role}" />
+											 <select class="form-control" name="role"
+												id="role" data-bv-group=".group"">
+												<option value="">--Option--</option>
+											 </select>
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">Skills/Technology</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="skill" value="${skill}" />
+											  <select class="form-control" name="skill"
+												id="skill" data-bv-group=".group"">
+												<option value="">--Option--</option>
+											  </select>
 											</div>
 										</div>
 										</br></br></br>
 										<div class="group">
 											<label class="col-sm-2 control-label">BU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="bu" value="${BU}" />
+											  <select class="form-control" name="csBu" data-bv-notempty
+												data-bv-notempty-message="请选择角色" id="csBu" data-bv-group=".group">
+												<option value="">-- Option--</option>
+											  </select>
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">DU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control"  id="du" value="${DU}" />
+											  <select class="form-control" name="csSubDept" data-bv-notempty
+												data-bv-notempty-message="请选择角色" id="csSubDept" data-bv-group=".group">
+												<option value="">-- Option--</option>
+											  </select>
 											</div>
 										</div>
 										</br></br></br>
@@ -129,10 +141,11 @@ var path='<%=path%>';
                                         </div> 
 										<div class="col-lg-2">
                                             <select class="form-control" id="startQuarter">
-												<option>Q1</option>
-												<option>Q2</option>
-												<option>Q3</option>
-												<option>Q4</option>
+                                                <option value="-1">---Option---</option>
+												<option value="1">Q1</option>
+												<option value="2">Q2</option>
+												<option value="3">Q3</option>
+												<option value="4">Q4</option>
 											</select>
                                         </div> 
 								   </div>
@@ -149,10 +162,11 @@ var path='<%=path%>';
                                         </div> 
 										<div class="col-lg-2">
                                             <select class="form-control"  id="endQuarter">
-												<option>Q1</option>
-												<option>Q2</option>
-												<option>Q3</option>
-												<option>Q4</option>
+                                                <option value="-1">---Option---</option>
+												<option value="1">Q1</option>
+												<option value="2">Q2</option>
+												<option value="3">Q3</option>
+												<option value="4">Q4</option>
 											</select>
                                         </div> 
 								   </div>

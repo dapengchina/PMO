@@ -232,11 +232,57 @@ public class PerformanceResultController {
 	@RequestMapping("/getPerforEmployeeHistory")
 	@ResponseBody
     public String getPerforEmployeeHistory(Integer pageNumber,Integer pageSize,HttpServletRequest request) throws JsonProcessingException{
+		User user = (User) request.getSession().getAttribute("loginUser");
+        List<String>  csSubDeptNames = new ArrayList<String>();   
+        
+        List<CSDept> cSDepts = null;
+        
+        if(user.getCsdeptId() != null && user.getCsdeptId() != ""){
+        	cSDepts= cSDeptService.queryCSDeptByIds(user.getCsdeptId().split(","));
+        	for (CSDept csDept : cSDepts) {
+                csSubDeptNames.add(csDept.getCsSubDeptName());
+            }
+        }
+        
+        /**
+         * 获取传过来的搜索条件
+         */
+        String msaRole = request.getParameter("msaRole");
+        String skill = request.getParameter("skill");
+        String bu = request.getParameter("bu");
+        String du = request.getParameter("du");
+        String startYear = request.getParameter("startYear");
+        String endYear = request.getParameter("endYear");
+        String sq = request.getParameter("sq");
+        String eq = request.getParameter("eq");
+		
 		Map<String,Object> result = new HashMap<String,Object>();
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("loginUser");
 		PerformanceManageEvaBean pmb = new PerformanceManageEvaBean();
 		pmb.setEhr(user.getUserName());
+		if(msaRole!=null && !"".equals(msaRole) && !msaRole.equals("null")){
+			pmb.setRole(msaRole);
+		}
+        if(skill!=null && !"".equals(skill) && !skill.equals("null")){
+			pmb.setSkill(skill);
+		}
+        if(bu!=null && !"".equals(bu) && !bu.equals("null")){
+			pmb.setBu(bu);
+		}
+        if(du!=null && !"".equals(du) && !du.equals("null")){
+			pmb.setDu(du);
+		}
+        if(startYear!=null && !"".equals(startYear) && !startYear.equals("null")){
+        	pmb.setStartYear(startYear);
+        }
+        if(endYear!=null && !"".equals(endYear) && !endYear.equals("null")){
+        	pmb.setEndYear(endYear);
+        }
+        if(sq!=null && !"".equals(sq) && !sq.equals("null")){
+        	pmb.setStartQuarter(sq);
+        }
+        if(eq!=null && !"".equals(eq) && !eq.equals("null")){
+        	pmb.setEndQuarter(eq);
+        }
 		//第一个参数当前页码，第二个参数每页条数
 		PageHelper.startPage(pageNumber,pageSize); 
 		List<PresultVo> list = performanceResultService.getPerformanceList(pmb);
@@ -244,6 +290,9 @@ public class PerformanceResultController {
 		PageInfo<PresultVo> page = new PageInfo(list);
 		result.put("total", page.getTotal());
 		result.put("rows", list);
+		
+		result.put("user", user);
+		result.put("csSubDeptNames", csSubDeptNames);
 		return objectMapper.writeValueAsString(result);
 	}
 }

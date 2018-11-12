@@ -1,5 +1,8 @@
 $(function(){
 	loadEmpHistoryList();
+	loadSkill();
+	loadRole();
+	
 });
 
 function loadEmpHistoryList(){
@@ -86,8 +89,9 @@ function loadEmpHistoryList(){
 	            }
 	        }
 	    ],
-        onLoadSuccess: function (sta) {
-			
+        onLoadSuccess: function (result) {
+        	loadCSSubDept(result);
+        	loadCSBu(result);
         },
         onLoadError: function (status, res) {
           
@@ -99,4 +103,117 @@ function detail(){
 	window.location.href=path+"/service/performance/result/getDetail.html";
 }
 
+function loadSkill(){
+	var url = path+'/json/skill.json'
+	$.getJSON(url,  function(data) {
+	       $.each(data, function(i, item) {
+	    	   $("#skill").append("<option>"+item.name+"</option>");
+	       })
+	});
+}
 
+function loadRole(){
+	var url = path+'/json/role.json'
+	$.getJSON(url,  function(data) {
+	       $.each(data, function(i, item) {
+	    	   $("#role").append("<option>"+item.name+"</option>");
+	       })
+	});
+}
+
+var allCSSubDept;
+function loadCSSubDept(result){
+	var userType = result.user.userType;
+	var csSubDeptNames = result.csSubDeptNames;
+	$.ajax({
+		url:path+'/service/csDept/queryAllCSSubDeptName',
+		dataType:"json",
+		async:true,
+		cache:false,
+		type:"post",
+		success:function(list){
+			allCSSubDept= list;
+			$("#csSubDept").empty();
+			$("#csSubDept").append("<option value=''>--Option--</option>");
+			for(var i = 0;i<list.length;i++){
+				$("#csSubDept").append("<option>"+list[i].csSubDeptName+"</option>");
+			}
+			
+			if(userType=='3' || userType=='4' || userType=='5'){
+				if(csSubDeptNames.length==1){
+					$('#csSubDept').val(result.csSubDeptNames[0]);
+					$("#csSubDept").attr("disabled","disabled");
+				}else if(csSubDeptNames.length>1){
+					$("#csSubDept").empty();
+					for(var i = 0;i<csSubDeptNames.length;i++){
+						$("#csSubDept").append("<option>"+csSubDeptNames[i]+"</option>");
+						//$('#csSubDept').val(result.pageInfo.csSubDeptName);
+					}
+				}
+			}else{
+				//$('#csSubDept').val(result.pageInfo.csSubDeptName);
+				
+			}
+		}
+	})
+}
+
+function loadCSBu(result){
+	var csBuNames = result.csBuNames;
+	var userType = result.user.userType;
+	var url = path+'/json/csBuName.json'
+	$.getJSON(url,  function(data) {
+		   $("#csBu").empty();
+		   $("#csBu").append("<option value=''>--Option--</option>");
+	       $.each(data, function(i, item) {
+	    	   $("#csBu").append("<option>"+item.name+"</option>");
+	       })
+	       if(userType=='1' || userType=='2' || userType=='3' || userType=='4'||userType=='5'){
+	    	   if(csBuNames.length==1){   		   
+	    		   $('#csBu').val(result.user.bu);
+	    		   $("#csBu").attr("disabled","disabled");
+	    	   }else if(csBuNames.length>1){
+	    		   $("#csBu").empty();
+	    		   for(var i = 0;i<csBuNames.length;i++){
+						$("#csBu").append("<option>"+csBuNames[i]+"</option>");
+						//$('#csBu').val(result.pageInfo.csbuName);
+					}
+	    	   }
+			}else{
+				//$('#csBu').val(result.pageInfo.csbuName);
+			}
+	});
+}
+function search(){
+	//MSA Role
+	var msaRole = $("#role").val();
+	//Skills/Technology
+	var skill = $("#skill").val();
+	//BU
+	var bu = $("#csBu").val();
+	//DU
+	var du = $("#csSubDept").val();
+	//Start Year
+	var startYear = $("#startYear").val();
+	//Start Quarter
+	var sq = $("#startQuarter").val();
+	//End Year
+	var endYear = $("#endYear").val();
+	//End Quarter
+	var eq = $("#endQuarter").val();
+	console.log(startYear+sq+endYear+eq);
+	var queryParams = { 
+		query: {  
+		   msaRole:msaRole,
+		   skill:skill,
+		   bu:bu,
+		   du:du,
+		   startYear:startYear,
+		   endYear:endYear,
+		   sq:sq,
+		   eq:eq
+        }
+    }  
+	//刷新表格  
+    $('#empHistoryList').bootstrapTable('refresh',queryParams);  
+}

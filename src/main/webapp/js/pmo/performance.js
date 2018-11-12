@@ -15,13 +15,15 @@ if($("#id").length>0){}else{}
 
 //year drop down list for performanceEmpEvaHistoryQuery.html
 if($("#datetimepicker1").length>0){
+	var newDate = new Date();
+    var t = newDate.toJSON(); 
 	$('#datetimepicker1').datetimepicker({
-	    startView: 'decade',  
+	     startView: 'decade',  
 	     minView: 'decade',  
-	     format: 'yyyy',  
+	     format: 'yyyy',
 	     maxViewMode: 2,  
 	     minViewMode:2,  
-	      autoclose: true  
+	     autoclose: true
 	});
 	$('#datetimepicker2').datetimepicker({
 	    startView: 'decade',  

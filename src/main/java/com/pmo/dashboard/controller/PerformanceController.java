@@ -166,38 +166,6 @@ public class PerformanceController {
      */
     @RequestMapping("/performanceEmpEvaHistoryQuery")
     public String getPerformanceEmpEvaHistoryQuery(final HttpServletRequest request, Model model) {
-        User user = (User) request.getSession().getAttribute("loginUser");
-        PerformanceQueryCondition condition = new PerformanceQueryCondition();
-        condition.setUserId(user.getUserId());
-        String ehr = empHistoryService.queryCurrentLoginUserEhr(condition);
-
-        EmployeePageCondition employeePageCondition = new EmployeePageCondition();
-        employeePageCondition.setCurrentPage("0");
-        employeePageCondition.setPageRecordsNum(9);
-        employeePageCondition.seteHr(ehr);
-        List<EmployeeInfo> list = employeeInfoService.queryEmployeeList(employeePageCondition);
-        if (list != null && list.size() > 0) {
-            EmployeeInfo emp = list.get(0);
-            request.setAttribute("eHr", emp.geteHr());
-            request.setAttribute("staffName", emp.getStaffName());
-            request.setAttribute("DU", emp.getCsSubDeptName());
-            List<CSDept> dus = csDeptService.queryAllCSDept();
-            for (CSDept du : dus) {
-                if (du.getCsSubDeptName().equalsIgnoreCase(emp.getCsSubDeptName())) {
-                    request.setAttribute("BU", du.getCsBuName());
-                }
-            }
-            EmployeeSkill skillCondition = new EmployeeSkill();
-            skillCondition.seteHr(emp.geteHr());
-            List<EmployeeSkill> empSkill = employeeSkillService.query(skillCondition);
-            for (EmployeeSkill skill : empSkill) {
-                System.out.println("*************skill= " + skill.getMainAbility());
-                System.out.println("*************role= " + skill.getRole());
-                request.setAttribute("skill", skill.getMainAbility());
-                request.setAttribute("role", skill.getRole());
-            }
-        }
-
         return "performance/employee/performanceEmpEvaHistoryQuery";
     }
 
