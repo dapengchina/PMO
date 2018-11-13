@@ -27,6 +27,8 @@ public class PerformanceEmpProcessBean {
      */
     private String processname;
     
+    private String statename;
+    
     private String currentQuarterStartDate;
     private String currentQuarterEndDate;
     
@@ -34,7 +36,15 @@ public class PerformanceEmpProcessBean {
     
     
 
-    public String getCurrentQuarterStartDate() {
+    public String getStatename() {
+		return statename;
+	}
+
+	public void setStatename(String statename) {
+		this.statename = statename;
+	}
+
+	public String getCurrentQuarterStartDate() {
 		return currentQuarterStartDate;
 	}
 

@@ -16,6 +16,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.pmo.dashboard.constant.SysConstant;
 import com.pmo.dashboard.entity.PerformanceEmpProcessBean;
 import com.pmo.dashboard.entity.ProcessType;
 import com.pmo.dashboard.entity.User;
@@ -65,6 +66,7 @@ public class PerformanceEmpProgressController {
 				if(rept!=null){
 					list.get(i).setProcessname(rept.getProcess());
 				}
+				list.get(i).setStatename(SysConstant.getEvaProgressStateMap().get(list.get(i).getState()).toString());
 			}
 		}
 		PageInfo<PerformanceEmpProcessBean> page = new PageInfo<PerformanceEmpProcessBean>(list);

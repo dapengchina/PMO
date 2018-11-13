@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pmo.dashboard.constant.SysConstant;
 import com.pmo.dashboard.entity.CSDept;
+import com.pmo.dashboard.entity.Employee;
 import com.pmo.dashboard.entity.EmployeeImpplan;
 import com.pmo.dashboard.entity.EmployeeKeyevent;
 import com.pmo.dashboard.entity.EmployeeKpo;
@@ -30,6 +31,7 @@ import com.pom.dashboard.service.CSDeptService;
 import com.pom.dashboard.service.EmployeeImpplanService;
 import com.pom.dashboard.service.EmployeeKeyeventService;
 import com.pom.dashboard.service.EmployeeKpoService;
+import com.pom.dashboard.service.EmployeeService;
 import com.pom.dashboard.service.EmployeeperforgoalService;
 import com.pom.dashboard.service.PerformanceMatrixService;
 
@@ -59,6 +61,9 @@ private ObjectMapper objectMapper = new ObjectMapper();
 	@Resource
 	private CSDeptService cSDeptService;
 	
+	@Resource
+	private EmployeeService employeeService;
+	
 	private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	
@@ -74,7 +79,14 @@ private ObjectMapper objectMapper = new ObjectMapper();
 		Map<String,Object> map = new HashMap<String,Object>();
 		//查询中软部门信息
 		CSDept csdept = cSDeptService.queryCSDeptById(user.getCsdeptId());
-		session.setAttribute("department", csdept!=null?csdept.getCsSubDeptName():"");
+		//session.setAttribute("department", csdept!=null?csdept.getCsSubDeptName():"");
+		map.put("department", csdept!=null?csdept.getCsSubDeptName():"");
+		//查询职位信息
+		Employee employee = employeeService.queryEmployeeById(employeeid);
+		map.put("role", employee!=null?employee.getRole():"");
+		//查询考核主管
+		Employee employee2 = employeeService.queryEmployeeById(employee.getRmUserId());
+		map.put("assessmentSupervisor", employee2!=null?employee2.getStaffName():"");
 		
 		//查询重点工作表
 		EmployeeKpo eo = new EmployeeKpo();

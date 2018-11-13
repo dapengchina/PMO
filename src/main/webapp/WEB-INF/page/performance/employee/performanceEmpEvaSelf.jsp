@@ -85,15 +85,15 @@ var path='<%=path%>';
 							                <div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">工号</span>
-							                        <input readonly="readonly" class="form-control" type="text" 
+							                        <input style="width:110px;" readonly="readonly" class="form-control" type="text" 
 							                        name="lob" id="lob" value="${ sessionScope.loginUser.userName}">
 							                    </div>
 							                </div>
-							                <div class="form-group col-md-2">
+							                <div style="margin-left:13px;" class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">所在部门</span>
 							                        <input style="width:150px;" readonly="readonly" class="form-control" type="text" 
-							                        name="bu" id="bu" value="${ sessionScope.department}">
+							                        name="du" id="du">
 							                    </div>
 							                </div>
 							                <div style="margin-left:83px;" class="form-group col-md-2">
@@ -107,7 +107,7 @@ var path='<%=path%>';
 							                    <div class="input-group">
 							                        <span class="input-group-addon">考核主管</span>
 							                        <input readonly="readonly" class="form-control" type="text" 
-							                        name="" id="">
+							                        name="assessmentSupervisor" id="assessmentSupervisor">
 							                    </div>
 							                </div>
 							            </div>            							

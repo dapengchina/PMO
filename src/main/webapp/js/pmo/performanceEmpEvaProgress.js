@@ -22,7 +22,7 @@ function loadEmpProgressList(){
 				
 				var td1 = $("<td>"+result.rows[i].processname+"</td>");
 				var td2 = $("<td>"+result.rows[i].owner+"</td>");
-				var td3 = $("<td>"+result.rows[i].state+"</td>");
+				var td3 = $("<td>"+result.rows[i].statename+"</td>");
 				var td4 = $("<td></td>");
 				
 				td1.appendTo(tr1);

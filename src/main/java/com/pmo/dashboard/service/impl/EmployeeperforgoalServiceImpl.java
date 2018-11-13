@@ -203,20 +203,20 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 				per2.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
 				per2.setState(state);//状态
 				employeeperforgoalMapper.updateState(per2);
+				
+				/**
+				 * 保存员工考评进度
+				 */
+				PerformanceEmpProcessBean pb = new PerformanceEmpProcessBean();
+				Employee emp2 = employeeMapper.queryEmployeeById(emp.getRmUserId());
+				pb.setId(Utils.getUUID());
+				pb.setEmployeeid(employeeid);
+				pb.setProcessid(SysConstant.PROCESS_TYPE1);
+				pb.setOwner(emp2.getStaffName());
+				pb.setCreatedate(new Date());
+				pb.setState(SysConstant.PENDING_APPROVAL);
+				performanceProgressService.saveProcess(pb);
 			}
-			
-			/**
-			 * 保存员工考评进度
-			 */
-			PerformanceEmpProcessBean pb = new PerformanceEmpProcessBean();
-			Employee emp2 = employeeMapper.queryEmployeeById(emp.getRmUserId());
-			pb.setId(Utils.getUUID());
-			pb.setEmployeeid(employeeid);
-			pb.setProcessid(SysConstant.PROCESS_TYPE1);
-			pb.setOwner(emp2.getStaffName());
-			pb.setCreatedate(new Date());
-			pb.setState(SysConstant.PENDING_APPROVAL);
-			performanceProgressService.saveProcess(pb);
 			return 1;
 		}catch(Exception e){
 			return 0;

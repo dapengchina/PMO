@@ -10,6 +10,9 @@ function loadEmployeePerforself(){
 		cache:false,
 		type:"post",
 		success:function(result){
+			$("#du").val(result.department);
+			$("#position").val(result.role);
+			$("#assessmentSupervisor").val(result.assessmentSupervisor);
 			//console.log("data==" + JSON.stringify(result));
 //			if(result.state=="1"){
 //				document.getElementById("Save").setAttribute("disabled", true);
