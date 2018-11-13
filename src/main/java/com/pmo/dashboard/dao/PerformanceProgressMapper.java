@@ -12,4 +12,6 @@ public interface PerformanceProgressMapper {
 	   public List<PerformanceEmpProcessBean> selectEmpProcess(PerformanceEmpProcessBean pb);
 
 	   public int savePerformanceEmpProcess(PerformanceEmpProcessBean pb);
+	   
+	   public int updateState(PerformanceEmpProcessBean pb);
 }

@@ -181,3 +181,31 @@ function loadEmployeePlan(result){
 	$("#table3").append("</tbdoy>");	
 }
 
+//审批不通过
+function reject(){
+	$.ajax({
+		url:path+"/service/empPerforGoal/reject/"+$("#reemployeeid").val(),
+		dataType:"json",
+		async:true,
+		cache:false,
+		type:"post",
+		success:function(result){
+			alert(result.msg);
+		}
+	})
+}
+
+//审批通过
+function approval(){
+	$.ajax({
+		url:path+"/service/empPerforGoal/approval/"+$("#reemployeeid").val(),
+		dataType:"json",
+		async:true,
+		cache:false,
+		type:"post",
+		success:function(result){
+			alert(result.msg);
+		}
+	})
+}
+

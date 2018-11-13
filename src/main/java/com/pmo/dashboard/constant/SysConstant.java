@@ -44,10 +44,14 @@ public class SysConstant {
 	    * 员工考评进度(流程)
 	    */
 	   public static final String PENDING_APPROVAL="1";//员工绩效目标待RM审批
+	   public static final String PERFORMANCE_PASS = "2";//绩效目标审批通过
+	   public static final String PERFORMANCE_NOPASS = "3";//绩效目标审批未通过
 	   public static Map<String,Object> getEvaProgressStateMap(){
 		   Map<String,Object> map = new HashMap<String,Object>();
 		   
 		   map.put(PENDING_APPROVAL, "待审批");
+		   map.put(PERFORMANCE_PASS, "审批通过");
+		   map.put(PERFORMANCE_NOPASS, "审批未通过");
 		   
 		   return map;
 	   }

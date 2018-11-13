@@ -105,4 +105,23 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   
+  <update id="updateState" parameterType="com.pmo.dashboard.entity.PerformanceEmpProcessBean" >
+    update t_employeeperforprocess
+    <set >
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where 1=1
+    <if test="employeeid != null and employeeid != ''" >
+       and employeeid = #{employeeid}
+    </if>
+    <if test="currentQuarterStartDate != null and currentQuarterStartDate != ''" >
+       and DATE_FORMAT(createdate, '%Y-%m-%d') &gt;= #{currentQuarterStartDate}
+    </if>
+    <if test="currentQuarterEndDate != null and currentQuarterEndDate != ''" >
+       and DATE_FORMAT(createdate, '%Y-%m-%d') &lt;= #{currentQuarterEndDate}
+    </if>
+  </update>
+  
 </mapper>

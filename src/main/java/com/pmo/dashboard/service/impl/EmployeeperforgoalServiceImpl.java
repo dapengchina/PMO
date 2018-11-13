@@ -223,4 +223,9 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 		}
 	}
 
+	@Override
+	public int update(Employeeperforgoal epg) {
+		return employeeperforgoalMapper.updateState(epg);
+	}
+
 }

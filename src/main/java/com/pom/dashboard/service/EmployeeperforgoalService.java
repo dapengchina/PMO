@@ -14,4 +14,5 @@ public interface EmployeeperforgoalService {
 	   
 	   public int saveEmpPerforgoal(String employeeid,JSONArray data1,JSONArray data2,JSONArray data3,String state) throws ParseException;
 
+	   public int update(Employeeperforgoal epg);
 }

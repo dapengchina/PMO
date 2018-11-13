@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,6 +30,7 @@ import com.pmo.dashboard.entity.EmployeeImpplan;
 import com.pmo.dashboard.entity.EmployeeKeyevent;
 import com.pmo.dashboard.entity.EmployeeKpo;
 import com.pmo.dashboard.entity.Employeeperforgoal;
+import com.pmo.dashboard.entity.PerformanceEmpProcessBean;
 import com.pmo.dashboard.entity.Performancematrix;
 import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.entity.vo.EmployeePerforGoalVo;
@@ -40,6 +42,7 @@ import com.pom.dashboard.service.EmployeeKpoService;
 import com.pom.dashboard.service.EmployeeService;
 import com.pom.dashboard.service.EmployeeperforgoalService;
 import com.pom.dashboard.service.PerformanceMatrixService;
+import com.pom.dashboard.service.PerformanceProgressService;
 import com.pom.dashboard.service.UserService;
 
 @Controller
@@ -48,6 +51,9 @@ public class EmployeePerforGoalController {
 	
 	
 	private ObjectMapper objectMapper = new ObjectMapper();
+	
+	@Resource
+	private PerformanceProgressService performanceProgressService;
 	
 	@Resource
 	private EmployeeperforgoalService employeeperforgoalService;
@@ -220,4 +226,71 @@ public class EmployeePerforGoalController {
 		}
 	}
 
+	/**
+	 * Management-绩效目标-审批-不通过
+	 * @return
+	 * @throws JsonProcessingException 
+	 */
+	@RequestMapping("/reject/{employeeid}")
+    @ResponseBody
+	public String reject(final HttpServletRequest request, final HttpServletResponse response,@PathVariable("employeeid") String employeeid) throws JsonProcessingException{
+		Employeeperforgoal epg = new Employeeperforgoal();
+		epg.setEmployeeid(employeeid);
+		epg.setState(SysConstant.APPROVAL_NOPASS);
+		epg.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		epg.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		int i = employeeperforgoalService.update(epg);
+		
+		PerformanceEmpProcessBean pb = new PerformanceEmpProcessBean();
+		pb.setEmployeeid(employeeid);
+		pb.setState(SysConstant.PERFORMANCE_NOPASS);
+		pb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		pb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		performanceProgressService.updateState(pb);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		if(i>0){
+			map.put("msg", "审批成功");
+			map.put("code", "1");
+		}else{
+			map.put("msg", "审批失败");
+			map.put("code", "0");
+		}
+		return objectMapper.writeValueAsString(map);
+	}
+	
+	/**
+	 * Management-绩效目标-审批-通过
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws JsonProcessingException 
+	 */
+	@RequestMapping("/approval/{employeeid}")
+    @ResponseBody
+	public String approval(final HttpServletRequest request, final HttpServletResponse response,@PathVariable("employeeid") String employeeid) throws JsonProcessingException{
+		Employeeperforgoal epg = new Employeeperforgoal();
+		epg.setEmployeeid(employeeid);
+		epg.setState(SysConstant.APPROVAL_PASS);
+		epg.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		epg.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		int i = employeeperforgoalService.update(epg);
+		
+		PerformanceEmpProcessBean pb = new PerformanceEmpProcessBean();
+		pb.setEmployeeid(employeeid);
+		pb.setState(SysConstant.PERFORMANCE_PASS);
+		pb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		pb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		performanceProgressService.updateState(pb);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		if(i>0){
+			map.put("msg", "审批成功");
+			map.put("code", "1");
+		}else{
+			map.put("msg", "审批失败");
+			map.put("code", "0");
+		}
+		return objectMapper.writeValueAsString(map);
+	}
 }

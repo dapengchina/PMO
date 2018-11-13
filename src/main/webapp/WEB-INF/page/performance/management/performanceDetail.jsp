@@ -189,18 +189,16 @@ var path='<%=path%>';
 
 								<div class="form-group">
 									   <div style="text-align:center;width:100%;">
-									    <input type="button" value="Reject" name="Reject" id="Save" href="#"
+									    <input type="button" value="Reject" name="Reject" id="Reject" href="#"
 										class="button btn btn-primary" data-dismiss="modal"
-										onclick="save()"
+										onclick="reject()"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-									    <input type="button" value="Approve" name="Approve" id="Edit" href="#"
+									    <input type="button" value="Approve" name="Approve" id="Approve" href="#"
 										class="button btn btn-primary" data-dismiss="modal"
-										onclick="edit()"
+										onclick="approval()"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-										
-
 									    </div>
 								</div>
 

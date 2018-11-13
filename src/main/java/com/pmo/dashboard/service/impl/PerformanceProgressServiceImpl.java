@@ -32,4 +32,10 @@ public class PerformanceProgressServiceImpl implements PerformanceProgressServic
 	}
 
 
+	@Override
+	public int updateState(PerformanceEmpProcessBean pb) {
+		return performanceProgressMapper.updateState(pb);
+	}
+
+
 }
