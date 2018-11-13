@@ -176,15 +176,6 @@ var path='<%=path%>';
 							
 							<div class="panel panel-default"  style="border:1px solid black">	
 								 <div class="panel-body" >										
-										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Self-Evaluation</label>
-										<div class="col-lg-10">
-											<textarea readonly="readonly" rows="3" style="border:1px solid black" class="form-control" id="selfassessment" ></textarea>
-										</div>
-								 </div>
-							</div>
-							
-							<div class="panel panel-default"  style="border:1px solid black">	
-								 <div class="panel-body" >										
 										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Comments</label>
 										<div class="col-lg-10">
 											<textarea readonly="readonly" rows="3" style="border:1px solid black" class="form-control" id="comments" ></textarea>
@@ -197,7 +188,20 @@ var path='<%=path%>';
 								<span>&nbsp;</span>
 
 								<div class="form-group">
-									    
+									   <div style="text-align:center;width:100%;">
+									    <input type="button" value="Reject" name="Reject" id="Save" href="#"
+										class="button btn btn-primary" data-dismiss="modal"
+										onclick="save()"
+										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+									    <input type="button" value="Approve" name="Approve" id="Edit" href="#"
+										class="button btn btn-primary" data-dismiss="modal"
+										onclick="edit()"
+										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+										
+
+									    </div>
 								</div>
 
 
