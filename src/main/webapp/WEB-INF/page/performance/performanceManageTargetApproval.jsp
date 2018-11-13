@@ -114,7 +114,7 @@ div .stateTips{
 						<div class="box-inner" >
 							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效目标->审批   
+									<i class="glyphicon glyphicon-user"></i>  Management-绩效目标-审批   
 								</h2>
 							</div>
 

@@ -13,11 +13,15 @@ public class SysConstant {
 	    */
 	   public static final String PERFOR_DRAFT_STATE = "0";//绩效目标草稿状态
 	   public static final String PERFOR_SUBMIT_STATE = "1";//绩效目标提交状态
+	   public static final String APPROVAL_PASS = "2";//绩效目标审批通过
+	   public static final String APPROVAL_NOPASS = "3";//绩效目标审批未通过
 	   
 	   public static Map<String,Object> getPerforStateMap(){
 		   Map<String,Object> map = new HashMap<String,Object>();
 		   map.put(PERFOR_DRAFT_STATE, "草稿");
 		   map.put(PERFOR_SUBMIT_STATE, "已提交");
+		   map.put(APPROVAL_PASS, "审批通过");
+		   map.put(APPROVAL_NOPASS, "审批未通过");
 		   
 		   return map;
 	   }

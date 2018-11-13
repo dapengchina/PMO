@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.pmo.dashboard.entity.Employee;
 import com.pmo.dashboard.entity.EmployeePageCondition;
+import com.pmo.dashboard.entity.vo.RmApprovalVo;
 
 public interface EmployeeService
 {
@@ -39,5 +40,5 @@ public interface EmployeeService
      * @return 
      * List<Map<String,Object>>
      */
-	public List<Map<String, Object>> rmApprovalList(String rmUserId, String submit, String backbone, String[] state);
+	public List<RmApprovalVo> rmApprovalList(RmApprovalVo rv);
 }

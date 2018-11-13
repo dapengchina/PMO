@@ -4,7 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +16,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -25,6 +27,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,10 +38,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.pmo.dashboard.constant.SysConstant;
 import com.pmo.dashboard.dao.PerformanceEmpPBCMapper;
 import com.pmo.dashboard.entity.CSDept;
+import com.pmo.dashboard.entity.Employee;
+import com.pmo.dashboard.entity.EmployeeImpplan;
 import com.pmo.dashboard.entity.EmployeeInfo;
+import com.pmo.dashboard.entity.EmployeeKeyevent;
+import com.pmo.dashboard.entity.EmployeeKpo;
 import com.pmo.dashboard.entity.EmployeePageCondition;
+import com.pmo.dashboard.entity.Employeeperforgoal;
 import com.pmo.dashboard.entity.PerformanceEmpHistoryBean;
 import com.pmo.dashboard.entity.PerformanceEmpKPOBean;
 import com.pmo.dashboard.entity.PerformanceEmpKeyEventBean;
@@ -46,12 +55,22 @@ import com.pmo.dashboard.entity.PerformanceEmpPBCPlanBean;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
 import com.pmo.dashboard.entity.User;
+import com.pmo.dashboard.entity.vo.EmployeePerforGoalVo;
+import com.pmo.dashboard.entity.vo.PresultVo;
+import com.pmo.dashboard.entity.vo.RmApprovalVo;
 import com.pmo.dashboard.util.Constants;
+import com.pmo.dashboard.util.DateUtils;
 import com.pom.dashboard.service.CSDeptService;
+import com.pom.dashboard.service.EmployeeImpplanService;
 import com.pom.dashboard.service.EmployeeInfoService;
+import com.pom.dashboard.service.EmployeeKeyeventService;
+import com.pom.dashboard.service.EmployeeKpoService;
 import com.pom.dashboard.service.EmployeeService;
+import com.pom.dashboard.service.EmployeeperforgoalService;
 import com.pom.dashboard.service.PerformanceEmpHistoryService;
 import com.pom.dashboard.service.PerformanceManageEvaService;
+import com.pom.dashboard.service.PerformanceMatrixService;
+import com.pom.dashboard.service.PerformanceResultService;
 import com.pom.dashboard.service.PerformanceService;
 
 /**
@@ -66,6 +85,35 @@ public class PerformanceManageEvaController {
 
     private static Logger                logger              = LoggerFactory.getLogger(PerformanceManageEvaController.class);
 
+    @Resource
+	private EmployeeperforgoalService employeeperforgoalService;
+	
+	@Resource
+	private PerformanceMatrixService performanceMatrixService;
+	
+	@Resource
+	private EmployeeKpoService employeeKpoService;
+	
+	@Resource
+	private EmployeeKeyeventService employeeKeyeventService;
+	
+	@Resource
+	private EmployeeImpplanService employeeImpplanService;
+	
+	@Resource
+	private CSDeptService cSDeptService;
+	
+	private SimpleDateFormat sf3 = new SimpleDateFormat("yyyy-MM-dd");
+	
+	@Resource
+	private PerformanceResultService performanceResultService;
+	
+	private ObjectMapper objectMapper = new ObjectMapper();
+	
+	private SimpleDateFormat sf = new SimpleDateFormat("yyyy");
+	
+	private SimpleDateFormat sf2 = new SimpleDateFormat("MM");
+    
     @Resource
     private PerformanceManageEvaService  manageEvaService;
     @Resource
@@ -727,24 +775,36 @@ public class PerformanceManageEvaController {
      */
     @RequestMapping(value = "/assessment/goal/list", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> goalList(@RequestParam("pageSize") int pageSize, @RequestParam("pageNumber") int pageNumber, @RequestParam(value = "submit", required = false) String submit,
-            @RequestParam(value = "backbone", required = false) String backbone, @RequestParam(value = "state", required = false) String state, HttpServletRequest request) {
+    public Map<String, Object> goalList(
+    		@RequestParam("pageSize") int pageSize, 
+    		@RequestParam("pageNumber") int pageNumber, 
+    		@RequestParam(value = "submit", required = false) String submit,
+            @RequestParam(value = "backbone", required = false) String backbone, 
+            @RequestParam(value = "state", required = false) String state, 
+            HttpServletRequest request) {
+    	
         User user = (User) request.getSession().getAttribute("loginUser");
         if (!"5".equals(user.getUserType())) {
             logger.error("当前登录用户不是RM");
         }
-        String[] stateAry = null;
-        if (StringUtils.isNotBlank(state)) {
-            stateAry = state.split(",");
-        }
+        RmApprovalVo rv = new RmApprovalVo();
+        rv.setRmUserID(user.getUserId());
         // 分页获取该RM下所有员工
         PageHelper.startPage(pageNumber, pageSize);
-        List<Map<String, Object>> list = employeeService.rmApprovalList(user.getUserId(), submit, backbone, stateAry);
-        //List<Map<String, Object>> list = employeeService.rmApprovalList("cf527b21ab304c05b56a4096f6e389b5", submit, backbone, stateAry);
-        PageInfo<Map<String, Object>> page = new PageInfo<>(list);
+        List<RmApprovalVo> list = employeeService.rmApprovalList(rv);
+        if(list!=null && list.size()>0){
+        	for(int i=0;i<list.size();i++){
+        		if(list.get(i).getState()!=null && !"".equals(list.get(i).getState())){
+        			list.get(i).setStateName(SysConstant.getPerforStateMap().get(list.get(i).getState()).toString());
+        		}else{
+        			list.get(i).setStateName("未提交");
+        		}
+        	}
+        }
+        PageInfo<RmApprovalVo> page = new PageInfo<RmApprovalVo>(list);
         Map<String, Object> rtn = new HashMap<String, Object>();
         rtn.put("total", page.getTotal());
-        rtn.put("rows", page.getList());
+        rtn.put("rows", list);
         return rtn;
     }
 
@@ -779,8 +839,9 @@ public class PerformanceManageEvaController {
         if (!"5".equals(user.getUserType())) {
             logger.error("当前登录用户不是RM");
         }
+        RmApprovalVo rv = new RmApprovalVo();
         // 查询数据
-        List<Map<String, Object>> list = employeeService.rmApprovalList(user.getUserId(), null, null, null);
+        List<RmApprovalVo> list = employeeService.rmApprovalList(rv);
         //List<Map<String, Object>> list = employeeService.rmApprovalList("cf527b21ab304c05b56a4096f6e389b5", null, null, null);
         // 创建文件
         XSSFWorkbook book = new XSSFWorkbook();
@@ -800,13 +861,13 @@ public class PerformanceManageEvaController {
             cell.setCellValue(r + 1);
             for (int c = 1; c < approvalGoalContent.length; c++) {
                 cell = row.createCell(c);
-                if ("submit".equals(approvalGoalContent[c])) {
-                    cell.setCellValue("1".equals((String) list.get(r).get(approvalGoalContent[c])) ? "是" : "否");
-                } else if ("state".equals(approvalGoalContent[c])) {
-                    cell.setCellValue("1".equals((String) list.get(r).get(approvalGoalContent[c])) ? "审批通过" : "0".equals((String) list.get(r).get(approvalGoalContent[c])) ? "待审批" : "审批不通过");
-                } else {
-                    cell.setCellValue((String) list.get(r).get(approvalGoalContent[c]));
-                }
+//                if ("submit".equals(approvalGoalContent[c])) {
+//                    cell.setCellValue("1".equals((String) list.get(r).get(approvalGoalContent[c])) ? "是" : "否");
+//                } else if ("state".equals(approvalGoalContent[c])) {
+//                    cell.setCellValue("1".equals((String) list.get(r).get(approvalGoalContent[c])) ? "审批通过" : "0".equals((String) list.get(r).get(approvalGoalContent[c])) ? "待审批" : "审批不通过");
+//                } else {
+//                    cell.setCellValue((String) list.get(r).get(approvalGoalContent[c]));
+//                }
 
             }
         }
@@ -927,4 +988,127 @@ public class PerformanceManageEvaController {
         }
     }
 
+    /**
+     * Management-绩效目标-审批-详情页面
+     * @return
+     */
+    @RequestMapping("/detailPage/{employeeid}")
+    public String detailPage(HttpServletRequest request,@PathVariable("employeeid") String employeeid,Model model){
+    	model.addAttribute("employeeid", employeeid);
+    	return "performance/management/performanceDetail";
+    }
+    
+    /**
+     * Management-绩效目标-审批-详情页面数据
+     * @return
+     * @throws JsonProcessingException 
+     */
+    @RequestMapping("/detailData/{employeeid}")
+    @ResponseBody
+    public String detailData(HttpServletRequest request,@PathVariable("employeeid") String employeeid) throws JsonProcessingException{
+    	//HttpSession session = request.getSession();
+    	Employee emp = employeeService.queryEmployeeById(employeeid);
+		Map<String,Object> map = new HashMap<String,Object>();
+		//Ehr
+		map.put("ehr", emp.geteHr());
+		//EmployeeName
+		map.put("staffname", emp.getStaffName());
+		//查询中软部门信息
+		CSDept csdept = cSDeptService.queryCSDeptById(emp.getCsSubDept());
+		map.put("department", csdept!=null?csdept.getCsSubDeptName():"");
+		//查询职位信息
+		Employee employee = employeeService.queryEmployeeById(employeeid);
+		map.put("role", employee!=null?employee.getRole():"");
+		//查询考核主管
+		Employee employee2 = employeeService.queryEmployeeById(employee.getRmUserId());
+		map.put("assessmentSupervisor", employee2!=null?employee2.getStaffName():"");
+		
+		//查询重点工作表
+		EmployeeKpo eo = new EmployeeKpo();
+		eo.setEmployeeid(employeeid);//员工ID
+		eo.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		eo.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		List<EmployeeKpo> kpoList = employeeKpoService.getEmployeeKpo(eo);
+		
+		//查询关键事件表
+		EmployeeKeyevent ek = new EmployeeKeyevent();
+		ek.setEmployeeid(employeeid);//员工ID
+		ek.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		ek.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		List<EmployeeKeyevent> keyeventList = employeeKeyeventService.getEmployeeKeyEvent(ek);
+		
+		/**
+		 * 重点工作数据和关键事件数据整合
+		 */
+		List<EmployeePerforGoalVo> data1 = new ArrayList<EmployeePerforGoalVo>();
+		if(kpoList!=null && kpoList.size()>0){
+			for(int i=0;i<kpoList.size();i++){
+				EmployeePerforGoalVo perforgoal = new EmployeePerforGoalVo();
+				perforgoal.setId(kpoList.get(i).getId());
+				perforgoal.setIndex(kpoList.get(i).getIndex());
+				perforgoal.setKeyaction(kpoList.get(i).getKeyaction());
+				perforgoal.setPhasegoal(kpoList.get(i).getPhasegoal());
+				perforgoal.setWeightrate(kpoList.get(i).getWeightrate());
+				perforgoal.setEmployeeid(kpoList.get(i).getEmployeeid());
+				perforgoal.setDescription(kpoList.get(i).getDescription());
+				perforgoal.setCreatedate(kpoList.get(i).getCreatedate());
+				perforgoal.setDepartment(csdept!=null?csdept.getCsSubDeptName():"");
+				perforgoal.setType(SysConstant.PRIORITY_WORK);//重点工作
+				
+				data1.add(perforgoal);
+			}
+		}
+		if(keyeventList!=null && keyeventList.size()>0){
+			for(int j=0;j<keyeventList.size();j++){
+				EmployeePerforGoalVo perforgoal = new EmployeePerforGoalVo();
+				perforgoal.setId(keyeventList.get(j).getId());
+				perforgoal.setIndex(keyeventList.get(j).getIndex());
+				perforgoal.setKeyaction(keyeventList.get(j).getKeyaction());
+				perforgoal.setPhasegoal(keyeventList.get(j).getPhasegoal());
+				perforgoal.setWeightrate(keyeventList.get(j).getWeightrate());
+				perforgoal.setEmployeeid(keyeventList.get(j).getEmployeeid());
+				perforgoal.setDescription(keyeventList.get(j).getDescription());
+				perforgoal.setCreatedate(keyeventList.get(j).getCreatedate());
+				perforgoal.setDepartment(csdept!=null?csdept.getCsSubDeptName():"");
+				perforgoal.setType(SysConstant.KEY_EVENTS);//关键事件
+				
+				data1.add(perforgoal);
+			}
+		}
+		
+		//查询个人能力提升计划表
+		EmployeeImpplan el = new EmployeeImpplan();
+		el.setEmployeeid(employeeid);//员工ID
+		el.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		el.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		List<EmployeeImpplan> planList = employeeImpplanService.getEmployeeImpplan(el);
+	    if(planList!=null && planList.size()>0){
+	    	for(int k=0;k<planList.size();k++){
+	    		if(planList.get(k).getDealine()!=null && !"".equals(planList.get(k).getDealine())){
+	    			planList.get(k).setDealineString(sf3.format(planList.get(k).getDealine()));
+	    		}
+		    }
+	    }
+	    
+	    //查询员工绩效总表，获取自评信息
+	    Employeeperforgoal epg = new Employeeperforgoal();
+	    epg.setEmployeeid(employeeid);
+	    epg.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+	    epg.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+	    Employeeperforgoal reperfor = employeeperforgoalService.getEmpPerforgoal(epg);
+		
+		//查询绩效结果表，获取comments
+		PerformanceManageEvaBean pmb = new PerformanceManageEvaBean();
+		pmb.setEhr(emp.geteHr());
+		pmb.setYear(sf.format(new Date()));
+		pmb.setQuarter(String.valueOf(DateUtils.getQuarterByMonth(Integer.parseInt(sf2.format(new Date())))));
+		PresultVo pv = performanceResultService.getPerformance(pmb);
+	    
+		map.put("comments", pv!=null?pv.getResult_Comments():"");
+		map.put("selfassessment", reperfor!=null?reperfor.getSelfassessment():"");
+		map.put("data", data1);
+		map.put("plan", planList);
+		
+		return objectMapper.writeValueAsString(map);
+    }
 }

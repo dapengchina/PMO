@@ -10,46 +10,56 @@ function loadManageTargetApprovalList() {
 		visible : true
 	// 是否显示复选框
 	}, {
-		title : 'SL',
+		title : 'No',
 		formatter : function(value, row, index) {
 			// 保存分页信息
 			var options = $('#manageTargetApprovalList').bootstrapTable("getOptions");
 			return "<span>" + (index + 1 + (options.pageNumber - 1) * options.pageSize) + "</span>";
 		}
 	}, {
-		field : 'E_HR',
+		field : 'ehr',
 		title : 'E-HR',
 	}, {
-		field : 'STAFF_NAME',
+		field : 'employeeName',
 		title : 'Employee Name',
 	}, {
-		field : 'ROLE',
+		field : 'msaRole',
 		title : 'MSA Role',
 	}, {
-		field : 'SKILL',
+		field : 'skill',
 		title : 'Skill/Technology',
 	}, {
-		field : 'submit',
-		title : '是否提交&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(1);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="submitTips"></div> ',
+		field : 'stateName',
+		title : 'Submited&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(1);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="submitTips"></div> ',
 		formatter : function(value, row, index) {
-			return row.submit == "submit" ? "是" : "否";
+			if(row.state!=null && row.state!=""){
+				return row.state != "0" ? "<div><Strong><font color='green'>是</font></Strong></div>" : "<div><Strong><font color='red'>否</font></Strong></div>";
+			}else{
+				return "<div><Strong><font color='red'>否</font></Strong></div>";
+			}
 		}
 	}, {
-		field : 'pioneer',
-		title : '业务先锋&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(2);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="backboneTips"></div>'
+		field : 'ifbackone',
+		title : 'Backbone&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(2);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="backboneTips"></div>'
 	}, {
-		field : 'state',
-		title : '审批状态&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(3);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="stateTips"></div>',
+		field : 'stateName',
+		title : 'Status&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(3);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="stateTips"></div>',
 		formatter : function(value, row, index) {
-			return row.submit == "save" ? "未提交" : row.state == 0 ? "未审批" : row.state == 1 ? "审批通过" : "审批不通过";
+			if(row.state=="1" || row.state=="2"){
+				return "<div><Strong><font color='green'>"+value+"</font></Strong></div>";
+			}else{
+				return "<div><Strong><font color='red'>"+value+"</font></Strong></div>";
+			}
 		}
 	}, {
 		title : 'Detail',
-		formatter : function(value, row, index) {
-			if (row.submit == "submit" && row.state == 0) {
-				return "<a href='javascript:void(0);' onClick='detail(\"" + row.EMPLOYEE_ID + "\");' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
-			}
-		}
+        formatter : function(value,row, index){
+        	if(row.state!="0" && row.state!=null && row.state!="null"){
+        		return "<a onclick='detail(\"" + row.employeeId + "\")' href='#' class='btn btn-info btn-sm'>"+
+                "<span class='glyphicon glyphicon-pencil'></span> Detail"+
+              "</a>";
+        	}
+        }
 	} ];
 
 	var table = $('#manageTargetApprovalList').bootstrapTable({
@@ -129,23 +139,7 @@ function loadManageTargetApprovalList() {
 }
 
 function detail(employeeId) {
-	// 页面跳转post提交
-	$("#detailForm").remove();
-	var url = path + '/service/performance/goalDetail.html';
-	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
-	$eleForm.attr("action", url);
-	$(document.body).append($eleForm);
-
-	var idInput = $("<input type='text' name='employeeId' class='hidden'></input>");
-	var titleInput = $("<input type='text' name='title' class='hidden'></input>");
-	var typeInput = $("<input type='text' name='type' class='hidden'></input>");
-	idInput.attr("value", employeeId);
-	titleInput.attr("value", "Management->绩效目标->审批");
-	typeInput.attr("value", "1");
-	$("#detailForm").append(idInput);
-	$("#detailForm").append(titleInput);
-	$("#detailForm").append(typeInput);
-	$eleForm.submit();
+	window.location.href = path+"/service/performanceManageEva/detailPage/"+employeeId;
 }
 
 function download() {
