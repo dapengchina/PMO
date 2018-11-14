@@ -220,13 +220,6 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 				per2.setState(state);//状态
 				employeeperforgoalMapper.updateState(per2);
 				
-				PerformanceEmpProcessBean pb = new PerformanceEmpProcessBean();
-				pb.setEmployeeid(employeeid);
-				pb.setState(SysConstant.PENDING_APPROVAL);
-				pb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
-				pb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
-				performanceProgressService.updateState(pb);
-				
 				if(SysConstant.PERFOR_SUBMIT_STATE.equals(state)){
 					PerformanceEmpProcessBean pb2 = new PerformanceEmpProcessBean();
 					pb2.setEmployeeid(employeeid);
@@ -246,6 +239,14 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 						pb3.setCreatedate(new Date());
 						pb3.setState(SysConstant.PENDING_APPROVAL);
 						performanceProgressService.saveProcess(pb3);
+					}else{
+						PerformanceEmpProcessBean pb = new PerformanceEmpProcessBean();
+						pb.setEmployeeid(employeeid);
+						pb.setState(SysConstant.PENDING_APPROVAL);
+						pb.setRemark("");
+						pb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+						pb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+						performanceProgressService.updateState(pb);
 					}
 				}
 				

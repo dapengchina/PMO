@@ -111,7 +111,7 @@
       <if test="state != null" >
         state = #{state,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null and remark != ''" >
+      <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
