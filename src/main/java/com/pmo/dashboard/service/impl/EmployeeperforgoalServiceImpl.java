@@ -195,6 +195,21 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 				per1.setCreatedate(new Date());
 				per1.setState(state);
 				employeeperforgoalMapper.insert(per1);
+				
+				if(SysConstant.PERFOR_SUBMIT_STATE.equals(state)){
+					/**
+					 * 保存员工考评进度
+					 */
+					PerformanceEmpProcessBean pb = new PerformanceEmpProcessBean();
+					Employee emp2 = employeeMapper.queryEmployeeById(emp.getRmUserId());
+					pb.setId(Utils.getUUID());
+					pb.setEmployeeid(employeeid);
+					pb.setProcessid(SysConstant.PROCESS_TYPE1);
+					pb.setOwner(emp2.getStaffName());
+					pb.setCreatedate(new Date());
+					pb.setState(SysConstant.PENDING_APPROVAL);
+					performanceProgressService.saveProcess(pb);
+				}
 			}else{
 				//修改员工绩效总表，当年当季度的数据状态
 				Employeeperforgoal per2 = new Employeeperforgoal();
@@ -204,18 +219,12 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 				per2.setState(state);//状态
 				employeeperforgoalMapper.updateState(per2);
 				
-				/**
-				 * 保存员工考评进度
-				 */
 				PerformanceEmpProcessBean pb = new PerformanceEmpProcessBean();
-				Employee emp2 = employeeMapper.queryEmployeeById(emp.getRmUserId());
-				pb.setId(Utils.getUUID());
 				pb.setEmployeeid(employeeid);
-				pb.setProcessid(SysConstant.PROCESS_TYPE1);
-				pb.setOwner(emp2.getStaffName());
-				pb.setCreatedate(new Date());
 				pb.setState(SysConstant.PENDING_APPROVAL);
-				performanceProgressService.saveProcess(pb);
+				pb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+				pb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+				performanceProgressService.updateState(pb);
 			}
 			return 1;
 		}catch(Exception e){

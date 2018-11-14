@@ -15,7 +15,7 @@ function loadEmployeePerforgoal(){
 			$("#du").val(result.department);
 			$("#position").val(result.role);
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
-			if(result.state=="1"){
+			if(result.state=="1" || result.state=="2"){
 				document.getElementById("Save").setAttribute("disabled", true);
 				document.getElementById("Edit").setAttribute("disabled", true);
 				document.getElementById("Submit").setAttribute("disabled", true);
@@ -29,7 +29,7 @@ function loadEmployeePerforgoal(){
 				}
 			}
 			loadEmployeePlan(result);
-			if(result.state=="1"){
+			if(result.state=="1" || result.state=="2"){
 				document.getElementById("button1").setAttribute("disabled", 'disabled');
 				document.getElementById("button2").setAttribute("disabled", 'disabled');
 				document.getElementById("button3").setAttribute("disabled", 'disabled');

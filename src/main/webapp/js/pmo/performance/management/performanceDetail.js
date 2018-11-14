@@ -16,11 +16,10 @@ function loadPerforDetail(){
 			$("#position").val(result.role);
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
 			//console.log("data==" + JSON.stringify(result));
-//			if(result.state=="1"){
-//				document.getElementById("Save").setAttribute("disabled", true);
-//				document.getElementById("Edit").setAttribute("disabled", true);
-//				document.getElementById("Submit").setAttribute("disabled", true);
-//			}
+			if(result.state=="2"){
+				document.getElementById("Reject").setAttribute("disabled", true);
+				document.getElementById("Approve").setAttribute("disabled", true);
+			}
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){
 					loadPriorityWork(result);
@@ -190,7 +189,12 @@ function reject(){
 		cache:false,
 		type:"post",
 		success:function(result){
-			alert(result.msg);
+			if(result.code=="1"){
+				alert(result.msg);
+				window.location.href=path+"/service/performance/performanceManageTargetApproval";
+			}else{
+				alert(result.msg);
+			}
 		}
 	})
 }
@@ -204,7 +208,12 @@ function approval(){
 		cache:false,
 		type:"post",
 		success:function(result){
-			alert(result.msg);
+			if(result.code=="1"){
+				alert(result.msg);
+				window.location.href=path+"/service/performance/performanceManageTargetApproval";
+			}else{
+				alert(result.msg);
+			}
 		}
 	})
 }

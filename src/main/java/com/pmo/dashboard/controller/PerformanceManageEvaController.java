@@ -1106,6 +1106,7 @@ public class PerformanceManageEvaController {
 	    
 		map.put("comments", pv!=null?pv.getResult_Comments():"");
 		map.put("selfassessment", reperfor!=null?reperfor.getSelfassessment():"");
+		map.put("state", reperfor!=null?reperfor.getState():"");
 		map.put("data", data1);
 		map.put("plan", planList);
 		
