@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pmo.dashboard.dao.PerformanceMatrixMapper" >
+  <resultMap id="BaseResultMap" type="com.pmo.dashboard.entity.Performancematrix" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="index" property="index" jdbcType="INTEGER" />
+    <result column="weightrate" property="weightrate" jdbcType="VARCHAR" />
+    <result column="phasegoal" property="phasegoal" jdbcType="VARCHAR" />
+    <result column="keyaction" property="keyaction" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  
+  <select id="selectBasePerforTemplate" resultMap="BaseResultMap" parameterType="com.pmo.dashboard.entity.Performancematrix" >
+    select * from t_performancematrix
+    where 1=1
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from t_performancematrix
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.pmo.dashboard.entity.Performancematrix" >
+    insert into t_performancematrix
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="index != null" >
+        index,
+      </if>
+      <if test="weightrate != null" >
+        weightrate,
+      </if>
+      <if test="phasegoal != null" >
+        phasegoal,
+      </if>
+      <if test="keyaction != null" >
+        keyaction,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="index != null" >
+        #{index,jdbcType=INTEGER},
+      </if>
+      <if test="weightrate != null" >
+        #{weightrate,jdbcType=VARCHAR},
+      </if>
+      <if test="phasegoal != null" >
+        #{phasegoal,jdbcType=VARCHAR},
+      </if>
+      <if test="keyaction != null" >
+        #{keyaction,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.pmo.dashboard.entity.Performancematrix" >
+    update t_performancematrix
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="index != null" >
+        index = #{index,jdbcType=INTEGER},
+      </if>
+      <if test="weightrate != null" >
+        weightrate = #{weightrate,jdbcType=VARCHAR},
+      </if>
+      <if test="phasegoal != null" >
+        phasegoal = #{phasegoal,jdbcType=VARCHAR},
+      </if>
+      <if test="keyaction != null" >
+        keyaction = #{keyaction,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

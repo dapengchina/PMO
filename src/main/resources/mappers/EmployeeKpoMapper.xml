@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pmo.dashboard.dao.EmployeeKpoMapper" >
+  <resultMap id="BaseResultMap" type="com.pmo.dashboard.entity.EmployeeKpo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="employeeid" property="employeeid" jdbcType="VARCHAR" />
+    <result column="index" property="index" jdbcType="INTEGER" />
+    <result column="weightrate" property="weightrate" jdbcType="VARCHAR" />
+    <result column="phasegoal" property="phasegoal" jdbcType="VARCHAR" />
+    <result column="keyaction" property="keyaction" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <select id="selectEmployeeKpo" resultMap="BaseResultMap" parameterType="com.pmo.dashboard.entity.EmployeeKpo" >
+    select * from t_employeekpo
+    where 1=1
+    <if test="employeeid != null and employeeid != ''" >
+       and employeeid = #{employeeid}
+    </if>
+    <if test="currentQuarterStartDate != null and currentQuarterStartDate != ''" >
+       and DATE_FORMAT(createdate, '%Y-%m-%d') &gt;= #{currentQuarterStartDate}
+    </if>
+    <if test="currentQuarterEndDate != null and currentQuarterEndDate != ''" >
+       and DATE_FORMAT(createdate, '%Y-%m-%d') &lt;= #{currentQuarterEndDate}
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.pmo.dashboard.entity.EmployeeKpo" >
+    delete from t_employeekpo
+    where 1=1
+    <if test="employeeid != null and employeeid != ''" >
+       and employeeid = #{employeeid}
+    </if>
+    <if test="currentQuarterStartDate != null and currentQuarterStartDate != ''" >
+       and DATE_FORMAT(createdate, '%Y-%m-%d') &gt;= #{currentQuarterStartDate}
+    </if>
+    <if test="currentQuarterEndDate != null and currentQuarterEndDate != ''" >
+       and DATE_FORMAT(createdate, '%Y-%m-%d') &lt;= #{currentQuarterEndDate}
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.pmo.dashboard.entity.EmployeeKpo" >
+    insert into t_employeekpo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="employeeid != null" >
+        employeeid,
+      </if>
+      <if test="index != null" >
+        `Index`,
+      </if>
+      <if test="weightrate != null" >
+        weightrate,
+      </if>
+      <if test="phasegoal != null" >
+        phasegoal,
+      </if>
+      <if test="keyaction != null" >
+        keyaction,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeid != null" >
+        #{employeeid,jdbcType=VARCHAR},
+      </if>
+      <if test="index != null" >
+        #{index,jdbcType=INTEGER},
+      </if>
+      <if test="weightrate != null" >
+        #{weightrate,jdbcType=VARCHAR},
+      </if>
+      <if test="phasegoal != null" >
+        #{phasegoal,jdbcType=VARCHAR},
+      </if>
+      <if test="keyaction != null" >
+        #{keyaction,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.pmo.dashboard.entity.EmployeeKpo" >
+    update t_employeekpo
+    <set >
+      <if test="employeeid != null" >
+        employeeid = #{employeeid,jdbcType=VARCHAR},
+      </if>
+      <if test="index != null" >
+        index = #{index,jdbcType=INTEGER},
+      </if>
+      <if test="weightrate != null" >
+        weightrate = #{weightrate,jdbcType=VARCHAR},
+      </if>
+      <if test="phasegoal != null" >
+        phasegoal = #{phasegoal,jdbcType=VARCHAR},
+      </if>
+      <if test="keyaction != null" >
+        keyaction = #{keyaction,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

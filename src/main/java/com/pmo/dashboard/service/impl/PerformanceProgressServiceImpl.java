@@ -1,31 +1,40 @@
 package com.pmo.dashboard.service.impl;
 
-import java.util.ArrayList;
+
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.pmo.dashboard.entity.PerformanceProgressBean;
+import com.pmo.dashboard.dao.PerformanceProgressMapper;
+import com.pmo.dashboard.entity.PerformanceEmpProcessBean;
 import com.pom.dashboard.service.PerformanceProgressService;
 
 @Service
 public class PerformanceProgressServiceImpl implements PerformanceProgressService {
 	
+	
+	@Resource
+	private PerformanceProgressMapper performanceProgressMapper;
+	
+	
 	@Override
-	public List<PerformanceProgressBean> queryPerformanceProgressList(){
-		List<PerformanceProgressBean> list = new ArrayList<>();
-		
-		PerformanceProgressBean bean1 = new PerformanceProgressBean("绩效目标审核", "XXX", "通过", "OK");
-		PerformanceProgressBean bean2 = new PerformanceProgressBean("绩效初评 ", "XXX", "通过", "OK");
-		PerformanceProgressBean bean3 = new PerformanceProgressBean("绩效集体评议 ", "XXX", "通过", "OK");
-		PerformanceProgressBean bean4 = new PerformanceProgressBean("审批 ", "XXX", "通过", "OK");
-		
-		list.add(bean1);
-		list.add(bean2);
-		list.add(bean3);
-		list.add(bean4);
-				
-		return list;
+	public List<PerformanceEmpProcessBean> queryPerformanceProgressList(PerformanceEmpProcessBean pb){
+		List<PerformanceEmpProcessBean> processList = performanceProgressMapper.selectEmpProcess(pb);		
+		return processList;
+	}
+
+
+	@Override
+	public int saveProcess(PerformanceEmpProcessBean pb) {
+		return performanceProgressMapper.savePerformanceEmpProcess(pb);
+	}
+
+
+	@Override
+	public int updateState(PerformanceEmpProcessBean pb) {
+		return performanceProgressMapper.updateState(pb);
 	}
 
 

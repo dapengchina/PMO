@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.pmo.dashboard.dao.PerformanceEmpPBCMapper;
 import com.pmo.dashboard.dao.PerformanceResultMapper;
 import com.pmo.dashboard.entity.PerformanceEmpHistoryBean;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
@@ -26,6 +27,9 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
 
     @Resource
     PerformanceResultMapper     mapper;
+
+    @Resource
+    PerformanceEmpPBCMapper     pbcMapper;
 
     @Override
     public List<PerformanceManageEvaBean> queryManageEvaFirstDetailWithAchieveList(PerformanceQueryCondition condition) {
@@ -307,14 +311,27 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
         Map<String, Object> rtn = new HashMap<String, Object>();
         if (list == null || list.size() == 0)
             return rtn;
+        // 计算总数
         int sum = 0;
         for (Map<String, Object> map : list) {
-            sum += Integer.parseInt(map.get("count") + "");
+            if (map.get("result") == null || "".equals(map.get("result"))) {// 空值不统计
+                continue;
+            }
+            sum += Integer.parseInt(map.get("count") + ""); 
         }
+        // 总数为0直接返回
+        if (sum == 0) {
+            rtn.put("sum", sum);
+            return rtn;
+        }
+        // 计算百分比
         NumberFormat nf = NumberFormat.getPercentInstance();
         String level = "";
         int count = 0;
         for (Map<String, Object> map : list) {
+            if (map.get("result") == null || "".equals(map.get("result"))) {
+                continue;
+            }
             level = ((String) map.get("result")).toUpperCase();
             count = Integer.parseInt(map.get("count") + "");
             rtn.put(level, count);
@@ -368,6 +385,22 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
         filter.put("finalize", "True");// 已定稿
         List<PerformanceManageEvaBean> list = mapper.filterQuery(filter);
         getPreviousResult(list);
+        return list;
+    }
+
+    @Override
+    public List<PerformanceManageEvaBean> finalizeResultList(PerformanceQueryCondition condition) {
+        Map<String, Object> filter = new HashMap<String, Object>();
+        filter.put("eHr", condition.geteHr());
+        filter.put("staffName", condition.getStaffName());
+        filter.put("bu", condition.getBu());
+        filter.put("du", condition.getDu());
+        filter.put("startYear", condition.getStartYear());
+        filter.put("startQuarter", condition.getStartQuarter());
+        filter.put("endYear", condition.getEndYear());
+        filter.put("endQuarter", condition.getEndQuarter());
+        filter.put("finalize", "True");
+        List<PerformanceManageEvaBean> list = mapper.filterQuery(filter);
         return list;
     }
 
@@ -472,6 +505,21 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
     @Override
     public void updatePreAssessmentResult(String preAssessment, String id) {
         mapper.preAssessment(preAssessment, id);
+    }
+
+    @Override
+    public Map<String, Object> queryGoalById(String id) {
+        return pbcMapper.queryById(id);
+    }
+
+    @Override
+    public void updateByEmployeeId(String employeeId, String state, String remark) {
+        pbcMapper.updateByEmployeeId(employeeId, state, remark);
+    }
+
+    @Override
+    public Map<String, String> queryEmployeeIdByResultId(String resultId) {
+        return mapper.queryEmployeeIdByResultId(resultId);
     }
 
 }

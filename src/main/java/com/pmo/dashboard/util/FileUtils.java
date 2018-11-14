@@ -42,7 +42,7 @@ public class FileUtils {
             for (File f : fileList) {
                 if (!f.exists()) {
                     logger.error("==========要压缩的文件不存在,请检查！文件路径：" + f.getAbsolutePath());
-                    break;
+                    continue;
                 }
                 // 使用指定名称创建新的 ZIP 条目 （通俗点就是文件名）,写入新的 ZIP 文件条目并将流定位到条目数据的开始处
                 out.putNextEntry(new ZipEntry(f.getName()));

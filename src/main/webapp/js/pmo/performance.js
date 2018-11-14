@@ -3,10 +3,10 @@ $("#getEmp").click(function(){
 } );
 
 $("#getManage").click(function(){
-	window.open(path+"/service/performance/performanceEmpPBC.html");
+	window.open(path+"/service/performance/performanceManageTargetApproval.html");
 });
 $("#getHR").click(function(){
-	window.open(path+"/service/performance/performanceEmpPBC.html");
+	window.open(path+"/service/performance/performanceHRBPGroupEva.html");
 });
 $("#getLOB").click(function(){
 	window.open(path+"/service/performance/performanceEmpPBC.html");
@@ -15,13 +15,15 @@ if($("#id").length>0){}else{}
 
 //year drop down list for performanceEmpEvaHistoryQuery.html
 if($("#datetimepicker1").length>0){
+	var newDate = new Date();
+    var t = newDate.toJSON(); 
 	$('#datetimepicker1').datetimepicker({
-	    startView: 'decade',  
+	     startView: 'decade',  
 	     minView: 'decade',  
-	     format: 'yyyy',  
+	     format: 'yyyy',
 	     maxViewMode: 2,  
 	     minViewMode:2,  
-	      autoclose: true  
+	     autoclose: true
 	});
 	$('#datetimepicker2').datetimepicker({
 	    startView: 'decade',  
@@ -54,13 +56,13 @@ function addTr(tableId, row, trHtml) {
 function addTr1(tableId, row, cols) {
 	var tr0 = $("<tr id='tr1'></tr>");
 	
-	var td0 = $("<td >"	+ "&nbsp;"	+ "</td>");
+	var td0 = $("<td >"	+ "重点工作"	+ "</td>");
 	var td1 = $("<td name='index'>"	+ "</td>");
 	var td2 = $("<td name='description'>"+ "</td>");
 	var td3 = $("<td name='weightrate'>"+ "</td>");
 	var td4 = $("<td name='phasegoal'>"	+ "</td>");
 	var td5 = $("<td name='keyaction'>"	+ "</td>");
-	var td6 = $("<td>"	+ "&nbsp;"	+ "</td>");
+	var td6 = $("<td colspan='8'>"	+ "&nbsp;"	+ "</td>");
 	td0.appendTo(tr0);
 	td1.appendTo(tr0);
 	td2.appendTo(tr0);
@@ -87,6 +89,30 @@ function addTr2(tableId, row, cols) {
 	td3.appendTo(tr0);
 	
 	addTr(tableId, row, tr0);
+}
+function addTr3(tableId, row, cols) {
+	var tr0 = $("<tr id='tr1'></tr>");
+	
+	var td0 = $("<td style='width:153px;'>"	+ "关键事件"	+ "</td>");
+	var td1 = $("<td style='width:97px;' name='index'>"	+ "</td>");
+	var td2 = $("<td style='width:208px;' name='description'>"+ "</td>");
+	var td3 = $("<td style='width:97px;' name='weightrate'>"+ "</td>");
+	var td4 = $("<td style='width:153px;' name='phasegoal'>"	+ "</td>");
+	var td5 = $("<td style='width:153px;' name='keyaction'>"	+ "</td>");
+	var td6 = $("<td colspan='8'>"	+ "&nbsp;"	+ "</td>");
+	td0.appendTo(tr0);
+	td1.appendTo(tr0);
+	td2.appendTo(tr0);
+	td3.appendTo(tr0);
+	td4.appendTo(tr0);
+	td5.appendTo(tr0);
+	td6.appendTo(tr0);
+	addTr(tableId, row, tr0);
+	
+	//更新“重点工作”列的rowspan参数，使其加1
+	var currentRowspan = $("#leftrowspan").attr("rowspan");
+	newRowspan =(parseInt(currentRowspan)+1);
+	$("#leftrowspan").attr("rowspan", newRowspan);
 }
 function edit(){
 	$("tbody #tr1 td").attr("contenteditable","true");

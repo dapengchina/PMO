@@ -13,14 +13,15 @@ function loadManageResultHistoryQueryList() {
 		title : 'SL',
 		sortable : true,
 		formatter : function(value, row, index) {
-			return "<span>" + (index + 1) + "</span>";
+			var options = $('#manageResultHistoryQueryList').bootstrapTable("getOptions");
+			return "<span>" + (index + 1 + (options.pageNumber - 1) * options.pageSize) + "</span>";
 		}
 	}, {
 		field : 'ehr',
 		title : 'E-HR',
 		sortable : true
 	}, {
-		field : 'empName',
+		field : 'name',
 		title : 'Employee Name',
 		sortable : true
 	}, {
@@ -33,10 +34,32 @@ function loadManageResultHistoryQueryList() {
 		sortable : true
 	}, {
 		field : 'beginDate',
-		title : 'Begin Date'
+		title : 'Begin Date',
+		formatter : function(value, row, index) {
+			if (row.quarter == "Q1") {
+				return "01 / 01 / " + row.year;
+			} else if (row.quarter == "Q2") {
+				return "01 / 04 / " + row.year;
+			} else if (row.quarter == "Q3") {
+				return "01 / 07 / " + row.year;
+			} else if (row.quarter == "Q4") {
+				return "01 / 10 / " + row.year;
+			}
+		}
 	}, {
 		field : 'endDate',
-		title : 'End Date'
+		title : 'End Date',
+		formatter : function(value, row, index) {
+			if (row.quarter == "Q1") {
+				return "31 / 03 / " + row.year;
+			} else if (row.quarter == "Q2") {
+				return "30 / 06 / " + row.year;
+			} else if (row.quarter == "Q3") {
+				return "30 / 09 / " + row.year;
+			} else if (row.quarter == "Q4") {
+				return "31 / 12 / " + row.year;
+			}
+		}
 	}, {
 		field : 'rm',
 		title : 'RM'
@@ -44,12 +67,12 @@ function loadManageResultHistoryQueryList() {
 		field : 'result',
 		title : '考评结果'
 	}, {
-		field : 'comments',
+		field : 'resultComments',
 		title : 'Comments'
 	}, {
 		title : 'Detail',
 		formatter : function(value, row, index) {
-			return "<a href='performanceManageResultHistory.html' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+			return "<a href='javascript:void(0);' onClick='detail(\"" + row.resultId + "\")' " + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
 		}
 	} ];
 
@@ -59,10 +82,10 @@ function loadManageResultHistoryQueryList() {
 		// toolbar: '#toolbar', //工具按钮用哪个容器
 		striped : true, // 是否显示行间隔色
 		cache : false, // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-		pagination : false, // 是否显示分页（*）
+		pagination : true, // 是否显示分页（*）
 		sortable : true, // 是否启用排序
 		sortOrder : "asc", // 排序方式
-		sidePagination : "client", // 分页方式：client客户端分页，server服务端分页（*）
+		sidePagination : "server", // 分页方式：client客户端分页，server服务端分页（*）
 		pageNumber : 1, // 初始化加载第一页，默认第一页,并记录
 		pageSize : 10, // 每页的记录行数（*）
 		pageList : [ 10, 25, 50, 100 ], // 可供选择的每页的行数（*）
@@ -80,6 +103,7 @@ function loadManageResultHistoryQueryList() {
 		singleSelect : false, // 禁止多选_____
 		// 得到查询的参数
 		queryParams : function(params) {
+			console.log(params);
 			// 获取查询条件
 			var eHr = $("#eHr").val();
 			var staffName = $("#staffName").val();
@@ -141,11 +165,40 @@ function search() {
 		}
 	}
 	// 刷新表格
-	$('#manageResultHistoryQueryList').bootstrapTable('refresh', queryParams);
+	$('#manageResultHistoryQueryList').bootstrapTable('refreshOptions', {
+		pageSize : 10,
+		pageNumber : 1
+	});
+	// $('#manageResultHistoryQueryList').bootstrapTable('refresh',
+	// queryParams);
+}
+function detail(resultId) {
+	// 页面跳转post提交
+	$("#detailForm").remove();
+	var url = path + '/service/performance/goalDetail.html';
+	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
+	$eleForm.attr("action", url);
+	$(document.body).append($eleForm);
+
+	var idInput = $("<input type='text' name='resultId' class='hidden'></input>");
+	var titleInput = $("<input type='text' name='title' class='hidden'></input>");
+	var typeInput = $("<input type='text' name='type' class='hidden'></input>");
+	idInput.attr("value", resultId);
+	titleInput.attr("value", "Management->绩效结果->历史绩效");
+	typeInput.attr("value", "6");
+	$("#detailForm").append(idInput);
+	$("#detailForm").append(titleInput);
+	$("#detailForm").append(typeInput);
+	$eleForm.submit();
 }
 
 /** 历史绩效导出 * */
 function historyResultExport() {
+	var tableData = $('#manageResultHistoryQueryList').bootstrapTable("getData");
+	if (tableData.length == 0) {
+		alert("暂无数据导出");
+		return;
+	}
 	$("#downloadForm").remove();
 	var url = path + '/service/performanceManageResultHistory/result/export';
 	var $eleForm = $("<form method='post'></form>");

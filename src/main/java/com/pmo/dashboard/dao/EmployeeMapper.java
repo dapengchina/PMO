@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.pmo.dashboard.entity.Employee;
 import com.pmo.dashboard.entity.EmployeePageCondition;
+import com.pmo.dashboard.entity.vo.RmApprovalVo;
 
 public interface EmployeeMapper
 {
@@ -41,5 +42,5 @@ public interface EmployeeMapper
 	 * @return 
 	 * List<Map<String,Object>>
 	 */
-	public List<Map<String,Object>> rmApprovalList(@Param("rmUserId") String rmUserId,@Param("submit") String submit, @Param("backbone") String backbone, @Param("state") String state);
+	public List<RmApprovalVo> rmApprovalList(RmApprovalVo rv);
 }

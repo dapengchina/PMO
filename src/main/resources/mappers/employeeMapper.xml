@@ -746,20 +746,44 @@
     where EMPLOYEE_ID = #{employeeId,jdbcType=VARCHAR}
   </update>
   
-  <select id="rmApprovalList" resultType="hashMap">
-  	select e.E_HR, e.STAFF_NAME, e.ROLE, e.SKILL, goal.state as submit, process.state from t_employee e, t_employeeperforgoal goal, t_employeeperforprocess process 
-  	where e.EMPLOYEE_ID = goal.employeeid and e.EMPLOYEE_ID = process.employeeid
-  	<if test="rmUserId != null and rmUserId != ''">
-  		and e.RM_USER_ID = #{rmUserId}
+  <select id="rmApprovalList" resultMap="rmApprovalListMap" parameterType="com.pmo.dashboard.entity.vo.RmApprovalVo">
+  	SELECT
+	  e.EMPLOYEE_ID,
+	  e.E_HR,
+	  e.STAFF_NAME,
+	  e.ROLE,
+	  e.SKILL,
+      e1.state
+    FROM
+	  t_employee e
+	LEFT JOIN
+      t_employeeperforgoal e1
+    ON e.EMPLOYEE_ID=e1.employeeid
+    WHERE 1=1
+  	<if test="rmUserID != null and rmUserID != ''">
+  		and e.RM_USER_ID = #{rmUserID}
   	</if>
+  	<!--
   	<if test="submit != null and submit != ''">
   		and goal.state = #{submit}
   	</if>
-  	<if test="state != null and state != ''">
-  		and process.state = #{state}
-  	</if>
+  	<if test="state != null and state.length > 0">
+  		and process.state in
+  		<foreach collection="state" item="item" open="(" close=")" separator=",">
+  			#{item}
+  		</foreach>
+  	</if>  -->
   	<!-- backbone -->
   	
   </select>
+  
+  <resultMap id="rmApprovalListMap" type="com.pmo.dashboard.entity.vo.RmApprovalVo">
+		<id property="employeeId" column="EMPLOYEE_ID" javaType="String" />
+		<result property="ehr" column="E_Hr"  javaType="String" />
+		<result property="employeeName" column="STAFF_NAME" javaType="String" />
+		<result property="msaRole" column="ROLE" javaType="String" />
+		<result property="skill" column="SKILL" javaType="String" />
+		<result property="state" column="state" javaType="String" />
+  </resultMap>
 	
 </mapper>

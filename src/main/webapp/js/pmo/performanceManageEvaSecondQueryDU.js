@@ -23,108 +23,17 @@ function queryPercentage() {
 			$("#empC").html(data["C"] == undefined ? 0 : data["C"]);
 			$("#empD").html(data["D"] == undefined ? 0 : data["D"]);
 			$("#empSum").html(data["sum"] == undefined ? 0 : data["sum"]);
-			$("#percentSum").html("100%");
+			if (data["sum"] == 0) {
+				$("#percentSum").html("0%");
+			}
 		}
 	})
 }
-
+tableId = "queryManageEvaSecondQueryDUList";
 function loadManageEvaSecondQueryDUList() {
 	// var queryUrl =
 	// path+'/service/performanceManageEva/queryManageEvaSecondQueryDUList';
 	var queryUrl = path + '/service/performanceHRBPEva/processing/result/list';
-	var columns = [ {
-		title : '绩效<br/>目标',
-		formatter : function(value, row, index) {
-			return "<a href='#' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
-		}
-	}, {
-		title : '序号',
-		formatter : function(value, row, index) {
-			return "<span>" + (index + 1) + "</span>";
-		}
-	}, {
-		field : 'ehr',
-		title : 'E-HR编号'
-	}, {
-		field : 'lobNo',
-		title : 'LOB工号'
-	}, {
-		field : 'name',
-		title : '姓名'
-	}, {
-		field : 'hireDate',
-		title : '入职时间'
-	}, {
-		field : 'role',
-		title : '职务'
-	}, {
-		field : 'serviceLine',
-		title : '业务线'
-	}, {
-		field : 'bu',
-		title : 'BU'
-	}, {
-		field : 'du',
-		title : '交付部'
-	}, {
-		field : 'location',
-		title : '归属地'
-	}, {
-		field : 'keymember',
-		title : '是否<br/>骨干'
-	}, {
-		field : 'participate',
-		title : '是否<br/>参评'
-	}, {
-		field : 'manager',
-		title : '直接主管'
-	}, {
-		field : 'customerFeedback',
-		title : '客户反馈',
-		formatter : function(value, row, index) {
-			var substr = "";
-			if (value.length > 5) {
-				substr = value.substring(0, 5);
-				return "<a href='#' class='link'>" + substr + "<div class='tips'>" + value + "</div></a>";
-			} else {
-				return value;
-			}
-		}
-	}, {
-		field : 'initialEvalution',
-		title : '初评<br/>(依据<br/>客户<br/>反馈)',
-	// sortable : true
-	}, {
-		field : 'pmEvalution',
-		title : '直接<br/>主管<br/>初评<br/>结果',
-	// sortable : true
-	}, {
-		field : 'duEvalution',
-		title : '部门<br/>集体<br/>评议<br/>结果',
-	// sortable : true
-	}, {
-		field : 'duEvaManager',
-		title : '集体<br/>评议<br/>主管'
-	}, {
-		field : 'achievement',
-		title : 'A/C/D<br/>人员<br/>绩效<br/>事实'
-	}, {
-		field : 'jump',
-		title : '是否<br/>绩效<br/>跳变'
-	}, {
-		field : 'comments',
-		title : '备注',
-	// sortable : true
-	}, {
-		field : 'previous1Quarter',
-		title : '上<br/>季度<br/>绩效'
-	}, {
-		field : 'previous2Quarter',
-		title : '上上<br/>季度<br/>绩效'
-	}, {
-		field : 'previous3Quarter',
-		title : '上上上<br/>季<br/>度绩效'
-	} ];
 
 	var table = $('#queryManageEvaSecondQueryDUList').bootstrapTable({
 		url : queryUrl, // 请求后台的URL（*）
@@ -195,6 +104,26 @@ function loadManageEvaSecondQueryDUList() {
 	});
 }
 
+function detail(resultId) {
+	// 页面跳转post提交
+	$("#detailForm").remove();
+	var url = path + '/service/performance/goalDetail.html';
+	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
+	$eleForm.attr("action", url);
+	$(document.body).append($eleForm);
+
+	var idInput = $("<input type='text' name='resultId' class='hidden'></input>");
+	var titleInput = $("<input type='text' name='title' class='hidden'></input>");
+	var typeInput = $("<input type='text' name='type' class='hidden'></input>");
+	idInput.attr("value", resultId);
+	titleInput.attr("value", "Management->绩效考评->审批");
+	typeInput.attr("value", "5");
+	$("#detailForm").append(idInput);
+	$("#detailForm").append(titleInput);
+	$("#detailForm").append(typeInput);
+	$eleForm.submit();
+}
+
 function search() {
 	// 获取查询条件
 	var eHr = $("#eHr").val();
@@ -210,7 +139,10 @@ function search() {
 		}
 	};
 	// 刷新表格
-	$('#queryManageEvaSecondQueryDUList').bootstrapTable('refresh', queryParams);
+	$('#queryManageEvaSecondQueryDUList').bootstrapTable('refreshOptions', {
+		pageSize : 10,
+		pageNumber : 1
+	});
 }
 /** 清除条件 * */
 function duClear() {

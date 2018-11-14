@@ -13,10 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.junit.runners.Parameterized.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -78,6 +74,7 @@ public class PerformanceManageTemplateDownloadController {
         try {
             fileName = new String((template.getName() + template.getUrl().substring(template.getUrl().indexOf("."))).getBytes("UTF-8"), "ISO-8859-1");
         } catch (UnsupportedEncodingException e) {
+            fileName = "template" + template.getUrl().substring(template.getUrl().indexOf("."));
             e.printStackTrace();
         }
 
@@ -107,6 +104,11 @@ public class PerformanceManageTemplateDownloadController {
     @ResponseBody
     public ResponseEntity<byte[]> downloads(@RequestParam String templateIds) {
         String[] templateIdsAry = templateIds.split(",");
+        /*单文件采用单文件下载*/
+        if (templateIdsAry.length == 1) {
+            return download(templateIdsAry[0]);
+        }
+        // 多文件下载
         List<Template> list = templateService.getByIds(templateIdsAry);
         List<File> fileList = new ArrayList<>();
         for (Template template : list) {
@@ -122,6 +124,7 @@ public class PerformanceManageTemplateDownloadController {
         try {
             fileName = new String("模板.zip".getBytes("UTF-8"), "ISO-8859-1");
         } catch (UnsupportedEncodingException e) {
+            fileName = "template.zip";
             e.printStackTrace();
         }
 
@@ -139,7 +142,7 @@ public class PerformanceManageTemplateDownloadController {
 
     /**
      * 上传模板
-     * @author: Song_Lee
+     * @author: xuexuan
      * 2018年10月17日 下午7:09:16
      * @param file
      * @param request

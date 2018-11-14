@@ -1,53 +1,37 @@
-$(function(){
-	loadPerformanceProgressList();
-})
+$(function () {
+    loadEmpProgressList();
+});
 
 
-function loadPerformanceProgressList(pageState){
-	var pageState = pageState;
+function loadEmpProgressList(){
 	
 	$.ajax({
-		url:path+"/service/performanceEmpProgress/queryPerformanceEmpProgressList",
+		url:path+'/service/performanceEmpProgress/queryPerformanceEmpProgressList',
 		dataType:"json",
 		async:true,
-		data:{"pageState":pageState},
 		cache:false,
 		type:"post",
 		success:function(result){
-			console.log("data==" + JSON.stringify(result));
+			console.log("data==" + JSON.stringify(result.rows));
 			$("#performancePregressList tbody").remove();
-			
 			var tbody = $("<tbody>");
 			tbody.appendTo($("#performancePregressList"));
-			for (var i = 0; i < result.data.length; i++) {
-				var tr = $("<tr></tr>");
-				tr.appendTo(tbody);
-
-				var td1 = $("<td id='tx1'>"
-						+ result.data[i].progressName
-						+ "</td>");
+			for(var i=0;i<result.rows.length;i++){
+				var tr1 = $("<tr></tr>");
+				tr1.appendTo(tbody);
 				
-				var td2 = $("<td>"
-						+ result.data[i].auditor
-						+ "</td>");
-				var td3 = $("<td>"
-						+ result.data[i].status
-						+ "</td>");
-				var td4 = $("<td>"
-						+ result.data[i].comments
-						+ "</td>");
+				var td1 = $("<td>"+result.rows[i].processname+"</td>");
+				var td2 = $("<td>"+result.rows[i].owner+"</td>");
+				var td3 = $("<td>"+result.rows[i].statename+"</td>");
+				var td4 = $("<td>"+result.rows[i].remark+"</td>");
 				
-				td1.appendTo(tr);
-				td2.appendTo(tr);
-				td3.appendTo(tr);
-				td4.appendTo(tr);
-
+				td1.appendTo(tr1);
+				td2.appendTo(tr1);
+				td3.appendTo(tr1);
+				td4.appendTo(tr1);
 			}
-			$("#performancePregressList").append("</tbdoy>");		
-
+			$("#performancePregressList").append("</tbdoy>");
 		}
-		
 	})
 }
-
 

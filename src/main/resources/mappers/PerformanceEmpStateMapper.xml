@@ -32,5 +32,9 @@
 	DELETE FROM t_employeeperforgoal 
 	WHERE employeeid = #{employeeid,jdbcType=VARCHAR}
 	</delete>
+	
+	<select id="queryById"  resultType="hashMap" >
+	    SELECT  g.*, p.remark FROM t_employeeperforgoal g left join t_employeeperforprocess p  on g.employeeid = p.employeeid WHERE g.employeeid = #{employeeid,jdbcType=VARCHAR}
+	</select>
 
 </mapper>

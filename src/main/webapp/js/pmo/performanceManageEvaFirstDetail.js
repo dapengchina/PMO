@@ -22,116 +22,18 @@ function queryPercentage() {
 			$("#empC").html(data["C"] == undefined ? 0 : data["C"]);
 			$("#empD").html(data["D"] == undefined ? 0 : data["D"]);
 			$("#empSum").html(data["sum"] == undefined ? 0 : data["sum"]);
-			$("#percentSum").html("100%");
+			if (data["sum"] == 0) {
+				$("#percentSum").html("0%");
+			}
 		}
 	});
 }
-
+RmEvaFlag = true;// 标识该页面为RM评级页面，反馈给performancTable.js
+tableId = "manageEvaFirstDetailList";
 function loadManageEvaFirstDetailList() {
 	// var queryUrl = path +
 	// '/service/performanceManageEva/queryManageEvaFirstDetailList';
 	var queryUrl = path + '/service/performanceManageEva/processing/result/list/rm';
-	var columns = [ {
-		title : '序号',
-		formatter : function(value, row, index) {
-			return "<span>" + (index + 1) + "</span>";
-		}
-	}, {
-		field : 'ehr',
-		title : 'E-HR编号'
-	}, {
-		field : 'lobNo',
-		title : 'LOB工号'
-	}, {
-		field : 'name',
-		title : '姓名'
-	}, {
-		field : 'hireDate',
-		title : '入职时间'
-	}, {
-		field : 'position',
-		title : '职务'
-	}, {
-		field : 'serviceLine',
-		title : '业务线'
-	}, {
-		field : 'bu',
-		title : 'BU'
-	}, {
-		field : 'du',
-		title : '交付部'
-	}, {
-		field : 'location',
-		title : '归属地'
-	}, {
-		field : 'keymember',
-		title : '是否<br/>骨干'
-	}, {
-		field : 'participate',
-		title : '是否<br/>参评'
-	}, {
-		field : 'manager',
-		title : '直接主管'
-	}, {
-		field : 'customerFeedback',
-		title : '客户反馈',
-		formatter : function(value, row, index) {
-			var substr = "";
-			if (value.length > 5) {
-				substr = value.substring(0, 5);
-				return "<a href='#' class='link'>" + substr + "<div class='tips'>" + value + "</div></a>";
-			} else {
-				return value;
-			}
-		}
-	}, {
-		field : 'initialEvalution',
-		title : '初评<br/>(依据<br/>客户<br/>反馈)',
-		// sortable : true
-		formatter : function(value, row, index) {
-			if (row.initialEvalution == "" || row.initialEvalution == undefined) {
-				stateSubmitFlag = false;
-			}
-			return value;
-		}
-	}, {
-		field : 'pmEvalution',
-		title : '直接<br/>主管<br/>初评<br/>结果',
-	// sortable : true
-	}, {
-		field : 'duEvalution',
-		title : '部门<br/>集体<br/>评议<br/>结果',
-	// sortable : true
-	}, {
-		field : 'duEvaManager',
-		title : '集体<br/>评议<br/>主管'
-	}, {
-		field : 'achievement',
-		title : 'A/C/D<br/>人员<br/>绩效<br/>事实'
-	}, {
-		field : 'jump',
-		title : '是否<br/>绩效<br/>跳变'
-	}, {
-		field : 'comments',
-		title : '备注',
-	// sortable : true
-	}, {
-		field : 'previous1Quarter',
-		title : '上<br/>季度<br/>绩效'
-	}, {
-		field : 'previous2Quarter',
-		title : '上上<br/>季度<br/>绩效'
-	}, {
-		field : 'previous3Quarter',
-		title : '上上上<br/>季<br/>度绩效'
-	}, {
-		title : '绩效<br/>目标',
-		formatter : function(value, row, index) {
-			if (row.state == 0) {// 待RM审批状态显示编辑按钮
-				return "<a href='performanceManageEvaFirst.html?resultId=" + row.resultId + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
-			}
-		}
-	} ];
 
 	var table = $('#manageEvaFirstDetailList').bootstrapTable({
 		url : queryUrl, // 请求后台的URL（*）
@@ -186,12 +88,15 @@ function loadManageEvaFirstDetailList() {
 
 	});
 }
-var stateSubmitFlag = true;
 var stateSubmitIds = new Array();
 function stateSubmit() {
 	// 所有员工评价后才可提交
 	if (!stateSubmitFlag) {
 		alert("还有未评级员工，请先评级");
+		return;
+	}
+	if (stateSubmitIds.length == 0) {
+		alert("暂无数据审批！");
 		return;
 	}
 	// 审批
@@ -203,6 +108,7 @@ function stateSubmit() {
 		},
 		success : function(data) {
 			alert("审批成功");
+			history.go(0);
 		},
 		error : function() {
 			alert("审批失败");
@@ -210,25 +116,22 @@ function stateSubmit() {
 	});
 }
 
-function gradeSubmit() {
-	// 审批
-	$.ajax({
-		url : path + "/service/performanceManageEva/assessment/grade/rm/submit",
-		type : "POST",
-		data : {
-			"id" : "0035e1d99c4d4a49b37f216305dceewe",
-			"grade" : "A"
-		},
-		success : function(data) {
-			alert("评级成功");
-			window.location.href = path + "/service/performance/performanceManageEvaFirstDetailComments.html";
-		},
-		error : function() {
-			alert("评级失败");
-		}
-	});
-}
+function detail(resultId) {
+	// 页面跳转post提交
+	$("#detailForm").remove();
+	var url = path + '/service/performance/goalDetail.html';
+	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
+	$eleForm.attr("action", url);
+	$(document.body).append($eleForm);
 
-function gradeCancel() {
-	window.location.href = path + "/service/performance/performanceManageEvaFirstDetailComments.html";
+	var idInput = $("<input type='text' name='resultId' class='hidden'></input>");
+	var titleInput = $("<input type='text' name='title' class='hidden'></input>");
+	var typeInput = $("<input type='text' name='type' class='hidden'></input>");
+	idInput.attr("value", resultId);
+	titleInput.attr("value", "Management->绩效考评->初评");
+	typeInput.attr("value", "2");
+	$("#detailForm").append(idInput);
+	$("#detailForm").append(titleInput);
+	$("#detailForm").append(typeInput);
+	$eleForm.submit();
 }

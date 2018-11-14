@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pmo.dashboard.dao.EmployeeImpplanMapper" >
+  <resultMap id="BaseResultMap" type="com.pmo.dashboard.entity.EmployeeImpplan" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="employeeid" property="employeeid" jdbcType="VARCHAR" />
+    <result column="keyability" property="keyability" jdbcType="VARCHAR" />
+    <result column="action" property="action" jdbcType="VARCHAR" />
+    <result column="supportor" property="supportor" jdbcType="VARCHAR" />
+    <result column="dealine" property="dealine" jdbcType="TIMESTAMP" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <select id="selectEmployeeImpplan" resultMap="BaseResultMap" parameterType="com.pmo.dashboard.entity.EmployeeImpplan" >
+    select * from t_employeeimpplan
+    where 1=1
+    <if test="employeeid != null and employeeid != ''" >
+       and employeeid = #{employeeid}
+    </if>
+    <if test="currentQuarterStartDate != null and currentQuarterStartDate != ''" >
+       and DATE_FORMAT(createdate, '%Y-%m-%d') &gt;= #{currentQuarterStartDate}
+    </if>
+    <if test="currentQuarterEndDate != null and currentQuarterEndDate != ''" >
+       and DATE_FORMAT(createdate, '%Y-%m-%d') &lt;= #{currentQuarterEndDate}
+    </if>
+  </select>
+  
+  <delete id="delete" parameterType="com.pmo.dashboard.entity.EmployeeImpplan" >
+    delete from t_employeeimpplan
+    where 1=1
+    <if test="employeeid != null and employeeid != ''" >
+       and employeeid = #{employeeid}
+    </if>
+    <if test="currentQuarterStartDate != null and currentQuarterStartDate != ''" >
+       and DATE_FORMAT(createdate, '%Y-%m-%d') &gt;= #{currentQuarterStartDate}
+    </if>
+    <if test="currentQuarterEndDate != null and currentQuarterEndDate != ''" >
+       and DATE_FORMAT(createdate, '%Y-%m-%d') &lt;= #{currentQuarterEndDate}
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.pmo.dashboard.entity.EmployeeImpplan" >
+    insert into t_employeeimpplan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="employeeid != null" >
+        employeeid,
+      </if>
+      <if test="keyability != null" >
+        keyability,
+      </if>
+      <if test="action != null" >
+        action,
+      </if>
+      <if test="supportor != null" >
+        supportor,
+      </if>
+      <if test="dealine != null" >
+        dealine,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeid != null" >
+        #{employeeid,jdbcType=VARCHAR},
+      </if>
+      <if test="keyability != null" >
+        #{keyability,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null" >
+        #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="supportor != null" >
+        #{supportor,jdbcType=VARCHAR},
+      </if>
+      <if test="dealine != null" >
+        #{dealine,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.pmo.dashboard.entity.EmployeeImpplan" >
+    update t_employeeimpplan
+    <set >
+      <if test="employeeid != null" >
+        employeeid = #{employeeid,jdbcType=VARCHAR},
+      </if>
+      <if test="keyability != null" >
+        keyability = #{keyability,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null" >
+        action = #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="supportor != null" >
+        supportor = #{supportor,jdbcType=VARCHAR},
+      </if>
+      <if test="dealine != null" >
+        dealine = #{dealine,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

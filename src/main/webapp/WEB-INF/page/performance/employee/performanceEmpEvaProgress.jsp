@@ -41,22 +41,20 @@
 .templateTable thead, .templateTable td { 
 	text-align: center;
 }
-</style>
-<style>
-    .table-thead-background  thead, th {
-        background-color:#d9edf7;
-    }
+
+
 </style>
 </head>
 <script>
 var path='<%=path%>';
 </script>
 <body>
+
 	<c:import url="/service/manage/top" />
 
 	<c:import url="/service/performance/performanceLeft">
 	    <c:param name="currentPageName" value="<%=currentPageName%>"/>
-	</c:import> 
+	</c:import>
 
 
 <!-- middle content start -->
@@ -67,7 +65,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  当期绩效  
+									<i class="glyphicon glyphicon-user"></i>  Employee-绩效考评-考评进度  
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
@@ -75,8 +73,19 @@ var path='<%=path%>';
 							<div class="panel panel-default">	
                               <div class="panel-body">
 
-									<table id="empEvaCurrentPeriodList" class="table table-thead-background"></table>
-
+									<table id="performancePregressList" class="table table-striped table-bordered" >
+										<thead>
+											<tr style="background-color:#d9edf7">
+												<th>流程名称</th>
+												<th>审核人</th>
+												<th>状态</th>
+												<th>Comments</th>
+											</tr>
+										</thead>										
+										<tbody>
+										
+									    </tbody>
+									</table>
 						     </div>
                              </div>
                           
@@ -87,13 +96,10 @@ var path='<%=path%>';
 
 
 <!-- middle content end -->
-	
-	
-	
+
 <div class="ch-container ">
 	<c:import url="/service/manage/footer" />
 </div>
-
 
 	
 	<!-- CSS引用 -->
@@ -144,8 +150,8 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-	<script type="text/javascript" src="<%=path %>/js/pmo/performanceEmpEvaCurrentPeriod.js"></script>
-	
+    <script type="text/javascript" src="<%=path %>/js/pmo/performanceEmpEvaProgress.js"></script>
+    
 </body>
 </html>
 

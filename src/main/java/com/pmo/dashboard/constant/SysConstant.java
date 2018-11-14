@@ -1,0 +1,74 @@
+package com.pmo.dashboard.constant;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class SysConstant {
+	
+	
+	
+	
+	   /**
+	    * 员工绩效目标设定状态
+	    */
+	   public static final String PERFOR_DRAFT_STATE = "0";//绩效目标草稿状态
+	   public static final String PERFOR_SUBMIT_STATE = "1";//绩效目标提交状态
+	   public static final String APPROVAL_PASS = "2";//绩效目标审批通过
+	   public static final String APPROVAL_NOPASS = "3";//绩效目标审批未通过
+	   
+	   public static Map<String,Object> getPerforStateMap(){
+		   Map<String,Object> map = new HashMap<String,Object>();
+		   map.put(PERFOR_DRAFT_STATE, "草稿");
+		   map.put(PERFOR_SUBMIT_STATE, "已提交");
+		   map.put(APPROVAL_PASS, "审批通过");
+		   map.put(APPROVAL_NOPASS, "审批未通过");
+		   
+		   return map;
+	   }
+	   
+	   /**
+	    * 员工绩效目标设定类型
+	    */
+	   public static final String PRIORITY_WORK = "0";//重点工作
+	   public static final String KEY_EVENTS = "1";//关键事件
+	   
+	   public static Map<String,Object> getPerforTypeMap(){
+		   Map<String,Object> map = new HashMap<String,Object>();
+		   map.put(PRIORITY_WORK, "重点工作");
+		   map.put(KEY_EVENTS, "关键事件");
+		   
+		   return map;
+	   }
+	   
+	   /**
+	    * 员工考评进度(流程)
+	    */
+	   public static final String PENDING_APPROVAL="1";//员工绩效目标待RM审批
+	   public static final String PERFORMANCE_PASS = "2";//绩效目标审批通过
+	   public static final String PERFORMANCE_NOPASS = "3";//绩效目标审批未通过
+	   public static Map<String,Object> getEvaProgressStateMap(){
+		   Map<String,Object> map = new HashMap<String,Object>();
+		   
+		   map.put(PENDING_APPROVAL, "待审批");
+		   map.put(PERFORMANCE_PASS, "审批通过");
+		   map.put(PERFORMANCE_NOPASS, "审批未通过");
+		   
+		   return map;
+	   }
+	   
+	   /**
+	    * 员工考评流程类型
+	    */
+	   public static final String PROCESS_TYPE1="1";//绩效目标审批
+	   public static Map<String,Object> getPerforProcessTypeMap(){
+		   Map<String,Object> map = new HashMap<String,Object>();
+		   
+		   map.put(PROCESS_TYPE1, "绩效目标审批");
+		   
+		   return map;
+	   }
+	   
+	   //本地服务器地址
+	   public static final String serverurl="http://localhost:8082/Pmo/";
+
+}

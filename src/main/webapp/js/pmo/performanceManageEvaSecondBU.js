@@ -36,7 +36,9 @@ function queryPercentage() {
 			$("#empC").html(data["C"] == undefined ? 0 : data["C"]);
 			$("#empD").html(data["D"] == undefined ? 0 : data["D"]);
 			$("#empSum").html(data["sum"] == undefined ? 0 : data["sum"]);
-			$("#percentSum").html("100%");
+			if (data["sum"] == 0) {
+				$("#percentSum").html("0%");
+			}
 		}
 	});
 }
@@ -80,7 +82,9 @@ function loadManageEvaSecondDUList() {
 	}, {
 		title : 'Detail',
 		formatter : function(value, row, index) {
-			return "<a href='performanceManageEvaSecondQueryDU.html?du=" + row.du + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+			if (row.status == 4) {
+				return "<a href='performanceManageEvaSecondQueryDU.html?du=" + row.du + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+			}
 		}
 	} ];
 
@@ -120,7 +124,7 @@ function loadManageEvaSecondDUList() {
 		onLoadSuccess : function(data) {
 			// 判断所有交付部是否均已审批
 			for ( var item in data) {
-				if (data[item].status == 4) {// TODO xuexuan
+				if (data[item].status <= 4) {// TODO xuexuan
 					approvalAllFlag = false;
 					return;
 				}
@@ -138,6 +142,11 @@ function loadManageEvaSecondDUList() {
 }
 /** 事业部经理审批提交 ** */
 function submit() {
+	var tableData = $('#manageEvaSeondBUList').bootstrapTable("getData");
+	if (tableData.length == 0) {
+		alert("暂无数据审批");
+		return;
+	}
 	// 所有交付部都审批才能提交
 	if (!approvalAllFlag) {
 		alert("还有未审批数据，请先审批");
@@ -160,6 +169,7 @@ function submit() {
 		type : "POST",
 		success : function(data) {
 			alert("审批成功");
+			history.go(0);
 		},
 		error : function(error) {
 			alert("审批失败");
@@ -168,5 +178,10 @@ function submit() {
 }
 
 function batchExport() {
+	var tableData = $('#manageEvaSeondBUList').bootstrapTable("getData");
+	if (tableData.length == 0) {
+		alert("暂无数据导出");
+		return;
+	}
 	window.location.href = path + "/service/performanceManageEva/assessment/approval/bu/export.html";
 }

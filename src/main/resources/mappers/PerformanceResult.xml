@@ -351,6 +351,59 @@
 		</where> 
 		group by RM
 	</select>
+	
+	<select id="queryEmployeeIdByResultId" parameterType="string"  resultType="hashMap">
+		select r.PreAssessment_Result as result, e.EMPLOYEE_ID as employeeId from p_result r left join t_employee e on r.E_HR = e.E_HR where r.Result_ID = #{id}
+	</select>
+	
+	
+	<!-- Employee-绩效结果-当期绩效 -->
+	<select id="queryCurrentYearQuarter" parameterType="com.pmo.dashboard.entity.PerformanceManageEvaBean"  resultType="com.pmo.dashboard.entity.vo.PresultVo">
+		select * from p_result 
+		where 1=1
+		<if test="ehr != null and ehr != ''">
+			AND E_HR = #{ehr}
+		</if>
+		<if test="year != null and year != ''">
+			AND Year = #{year}
+		</if>
+		<if test="quarter != null and quarter != ''">
+			AND Quarter = #{quarter}
+		</if>
+	</select>
+	
+	<!-- Employee-绩效结果-历史绩效 -->
+	<select id="queryPerformanceList" parameterType="com.pmo.dashboard.entity.PerformanceManageEvaBean"  resultType="com.pmo.dashboard.entity.vo.PresultVo">
+		select * from p_result 
+		where 1=1
+		<if test="ehr != null and ehr != ''">
+			AND E_HR = #{ehr}
+		</if>
+		<if test="year != null and year != ''">
+			AND Year = #{year}
+		</if>
+		<if test="quarter != null and quarter != ''">
+			AND Quarter = #{quarter}
+		</if>
+		<if test="role != null and role != ''">
+			AND Role = #{role}
+		</if>
+		<if test="skill != null and skill != ''">
+			AND Skill = #{skill}
+		</if>
+		<if test="bu != null and bu != ''">
+			AND BU = #{bu}
+		</if>
+		<if test="du != null and du != ''">
+			AND DU = #{du}
+		</if>
+		<if test="startYear != null and startYear != ''">
+			AND Year &gt;= #{startYear}
+		</if>
+		<if test="endYear != null and endYear != ''">
+			AND Year &lt;= #{endYear}
+		</if>
+	</select>
 
 </mapper>
 

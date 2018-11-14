@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pmo.dashboard.dao.EmployeeMapper;
 import com.pmo.dashboard.entity.Employee;
 import com.pmo.dashboard.entity.EmployeePageCondition;
+import com.pmo.dashboard.entity.vo.RmApprovalVo;
 import com.pom.dashboard.service.EmployeeService;
 
 @Service
@@ -124,7 +125,7 @@ public class EmployeeServiceImpl implements EmployeeService
 	}
 
     @Override
-    public List<Map<String, Object>> rmApprovalList(String rmUserId, String submit, String backbone, String state) {
-        return employeeMapper.rmApprovalList(rmUserId, submit, backbone, state);
+    public List<RmApprovalVo> rmApprovalList(RmApprovalVo rv) {
+        return employeeMapper.rmApprovalList(rv);
     }
 }

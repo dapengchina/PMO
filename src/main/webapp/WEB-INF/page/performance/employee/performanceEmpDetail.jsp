@@ -3,14 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
-	String path = request.getContextPath();
-	String url = request.getRequestURI();
-	String currentPageName = "";
-	if (url != null) {
-		String[] strs = url.split("/");
-		url = strs[strs.length-1];
-		currentPageName = url.substring(0, url.lastIndexOf('.'));
-	}
+String path = request.getContextPath();
+String url = request.getRequestURI();
+String currentPageName = "";
+if (url != null) {
+	String[] strs = url.split("/");
+	url = strs[strs.length-1];
+	currentPageName = url.substring(0, url.lastIndexOf('.'));
+}
+    
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +66,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  员工自评
+									<i class="glyphicon glyphicon-user"></i>  Employee-绩效结果-详情
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
@@ -77,32 +78,37 @@ var path='<%=path%>';
 							             	<div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">姓名</span>
-							                        <input class="form-control" type="text" placeholder="XXX">
+							                        <input readonly="readonly" class="form-control" type="text"
+							                        name="userName" id="userName" value="${ sessionScope.loginUser.nickname}">
 							                    </div>
 							                </div>
 
 							                <div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">工号</span>
-							                        <input class="form-control" type="text" placeholder="XXXXX">
+							                        <input readonly="readonly" class="form-control" type="text" 
+							                        name="lob" id="lob" value="${ sessionScope.loginUser.userName}">
 							                    </div>
 							                </div>
 							                <div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">所在部门</span>
-							                        <input class="form-control" type="text" placeholder="XX交付部">
+							                        <input style="width:150px;" readonly="readonly" class="form-control" type="text" 
+							                        name="bu" id="bu" value="${ sessionScope.department}">
 							                    </div>
 							                </div>
-							                <div class="form-group col-md-2">
+							                <div style="margin-left:83px;" class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">职位</span>
-							                        <input class="form-control" type="text" placeholder="PM">
+							                        <input style="width:100px;" readonly="readonly" class="form-control" type="text"
+							                        name="position" id="position">
 							                    </div>
 							                </div>
 											<div class="form-group col-md-2">
 							                    <div class="input-group">
 							                        <span class="input-group-addon">考核主管</span>
-							                        <input class="form-control" type="text" placeholder="XXX交付经理">
+							                        <input readonly="readonly" class="form-control" type="text" 
+							                        name="" id="">
 							                    </div>
 							                </div>
 							            </div>            							
@@ -124,49 +130,8 @@ var path='<%=path%>';
                                  <td>测评部门考核</td>
                                </tr>
 							   </thead>
-
                                <tr>
-                                <td rowspan="5" id="leftrowspan">重点工作</td>
-                                 <td>1</td>
-                                 <td>招聘管理</td>
-                                 <td>25%</td>
-                                 <td>Xpod team面试通过率达到30%</td>
-                                 <td>
-								 1.举办2次面试官培训，面试官认证通过3名人选，权重5%
-								 <Br/>
-								 2.增加内推量，下限50份简历资源，权重5%
-								 </td>
-                                 <td>XX交付经理</td>
-                               </tr>
-
-                               <tr>
-                                 <td>2</td>
-                                 <td>项目质量</td>
-                                 <td>30%</td>
-                                 <td>XXXXXXXXXXXX</td>
-                                 <td>XXXXXXXX</td>
-                                 <td>XX交付经理</td>
-                               </tr>
-
-                               <tr>
-                                 <td>3</td>
-                                 <td>技术分享</td>
-                                 <td>20%</td>
-                                 <td>XXXXXXXXXXXX</td>
-                                 <td>XXXXXXXX</td>
-                                 <td>XX交付经理</td>
-                               </tr>
-
-                               <tr>
-                                 <td>4</td>
-                                 <td>新人培养</td>
-                                 <td>10%</td>
-                                 <td>XXXXXXXXXXXX</td>
-                                 <td>XXXXXXXX</td>
-                                 <td>XX交付经理</td>
-                               </tr>
-                               <tr>
-                                 <td colspan="6"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr1('table1', -1, 6);")>+</a>
+                                 <td colspan="7"><a href='javascript:void(0);' class='btn btn-info btn-sm' onclick="addTr1('table1', -1, 6);")><span class="glyphicon glyphicon-plus"></span> Plus</a>
 								 </td>
                                </tr>
                              </table>
@@ -174,19 +139,9 @@ var path='<%=path%>';
 								<br/>
 
                              <table id="table2" border="1" width="100%" class="templateTable">
+                               
                                <tr>
-                                 <td>关键事件</td>
-                                 <td>1</td>
-                                 <td>Develop and Support</td>
-                                 <td>15%</td>
-                                 <td>Xpod team面试通过率达到30%</td>
-                                 <td>
-								   Organize technology research like POC
-								 </td>
-                                 <td>XX交付经理</td>
-                               </tr>
-                               <tr>
-                                 <td colspan="7"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr2('table2', -1, 7);")>+</a>
+                                 <td colspan="7"><a href='javascript:void(0);' class='btn btn-info btn-sm' onclick="addTr2('table2', -1, 7);")><span class="glyphicon glyphicon-plus"></span> Plus</a>
 								 </td>
                                </tr>
 							 </table>
@@ -211,14 +166,8 @@ var path='<%=path%>';
 								 </td>
                                </tr>
 							   </thead>
-                               <tr>
-                                 <td> Spring Boot	 </td>
-                                 <td> Pass exam </td>
-                                 <td> Pim </td>
-                                 <td> 2018-12-31 </td>
-                               </tr>
 							    <tr>
-                                 <td colspan="4"><a href='javascript:void(0);' class='btn btn-info btn-small' onclick="addTr2('table3', -1, 4);")>+</a>
+                                 <td colspan="4"><a href='javascript:void(0);' class='btn btn-info btn-sm' onclick="addTr2('table3', -1, 4);")><span class="glyphicon glyphicon-plus"></span> Plus</a>
 								 </td>
                                </tr>
 							 </table>
@@ -229,7 +178,16 @@ var path='<%=path%>';
 								 <div class="panel-body" >										
 										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Self-Evaluation</label>
 										<div class="col-lg-10">
-											<textarea rows="3" style="border:1px solid black" class="form-control" id="changeInformation" ></textarea>
+											<textarea readonly="readonly" rows="3" style="border:1px solid black" class="form-control" id="selfassessment" ></textarea>
+										</div>
+								 </div>
+							</div>
+							
+							<div class="panel panel-default"  style="border:1px solid black">	
+								 <div class="panel-body" >										
+										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Comments</label>
+										<div class="col-lg-10">
+											<textarea readonly="readonly" rows="3" style="border:1px solid black" class="form-control" id="comments" ></textarea>
 										</div>
 								 </div>
 							</div>
@@ -239,23 +197,7 @@ var path='<%=path%>';
 								<span>&nbsp;</span>
 
 								<div class="form-group">
-									    <div style="text-align:center;width:100%;">
-									    <input type="button" value="Save" name="Save" id="Save" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-									    <input type="button" value="Edit" name="Edit" id="Edit" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-										<input type="button" value="Submit" name="Submit" id="Submit" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-
-									    </div>
+									    
 								</div>
 
 
@@ -322,6 +264,7 @@ var path='<%=path%>';
 	<!-- application script for Charisma demo -->
 	<script src="<%=path %>/js/charisma.js"></script>
 	
+	<script type="text/javascript" src="<%=path %>/js/pmo/performance/employeePerformanceDetail.js"></script>
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
 </body>
 </html>

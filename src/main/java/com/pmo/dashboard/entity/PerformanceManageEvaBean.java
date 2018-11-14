@@ -58,8 +58,68 @@ public class PerformanceManageEvaBean {
 
     private String resultId;         // add by xuexan
     private String state;
+    
+    
+    /**
+     * 不匹配字段
+     * @return
+     */
+    private String e_hr;
+    
+    /**
+     * 表外字段
+     * @return
+     */
+    private String startYear;
+    private String endYear;
+    private String startQuarter;
+    private String endQuarter;
+    
+    
 
-    public String getResultId() {
+    
+    
+    public String getStartYear() {
+		return startYear;
+	}
+
+	public void setStartYear(String startYear) {
+		this.startYear = startYear;
+	}
+
+	public String getEndYear() {
+		return endYear;
+	}
+
+	public void setEndYear(String endYear) {
+		this.endYear = endYear;
+	}
+
+	public String getStartQuarter() {
+		return startQuarter;
+	}
+
+	public void setStartQuarter(String startQuarter) {
+		this.startQuarter = startQuarter;
+	}
+
+	public String getEndQuarter() {
+		return endQuarter;
+	}
+
+	public void setEndQuarter(String endQuarter) {
+		this.endQuarter = endQuarter;
+	}
+
+	public String getE_hr() {
+		return e_hr;
+	}
+
+	public void setE_hr(String e_hr) {
+		this.e_hr = e_hr;
+	}
+
+	public String getResultId() {
         return resultId;
     }
 
