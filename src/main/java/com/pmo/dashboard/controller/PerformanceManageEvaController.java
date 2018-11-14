@@ -135,7 +135,7 @@ public class PerformanceManageEvaController {
     private static String[]              approvalDUTitle     = new String[] { "NO.", "RM", "Year", "Quarter", "Status" };
     private static String[]              approvalDUContent   = new String[] { "NO.", "rm", "year", "quarter", "status" };
     /** Management-绩效目标-审批导出文件 **/
-    private static String[]              approvalGoalTitle   = new String[] { "NO.", "E-HR", "Employee Name", "MSA Role", "Skill/Technology", "是否提交", "业务先锋", "审批状态" };
+    private static String[]              approvalGoalTitle   = new String[] { "NO.", "E-HR", "Employee Name", "MSA Role", "Skill/Technology", "Submited", "Backbone", "Status" };
     private static String[]              approvalGoalContent = new String[] { "NO.", "E_HR", "STAFF_NAME", "ROLE", "SKILL", "submit", "backbone", "state" };
 
     @RequestMapping("/queryManageEvaFirstDetailList")
@@ -840,9 +840,9 @@ public class PerformanceManageEvaController {
             logger.error("当前登录用户不是RM");
         }
         RmApprovalVo rv = new RmApprovalVo();
+        rv.setRmUserID(user.getUserId());
         // 查询数据
         List<RmApprovalVo> list = employeeService.rmApprovalList(rv);
-        //List<Map<String, Object>> list = employeeService.rmApprovalList("cf527b21ab304c05b56a4096f6e389b5", null, null, null);
         // 创建文件
         XSSFWorkbook book = new XSSFWorkbook();
         Row row;
@@ -861,14 +861,33 @@ public class PerformanceManageEvaController {
             cell.setCellValue(r + 1);
             for (int c = 1; c < approvalGoalContent.length; c++) {
                 cell = row.createCell(c);
-//                if ("submit".equals(approvalGoalContent[c])) {
-//                    cell.setCellValue("1".equals((String) list.get(r).get(approvalGoalContent[c])) ? "是" : "否");
-//                } else if ("state".equals(approvalGoalContent[c])) {
-//                    cell.setCellValue("1".equals((String) list.get(r).get(approvalGoalContent[c])) ? "审批通过" : "0".equals((String) list.get(r).get(approvalGoalContent[c])) ? "待审批" : "审批不通过");
-//                } else {
-//                    cell.setCellValue((String) list.get(r).get(approvalGoalContent[c]));
-//                }
-
+                if(c==1){
+                	 cell.setCellValue(list.get(r).getEhr());
+                }
+                if(c==2){
+                	 cell.setCellValue(list.get(r).getEmployeeName());
+                }
+                if(c==3){
+                	 cell.setCellValue(list.get(r).getMsaRole());
+                }
+                if(c==4){
+                	 cell.setCellValue(list.get(r).getSkill());
+                }
+                if(c==5){
+                	 if(list.get(r).getState()!=null && !"".equals(list.get(r).getState())){
+                		 if(!list.get(r).getState().equals(SysConstant.PERFOR_DRAFT_STATE)){
+                			 cell.setCellValue("已提交"); 
+                		 }
+                	 }else{
+                		 cell.setCellValue("未提交"); 
+                	 }
+                }
+                if(c==6){
+                	 cell.setCellValue("");
+                }
+                if(c==7){
+                	 cell.setCellValue((String)SysConstant.getPerforStateMap().get(list.get(r).getState()));
+                }
             }
         }
         ByteArrayOutputStream os = new ByteArrayOutputStream();
