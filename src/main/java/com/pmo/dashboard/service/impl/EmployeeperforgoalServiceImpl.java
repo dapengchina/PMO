@@ -4,6 +4,7 @@ package com.pmo.dashboard.service.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -225,6 +226,29 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 				pb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
 				pb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
 				performanceProgressService.updateState(pb);
+				
+				if(SysConstant.PERFOR_SUBMIT_STATE.equals(state)){
+					PerformanceEmpProcessBean pb2 = new PerformanceEmpProcessBean();
+					pb2.setEmployeeid(employeeid);
+					pb2.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+					pb2.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+					List<PerformanceEmpProcessBean> processList = performanceProgressService.queryPerformanceProgressList(pb2);
+					if(processList==null || processList.size()==0){
+						/**
+						 * 保存员工考评进度
+						 */
+						PerformanceEmpProcessBean pb3 = new PerformanceEmpProcessBean();
+						Employee emp2 = employeeMapper.queryEmployeeById(emp.getRmUserId());
+						pb3.setId(Utils.getUUID());
+						pb3.setEmployeeid(employeeid);
+						pb3.setProcessid(SysConstant.PROCESS_TYPE1);
+						pb3.setOwner(emp2.getStaffName());
+						pb3.setCreatedate(new Date());
+						pb3.setState(SysConstant.PENDING_APPROVAL);
+						performanceProgressService.saveProcess(pb3);
+					}
+				}
+				
 			}
 			return 1;
 		}catch(Exception e){
