@@ -234,6 +234,7 @@ public class EmployeePerforGoalController {
 	@RequestMapping("/reject/{employeeid}")
     @ResponseBody
 	public String reject(final HttpServletRequest request, final HttpServletResponse response,@PathVariable("employeeid") String employeeid) throws JsonProcessingException{
+		String comments = request.getParameter("comments");
 		Employeeperforgoal epg = new Employeeperforgoal();
 		epg.setEmployeeid(employeeid);
 		epg.setState(SysConstant.APPROVAL_NOPASS);
@@ -244,6 +245,7 @@ public class EmployeePerforGoalController {
 		PerformanceEmpProcessBean pb = new PerformanceEmpProcessBean();
 		pb.setEmployeeid(employeeid);
 		pb.setState(SysConstant.PERFORMANCE_NOPASS);
+		pb.setRemark(comments);
 		pb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
 		pb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
 		performanceProgressService.updateState(pb);
@@ -269,6 +271,7 @@ public class EmployeePerforGoalController {
 	@RequestMapping("/approval/{employeeid}")
     @ResponseBody
 	public String approval(final HttpServletRequest request, final HttpServletResponse response,@PathVariable("employeeid") String employeeid) throws JsonProcessingException{
+		String comments = request.getParameter("comments");
 		Employeeperforgoal epg = new Employeeperforgoal();
 		epg.setEmployeeid(employeeid);
 		epg.setState(SysConstant.APPROVAL_PASS);
@@ -279,6 +282,7 @@ public class EmployeePerforGoalController {
 		PerformanceEmpProcessBean pb = new PerformanceEmpProcessBean();
 		pb.setEmployeeid(employeeid);
 		pb.setState(SysConstant.PERFORMANCE_PASS);
+		pb.setRemark(comments);
 		pb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
 		pb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
 		performanceProgressService.updateState(pb);

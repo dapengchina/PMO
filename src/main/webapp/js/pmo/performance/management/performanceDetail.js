@@ -182,12 +182,14 @@ function loadEmployeePlan(result){
 
 //审批不通过
 function reject(){
+	var comments = $("#comments").val();
 	$.ajax({
 		url:path+"/service/empPerforGoal/reject/"+$("#reemployeeid").val(),
 		dataType:"json",
 		async:true,
 		cache:false,
 		type:"post",
+		data:{comments:comments},
 		success:function(result){
 			if(result.code=="1"){
 				alert(result.msg);
@@ -201,12 +203,14 @@ function reject(){
 
 //审批通过
 function approval(){
+	var comments = $("#comments").val();
 	$.ajax({
 		url:path+"/service/empPerforGoal/approval/"+$("#reemployeeid").val(),
 		dataType:"json",
 		async:true,
 		cache:false,
 		type:"post",
+		data:{comments:comments},
 		success:function(result){
 			if(result.code=="1"){
 				alert(result.msg);

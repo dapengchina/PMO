@@ -1,6 +1,6 @@
 package com.pmo.dashboard.controller;
 
-import java.text.NumberFormat;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +27,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pmo.dashboard.entity.CSDept;
 import com.pmo.dashboard.entity.EmployeeInfo;
 import com.pmo.dashboard.entity.EmployeePageCondition;
-import com.pmo.dashboard.entity.EmployeeSkill;
 import com.pmo.dashboard.entity.NewTree;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
 import com.pmo.dashboard.entity.Template;
@@ -115,9 +114,15 @@ public class PerformanceController {
         return "performance/performanceListPage";
     }
 
+    /**
+     * Employee-绩效目标-绩效目标设定
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceEmpPBC")
     public String getTMemployee(final HttpServletRequest request, Model model) {
-        return "performance/performanceEmpPBC";
+        return "performance/employee/performanceEmpPBC";
     }
 
     /**
@@ -139,7 +144,7 @@ public class PerformanceController {
      */
     @RequestMapping("/performanceEmpEvaProgress")
     public String getPerformanceEmpEvaProgress(final HttpServletRequest request, Model model) {
-        return "performance/performanceEmpEvaProgress";
+        return "performance/employee/performanceEmpEvaProgress";
     }
 
     /**
