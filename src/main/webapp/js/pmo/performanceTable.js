@@ -7,54 +7,50 @@ var tableId = "";// 由引入页面传入以便计算序号值
 var pageNumber = 1;
 var pageSize = 10;
 var columns = [ {
-	title : '序<br/>号',
-	formatter : function(value, row, index) {
-		var options = $('#' + tableId).bootstrapTable("getOptions");
-		return "<span>" + (1 + index + (options.pageNumber - 1) * options.pageSize) + "</span>";
-	},
-	width : "2.5%",
+	title : 'No',
+	formatter: function (value, row, index) {
+        return index+1;
+    }
 }, {
 	field : 'ehr',
-	title : 'E-HR<br/>编号'
+	title : 'E-HR'
 }, {
 	field : 'lobNo',
-	title : 'LOB<br/>工号'
+	title : 'LOB'
 }, {
 	field : 'name',
-	title : '姓名'
+	title : 'Name'
 }, {
 	field : 'hireDate',
-	title : '入<br/>职<br/>时<br/>间'
+	title : 'Date-onboard'
 }, {
 	field : 'role',
-	title : '职务'
+	title : 'MSA Role'
 }, {
 	field : 'serviceLine',
-	title : '业务线'
+	title : 'Line'
 }, {
 	field : 'bu',
-	title : '事<br/>业<br/>部',
+	title : 'BU',
 	showSelectTitle : true
 }, {
 	field : 'du',
-	title : '交<br/>付<br/>部'
+	title : 'DU'
 }, {
 	field : 'location',
-	title : '归<br/>属<br/>地'
+	title : 'Location'
 }, {
 	field : 'keymember',
-	title : '是<br/>否<br/>骨<br/>干',
-	width : "2.5%",
+	title : 'Backbone'
 }, {
 	field : 'participate',
-	title : '是<br/>否<br/>参<br/>评',
-	width : "2.5%"
+	title : 'Assessed'
 }, {
 	field : 'manager',
-	title : '直<br/>接<br/>主<br/>管'
+	title : 'Direct Supervisor'
 }, {
 	field : 'customerFeedback',
-	title : '客户<br/>反馈',
+	title : 'Client Feedback',
 	formatter : function(value, row, index) {
 		var substr = "";
 		if (value == null) {
@@ -69,8 +65,7 @@ var columns = [ {
 	}
 }, {
 	field : 'initialEvalution',
-	title : '初评<br/>(依据<br/>客户<br/>反馈)',
-	width : "4%",
+	title : 'Pre-Assessment(Refer Client Feedback)',
 	formatter : function(value, row, index) {
 		if (row.initialEvalution == "" || row.initialEvalution == undefined) {
 			stateSubmitFlag = false;// RM初评页面，所有员工评级完成才可提交
@@ -79,40 +74,33 @@ var columns = [ {
 	}
 }, {
 	field : 'pmEvalution',
-	title : '直接<br/>主管<br/>初评<br/>结果',
-	width : "4%"
+	title : 'Pre-Assessment'
 }, {
 	field : 'duEvalution',
-	title : '部门<br/>集体<br/>评议<br/>结果',
-	width : "4%"
+	title : 'GroupAssessment'
 }, {
 	field : 'duEvaManager',
-	title : '集体<br/>评议<br/>主管'
+	title : 'GroupAssessment Result'
 }, {
 	field : 'achievement',
-	title : 'A/C/D<br/>人员<br/>绩效<br/>事实'
+	title : 'PerformanceFacts(A/C/D)'
 }, {
 	field : 'jump',
-	title : '是否<br/>绩效<br/>跳变',
-	width : "4%"
+	title : 'PerformanceSkip'
 }, {
 	field : 'comments',
-	title : '备注',
+	title : 'Remark',
 }, {
 	field : 'previous1Quarter',
-	title : '上<br/>季度<br/>绩效',
-	width : "4%"
+	title : 'Last Q'
 }, {
 	field : 'previous2Quarter',
-	title : '上上<br/>季度<br/>绩效',
-	width : "4%"
+	title : '2Qs ago'
 }, {
 	field : 'previous3Quarter',
-	title : '上上<br/>上季<br/>度绩<br/>效',
-	width : "4%"
-}, {
-	title : '详<br/>情',
-	width : "3%",
+	title : '3Qs ago'
+}/*, {
+	title : 'Detail',
 	formatter : function(value, row, index) {
 		if (!RmEvaFlag) {
 			return "<a href='javascript:void(0);' onClick='detail(\"" + row.resultId + "\");' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
@@ -120,4 +108,4 @@ var columns = [ {
 			return "<a href='javascript:void(0);' onClick='detail(\"" + row.resultId + "\")' " + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
 		}
 	}
-} ];
+}*/ ];

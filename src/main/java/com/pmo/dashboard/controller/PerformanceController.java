@@ -182,7 +182,7 @@ public class PerformanceController {
      */
     @RequestMapping("/performanceManageTargetApproval")
     public String getPerformanceManageTargetApproval(final HttpServletRequest request, Model model) {
-        return "performance/performanceManageTargetApproval";
+        return "performance/management/performanceManageTargetApproval";
     }
 
     @RequestMapping("/performanceManageTargetApprovalFilter")
@@ -205,9 +205,15 @@ public class PerformanceController {
         return "performance/performanceManageEvaFirst";
     }
 
+    /**
+     * Management-绩效考评-初评页面
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceManageEvaFirstDetailComments")
     public String getPerformanceManageEvaFirstDetailComments(final HttpServletRequest request, Model model) {
-        return "performance/performanceManageEvaFirstDetailComments";
+        return "performance/management/performanceManageEvaFirstDetailComments";
     }
 
     @RequestMapping("/performanceManageEvaSecondDU")

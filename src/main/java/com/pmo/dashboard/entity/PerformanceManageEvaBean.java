@@ -3,6 +3,7 @@ package com.pmo.dashboard.entity;
 public class PerformanceManageEvaBean {
     //EHR编号
     private String ehr;
+    private String employee_id;
     //LOB工号
     private String lobNo;
     //姓名
@@ -79,7 +80,15 @@ public class PerformanceManageEvaBean {
 
     
     
-    public String getStartYear() {
+    public String getEmployee_id() {
+		return employee_id;
+	}
+
+	public void setEmployee_id(String employee_id) {
+		this.employee_id = employee_id;
+	}
+
+	public String getStartYear() {
 		return startYear;
 	}
 

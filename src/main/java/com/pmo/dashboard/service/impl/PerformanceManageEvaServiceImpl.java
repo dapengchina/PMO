@@ -361,7 +361,8 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
         Map<String, Object> filter = new HashMap<String, Object>();
         Calendar c = Calendar.getInstance();
         String startYear = c.get(Calendar.YEAR) + "";
-        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        //String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        String startQuarter = PerformanceEmpHistoryServiceImpl.getSeason()+"";
         filter.put("startYear", startYear);
         filter.put("startQuarter", startQuarter);// 当年-当季
         filter.put("bu", bu);

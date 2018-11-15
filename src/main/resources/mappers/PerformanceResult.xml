@@ -276,7 +276,7 @@
 	</update>
 	<!-- 条件查询 -->
 	<select id="filterQuery" parameterType="hashMap" resultMap="PerformanceResultMap">
-		select e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r,
+		select e.EMPLOYEE_ID,e.STAFF_NAME,e.lob,e.ENTRY_DATE, r.* from P_result r,
 		t_employee e where r.E_HR=e.E_HR
 		<if test="eHr != null and eHr != ''">
 			AND e.E_HR = #{eHr}

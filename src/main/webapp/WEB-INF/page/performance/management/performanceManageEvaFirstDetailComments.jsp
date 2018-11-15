@@ -37,167 +37,148 @@
 <link href='<%=path %>/css/animate.min.css' rel='stylesheet'/>
 <link href='<%=path%>/css/bootstrap-datetimepicker.css' rel='stylesheet'/>
 <link href='<%=path%>/css/bootstrap-datetimepicker.min.css' rel='stylesheet'/>
+<link href='<%=path%>/css/style.css' rel='stylesheet'>
 <style type="text/css">
 .templateTable thead, .templateTable td { 
 	text-align: center;
 }
 </style>
 <style>
-.table-thead-background  thead, th {
-	background-color: #d9edf7;
-}
-
-a.link {
-	position: relative;
-}
-
-div.submitTips {
-	border: 1px solid #9a9898;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: white;
-    position: absolute;
-    width: 170px;
-    line-height: 20px;
-    word-wrap: break-word;
-    margin-top: -30px;
-    margin-left: 12px;
-    z-index: 1000;
-    display: none;
-}
-div.backboneTips{
-	border: 1px solid #9a9898;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: white;
-    position: absolute;
-    width: 170px;
-    line-height: 20px;
-    word-wrap: break-word;
-    margin-top: -30px;
-    margin-left: 12px;
-    z-index: 1000;
-    display: none;
-}
-div .stateTips{
-	border: 1px solid #9a9898;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: white;
-    position: absolute;
-    width: 170px;
-    line-height: 20px;
-    word-wrap: break-word;
-    margin-top: -30px;
-    margin-left: 12px;
-    z-index: 1000;
-    display: none;
-}
+    .table-thead-background  thead, th {
+        background-color:#d9edf7;
+        font-color:"white";
+    }
+</style>
+<style type="text/css">
+	a.link{position:relative;}
+	a.link div.tips{
+						border:1px solid black;
+						padding:2px;
+						background-color:#D7E7FC;
+						color:red;
+						position:absolute;
+						width:300px;
+  					    line-height:20px;
+						word-wrap:break-word ;
+						display:none;
+	}
+	a.link:hover{}
+	a.link:hover div.tips{
+						display:inline;
+					}
 </style>
 </head>
 <script>
-	var path = '<%=path%>';
+var path='<%=path%>';
 </script>
 <body>
 	<c:import url="/service/manage/top" />
+
 
 	<c:import url="/service/performance/performanceLeft">
 	    <c:param name="currentPageName" value="<%=currentPageName%>"/>
 	</c:import> 
 
-
+ 	
 <!-- middle content start -->
 			<div id="content" class="col-lg-10 col-sm-10">
 
 				<div class="row" >	
 				<div class="box col-md-12">
 						<div class="box-inner" >
-							<div class="box-header well" data-original-title="" >
+							<div class="box-header well" data-original-title="" > 
+							<div style="display:none">跟performanceManageEvaFirstDetail.jsp页面几乎一样的内容， 只是下面的参数和标题不同</div>
+							<input type="hidden" id="showAchievement" value="true"></input>
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management-绩效目标-审批   
+									<i class="glyphicon glyphicon-user"></i>   Management-绩效考评-初评
 								</h2>
 							</div>
 
 							<div id="employeeInfo" class="box-content">					
-	
-							<!-- result box start -->
-									<table id="table3" border="1" width="100%" >
-										<tr style="background-color:#00688B">
-										 <td ><font color="white"> 绩效目标审批</font>	 </td>
+								
+							<div class="panel panel-default">	
+                              <div class="panel-body">
+									<table id="table1" border="1" width="100%" borderColor="green" >
+										<tr style="">
+										 <td rowspan="4" width="55%">
+											说明：<br/>
+											1.<font color="red">比例控制：A 10-15%; B+ 30-40%; B 30-40%; C 5-10%; D 0-5%; A未使用比例可用于B+, 但A&B+ &lt; 55%; </font><br/>
+											2.考评周期内在岗时间不足一个月的长假员工，不参与考评，请各部门在备注中注明原因，HRBP部会从OA系统取数据
+											进行统一复核;<br/>
+											3.标蓝色行的异动和借阅人员，考评部门需参考有监督权交付部的建议，HRBP做复核，以确保这部分人员的绩效考核被合理对待。<br/>
+										 </td>
+										 <td colspan="7" style="text-align:center"><font color="green"> 主管比例统计(参考比例要求控制)</font>	 </td>
 										</tr>
 									   <tr>
-										 <td> <table id="manageTargetApprovalList" class="table table-thead-background"></table> </td>									
+										 <td> A <br/>(10-15%)</td>
+										 <td> B+ <br/>(30-40%) </td>
+										 <td> B <br/> &nbsp;</td>
+										 <td> C <br/>(5-10%)</td>
+										 <td> D <br/>(0-5%) </td>
+										 <td> 参评比例合计 </td>
+									   </tr>
+									   <tr>			
+										 <td>  <div id="empA"></div>	 </td>
+										 <td> <div id="empBplus"></div> </td>
+										 <td> <div id="empB"></div> </td>
+										 <td><div id="empC"></div> </td>
+										 <td> <div id="empD"></div> </td>
+										 <td> <div id="empSum"></div> </td>
+									   </tr>
+									   <tr>
+										 <td>  <div id="percentA"></div>	 </td>
+										 <td> <div id="percentBplus"></div> </td>
+										 <td> <div id="percentB"></div> </td>
+										 <td><div id="percentC"></div> </td>
+										 <td> <div id="percentD"></div> </td>
+										 <td> <div id="percentSum"></div> </td>
 									   </tr>
 									</table>
+
+									<br/>
+
+						<table id="manageEvaFirstDetailList"></table>
+
+						 
+						     </div>
+                             </div>                          
+
 									<span>&nbsp;</span>
 									<div class="form-group">
 												<div style="text-align:center;width:100%;">
-												<input type="button" value="Select All" name="Save" id="Save" href="#"
+												<input type="button" value="Save" name="Save" id="Save" href="#"
 												class="button btn btn-primary" data-dismiss="modal"
 												onclick=""
 												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 												<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-												<input type="button" value="Download" name="Edit" id="Edit" href="#"
+												<input type="button" value="Submit" name="Edit" id="Edit" href="#"
 												class="button btn btn-primary" data-dismiss="modal"
-												onclick="download();"
+												onclick="stateSubmit();"
 												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 												</div>
 										</div>
 
 						    </div>
 						 </div>
-							<!-- result box end -->
+
 
 	                           </div>  
 							</div>
 						</div>
-	<!-- middle content end -->
-	<div id="submitFilterDiv" class="hidden">
-		<span style="color:#006633;font-size: 16px;">Submited</span>
-		<div style="border-bottom:1px solid #0e5b87;margin: 10px 0px 20px 0px;"></div>
-		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
-			<input type="checkbox" id="yes" name="submitCheckbox" value="submit" checked> <label for="yes">Yes</label>
-		</div>
-		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
-			<input type="checkbox" id="no" name="submitCheckbox" value="save" checked> <label for="no">No</label>
-		</div>
-		<button type="button" class="btn btn-default" onClick="search(1)" style="margin-right:5px;">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
-		<button type="button" class="btn btn-default" onClick="cancelFilter(1)">Cancel</button>
-	</div>
-	<div id="backboneFilterDiv" class="hidden">
-		<span style="color:#006633;font-size: 16px;">Backbone</span>
-		<div style="border-bottom:1px solid #0e5b87;margin: 10px 0px 20px 0px;"></div>
-		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
-			<input type="checkbox" id="yes" name="backboneCheckbox" value="1" checked> <label for="yes">Yes</label>
-		</div>
-		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
-			<input type="checkbox" id="no" name="backboneCheckbox" value="0" checked> <label for="no">No</label>
-		</div>
-		<button type="button" class="btn btn-default" onClick="search(2)" style="margin-right:5px;">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
-		<button type="button" class="btn btn-default" onClick="cancelFilter(2)">Cancel</button>
-	</div>
-	<div id="stateFilterDiv" class="hidden">
-		<span style="color:#006633;font-size: 16px;">State</span>
-		<div style="border-bottom:1px solid #0e5b87;margin: 10px 0px 20px 0px;"></div>
-		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
-			<input type="checkbox" id="yes" name="stateCheckbox" value="0" checked> <label for="yes">未审批</label>
-		</div>
-		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
-			<input type="checkbox" id="no" name="stateCheckbox" value="1" checked> <label for="no">审批通过</label>
-		</div>
-		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
-			<input type="checkbox" id="no" name="stateCheckbox" value="-1" checked> <label for="no">审批未通过</label>
-		</div>
-		<button type="button" class="btn btn-default" onClick="search(3)" style="margin-right:5px;">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
-		<button type="button" class="btn btn-default" onClick="cancelFilter(3)">Cancel</button>
-	</div>
 
-	<div class="ch-container ">
-		<c:import url="/service/manage/footer" />
-	</div>
+
+
+<!-- middle content end -->
+
+	
+	
+	
+<div class="ch-container ">
+	<c:import url="/service/manage/footer" />
+</div>
 
 	<!-- CSS引用 -->
-    <link rel="stylesheet" href="<%=path%>/extensioncss/bootstarp-table/bootstrap-table.css" type="text/css" />
+    <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.css" type="text/css" />
     <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.min.css" type="text/css" />
 	<link rel="stylesheet" href="<%=path %>/extensionjs/bootstrap3-editable/css/bootstrap-editable.css" type="text/css" />
 	<link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table-fixed-columns.css" type="text/css" />      
@@ -244,8 +225,8 @@ div .stateTips{
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-    <script type="text/javascript" src="<%=path %>/js/pmo/performanceManageTargetApproval.js"></script>
-	
+    <!--<script type="text/javascript" src="<%=path%>/js/pmo/performanceTable.js"></script>  -->
+	<script type="text/javascript" src="<%=path %>/js/pmo/performanceManageEvaFirstDetail.js"></script>
 </body>
 </html>
 
