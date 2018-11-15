@@ -272,7 +272,7 @@ var path='<%=path%>';
 	<!-- application script for Charisma demo -->
 	<script src="<%=path %>/js/charisma.js"></script>
 	
-	<script type="text/javascript" src="<%=path %>/js/pmo/performance/employeeperforself.js"></script>
+	<script type="text/javascript" src="<%=path %>/js/pmo/performance/employee/employeeperforself.js"></script>
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
 </body>
 </html>

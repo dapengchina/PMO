@@ -150,7 +150,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-    <script type="text/javascript" src="<%=path %>/js/pmo/performanceEmpEvaProgress.js"></script>
+    <script type="text/javascript" src="<%=path %>/js/pmo/performance/employee/performanceEmpEvaProgress.js"></script>
     
 </body>
 </html>

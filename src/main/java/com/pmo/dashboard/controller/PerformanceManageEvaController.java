@@ -85,6 +85,8 @@ public class PerformanceManageEvaController {
 
     private static Logger                logger              = LoggerFactory.getLogger(PerformanceManageEvaController.class);
 
+   
+    
     @Resource
 	private EmployeeperforgoalService employeeperforgoalService;
 	
@@ -732,12 +734,22 @@ public class PerformanceManageEvaController {
      * @param grade 绩效等级
      * @return 
      * String
+     * @throws JsonProcessingException 
      */
     @RequestMapping("/assessment/grade/rm/submit")
     @ResponseBody
-    public String approvalRMSubmit(@RequestParam("id") String resultId, @RequestParam("grade") String preAssessment) {
-        manageEvaService.updatePreAssessmentResult(preAssessment, resultId);
-        return "";
+    public String approvalRMSubmit(@RequestParam("id") String resultId, @RequestParam("grade") String preAssessment) throws JsonProcessingException {
+    	Map<String,Object> map = new HashMap<String,Object>();
+    	try{
+    		manageEvaService.updatePreAssessmentResult(preAssessment,SysConstant.PRESULT_DRAFT, resultId);
+    	    map.put("msg", "初评成功");
+    	    map.put("code", "1");
+    	}catch(Exception e){
+    		map.put("msg", "初评失败");
+    	    map.put("code", "0");
+    	}
+    	
+        return objectMapper.writeValueAsString(map);
     }
 
     /**
@@ -1135,9 +1147,10 @@ public class PerformanceManageEvaController {
      * Management-绩效考评-初评-详情页面
      * @return
      */
-    @RequestMapping("/approvalDetailPage/{employeeid}")
-    public String approvalDetailPage(HttpServletRequest request,@PathVariable("employeeid") String employeeid,Model model){
+    @RequestMapping("/approvalDetailPage/{employeeid}/{pid}")
+    public String approvalDetailPage(HttpServletRequest request,@PathVariable("employeeid") String employeeid,@PathVariable("pid") String pid,Model model){
     	model.addAttribute("employeeid", employeeid);
+    	model.addAttribute("pid", pid);
     	return "performance/management/performanceApprovalDetail";
     }
     
@@ -1248,6 +1261,7 @@ public class PerformanceManageEvaController {
 		PresultVo pv = performanceResultService.getPerformance(pmb);
 	    
 		map.put("comments", pv!=null?pv.getResult_Comments():"");
+		map.put("directresult", pv!=null?pv.getDirect_Supervisor_Assessment_Result():"");
 		map.put("selfassessment", reperfor!=null?reperfor.getSelfassessment():"");
 		map.put("state", reperfor!=null?reperfor.getState():"");
 		map.put("data", data1);

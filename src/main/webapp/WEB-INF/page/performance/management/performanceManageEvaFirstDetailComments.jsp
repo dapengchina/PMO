@@ -226,7 +226,7 @@ var path='<%=path%>';
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
     <!--<script type="text/javascript" src="<%=path%>/js/pmo/performanceTable.js"></script>  -->
-	<script type="text/javascript" src="<%=path %>/js/pmo/performanceManageEvaFirstDetail.js"></script>
+	<script type="text/javascript" src="<%=path %>/js/pmo/performance/management/performanceManageEvaFirstDetail.js"></script>
 </body>
 </html>
 

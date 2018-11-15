@@ -40,7 +40,7 @@ public class PresultVo {
 
     private String preassessmentResult;
 
-    private String directSupervisorAssessmentResult;
+    private String direct_Supervisor_Assessment_Result;
 
     private String groupAssessmentResult;
 
@@ -60,7 +60,15 @@ public class PresultVo {
     
     
 
-    public String getResult_Comments() {
+    public String getDirect_Supervisor_Assessment_Result() {
+		return direct_Supervisor_Assessment_Result;
+	}
+
+	public void setDirect_Supervisor_Assessment_Result(String direct_Supervisor_Assessment_Result) {
+		this.direct_Supervisor_Assessment_Result = direct_Supervisor_Assessment_Result;
+	}
+
+	public String getResult_Comments() {
 		return result_Comments;
 	}
 
@@ -202,14 +210,6 @@ public class PresultVo {
 
     public void setPreassessmentResult(String preassessmentResult) {
         this.preassessmentResult = preassessmentResult == null ? null : preassessmentResult.trim();
-    }
-
-    public String getDirectSupervisorAssessmentResult() {
-        return directSupervisorAssessmentResult;
-    }
-
-    public void setDirectSupervisorAssessmentResult(String directSupervisorAssessmentResult) {
-        this.directSupervisorAssessmentResult = directSupervisorAssessmentResult == null ? null : directSupervisorAssessmentResult.trim();
     }
 
     public String getGroupAssessmentResult() {

@@ -18,6 +18,7 @@ function loadPerforDetail(){
 			//console.log("data==" + JSON.stringify(result));
 			$("#selfEvaluation").val(result.selfassessment);
 			$("#comments").val(result.comments);
+			$("#rating").val(result.directresult);
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){
 					loadPriorityWork(result);
@@ -178,8 +179,32 @@ function loadEmployeePlan(result){
 	$("#table3").append("</tbdoy>");	
 }
 
-//返回
-function back(){
+//ok
+function ok(){
+	var result = $("#rating").val();//直接主管初评结果(RM)
+	var pid = $("#pid").val();//绩效结果表主键
+	$.ajax({
+		url:path+"/service/performanceManageEva/assessment/grade/rm/submit",
+		dataType:"json",
+		async:true,
+		cache:false,
+		type:"post",
+		data:{
+			grade:result,
+			id:pid
+		},
+		success:function(result){
+			if(result.code=="1"){
+				window.location.href=path+"/service/performance/performanceManageEvaFirstDetailComments";
+			}else{
+				alert(result.msg);
+			}
+		}
+	})
+}
+
+//取消
+function cancel(){
 	window.location.href=path+"/service/performance/performanceManageEvaFirstDetailComments";
 }
 

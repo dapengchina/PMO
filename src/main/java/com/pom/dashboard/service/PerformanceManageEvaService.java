@@ -252,7 +252,7 @@ public interface PerformanceManageEvaService {
      * 2018年10月26日 下午6:24:35 
      * void
      */
-    public void updatePreAssessmentResult(String preAssessment, String id);
+    public void updatePreAssessmentResult(String preAssessment,String state, String id);
 
     /**
      * 根据id查询绩效目标设定总表

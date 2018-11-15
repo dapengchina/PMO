@@ -273,7 +273,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-	<script type="text/javascript" src="<%=path %>/js/pmo/performance/performanceEmpEvaHistoryQuery.js"></script>
+	<script type="text/javascript" src="<%=path %>/js/pmo/performance/employee/performanceEmpEvaHistoryQuery.js"></script>
 </body>
 </html>
 

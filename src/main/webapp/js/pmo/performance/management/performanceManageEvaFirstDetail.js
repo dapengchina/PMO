@@ -3,6 +3,7 @@ $(function() {
 	loadManageEvaFirstDetailList();
 
 });
+var stateSubmitFlag = true;// 返回给RM初评页面以便决定是否可以提交
 /** 获取当年当季绩效审核比例 * */
 function queryPercentage() {
 	$.ajax({
@@ -49,7 +50,7 @@ function loadManageEvaFirstDetailList() {
 		search : false, // 是否显示表格搜索
 		strictSearch : false,
 		showColumns : false, // 是否显示所有的列（选择显示的列）
-		// showRefresh: true, //是否显示刷新按钮
+		showRefresh: true, //是否显示刷新按钮
 		minimumCountColumns : 2, // 最少允许的列数
 		clickToSelect : true, // 是否启用点击选中行
 		// height : 500, // 行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
@@ -80,7 +81,7 @@ function loadManageEvaFirstDetailList() {
 	            width: "100px",
 	            sortable: true,
 	            formatter : function(value,row, index){
-	                return "<a onclick='detail(\"" + row.employee_id + "\")' href='#' class='btn btn-info btn-sm'>"+
+	                return "<a onclick='detail(\"" + row.employee_id + "\",\"" + row.resultId + "\")' href='#' class='btn btn-info btn-sm'>"+
 	                "<span></span> Detail"+
 	              "</a>";
 	            }
@@ -148,7 +149,19 @@ function loadManageEvaFirstDetailList() {
 		    {
 			  field : 'customerFeedback',
 			  title : 'Client Feedback',
-			  width: "140px"
+			  width: "140px",
+			  formatter : function(value, row, index) {
+					var substr = "";
+					if (value == null) {
+						return "";
+					}
+					if (value.length > 5) {
+						substr = value.substring(0, 5);
+						return "<a href='#' class='link'>" + substr + "<div class='tips'>" + value + "</div></a>";
+					} else {
+						return value;
+					}
+			   }
 		    }, 
 		    {
 			  field : 'initialEvalution',
@@ -158,7 +171,13 @@ function loadManageEvaFirstDetailList() {
 		    {
 			  field : 'pmEvalution',
 			  title : 'Pre-Assessment',
-			  width: "140px"
+			  width: "140px",
+			  formatter : function(value, row, index) {
+				if (row.pmEvalution == "" || row.pmEvalution == undefined) {
+					stateSubmitFlag = false;// RM初评页面，所有员工评级完成才可提交
+				}
+				return value;
+		      }
 		    }, 
 		    {
 			  field : 'duEvalution',
@@ -219,27 +238,27 @@ function stateSubmit() {
 		alert("还有未评级员工，请先评级");
 		return;
 	}
-	if (stateSubmitIds.length == 0) {
-		alert("暂无数据审批！");
-		return;
-	}
+//	if (stateSubmitIds.length == 0) {
+//		alert("暂无数据审批！");
+//		return;
+//	}
 	// 审批
-	$.ajax({
-		url : path + "/service/performanceManageEva/assessment/approval/rm/submit",
-		type : "POST",
-		data : {
-			"ids" : stateSubmitIds.join(",")
-		},
-		success : function(data) {
-			alert("审批成功");
-			history.go(0);
-		},
-		error : function() {
-			alert("审批失败");
-		}
-	});
+//	$.ajax({
+//		url : path + "/service/performanceManageEva/assessment/approval/rm/submit",
+//		type : "POST",
+//		data : {
+//			"ids" : stateSubmitIds.join(",")
+//		},
+//		success : function(data) {
+//			alert("审批成功");
+//			history.go(0);
+//		},
+//		error : function() {
+//			alert("审批失败");
+//		}
+//	});
 }
 
-function detail(employeeId) {
-	window.location.href = path+"/service/performanceManageEva/approvalDetailPage/"+employeeId;
+function detail(employeeId,pid) {
+	window.location.href = path+"/service/performanceManageEva/approvalDetailPage/"+employeeId+"/"+pid;
 }

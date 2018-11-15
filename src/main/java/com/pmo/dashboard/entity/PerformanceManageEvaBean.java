@@ -32,6 +32,7 @@ public class PerformanceManageEvaBean {
     private String initialEvalution;
     //直接主管初评结果
     private String pmEvalution;
+    private String directSupervisorAssessmentResult;
     //部门集体评议结果
     private String duEvalution;
     //集体评议主管
@@ -80,7 +81,15 @@ public class PerformanceManageEvaBean {
 
     
     
-    public String getEmployee_id() {
+    public String getDirectSupervisorAssessmentResult() {
+		return directSupervisorAssessmentResult;
+	}
+
+	public void setDirectSupervisorAssessmentResult(String directSupervisorAssessmentResult) {
+		this.directSupervisorAssessmentResult = directSupervisorAssessmentResult;
+	}
+
+	public String getEmployee_id() {
 		return employee_id;
 	}
 

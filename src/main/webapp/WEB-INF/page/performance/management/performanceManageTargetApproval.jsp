@@ -244,7 +244,7 @@ div .stateTips{
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-    <script type="text/javascript" src="<%=path %>/js/pmo/performanceManageTargetApproval.js"></script>
+    <script type="text/javascript" src="<%=path %>/js/pmo/performance/management/performanceManageTargetApproval.js"></script>
 	
 </body>
 </html>

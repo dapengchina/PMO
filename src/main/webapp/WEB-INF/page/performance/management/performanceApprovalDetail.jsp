@@ -58,6 +58,7 @@ var path='<%=path%>';
 	</c:import>
 
     <input type="hidden" id="reemployeeid" value="${employeeid}"></input>
+    <input type="hidden" id="pid" value="${pid}"></input>
 	<!-- middle content start -->
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
