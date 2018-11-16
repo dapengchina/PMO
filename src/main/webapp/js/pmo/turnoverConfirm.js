@@ -2,6 +2,7 @@ $(function () {
 	loadTurnoverList();
 });
 
+var hasLoadCSSubDept = false; //du 接口是否已请求，若已请求，则不再发送请求
 function loadCSSubDept(data){
 	var userType = data.user.userType;
 	var csSubDeptNames = data.csSubDeptNames;
@@ -13,6 +14,7 @@ function loadCSSubDept(data){
 		cache:false,
 		type:"post",
 		success:function(list){
+			hasLoadCSSubDept = true;
 			var html = "<option value=''>--Option--</option>";
 			for(var i = 0;i<list.length;i++){
 				html += "<option value='"+list[i].csSubDeptId+"'>"+list[i].csSubDeptName+"</option>";
@@ -145,6 +147,19 @@ function loadTurnoverList(){
 	            }
 	        },
 	        {
+	        	field: 'newRMName',
+	            title: 'new RM',
+	            sortable: true
+	            , formatter : function(value, row, index){
+	            	  if(value == null){
+	            		  return "";
+	            	  }else{
+	            		  var div = "<div style='width:150px;'>"+value+"</div>";
+	                	  return div;
+	            	  }
+	            }
+	        },
+	        {
 	        	field: 'applicationdate',
 	            title: 'Applicate Date',
 	            sortable: true
@@ -166,7 +181,9 @@ function loadTurnoverList(){
 	        }
 	        ],
 	        onLoadSuccess: function (data) {
-	        	loadCSSubDept(data);
+	        	if(!hasLoadCSSubDept){
+	        		loadCSSubDept(data);
+	        	}
 	        }
 	});
 }

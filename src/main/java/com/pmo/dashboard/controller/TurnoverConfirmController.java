@@ -29,7 +29,6 @@ import com.pmo.dashboard.entity.Employee;
 import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.entity.EmployeeTurnoverRecord;
 import com.pmo.dashboard.entity.OfflineOper;
-import com.pmo.dashboard.util.Utils;
 import com.pom.dashboard.service.CSDeptService;
 import com.pom.dashboard.service.EmployeeService;
 import com.pom.dashboard.service.EmployeeTurnoverService;
@@ -84,10 +83,10 @@ public class TurnoverConfirmController{
         		csSubDeptNames.add(csDept.getCsSubDeptName());
 			}
         }
-		if( "3".equals(user.getUserType())){
+		if( "3".equals(user.getUserType()) && newDepartment.length() == 0){
 			newDepartment = cSDepts.get(0).getCsSubDeptId();
 		}
-		EmployeeTurnoverRecord record = new EmployeeTurnoverRecord(ehr, lob, staffId, staffname, olddepartment,newDepartment,null,null,state);
+		EmployeeTurnoverRecord record = new EmployeeTurnoverRecord(ehr, lob, staffId, staffname, olddepartment,newDepartment,null,null,null,state);
 		List<EmployeeTurnoverRecord> data = employeeTurnoverService.queryList(record);
 		for(int i=0;i<data.size();i++){
 			CSDept csdept = csDeptService.queryCSDeptById(data.get(i).getNewdepartment());
@@ -100,6 +99,11 @@ public class TurnoverConfirmController{
 				User ur = userService.queryUserById(data.get(i).getApprovalid());
 				data.get(i).setApprovalName(ur.getNickname());				
 			}
+			if(data.get(i).getNewRM() != null && data.get(i).getNewRM().length() > 0){
+				User newRMName = userService.queryUserById(data.get(i).getNewRM());
+				data.get(i).setNewRMName(newRMName.getNickname());
+			}
+			
 			if("0".equals(data.get(i).getState())){
 				data.get(i).setStateName("Wait Approve");
 			}else if("1".equals(data.get(i).getState())){
@@ -124,9 +128,10 @@ public class TurnoverConfirmController{
 	public Boolean updateList(final HttpServletRequest request,
         final HttpServletResponse response){
 		String id = request.getParameter("id");
-		EmployeeTurnoverRecord employee = employeeTurnoverService.queryById(id);
-		String employeeid = employee.getEmployeeid();
-		String newDepartment = employee.getNewdepartment();
+		EmployeeTurnoverRecord employeeTurnover = employeeTurnoverService.queryById(id);
+		String employeeid = employeeTurnover.getEmployeeid();
+		String newDepartment = employeeTurnover.getNewdepartment();
+		String newRM = employeeTurnover.getNewRM();
 		String state = request.getParameter("state");
 		User user = (User)request.getSession().getAttribute("loginUser");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -149,6 +154,7 @@ public class TurnoverConfirmController{
 		employeeInfo.setEmployeeId(employeeid);
 		if("1".equals(state) && result){
 			employeeInfo.setCsSubDept(newDepartment);
+			employeeInfo.setRmUserId(newRM);
 			employeeService.updateForOtherEmployee(employeeInfo);
 		}
 		return result;

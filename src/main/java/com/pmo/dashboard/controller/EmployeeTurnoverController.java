@@ -82,7 +82,8 @@ public class EmployeeTurnoverController {
         String hsbcStaffId = employee.getHsbcStaffId();
         String staffName = employee.getStaffName();
         String oldDepartMent = employee.getCsSubDept();
-        String newdepartment = request.getParameter("newdepartment"); 
+        String newdepartment = request.getParameter("newdepartment");
+        String newRM = request.getParameter("newRM");
         String state = "0";
         User user = (User)request.getSession().getAttribute("loginUser");
         String applicant = user.getUserId();
@@ -94,15 +95,15 @@ public class EmployeeTurnoverController {
 		} catch (ParseException e) {
 			logger.error(e.getMessage());
 		}
-        EmployeeTurnoverRecord condition = new EmployeeTurnoverRecord(ehr,lob,null,null,oldDepartMent,null,null,null,state);
+        EmployeeTurnoverRecord condition = new EmployeeTurnoverRecord(ehr,lob,null,null,oldDepartMent,null,null,null,newRM,state);
         EmployeeTurnoverRecord turnover = new EmployeeTurnoverRecord(id, employeeID, ehr, staffName, hsbcStaffId, lob, oldDepartMent, newdepartment,
-        		applicationDate,null,applicant,state);
+        		applicationDate,null,applicant,newRM,state);
         List<EmployeeTurnoverRecord> list = employeeTurnoverService.queryList(condition);
         if(list.isEmpty()){
         	return employeeTurnoverService.insert(turnover);
         }else{
         	String oldId = list.get(0).getId();
-        	EmployeeTurnoverRecord update = new EmployeeTurnoverRecord(oldId,null,null,null,null,null,null,newdepartment,applicationDate,null,applicant,null);
+        	EmployeeTurnoverRecord update = new EmployeeTurnoverRecord(oldId,null,null,null,null,null,null,newdepartment,applicationDate,null,applicant,newRM,null);
         	return employeeTurnoverService.update(update);
         } 
 	}
