@@ -172,7 +172,7 @@ var currentPageName = '<%=currentPageName%>'
 	<script src="<%=path%>/js/charisma.js"></script>
 
 	<script type="text/javascript" src="<%=path%>/js/pmo/performance.js"></script>
-	<script type="text/javascript" src="<%=path%>/js/pmo/performanceManageTemplateDownload.js"></script>
+	<script type="text/javascript" src="<%=path%>/js/pmo/performance/management/performanceManageTemplateDownload.js"></script>
 
 
 </body>

@@ -301,9 +301,15 @@ public class PerformanceController {
         return "performance/performanceManageEvaSecondQueryDU";
     }
 
+    /**
+     * Management-绩效结果-绩效定稿页面
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceManageEvaFinal")
     public String getPerformanceManageEvaFinal(final HttpServletRequest request, Model model) {
-        return "performance/performanceManageEvaFinal";
+        return "performance/management/performanceManageEvaFinal";
     }
 
     @RequestMapping("/performanceManageResultHistoryQuery")
@@ -321,12 +327,18 @@ public class PerformanceController {
         return "performance/performanceManageResultHistory";
     }
 
+    /**
+     * Management-Template Download
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceManageTemplateDownload")
     public String getPerformanceManageTemplateDownload(final HttpServletRequest request, Model model) {
         List<Template> list = templateService.list();
         model.addAttribute("type", 1);
         model.addAttribute("list", list);
-        return "performance/performanceManageTemplateDownload";
+        return "performance/management/performanceManageTemplateDownload";
     }
 
     /**

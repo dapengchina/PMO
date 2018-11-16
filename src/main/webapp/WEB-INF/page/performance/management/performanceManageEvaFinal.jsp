@@ -225,8 +225,8 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/pmo/performanceTable.js"></script>
-	<script type="text/javascript" src="<%=path %>/js/pmo/performanceManageEvaFinal.js"></script>
+    <!--<script type="text/javascript" src="<%=path%>/js/pmo/performanceTable.js"></script>  -->
+	<script type="text/javascript" src="<%=path %>/js/pmo/performance/management/performanceManageEvaFinal.js"></script>
 </body>
 </html>
 

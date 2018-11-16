@@ -628,12 +628,21 @@ public class PerformanceManageEvaController {
      * @param state 审批状态
      * @return 
      * String
+     * @throws JsonProcessingException 
      */
     @RequestMapping("/assessment/approval/du/detail/submit")
     @ResponseBody
-    public String approvalDUDetailSubmit(@RequestParam String rm, @RequestParam String state) {
-        manageEvaService.updateStateByRM(rm, state);
-        return "";
+    public String approvalDUDetailSubmit(@RequestParam String rm, @RequestParam String state) throws JsonProcessingException {
+        Map<String,Object> map = new HashMap<String,Object>();
+    	try{
+        	manageEvaService.updateStateByRM(rm, state);
+        	map.put("msg", "审批成功");
+        	map.put("code", "1");
+        }catch(Exception e){
+        	map.put("msg", "审批失败");
+        	map.put("code", "0");
+        }
+        return objectMapper.writeValueAsString(map);
     }
 
     /**
