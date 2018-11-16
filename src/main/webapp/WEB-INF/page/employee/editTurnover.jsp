@@ -84,7 +84,7 @@ var path='<%=path%>';
 								</h2>
 							</div>
 							<div id="register" class="box-content" style="overflow: auto;">
-							<form id="registerEmployeeForm" method="post">
+							<form id="editTurnoverForm" method="post">
 							    <input name="bt" id="bt" type="hidden" value="${typepage}"></input>
 							    <div class="form-group">
 									    <input type="hidden" name="employeeId" id="employeeId" value="${employeeId}"/>
@@ -129,11 +129,13 @@ var path='<%=path%>';
 								</div>
 								<br/><br/>
 								<div class="form-group">
-										<div class="group">
+									<div class="group">
 										<label class="col-lg-2 control-label">CS Dept</label>
 											<div class="col-lg-4">
-												<input type="text" readonly class="form-control" name="csSubDept"
-														id="csSubDept" />
+												<select class="form-control" readonly name="csSubDept"
+													id="csSubDept" data-bv-group=".group">
+													<option value="">--Option--</option>
+												</select>
 											</div>
 										</div>
 										<div class="group">
@@ -153,13 +155,22 @@ var path='<%=path%>';
 										<label class="col-lg-2 control-label">new CS Dept</label>
 											<div class="col-lg-4">
 												<select class="form-control" name="newSubDept"
-													id="newSubDept" data-bv-group=".group">
+													id="newSubDept" data-bv-group=".group" onchange = "loadRMList(this.value)">
+													<option value="">--Option--</option>
+												</select>
+											</div>
+										</div>
+										<div class="group">
+										<label class="col-lg-2 control-label">new RM</label>
+											<div class="col-lg-4">
+												<select class="form-control" name="newRM"
+													id="newRM" data-bv-group=".group">
 													<option value="">--Option--</option>
 												</select>
 											</div>
 										</div>
 								</div>
-								<br/><br/>
+								<br/><br/><br/>
 								
 								<div class="form-group">
 										<div style="text-align: center; width: 50%; float: left">

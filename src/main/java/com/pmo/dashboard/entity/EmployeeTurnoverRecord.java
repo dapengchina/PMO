@@ -35,6 +35,10 @@ public class EmployeeTurnoverRecord {
     private String approvalid;
     
     private String approvalName;
+    
+    private String newRM;
+    
+    private String newRMName;
 
     private String state;
     
@@ -165,6 +169,23 @@ public class EmployeeTurnoverRecord {
     public void setApprovalid(String approvalid) {
         this.approvalid = approvalid == null ? null : approvalid.trim();
     }
+    
+    public String getNewRM() {
+        return newRM;
+    }
+
+    public void setNewRM(String newRM) {
+        this.newRM = newRM == null ? null : newRM.trim();
+    }
+    
+    public String getNewRMName() {
+        return newRMName;
+    }
+
+    public void setNewRMName(String newRMName) {
+        this.newRMName = newRMName == null ? null : newRMName.trim();
+    }
+    
     public String getState() {
         return state;
     }
@@ -185,9 +206,8 @@ public class EmployeeTurnoverRecord {
     	super();
     }
     
-    public EmployeeTurnoverRecord(String eHr, String lob, String staffid, String staffname, String olddepartment, String newdepartment, String applicant,String approvalid, String state){
-    	super();
-    	
+    public EmployeeTurnoverRecord(String eHr, String lob, String staffid, String staffname, String olddepartment, String newdepartment, String applicant,String approvalid, String newRM, String state){
+    	super();    	
     	this.ehr = eHr;
     	this.lob = lob;
     	this.staffid = staffid;
@@ -197,11 +217,12 @@ public class EmployeeTurnoverRecord {
         this.applicant = applicant;
         this.state = state;
         this.approvalid = approvalid;
+        this.newRM = newRM;
     }
     
     public EmployeeTurnoverRecord(String id,String employid, String eHr,  String staffName,
             String hsbcStaffId, String lob, String olddepartment, String newdepartment, 
-            Timestamp applicationDate, Timestamp approvaldate, String applicant, String state
+            Timestamp applicationDate, Timestamp approvaldate, String applicant, String newRM, String state
     		)
     {
         super();
@@ -216,6 +237,7 @@ public class EmployeeTurnoverRecord {
         this.applicationdate = applicationDate;
         this.approvaldate = approvaldate;
         this.applicant = applicant;
+        this.newRM = newRM;
         this.state = state;   
     }
     

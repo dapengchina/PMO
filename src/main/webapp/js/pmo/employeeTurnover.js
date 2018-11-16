@@ -14,23 +14,30 @@ $("#pageRecordsNum").change(function(){
 		csBuName = "";
 	}
 	var csSubDeptName = $("#csSubDept").find("option:selected").text();
-	
 	if(csSubDeptName.indexOf('Option')!=-1){
 		csSubDeptName = "";
 	}
 	loadEmployeeList("",csDeptName,csSubDeptName,csBuName);
 })
 
+var hasLoadBu = false; //是否已经加载bu
+var hasLoadDu = false; //是否已经加载du
+var hasLoadRM = false; //是否已经加载 rm
 $("#csSubDept").change(function(){
 	var bu = $("#csBu").val();
-	var du =changeCSDeptToId($("#csSubDept").val());
-	loadUserForRM(bu,du,"","");
+	var du =$("#csSubDept").val();
+	if($("#RM").attr("disabled") != "disabled"){
+		loadUserForRM(bu,du);
+	}
 })
 
 $("#csBu").change(function(){
 	var bu = $("#csBu").val();
-	var du =changeCSDeptToId($("#csSubDept").val());
-	loadUserForRM(bu,du,"","");
+	var du =$("#csSubDept").val();
+	if($("#RM").attr("disabled") != "disabled"){
+		loadUserForRM(bu,du);
+	}
+	loadUserForRM(bu,du);
 })
 
 $('#searchBtn').bind("click", function(){
@@ -50,25 +57,23 @@ $('#searchBtn').bind("click", function(){
 	loadEmployeeList("",csDeptName,csSubDeptName,csBuName);
 });
 
-var allCSSubDept;
 function loadCSSubDept(result){
 	var userType = result.user.userType;
 	var csSubDeptNames = result.csSubDeptNames;
+	var csdeptIds =  result.user.csdeptId.split(",");
 	var html = "";
 	if(userType == '5'){
 		if(csSubDeptNames.length == 1){
-			html += "<option>"+ result.csSubDeptNames[0]+ "</option>";
-			$('#csSubDept').val(result.csSubDeptNames[0]);
+			html += "<option value='"+ result.csSubDeptId +"'>"+ result.csSubDeptNames[0]+ "</option>";
 			$("#csSubDept").html(html);
 			$("#csSubDept").attr("disabled","disabled");
 		}else if(csSubDeptNames.length>1){
-			$("#csSubDept").empty();
 			for(var i = 0;i<csSubDeptNames.length;i++){
-				html += "<option>"+csSubDeptNames[i]+"</option>";
+				html += "<option value='"+csdeptIds[i]+"'>"+csSubDeptNames[i]+"</option>";
 			}
 			$("#csSubDept").html(html);
-			$('#csSubDept').val(result.pageInfo.csSubDeptName);
 		}
+		hasLoadDu = true;
 	}else if(userType == "0"){
 		$.ajax({
 			url:path+'/service/csDept/queryAllCSSubDeptName',
@@ -77,13 +82,13 @@ function loadCSSubDept(result){
 			cache:false,
 			type:"post",
 			success:function(list){
-				allCSSubDept= list;
-				html = "<option value=''>--Option--</option>";
+				hasLoadDu = true;
+				html = "<option value>--Option--</option>";
 				for(var i = 0;i<list.length;i++){
-					html +="<option>"+list[i].csSubDeptName+"</option>";
+					html +="<option value='"+list[i].csSubDeptId+"'>"+list[i].csSubDeptName+"</option>";
 				}
 				$("#csSubDept").html(html);
-				$('#csSubDept').val(result.pageInfo.csSubDeptName);
+				$('#csSubDept').val(result.csSubDeptId);
 			}
 		});
 	}
@@ -112,9 +117,11 @@ function loadCSBu(result){
  		  $('#csBu').html(html);
  		  $('#csBu').val(result.pageInfo.csbuName);  
  	   }
+		hasLoadBu = true;
 	}else if(userType == "0"){
 		var url = path+'/json/csBuName.json'
 		$.getJSON(url,  function(data) { 
+		   hasLoadBu = true;
 		   html = "<option value=''>--Option--</option>";
 	       $.each(data, function(i, item) {
 	    	  html += "<option>"+item.name+"</option>";
@@ -126,7 +133,7 @@ function loadCSBu(result){
 }
 
 var allRMList = [];
-function loadUserForRM(bu,du,rmUserId){
+function loadUserForRM(bu,du){
 	if(allRMList.length == 0){
 		$.ajax({
 			url:path+'/service/user/getUserForRM',
@@ -137,6 +144,7 @@ function loadUserForRM(bu,du,rmUserId){
 			success:function(list){
 				allRMList = list;
 				loadRMList(bu,du,allRMList)
+				hasLoadRM = true;
 			}
 		});
 	}else{
@@ -150,7 +158,7 @@ function loadRMList(bu,du,allRMList){
 	for(var i = 0; i<allRMList.length; i++){
 		var csDeptIds = allRMList[i].csdeptId.split(",");
 		var testbu = bu?bu:allRMList[i].bu;
-		var testdu = du?du:csDeptIds;
+		var testdu = du? du.split():csDeptIds;
 		if(allRMList[i].bu == testbu){
 			if(testdu.length>1){
 				RMList.push(allRMList[i]);
@@ -167,19 +175,6 @@ function loadRMList(bu,du,allRMList){
 		html += "<option value='"+RMList[i].userId+"'>"+RMList[i].nickname+"</option>";
 	}	
 	$("#RM").html(html);
-	$('#RM').val(rmUserId);	
-}
-
-function changeCSDeptToId(du){
-	var list = allCSSubDept;
-	var csDeptId;
-	for(var i=0;i<list.length;i++){
-		if(list[i].csSubDeptName==du){
-			csDeptId = list[i].csSubDeptId;
-			break;
-		}
-	}
-	return csDeptId;
 }
 
 function loadEmployeeList(pageState,csDeptName,csSubDeptName,csBuName){
@@ -239,14 +234,20 @@ function loadEmployeeList(pageState,csDeptName,csSubDeptName,csBuName){
 			if(pageNum == 1){
 				$("#previousPage").removeAttr("onclick");
 			}
-			loadCSSubDept(result);
-			loadCSBu(result);
-			if(userType == "5"){
-				var rm = "<option value = '"+result.user.userId +"'>"+ result.user.nickname +"</option>";
-				$("#RM").html(rm);
-				$("#RM").attr("disabled","disabled");
-			}else if(userType == "0"){
-				loadUserForRM(result.pageInfo.csbuName,result.csSubDeptId,result.pageInfo.rmUserId);
+			if(!hasLoadBu){
+				loadCSBu(result);
+			}
+			if(!hasLoadDu){
+				loadCSSubDept(result);
+			}
+			if(!hasLoadRM){
+				if(userType == "5"){
+					$("#RM").html("<option value = '"+result.user.userId +"'>"+ result.user.nickname +"</option>");
+					$("#RM").attr("disabled","disabled");
+					hasLoadRM = true;
+				}else if(userType == "0"){
+					loadUserForRM(result.pageInfo.csbuName,result.csSubDeptId);
+				}
 			}
 		}
 	});
