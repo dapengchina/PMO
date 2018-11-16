@@ -101,7 +101,7 @@ public interface PerformanceResultMapper {
      * 2018年10月26日 下午6:24:35 
      * void
      */
-    public void preAssessment(@Param("preAssessment") String preAssessment, @Param("id") String id);
+    public void preAssessment(@Param("preAssessment") String preAssessment, @Param("state") String state,@Param("id") String id);
 
     /**
      * 根据resultId获取employeeId、PreAssessment_Result

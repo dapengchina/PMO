@@ -43,11 +43,17 @@
 	text-align: center;
 }
 </style>
+<style>
+    .table-thead-background  thead, th {
+        background-color:#d9edf7;
+        font-color:"white";
+    }
+</style>
 <style type="text/css">
 	a.link{position:relative;}
 	a.link div.tips{
 						border:1px solid black;
-						padding:10px;
+						padding:2px;
 						background-color:#D7E7FC;
 						color:red;
 						position:absolute;
@@ -61,12 +67,6 @@
 						display:inline;
 					}
 </style>
-<style>
-    .table-thead-background  thead, th {
-        background-color:#d9edf7;
-        font-color:"white";
-    }
-</style>
 </head>
 <script>
 var path='<%=path%>';
@@ -74,33 +74,40 @@ var path='<%=path%>';
 <body>
 	<c:import url="/service/manage/top" />
 
+
 	<c:import url="/service/performance/performanceLeft">
 	    <c:param name="currentPageName" value="<%=currentPageName%>"/>
 	</c:import> 
 
-
+ 	
 <!-- middle content start -->
 			<div id="content" class="col-lg-10 col-sm-10">
 
 				<div class="row" >	
 				<div class="box col-md-12">
 						<div class="box-inner" >
-							<div class="box-header well" data-original-title="" >
+							<div class="box-header well" data-original-title="" > 
+							<div style="display:none">跟performanceManageEvaFirstDetail.jsp页面几乎一样的内容， 只是下面的参数和标题不同</div>
+							<input type="hidden" id="showAchievement" value="true"></input>
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->审批->${rm}
-									<input type="text" value="${rm}" id="curRm" class="hidden"></input>
+									<i class="glyphicon glyphicon-user"></i>   Management-绩效考评-初评
 								</h2>
 							</div>
 
 							<div id="employeeInfo" class="box-content">					
-	
 								
 							<div class="panel panel-default">	
                               <div class="panel-body">
-
 									<table id="table1" border="1" width="100%" borderColor="green" >
 										<tr style="">
-										 <td colspan="7" style="text-align:center"><font color="green"> ${rm}下员工绩效比例统计(参考比例要求控制)</font>	 </td>
+										 <td rowspan="4" width="55%">
+											说明：<br/>
+											1.<font color="red">比例控制：A 10-15%; B+ 30-40%; B 30-40%; C 5-10%; D 0-5%; A未使用比例可用于B+, 但A&B+ &lt; 55%; </font><br/>
+											2.考评周期内在岗时间不足一个月的长假员工，不参与考评，请各部门在备注中注明原因，HRBP部会从OA系统取数据
+											进行统一复核;<br/>
+											3.标蓝色行的异动和借阅人员，考评部门需参考有监督权交付部的建议，HRBP做复核，以确保这部分人员的绩效考核被合理对待。<br/>
+										 </td>
+										 <td colspan="7" style="text-align:center"><font color="green"> 主管比例统计(参考比例要求控制)</font>	 </td>
 										</tr>
 									   <tr>
 										 <td> A <br/>(10-15%)</td>
@@ -129,98 +136,24 @@ var path='<%=path%>';
 									</table>
 
 									<br/>
-							<div class="panel panel-default"  style="border:1px solid black">	
-								 <div class="panel-body" >										
-										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Comments</label>
-										<div class="col-lg-10">
-											<textarea rows="3" style="border:1px solid black" class="form-control" readonly>${resultComments}</textarea>
-										</div>
-								 </div>
-							</div>						
 
-								<div class="form-group" >
-									    <div style="text-align:center;width:20%;float:left"   >
-									    <input type="button" value="Reject"
-										name="searchBtn" id="searchBtn" href="#" onClick="approval(-1);"
-										class="button btn btn-primary" data-dismiss="modal"
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-									    </div>
-									    <div style="text-align:left;width:80%;float:left">
-									    <input type="button" value="Approve" href="#" onClick="approval(1);"
-										class="button btn btn-primary" data-dismiss="modal"
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-									    </div>
-								</div>
-								<br/><br/><br/>
+						<table id="manageEvaFirstDetailList"></table>
 
-							<!-- search box start -->							
-
-						<div class="panel panel-default">
-							 <div class="panel-heading" style="background-color:#00688B">
-									<font color="white"> Search for Documents</font>
-							 </div>
-                             <div class="panel-body">
-
-										<div class="group">
-											<label class="col-sm-2 control-label">E-HR</label>
-											<div class="col-sm-4">
-												<input type="text" class="form-control" id="eHr" />
-											</div>
-										</div>
-										<div class="group">
-											<label class="col-sm-2 control-label">Employee Name</label>
-											<div class="col-sm-4">
-												<input type="text" class="form-control" id="staffName" />
-											</div>
-										</div>
-										</br></br></br>
-										<div class="group">
-											<label class="col-sm-2 control-label">BU</label>
-											<div class="col-sm-4">
-												<input type="text" class="form-control" id="bu" value="${bu}" readonly/>
-											</div>
-										</div>
-										<div class="group">
-											<label class="col-sm-2 control-label">DU</label>
-											<div class="col-sm-4">
-												<input type="text" class="form-control"  id="du" value="${du}" readonly/>
-											</div>
-										</div>
-										</br></br></br>
+						 
 						     </div>
-		
-                          </div>		  	
-								<div class="form-group" >
-									    <div style="text-align:center;width:20%;float:left"   >
-									    <input type="button" value="Search"
-										name="searchBtn" id="searchBtn"  onClick="search();"
-										class="button btn btn-primary" data-dismiss="modal"
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-									    </div>
-									    <div style="text-align:left;width:80%;float:left">
-									    <input type="button" value="Clear" href="#" onClick="duClear();"
-										class="button btn btn-primary" data-dismiss="modal"
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-									    </div>
-								</div>
-								        
-					<!-- search box end -->
-
-								<br/><br/><br/>
-
-
-						<table id="queryManageEvaSecondQueryList" class="table table-thead-background"></table>
-
-						     </div>
-                             </div>
-                             
+                             </div>                          
 
 									<span>&nbsp;</span>
 									<div class="form-group">
 												<div style="text-align:center;width:100%;">
-												<input type="button" value="OK" name="Save" id="Save" href="#"
+												<input type="button" value="Save" name="Save" id="Save" href="#"
 												class="button btn btn-primary" data-dismiss="modal"
-												onclick="goBack();"
+												onclick=""
+												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
+												<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+												<input type="button" value="Submit" name="Edit" id="Edit" href="#"
+												class="button btn btn-primary" data-dismiss="modal"
+												onclick="stateSubmit();"
 												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 												</div>
 										</div>
@@ -236,8 +169,7 @@ var path='<%=path%>';
 
 
 <!-- middle content end -->
-	
-	
+
 	
 	
 	
@@ -293,9 +225,8 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/pmo/performanceTable.js"></script>
-	<script type="text/javascript" src="<%=path %>/js/pmo/performanceManageEvaSecondQuery.js"></script>
-	
+    <!--<script type="text/javascript" src="<%=path%>/js/pmo/performanceTable.js"></script>  -->
+	<script type="text/javascript" src="<%=path %>/js/pmo/performance/management/performanceManageEvaFirstDetail.js"></script>
 </body>
 </html>
 

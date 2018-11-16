@@ -3,14 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
-	String path = request.getContextPath();
-	String url = request.getRequestURI();
-	String currentPageName = "";
-	if (url != null) {
-		String[] strs = url.split("/");
-		url = strs[strs.length-1];
-		currentPageName = url.substring(0, url.lastIndexOf('.'));
-	}
+String path = request.getContextPath();
+String url = request.getRequestURI();
+String currentPageName = "";
+if (url != null) {
+	String[] strs = url.split("/");
+	url = strs[strs.length-1];
+	currentPageName = url.substring(0, url.lastIndexOf('.'));
+}
+    
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +57,7 @@ var path='<%=path%>';
 	    <c:param name="currentPageName" value="<%=currentPageName%>"/>
 	</c:import>
 
-
+    <input type="hidden" id="reemployeeid" value="${employeeid}"></input>
 	<!-- middle content start -->
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
@@ -65,7 +66,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Employee-绩效考评-员工自评
+									<i class="glyphicon glyphicon-user"></i>  Management-详情
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
@@ -78,7 +79,7 @@ var path='<%=path%>';
 							                    <div class="input-group">
 							                        <span class="input-group-addon">姓名</span>
 							                        <input readonly="readonly" class="form-control" type="text"
-							                        name="userName" id="userName" value="${ sessionScope.loginUser.nickname}">
+							                        name="staffname" id="staffname">
 							                    </div>
 							                </div>
 
@@ -86,7 +87,7 @@ var path='<%=path%>';
 							                    <div class="input-group">
 							                        <span class="input-group-addon">工号</span>
 							                        <input style="width:110px;" readonly="readonly" class="form-control" type="text" 
-							                        name="lob" id="lob" value="${ sessionScope.loginUser.userName}">
+							                        name="ehr" id="ehr">
 							                    </div>
 							                </div>
 							                <div style="margin-left:13px;" class="form-group col-md-2">
@@ -175,9 +176,9 @@ var path='<%=path%>';
 							
 							<div class="panel panel-default"  style="border:1px solid black">	
 								 <div class="panel-body" >										
-										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Self-Evaluation</label>
+										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Comments</label>
 										<div class="col-lg-10">
-											<textarea rows="3" style="border:1px solid black" class="form-control" id="changeInformation" ></textarea>
+											<textarea rows="3" style="border:1px solid black" class="form-control" id="comments" ></textarea>
 										</div>
 								 </div>
 							</div>
@@ -187,24 +188,11 @@ var path='<%=path%>';
 								<span>&nbsp;</span>
 
 								<div class="form-group">
-									    <div style="text-align:center;width:100%;">
-									    <!--
-									    <input type="button" value="Save" name="Save" id="Save" href="#"
+									   <div style="text-align:center;width:100%;">
+									    <input type="button" value="Back" name="Back" id="Back" href="#"
 										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
+										onclick="back()"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>  -->
-										<!--
-									    <input type="button" value="Edit" name="Edit" id="Edit" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
-										<input type="button" value="Submit" name="Submit" id="Submit" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-
 									    </div>
 								</div>
 
@@ -272,7 +260,7 @@ var path='<%=path%>';
 	<!-- application script for Charisma demo -->
 	<script src="<%=path %>/js/charisma.js"></script>
 	
-	<script type="text/javascript" src="<%=path %>/js/pmo/performance/employee/employeeperforself.js"></script>
+	<script type="text/javascript" src="<%=path %>/js/pmo/performance/management/performanceApprovalDuDetail.js"></script>
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
 </body>
 </html>

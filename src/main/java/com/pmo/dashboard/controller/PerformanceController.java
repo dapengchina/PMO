@@ -182,7 +182,7 @@ public class PerformanceController {
      */
     @RequestMapping("/performanceManageTargetApproval")
     public String getPerformanceManageTargetApproval(final HttpServletRequest request, Model model) {
-        return "performance/performanceManageTargetApproval";
+        return "performance/management/performanceManageTargetApproval";
     }
 
     @RequestMapping("/performanceManageTargetApprovalFilter")
@@ -205,20 +205,39 @@ public class PerformanceController {
         return "performance/performanceManageEvaFirst";
     }
 
+    /**
+     * Management-绩效考评-初评页面
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceManageEvaFirstDetailComments")
     public String getPerformanceManageEvaFirstDetailComments(final HttpServletRequest request, Model model) {
-        return "performance/performanceManageEvaFirstDetailComments";
+        return "performance/management/performanceManageEvaFirstDetailComments";
     }
 
+    /**
+     * Management-绩效考评-审批页面
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceManageEvaSecondDU")
     public String getPerformanceManageEvaSecondDU(final HttpServletRequest request, Model model) {
         // add by xuexuan 返回当前登录用户所在的交付部
         User user = (User) request.getSession().getAttribute("loginUser");
         CSDept csDept = csDeptService.queryCSDeptById(user.getCsdeptId());
         model.addAttribute("du", csDept.getCsSubDeptName());
-        return "performance/performanceManageEvaSecondDU";
+        return "performance/management/performanceManageEvaSecondDU";
     }
 
+    /**
+     * Management-绩效考评-审批-详情页面
+     * @param rm
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceManageEvaSecondQuery")
     public String getPerformanceManageEvaSecondQuery(@RequestParam("rm") String rm, final HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("loginUser");
@@ -230,7 +249,7 @@ public class PerformanceController {
         // 根据du查询审批内容
         String resultComments = performanceManageEvaService.queryResultCommentsByDU(csDept.getCsSubDeptName()).getResultComments();
         model.addAttribute("resultComments", resultComments);
-        return "performance/performanceManageEvaSecondQuery";
+        return "performance/management/performanceManageEvaSecondQuery";
     }
 
     private void getDUBU(final HttpServletRequest request, User user) {

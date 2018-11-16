@@ -15,10 +15,21 @@ public class CommonMenuVo {
 	private String color;
 	   
 	private String href;
+	
+	private boolean isPermission;
 	   
 	private List<CommonMenuVo> nodes;
 	   
 	   
+
+	
+	public boolean isPermission() {
+		return isPermission;
+	}
+
+	public void setPermission(boolean isPermission) {
+		this.isPermission = isPermission;
+	}
 
 	public String getId() {
 		return id;
