@@ -14,11 +14,12 @@
     <result column="ApplicationDate" property="applicationdate" jdbcType="TIMESTAMP" />
     <result column="Applicant" property="applicant" jdbcType="VARCHAR" />
     <result column="ApprovalID" property="approvalid" jdbcType="VARCHAR" />
+    <result column="NewRM" property="newRM" jdbcType="VARCHAR" />
     <result column="State" property="state" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, EmployeeID, Ehr, StaffName, StaffID, Lob, OldDepartMent, NewDepartMent, ApprovalDate, 
-    ApplicationDate, Applicant, ApprovalID, State
+    ApplicationDate, Applicant, ApprovalID, NewRM, State
   </sql>
   <select id="queryList" resultMap="BaseResultMap" parameterType="com.pmo.dashboard.entity.EmployeeTurnoverRecord" >
     select * from t_staffmovement_record where 1=1
@@ -46,6 +47,9 @@
     <if test="approvalid != null and approvalid != ''" >
         and ApprovalID=#{approvalid}
     </if>
+    <if test="newRM != null and newRM != ''" >
+        and NewRM=#{newRM}
+      </if>
     <if test="state != null and state !=''" >
         and State=#{state}
     </if>
@@ -97,6 +101,9 @@
       <if test="approvalid != null" >
         ApprovalID,
       </if>
+      <if test="newRM != null" >
+        NewRM,
+      </if>
       <if test="state != null" >
         State,
       </if>
@@ -138,6 +145,9 @@
       <if test="approvalid != null" >
         #{approvalid,jdbcType=VARCHAR},
       </if>
+      <if test="newRM != null" >
+        #{newRM,jdbcType=VARCHAR},
+      </if>
       <if test="state != null" >
         #{state,jdbcType=VARCHAR},
       </if>
@@ -175,6 +185,9 @@
       </if>
       <if test="approvalid != null" >
         ApprovalID = #{approvalid,jdbcType=VARCHAR},
+      </if>
+       <if test="newRM != null" >
+        NewRM = #{newRM,jdbcType=VARCHAR},
       </if>
       <if test="state != null" >
         State = #{state,jdbcType=VARCHAR},

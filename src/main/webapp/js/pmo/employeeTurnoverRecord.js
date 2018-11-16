@@ -133,6 +133,19 @@ function loadTurnoverList(){
 	            }
 	        },
 	        {
+	        	field: 'newRMName',
+	            title: 'new RM',
+	            sortable: true
+	            , formatter : function(value, row, index){
+	            	  if(value == null){
+	            		  return "";
+	            	  }else{
+	            		  var div = "<div style='width:150px;'>"+value+"</div>";
+	                	  return div;
+	            	  }
+	            }
+	        },
+	        {
 	        	field: 'applicationdate',
 	            title: 'Applicate Date',
 	            sortable: true
