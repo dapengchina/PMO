@@ -4,19 +4,7 @@ $(function() {
 
 });
 
-/*
- * function queryPercentage(){ $.ajax({
- * url:path+'/service/performanceManageEva/queryPercentage', dataType:"json",
- * data:{}, async:true, cache:false, type:"post", success:function(sta){
- * $("#percentA").html(sta["percentA"]);
- * $("#percentBplus").html(sta["percentBplus"]);
- * $("#percentB").html(sta["percentB"]); $("#percentC").html(sta["percentC"]);
- * $("#percentD").html(sta["percentD"]);
- * $("#percentSum").html(sta["percentSum"]); $("#empA").html(sta["empA"]);
- * $("#empBplus").html(sta["empBplus"]); $("#empB").html(sta["empB"]);
- * $("#empC").html(sta["empC"]); $("#empD").html(sta["empD"]);
- * $("#empSum").html(sta["empSum"]); } }) }
- */
+
 /** 获取当年当季绩效审核比例 * */
 function queryPercentage() {
 	$.ajax({
@@ -44,21 +32,19 @@ function queryPercentage() {
 }
 var approvalAllFlag = true;
 function loadManageEvaSecondDUList() {
-	// var queryUrl = path +
-	// '/service/performanceManageEva/queryManageEvaSecondBUList';
 	var queryUrl = path + '/service/performanceManageEva/assessment/approval/list';
 	var columns = [ {
 		checkbox : true,
 		visible : true
 	// 是否显示复选框
 	}, {
-		title : 'SL',
+		title : 'No',
 		formatter : function(value, row, index) {
 			return "<span>" + (index + 1) + "</span>";
 		}
 	}, {
 		field : 'du',
-		title : '交付部'
+		title : 'Du'
 	}, {
 		field : 'year',
 		title : 'Year'
@@ -66,7 +52,7 @@ function loadManageEvaSecondDUList() {
 		field : 'quarter',
 		title : 'Quarter'
 	}, {
-		title : '状态',
+		title : 'Status',
 		formatter : function(value, row, index) {
 			var state = "";
 			$.ajax({
@@ -83,7 +69,9 @@ function loadManageEvaSecondDUList() {
 		title : 'Detail',
 		formatter : function(value, row, index) {
 			if (row.status == 4) {
-				return "<a href='performanceManageEvaSecondQueryDU.html?du=" + row.du + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+				return "<a href='performanceManageEvaSecondQueryDU.html?du=" + row.du + "' class='btn btn-info btn-sm'>"+
+	            "<span></span> Detail"+
+	          "</a>";
 			}
 		}
 	} ];

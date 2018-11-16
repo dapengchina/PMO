@@ -440,7 +440,8 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
     public PerformanceManageEvaBean queryResultCommentsByBU(String bu) {
         Calendar c = Calendar.getInstance();
         String startYear = c.get(Calendar.YEAR) + "";
-        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        //String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        String startQuarter = PerformanceEmpHistoryServiceImpl.getSeason()+"";
         return mapper.queryResultComments(bu, null, startYear, startQuarter);
     }
 
@@ -493,7 +494,8 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
     public List<Map<String, Object>> listGroupByDU(String bu) {
         Calendar c = Calendar.getInstance();
         String startYear = c.get(Calendar.YEAR) + "";
-        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        //String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        String startQuarter = PerformanceEmpHistoryServiceImpl.getSeason()+"";
         return mapper.listGroupByDU(bu, startYear, startQuarter);
     }
 

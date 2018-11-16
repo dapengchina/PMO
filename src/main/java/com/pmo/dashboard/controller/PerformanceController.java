@@ -281,14 +281,26 @@ public class PerformanceController {
         }
     }
 
+    /**
+     * Management-绩效考评-审批-事业部经理审批页面
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceManageEvaSecondBU")
     public String getPerformanceManageEvaSecondBU(final HttpServletRequest request, Model model) {
         // add by xuexuan 返回当前登录用户所在的事业部
         User user = (User) request.getSession().getAttribute("loginUser");
         model.addAttribute("bu", user.getBu());
-        return "performance/performanceManageEvaSecondBU";
+        return "performance/management/performanceManageEvaSecondBU";
     }
 
+    /**
+     * Management-绩效考评-审批-事业部经理审批-详细页面
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceManageEvaSecondQueryDU")
     public String getPerformanceManageEvaSecondQueryDU(@RequestParam("du") String du, final HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("loginUser");
@@ -298,7 +310,7 @@ public class PerformanceController {
         // 根据bu查询审批内容
         String resultComments = performanceManageEvaService.queryResultCommentsByBU(user.getBu()).getResultComments();
         model.addAttribute("resultComments", resultComments);
-        return "performance/performanceManageEvaSecondQueryDU";
+        return "performance/management/performanceManageEvaSecondQueryDU";
     }
 
     /**

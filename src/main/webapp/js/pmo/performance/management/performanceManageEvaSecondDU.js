@@ -32,8 +32,6 @@ function queryPercentage() {
 }
 var approvalAllFlag = true;
 function loadManageEvaSecondDUList() {
-	// var queryUrl = path +
-	// '/service/performanceManageEva/queryManageEvaSecondDUList';
 	var queryUrl = path + '/service/performanceManageEva/assessment/approval/list';
 	var columns = [ {
 		checkbox : true,
