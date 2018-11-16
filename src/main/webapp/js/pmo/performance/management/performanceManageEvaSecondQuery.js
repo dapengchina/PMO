@@ -38,6 +38,8 @@ function loadManageEvaSecondQueryList() {
 	var table = $('#queryManageEvaSecondQueryList').bootstrapTable({
 		url : queryUrl, // 请求后台的URL（*）
 		method : 'GET', // 请求方式（*）
+		fixedColumns: true,
+        fixedNumber: 5,
 		// toolbar: '#toolbar', //工具按钮用哪个容器
 		striped : true, // 是否显示行间隔色
 		cache : false, // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
@@ -78,23 +80,162 @@ function loadManageEvaSecondQueryList() {
 				rm : rm
 			};
 		},
-		columns : columns,
+		columns : 
+		[ 
+			   {
+				  title : 'No',
+				  width: "70px",
+				  formatter: function (value, row, index) {
+			         return index+1;
+			      }
+			    },
+			    {
+		            field: 'operation',
+		            title: 'Operation',
+		            width: "100px",
+		            sortable: true,
+		            formatter : function(value,row, index){
+		                return "<a onclick='detail(\"" + row.employee_id + "\")' href='#' class='btn btn-info btn-sm'>"+
+		                "<span></span> Detail"+
+		              "</a>";
+		            }
+		        },
+			    {
+				  field : 'ehr',
+				  title : 'E-HR',
+				  width: "100px"
+			    }, 
+			    {
+				  field : 'lobNo',
+				  title : 'LOB',
+				  width: "100px"
+			    },
+			    {
+				  field : 'name',
+				  title : 'Name',
+				  width: "100px"
+			    }, 
+			    {
+				  field : 'hireDate',
+				  title : 'Date-onboard',
+				  width: "110px"
+			    }, 
+			    {
+				  field : 'role',
+				  title : 'MSA Role',
+				  width: "130px"
+			    }, 
+			    {
+				  field : 'serviceLine',
+				  title : 'Line',
+				  width: "100px"
+			    }, 
+			    {
+				  field : 'bu',
+				  title : 'BU',
+				  width: "170px"
+			    }, 
+			    {
+				  field : 'du',
+				  title : 'DU',
+				  width: "150px"
+			    }, 
+			    {
+				  field : 'location',
+				  title : 'Location',
+				  width: "100px"
+			    }, 
+			    {
+				  field : 'keymember',
+				  title : 'Backbone',
+				  width: "100px"
+			    }, 
+			    {
+				  field : 'participate',
+				  title : 'Assessed',
+				  width: "100px"
+			    }, 
+			    {
+				  field : 'manager',
+				  title : 'Direct Supervisor',
+				  width: "140px"
+			    }, 
+			    {
+				  field : 'customerFeedback',
+				  title : 'Client Feedback',
+				  width: "140px",
+				  formatter : function(value, row, index) {
+						var substr = "";
+						if (value == null) {
+							return "";
+						}
+						if (value.length > 5) {
+							substr = value.substring(0, 5);
+							return "<a href='#' class='link'>" + substr + "<div class='tips'>" + value + "</div></a>";
+						} else {
+							return value;
+						}
+				   }
+			    }, 
+			    {
+				  field : 'initialEvalution',
+				  title : 'Pre-Assessment',
+				  width: "140px"
+			    }, 
+			    {
+				  field : 'pmEvalution',
+				  title : 'Pre-Assessment',
+				  width: "140px",
+				  formatter : function(value, row, index) {
+					if (row.pmEvalution == "" || row.pmEvalution == undefined) {
+						stateSubmitFlag = false;// RM初评页面，所有员工评级完成才可提交
+					}
+					return value;
+			      }
+			    }, 
+			    {
+				  field : 'duEvalution',
+				  title : 'GroupAssessment',
+				  width: "150px"
+			    }, 
+			    {
+				  field : 'duEvaManager',
+				  title : 'GroupAssessment Result',
+				  width: "200px"
+			    }, 
+			    {
+				  field : 'achievement',
+				  title : 'PerformanceFacts(A/C/D)',
+				  width: "200px"
+			    }, 
+			    {
+				  field : 'jump',
+				  title : 'PerformanceSkip',
+				  width: "150px"
+			    }, 
+			    {
+				  field : 'comments',
+				  title : 'Remark',
+				  width: "100px"
+			    }, 
+			    {
+				  field : 'previous1Quarter',
+				  title : 'Last Q',
+				  width: "100px"
+			    }, 
+			    {
+				  field : 'previous2Quarter',
+				  title : '2Qs ago',
+				  width: "100px"
+			    }, 
+			    {
+				  field : 'previous3Quarter',
+				  title : '3Qs ago',
+				  width: "100px"
+		}],
 		onLoadSuccess : function(sta) {
 			console.log("in onLoadSuccess");
 			console.log(JSON.stringify(sta));
-
-			/*
-			 * $("#percentA").html(sta["percentA"]);
-			 * $("#percentBplus").html(sta["percentBplus"]);
-			 * $("#percentB").html(sta["percentB"]);
-			 * $("#percentC").html(sta["percentC"]);
-			 * $("#percentD").html(sta["percentD"]);
-			 * $("#percentSum").html(sta["percentSum"]);
-			 * $("#empA").html(sta["empA"]);
-			 * $("#empBplus").html(sta["empBplus"]);
-			 * $("#empB").html(sta["empB"]); $("#empC").html(sta["empC"]);
-			 * $("#empD").html(sta["empD"]); $("#empSum").html(sta["empSum"]);
-			 */
 		},
 		onLoadError : function(status, res) { // 加载失败时执行
 			console.log(res);
@@ -106,24 +247,8 @@ function loadManageEvaSecondQueryList() {
 	});
 }
 
-function detail(resultId) {
-	// 页面跳转post提交
-	$("#detailForm").remove();
-	var url = path + '/service/performance/goalDetail.html';
-	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
-	$eleForm.attr("action", url);
-	$(document.body).append($eleForm);
-
-	var idInput = $("<input type='text' name='resultId' class='hidden'></input>");
-	var titleInput = $("<input type='text' name='title' class='hidden'></input>");
-	var typeInput = $("<input type='text' name='type' class='hidden'></input>");
-	idInput.attr("value", resultId);
-	titleInput.attr("value", "Management->绩效考评->审批");
-	typeInput.attr("value", "3");
-	$("#detailForm").append(idInput);
-	$("#detailForm").append(titleInput);
-	$("#detailForm").append(typeInput);
-	$eleForm.submit();
+function detail(employeeid) {
+	window.location.href=path+"/service/performanceManageEva/approvalDuDetailPage/"+employeeid;
 }
 
 function search() {

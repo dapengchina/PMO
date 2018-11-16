@@ -1270,4 +1270,135 @@ public class PerformanceManageEvaController {
 		return objectMapper.writeValueAsString(map);
     }
 
+    /**
+     * Management-绩效考评-审批-员工详情页面
+     * @param request
+     * @param employeeid
+     * @param model
+     * @return
+     */
+    @RequestMapping("/approvalDuDetailPage/{employeeid}")
+    public String approvalDuDetailPage(HttpServletRequest request,@PathVariable("employeeid") String employeeid,Model model){
+    	model.addAttribute("employeeid", employeeid);
+    	return "performance/management/performanceApprovalDuDetail";
+    }
+    
+    /**
+     * Management-绩效考评-审批-员工详情页面数据
+     * @param request
+     * @param employeeid
+     * @param model
+     * @return
+     * @throws JsonProcessingException 
+     */
+    @RequestMapping("/approvalDuDetailData/{employeeid}")
+    @ResponseBody
+    public String approvalDuDetailData(HttpServletRequest request,@PathVariable("employeeid") String employeeid) throws JsonProcessingException{
+    	//HttpSession session = request.getSession();
+    	Employee emp = employeeService.queryEmployeeById(employeeid);
+		Map<String,Object> map = new HashMap<String,Object>();
+		//Ehr
+		map.put("ehr", emp.geteHr());
+		//EmployeeName
+		map.put("staffname", emp.getStaffName());
+		//查询中软部门信息
+		CSDept csdept = cSDeptService.queryCSDeptById(emp.getCsSubDept());
+		map.put("department", csdept!=null?csdept.getCsSubDeptName():"");
+		//查询职位信息
+		Employee employee = employeeService.queryEmployeeById(employeeid);
+		map.put("role", employee!=null?employee.getRole():"");
+		//查询考核主管
+		Employee employee2 = employeeService.queryEmployeeById(employee.getRmUserId());
+		map.put("assessmentSupervisor", employee2!=null?employee2.getStaffName():"");
+		
+		//查询重点工作表
+		EmployeeKpo eo = new EmployeeKpo();
+		eo.setEmployeeid(employeeid);//员工ID
+		eo.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		eo.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		List<EmployeeKpo> kpoList = employeeKpoService.getEmployeeKpo(eo);
+		
+		//查询关键事件表
+		EmployeeKeyevent ek = new EmployeeKeyevent();
+		ek.setEmployeeid(employeeid);//员工ID
+		ek.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		ek.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		List<EmployeeKeyevent> keyeventList = employeeKeyeventService.getEmployeeKeyEvent(ek);
+		
+		/**
+		 * 重点工作数据和关键事件数据整合
+		 */
+		List<EmployeePerforGoalVo> data1 = new ArrayList<EmployeePerforGoalVo>();
+		if(kpoList!=null && kpoList.size()>0){
+			for(int i=0;i<kpoList.size();i++){
+				EmployeePerforGoalVo perforgoal = new EmployeePerforGoalVo();
+				perforgoal.setId(kpoList.get(i).getId());
+				perforgoal.setIndex(kpoList.get(i).getIndex());
+				perforgoal.setKeyaction(kpoList.get(i).getKeyaction());
+				perforgoal.setPhasegoal(kpoList.get(i).getPhasegoal());
+				perforgoal.setWeightrate(kpoList.get(i).getWeightrate());
+				perforgoal.setEmployeeid(kpoList.get(i).getEmployeeid());
+				perforgoal.setDescription(kpoList.get(i).getDescription());
+				perforgoal.setCreatedate(kpoList.get(i).getCreatedate());
+				perforgoal.setDepartment(csdept!=null?csdept.getCsSubDeptName():"");
+				perforgoal.setType(SysConstant.PRIORITY_WORK);//重点工作
+				
+				data1.add(perforgoal);
+			}
+		}
+		if(keyeventList!=null && keyeventList.size()>0){
+			for(int j=0;j<keyeventList.size();j++){
+				EmployeePerforGoalVo perforgoal = new EmployeePerforGoalVo();
+				perforgoal.setId(keyeventList.get(j).getId());
+				perforgoal.setIndex(keyeventList.get(j).getIndex());
+				perforgoal.setKeyaction(keyeventList.get(j).getKeyaction());
+				perforgoal.setPhasegoal(keyeventList.get(j).getPhasegoal());
+				perforgoal.setWeightrate(keyeventList.get(j).getWeightrate());
+				perforgoal.setEmployeeid(keyeventList.get(j).getEmployeeid());
+				perforgoal.setDescription(keyeventList.get(j).getDescription());
+				perforgoal.setCreatedate(keyeventList.get(j).getCreatedate());
+				perforgoal.setDepartment(csdept!=null?csdept.getCsSubDeptName():"");
+				perforgoal.setType(SysConstant.KEY_EVENTS);//关键事件
+				
+				data1.add(perforgoal);
+			}
+		}
+		
+		//查询个人能力提升计划表
+		EmployeeImpplan el = new EmployeeImpplan();
+		el.setEmployeeid(employeeid);//员工ID
+		el.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		el.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		List<EmployeeImpplan> planList = employeeImpplanService.getEmployeeImpplan(el);
+	    if(planList!=null && planList.size()>0){
+	    	for(int k=0;k<planList.size();k++){
+	    		if(planList.get(k).getDealine()!=null && !"".equals(planList.get(k).getDealine())){
+	    			planList.get(k).setDealineString(sf3.format(planList.get(k).getDealine()));
+	    		}
+		    }
+	    }
+	    
+	    //查询员工绩效总表，获取自评信息
+	    Employeeperforgoal epg = new Employeeperforgoal();
+	    epg.setEmployeeid(employeeid);
+	    epg.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+	    epg.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+	    Employeeperforgoal reperfor = employeeperforgoalService.getEmpPerforgoal(epg);
+		
+		//查询绩效结果表，获取comments
+		PerformanceManageEvaBean pmb = new PerformanceManageEvaBean();
+		pmb.setEhr(emp.geteHr());
+		pmb.setYear(sf.format(new Date()));
+		pmb.setQuarter(String.valueOf(DateUtils.getQuarterByMonth(Integer.parseInt(sf2.format(new Date())))));
+		PresultVo pv = performanceResultService.getPerformance(pmb);
+	    
+		map.put("comments", pv!=null?pv.getResult_Comments():"");
+		map.put("directresult", pv!=null?pv.getDirect_Supervisor_Assessment_Result():"");
+		map.put("selfassessment", reperfor!=null?reperfor.getSelfassessment():"");
+		map.put("state", reperfor!=null?reperfor.getState():"");
+		map.put("data", data1);
+		map.put("plan", planList);
+		
+		return objectMapper.writeValueAsString(map);
+    }
 }

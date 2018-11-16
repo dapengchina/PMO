@@ -82,6 +82,8 @@ public class CommonMenuController {
 					   cv.setSelectedIcon("glyphicon glyphicon-folder-open");
 					   cv.setColor("#2FA4E7");
 					   cv.setNodes(handleChildMenu(childList.get(i).getMenuid(),usertype));
+				   
+					   returnChildList.add(cv);
 				   }
 			   }else{
 				   //权限校验
@@ -93,9 +95,9 @@ public class CommonMenuController {
 					   cv.setColor("#2FA4E7");
 					   cv.setHref(SysConstant.serverurl+"service/performance/"+childList.get(i).getMenuUrl());
 					   //cv.setNodes(handleChildMenu(childList.get(i).getMenuid()));
+					   returnChildList.add(cv);
 				   }
 			   }
-			   returnChildList.add(cv);
 		   }
 		   
 		   return returnChildList;

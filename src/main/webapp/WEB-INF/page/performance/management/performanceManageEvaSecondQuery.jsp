@@ -87,7 +87,7 @@ var path='<%=path%>';
 						<div class="box-inner" >
 							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->审批->${rm}
+									<i class="glyphicon glyphicon-user"></i>  Management-绩效考评-审批-${rm}
 									<input type="text" value="${rm}" id="curRm" class="hidden"></input>
 								</h2>
 							</div>
@@ -294,7 +294,7 @@ var path='<%=path%>';
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
     <script type="text/javascript" src="<%=path%>/js/pmo/performanceTable.js"></script>
-	<script type="text/javascript" src="<%=path %>/js/pmo/performanceManageEvaSecondQuery.js"></script>
+	<script type="text/javascript" src="<%=path %>/js/pmo/performance/management/performanceManageEvaSecondQuery.js"></script>
 	
 </body>
 </html>

@@ -53,7 +53,7 @@ function loadManageEvaSecondDUList() {
 		visible : true
 	// 是否显示复选框
 	}, {
-		title : 'SL',
+		title : 'No',
 		formatter : function(value, row, index) {
 			return "<span>" + (index + 1) + "</span>";
 		}
@@ -82,11 +82,11 @@ function loadManageEvaSecondDUList() {
 		}
 	}, {
 		title : 'Detail',
-		formatter : function(value, row, index) {
-			if (row.status == 2) {// 待交付部经理审批
-				return "<a href='performanceManageEvaSecondQuery.html?rm=" + row.rm + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
-			}
-		}
+		formatter : function(value,row, index){
+            return "<a href='performanceManageEvaSecondQuery.html?rm=" + row.rm + "' class='btn btn-info btn-sm'>"+
+            "<span></span> Detail"+
+          "</a>";
+        }
 	} ];
 
 	var table = $('#manageEvaSeondDUList').bootstrapTable({

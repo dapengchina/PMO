@@ -62,7 +62,7 @@ var path='<%=path%>';
 						<div class="box-inner" >
 							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->审批->${du}
+									<i class="glyphicon glyphicon-user"></i>  Management-绩效考评-审批-${du}
 									<input type="text" value="${du}" class="hidden" id="curDu"></input>
 								</h2>
 							</div>
@@ -75,7 +75,7 @@ var path='<%=path%>';
 
 									<table id="table1" border="1" width="100%" borderColor="green" >
 										<tr style="">
-										 <td colspan="7" style="text-align:center"><font color="green"> ${du}绩效审核(参考比例要求控制)</font>	 </td>
+										 <td colspan="7" style="text-align:center"><font color="green"> ${du}(参考比例要求控制)</font>	 </td>
 										</tr>
 									   <tr>
 										 <td> A <br/>(10-15%)</td>
@@ -216,7 +216,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-	    <script type="text/javascript" src="<%=path %>/js/pmo/performanceManageEvaSecondDU.js"></script>
+	    <script type="text/javascript" src="<%=path %>/js/pmo/performance/management/performanceManageEvaSecondDU.js"></script>
 	
 </body>
 </html>
