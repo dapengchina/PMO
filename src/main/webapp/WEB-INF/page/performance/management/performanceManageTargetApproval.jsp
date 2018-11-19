@@ -156,10 +156,10 @@ div .stateTips{
 		<span style="color:#006633;font-size: 16px;">Submited</span>
 		<div style="border-bottom:1px solid #0e5b87;margin: 10px 0px 20px 0px;"></div>
 		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
-			<input type="checkbox" id="yes" name="submitCheckbox" value="submit" checked> <label for="yes">Yes</label>
+			<input type="checkbox" id="yes" name="submitCheckbox" value="1" checked> <label for="yes">Yes</label>
 		</div>
 		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
-			<input type="checkbox" id="no" name="submitCheckbox" value="save" checked> <label for="no">No</label>
+			<input type="checkbox" id="no" name="submitCheckbox" value="0" checked> <label for="no">No</label>
 		</div>
 		<button type="button" class="btn btn-default" onClick="search(1)" style="margin-right:5px;">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
 		<button type="button" class="btn btn-default" onClick="cancelFilter(1)">Cancel</button>
@@ -180,13 +180,13 @@ div .stateTips{
 		<span style="color:#006633;font-size: 16px;">State</span>
 		<div style="border-bottom:1px solid #0e5b87;margin: 10px 0px 20px 0px;"></div>
 		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
-			<input type="checkbox" id="yes" name="stateCheckbox" value="0" checked> <label for="yes">未审批</label>
+			<input type="checkbox" id="yes" name="stateCheckbox" value="-0" checked> <label for="yes">未审批</label>
 		</div>
 		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
-			<input type="checkbox" id="no" name="stateCheckbox" value="1" checked> <label for="no">审批通过</label>
+			<input type="checkbox" id="no" name="stateCheckbox" value="2" checked> <label for="no">审批通过</label>
 		</div>
 		<div class="checkbox-custom checkbox-default" style="margin-bottom: 10px;padding-left: 15px;">
-			<input type="checkbox" id="no" name="stateCheckbox" value="-1" checked> <label for="no">审批未通过</label>
+			<input type="checkbox" id="no" name="stateCheckbox" value="3" checked> <label for="no">审批未通过</label>
 		</div>
 		<button type="button" class="btn btn-default" onClick="search(3)" style="margin-right:5px;">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
 		<button type="button" class="btn btn-default" onClick="cancelFilter(3)">Cancel</button>

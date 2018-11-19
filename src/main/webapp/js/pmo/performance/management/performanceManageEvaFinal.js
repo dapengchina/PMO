@@ -80,7 +80,7 @@ function loadManageEvaFinalList() {
 				    {
 			            field: 'operation',
 			            title: 'Operation',
-			            width: "100px",
+			            width: "120px",
 			            sortable: true,
 			            formatter : function(value,row, index){
 			                return "<a onclick='detail(\"" + row.employee_id + "\")' href='#' class='btn btn-info btn-sm'>"+

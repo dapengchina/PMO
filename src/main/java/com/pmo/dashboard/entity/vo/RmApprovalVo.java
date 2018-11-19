@@ -20,6 +20,7 @@ public class RmApprovalVo {
 	private boolean ifbackone;
 	   
 	private String stateName;
+	
 	   
 	   
 	

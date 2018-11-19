@@ -763,16 +763,26 @@
   	<if test="rmUserID != null and rmUserID != ''">
   		and e.RM_USER_ID = #{rmUserID}
   	</if>
-  	<!--
-  	<if test="submit != null and submit != ''">
-  		and goal.state = #{submit}
+  	<!-- 未提交 -->
+  	<if test="state == 0">
+  		and (e1.state = '0' or e1.state = '' or e1.state is null)
   	</if>
-  	<if test="state != null and state.length > 0">
-  		and process.state in
-  		<foreach collection="state" item="item" open="(" close=")" separator=",">
-  			#{item}
-  		</foreach>
-  	</if>  -->
+  	<!-- 已提交 -->
+  	<if test="state == 1">
+  		and (e1.state = '1' or e1.state = '2' or e1.state = '3')
+  	</if>
+  	<!-- 未审批 -->
+  	<if test="state == -0">
+  		and (e1.state = '0' or e1.state = '' or e1.state is null or e1.state = '1')
+  	</if>
+  	<!-- 审批通过 -->
+  	<if test="state == 2">
+  		and e1.state = '2'
+  	</if>
+  	<!-- 审批未通过 -->
+  	<if test="state == 3">
+  		and e1.state = '3'
+  	</if>
   	<!-- backbone -->
   	
   </select>

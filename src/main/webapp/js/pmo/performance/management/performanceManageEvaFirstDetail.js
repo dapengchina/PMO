@@ -119,7 +119,7 @@ function loadManageEvaFirstDetailList() {
 		    {
 			  field : 'bu',
 			  title : 'BU',
-			  width: "130px"
+			  width: "170px"
 		    }, 
 		    {
 			  field : 'du',
@@ -220,7 +220,11 @@ function loadManageEvaFirstDetailList() {
 			  width: "100px"
 		}],
 		onLoadSuccess : function(data) {
-
+			var ary = data.rows;
+			for ( var item in ary) {
+				stateSubmitIds.push(ary[item].resultId);
+			}
+			//console.log("===" + stateSubmitIds);
 		},
 		onLoadError : function(status, res) { // 加载失败时执行
 
@@ -232,31 +236,37 @@ function loadManageEvaFirstDetailList() {
 	});
 }
 
+var stateSubmitIds = new Array();
 function stateSubmit() {
 	// 所有员工评价后才可提交
 	if (!stateSubmitFlag) {
 		alert("还有未评级员工，请先评级");
 		return;
 	}
-//	if (stateSubmitIds.length == 0) {
-//		alert("暂无数据审批！");
-//		return;
-//	}
-	// 审批
-//	$.ajax({
-//		url : path + "/service/performanceManageEva/assessment/approval/rm/submit",
-//		type : "POST",
-//		data : {
-//			"ids" : stateSubmitIds.join(",")
-//		},
-//		success : function(data) {
-//			alert("审批成功");
-//			history.go(0);
-//		},
-//		error : function() {
-//			alert("审批失败");
-//		}
-//	});
+	if (stateSubmitIds.length == 0) {
+		alert("暂无数据审批！");
+		return;
+	}
+	//审批
+	$.ajax({
+		url : path + "/service/performanceManageEva/assessment/approval/rm/submit",
+		type : "POST",
+		dataType:"json",
+		data : {
+			"ids" : stateSubmitIds.join(",")
+		},
+		success : function(result) {
+			if(result.code=="1"){
+				alert(result.msg);
+				history.go(0);
+			}else{
+				alert(result.msg);
+			}
+		},
+		error : function() {
+			alert("审批失败");
+		}
+	});
 }
 
 function detail(employeeId,pid) {

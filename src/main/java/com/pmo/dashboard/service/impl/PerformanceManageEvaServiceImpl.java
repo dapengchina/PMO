@@ -274,7 +274,8 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
     private List<Map<String, Object>> groupStatByResult(String bu, String du, String rm, String finalize) {
         Calendar c = Calendar.getInstance();
         String startYear = c.get(Calendar.YEAR) + "";
-        String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        //String startQuarter = "Q" + PerformanceEmpHistoryServiceImpl.getSeason();
+        String startQuarter = PerformanceEmpHistoryServiceImpl.getSeason()+"";
         Map<String, Object> filter = new HashMap<String, Object>();
         filter.put("startYear", startYear);
         filter.put("startQuarter", startQuarter);

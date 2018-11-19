@@ -15,10 +15,12 @@ function loadPerforDetail(){
 			$("#du").val(result.department);
 			$("#position").val(result.role);
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
+			$("#comments").val(result.comments);
 			//console.log("data==" + JSON.stringify(result));
 			if(result.state=="2"){
 				document.getElementById("Reject").setAttribute("disabled", true);
 				document.getElementById("Approve").setAttribute("disabled", true);
+				document.getElementById("comments").setAttribute("disabled", true);
 			}
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){
