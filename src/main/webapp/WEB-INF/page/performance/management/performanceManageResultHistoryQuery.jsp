@@ -80,7 +80,7 @@ var path='<%=path%>';
 						<div class="box-inner">
 							<div class="box-header well" data-original-title="">
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效结果->历史绩效
+									<i class="glyphicon glyphicon-user"></i>  Management-绩效结果-历史绩效
 								</h2>
 							</div>
 							<div id="employeeInfo" class="box-content">
@@ -109,13 +109,13 @@ var path='<%=path%>';
 										<div class="group">
 											<label class="col-sm-2 control-label">BU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="bu" name="bu" value="${BU }" />
+												<input readonly="readonly" type="text" class="form-control" id="bu" name="bu" value="${BU }" />
 											</div>
 										</div>
 										<div class="group">
 											<label class="col-sm-2 control-label">DU</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" id="du" name="du" value="${DU }" />
+												<input readonly="readonly" type="text" class="form-control" id="du" name="du" value="${DU }" />
 											</div>
 										</div>
 										</br></br></br>
@@ -131,10 +131,10 @@ var path='<%=path%>';
                                         </div> 
 										<div class="col-lg-2">
                                             <select class="form-control" id="startQuarter" name="startQuarter">
-												<option>Q1</option>
-												<option>Q2</option>
-												<option>Q3</option>
-												<option>Q4</option>
+												<option value="1">Q1</option>
+												<option value="2">Q2</option>
+												<option value="3">Q3</option>
+												<option value="4">Q4</option>
 											</select>
                                         </div> 
 								   </div>
@@ -151,10 +151,10 @@ var path='<%=path%>';
                                         </div> 
 										<div class="col-lg-2">
                                             <select class="form-control"  id="endQuarter" name="endQuarter">
-												<option>Q1</option>
-												<option>Q2</option>
-												<option>Q3</option>
-												<option selected>Q4</option>
+												<option value="1">Q1</option>
+												<option value="2">Q2</option>
+												<option value="3">Q3</option>
+												<option value="4" selected>Q4</option>
 											</select>
                                         </div> 
 								   </div>
@@ -178,14 +178,7 @@ var path='<%=path%>';
 							<span>&nbsp;</span>
 							<!-- result box start -->
 
-									<table id="table3" border="1" width="100%" >
-										<tr style="background-color:#00688B">
-										 <td ><font color="white">Performance Records</font>	 </td>
-										</tr>
-									   <tr>
-										 <td> <table id="manageResultHistoryQueryList" class="table table-thead-background"></table> </td>									
-									   </tr>
-									</table>
+									<table id="manageResultHistoryQueryList" class="table table-thead-background"></table>
 									
 									<br/>
 
@@ -270,7 +263,7 @@ var path='<%=path%>';
 	
 		<script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-	<script type="text/javascript" src="<%=path %>/js/pmo/performanceManageResultHistoryQuery.js"></script>
+	<script type="text/javascript" src="<%=path %>/js/pmo/performance/management/performanceManageResultHistoryQuery.js"></script>
 	    
 </body>
 </html>

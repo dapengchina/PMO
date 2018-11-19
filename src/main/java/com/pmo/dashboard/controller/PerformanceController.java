@@ -324,6 +324,12 @@ public class PerformanceController {
         return "performance/management/performanceManageEvaFinal";
     }
 
+    /**
+     * Management-绩效结果-历史绩效页面
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceManageResultHistoryQuery")
     public String getPerformanceManageResultHistoryQuery(final HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("loginUser");
@@ -331,12 +337,12 @@ public class PerformanceController {
         model.addAttribute("BU", user.getBu());
         CSDept csDept = csDeptService.queryCSDeptById(user.getCsdeptId());
         model.addAttribute("DU", csDept.getCsSubDeptName());
-        return "performance/performanceManageResultHistoryQuery";
+        return "performance/management/performanceManageResultHistoryQuery";
     }
 
     @RequestMapping("/performanceManageResultHistory")
     public String getPerformanceManageResultHistory(final HttpServletRequest request, Model model) {
-        return "performance/performanceManageResultHistory";
+        return "performance/management/performanceManageResultHistory";
     }
 
     /**
