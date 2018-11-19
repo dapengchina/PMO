@@ -1429,4 +1429,14 @@ public class PerformanceManageEvaController {
 		
 		return objectMapper.writeValueAsString(map);
     }
+
+    /**
+     * Management-绩效结果-绩效定稿-详情页面
+     * @return
+     */
+    @RequestMapping("/latestPerforDetailPage/{employeeid}")
+    public String latestPerforDetailPage(HttpServletRequest request,@PathVariable("employeeid") String employeeid,Model model){
+    	model.addAttribute("employeeid", employeeid);
+    	return "performance/management/performanceLatestDetail";
+    }
 }

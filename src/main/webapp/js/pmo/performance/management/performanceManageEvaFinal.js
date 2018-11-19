@@ -235,24 +235,8 @@ function loadManageEvaFinalList() {
 	});
 }
 
-function detail(resultId) {
-	// 页面跳转post提交
-	$("#detailForm").remove();
-	var url = path + '/service/performance/goalDetail.html';
-	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
-	$eleForm.attr("action", url);
-	$(document.body).append($eleForm);
-
-	var idInput = $("<input type='text' name='resultId' class='hidden'></input>");
-	var titleInput = $("<input type='text' name='title' class='hidden'></input>");
-	var typeInput = $("<input type='text' name='type' class='hidden'></input>");
-	idInput.attr("value", resultId);
-	titleInput.attr("value", "Management->绩效定稿");
-	typeInput.attr("value", "5");
-	$("#detailForm").append(idInput);
-	$("#detailForm").append(titleInput);
-	$("#detailForm").append(typeInput);
-	$eleForm.submit();
+function detail(employeeId) {
+	window.location.href = path+"/service/performanceManageEva/latestPerforDetailPage/"+employeeId;
 }
 
 /** 导出绩效定稿数据 */
