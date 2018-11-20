@@ -101,12 +101,8 @@ function loadManageTargetApprovalList() {
 			}
 			var stateAry = $("input[name='stateCheckbox']:checked");
 			var state = "";
-			if (stateAry.length > 0) {
-				var state = new Array();
-				stateAry.each(function(index, element) {
-					state.push(element.value);
-				});
-				state = state.join(",");
+			if (stateAry.length == 1) {
+				state = stateAry[0].value;
 			}
 			return {
 				pageSize : params.limit,

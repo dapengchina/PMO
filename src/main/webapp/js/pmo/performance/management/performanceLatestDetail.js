@@ -4,7 +4,7 @@ $(function(){
 
 function loadPerforDetail(){
 	$.ajax({
-		url:path+"/service/performanceManageEva/detailData/"+$("#reemployeeid").val(),
+		url:path+"/service/performanceManageEva/approvalDetailData/"+$("#reemployeeid").val(),
 		dataType:"json",
 		async:true,
 		cache:false,
@@ -15,13 +15,10 @@ function loadPerforDetail(){
 			$("#du").val(result.department);
 			$("#position").val(result.role);
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
-			$("#comments").val(result.comments);
 			//console.log("data==" + JSON.stringify(result));
-			if(result.state=="2"){
-				document.getElementById("Reject").setAttribute("disabled", true);
-				document.getElementById("Approve").setAttribute("disabled", true);
-				document.getElementById("comments").setAttribute("disabled", true);
-			}
+			$("#selfEvaluation").val(result.selfassessment);
+			$("#comments").val(result.comments);
+			$("#rating").val(result.directresult);
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){
 					loadPriorityWork(result);
@@ -31,9 +28,6 @@ function loadPerforDetail(){
 				}
 			}
 			loadEmployeePlan(result);
-			document.getElementById("button1").setAttribute("disabled", 'disabled');
-			document.getElementById("button2").setAttribute("disabled", 'disabled');
-			document.getElementById("button3").setAttribute("disabled", 'disabled');
 		}
 	})
 }
@@ -182,45 +176,14 @@ function loadEmployeePlan(result){
 	$("#table3").append("</tbdoy>");	
 }
 
-//审批不通过
-function reject(){
-	var comments = $("#comments").val();
-	$.ajax({
-		url:path+"/service/empPerforGoal/reject/"+$("#reemployeeid").val(),
-		dataType:"json",
-		async:true,
-		cache:false,
-		type:"post",
-		data:{comments:comments},
-		success:function(result){
-			if(result.code=="1"){
-				alert(result.msg);
-				window.location.href=path+"/service/performance/performanceManageTargetApproval";
-			}else{
-				alert(result.msg);
-			}
-		}
-	})
+//ok
+function ok(){
+	window.location.href=path+"/service/performance/performanceManageEvaFinal";
 }
 
-//审批通过
-function approval(){
-	var comments = $("#comments").val();
-	$.ajax({
-		url:path+"/service/empPerforGoal/approval/"+$("#reemployeeid").val(),
-		dataType:"json",
-		async:true,
-		cache:false,
-		type:"post",
-		data:{comments:comments},
-		success:function(result){
-			if(result.code=="1"){
-				alert(result.msg);
-				window.location.href=path+"/service/performance/performanceManageTargetApproval";
-			}else{
-				alert(result.msg);
-			}
-		}
-	})
+//取消
+function cancel(){
+	window.location.href=path+"/service/performance/performanceManageEvaFinal";
 }
+
 

@@ -628,12 +628,21 @@ public class PerformanceManageEvaController {
      * @param state 审批状态
      * @return 
      * String
+     * @throws JsonProcessingException 
      */
     @RequestMapping("/assessment/approval/du/detail/submit")
     @ResponseBody
-    public String approvalDUDetailSubmit(@RequestParam String rm, @RequestParam String state) {
-        manageEvaService.updateStateByRM(rm, state);
-        return "";
+    public String approvalDUDetailSubmit(@RequestParam String rm, @RequestParam String state) throws JsonProcessingException {
+        Map<String,Object> map = new HashMap<String,Object>();
+    	try{
+        	manageEvaService.updateStateByRM(rm, state);
+        	map.put("msg", "审批成功");
+        	map.put("code", "1");
+        }catch(Exception e){
+        	map.put("msg", "审批失败");
+        	map.put("code", "0");
+        }
+        return objectMapper.writeValueAsString(map);
     }
 
     /**
@@ -760,15 +769,24 @@ public class PerformanceManageEvaController {
      * @param ids  审批ID集合
      * @return 
      * String
+     * @throws JsonProcessingException 
      */
     @RequestMapping("/assessment/approval/rm/submit")
     @ResponseBody
-    public String approvalRMDetailSubmit(@RequestParam("ids") String ids) {
-        List<String> list = Arrays.asList(ids.split(","));
-        if (list.size() > 0) {
-            manageEvaService.updateStateByIds(list, Constants.APPROVAL_DU);
+    public String approvalRMDetailSubmit(@RequestParam("ids") String ids) throws JsonProcessingException {
+        Map<String,Object> map = new HashMap<String,Object>();
+    	try{
+        	List<String> list = Arrays.asList(ids.split(","));
+            if (list.size() > 0) {
+                manageEvaService.updateStateByIds(list, Constants.APPROVAL_DU);
+            }
+            map.put("msg", "提交成功");
+            map.put("code", "1");
+        }catch(Exception e){
+        	map.put("msg", "提交失败");
+            map.put("code", "0");
         }
-        return "";
+        return objectMapper.writeValueAsString(map);
     }
 
     /**
@@ -800,6 +818,16 @@ public class PerformanceManageEvaController {
         }
         RmApprovalVo rv = new RmApprovalVo();
         rv.setRmUserID(user.getUserId());
+        if("".equals(submit)){
+        	rv.setState("-1");//查全部
+        }else{
+        	rv.setState(submit);
+        }
+        if("".equals(state)){
+        	rv.setState("-999");//查全部
+        }else{
+        	rv.setState(state);
+        }
         // 分页获取该RM下所有员工
         PageHelper.startPage(pageNumber, pageSize);
         List<RmApprovalVo> list = employeeService.rmApprovalList(rv);
@@ -1400,5 +1428,15 @@ public class PerformanceManageEvaController {
 		map.put("plan", planList);
 		
 		return objectMapper.writeValueAsString(map);
+    }
+
+    /**
+     * Management-绩效结果-绩效定稿-详情页面
+     * @return
+     */
+    @RequestMapping("/latestPerforDetailPage/{employeeid}")
+    public String latestPerforDetailPage(HttpServletRequest request,@PathVariable("employeeid") String employeeid,Model model){
+    	model.addAttribute("employeeid", employeeid);
+    	return "performance/management/performanceLatestDetail";
     }
 }

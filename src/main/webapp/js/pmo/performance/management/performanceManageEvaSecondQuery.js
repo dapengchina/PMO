@@ -234,14 +234,15 @@ function loadManageEvaSecondQueryList() {
 				  width: "100px"
 		}],
 		onLoadSuccess : function(sta) {
-			console.log("in onLoadSuccess");
-			console.log(JSON.stringify(sta));
+//			console.log("in onLoadSuccess");
+//			console.log(JSON.stringify(sta));
 		},
 		onLoadError : function(status, res) { // 加载失败时执行
-			console.log(res);
-			console.log("error.status:" + status);
+//			console.log(res);
+//			console.log("error.status:" + status);
 		},
 		onDblClickRow : function(row, $element) {
+			
 		}
 
 	});
@@ -284,8 +285,8 @@ function goBack() {
 }
 
 /** 审批-指定rm下所有员工 * */
-function approval(type) {
-	var state = type == 1 ? 4 : 3;// TODO xuexuan
+function approval(state) {
+	alert(state);
 	var rm = $("#curRm").val();
 	$.ajax({
 		url : path + '/service/performanceManageEva/assessment/approval/du/detail/submit',
@@ -294,11 +295,16 @@ function approval(type) {
 			"state" : state
 		},
 		cache : false,
+		dataType:"json",
 		type : "POST",
-		success : function(data) {
-			alert("审批成功");
-			// 返回审批页面
-			window.location.href = path + "/service/performance/performanceManageEvaSecondDU.html";
+		success : function(result) {
+			if(result.code=="1"){
+				alert(result.msg);
+				// 返回审批页面
+				window.location.href = path + "/service/performance/performanceManageEvaSecondDU.html";
+			}else{
+				alert(result.msg);
+			}
 		},
 		error : function(error) {
 			alert("审批失败");

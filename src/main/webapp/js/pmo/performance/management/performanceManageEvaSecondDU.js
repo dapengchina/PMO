@@ -4,19 +4,6 @@ $(function() {
 
 });
 
-/*
- * function queryPercentage(){ $.ajax({
- * url:path+'/service/performanceManageEva/queryPercentage', dataType:"json",
- * data:{}, async:true, cache:false, type:"post", success:function(sta){
- * $("#percentA").html(sta["percentA"]);
- * $("#percentBplus").html(sta["percentBplus"]);
- * $("#percentB").html(sta["percentB"]); $("#percentC").html(sta["percentC"]);
- * $("#percentD").html(sta["percentD"]);
- * $("#percentSum").html(sta["percentSum"]); $("#empA").html(sta["empA"]);
- * $("#empBplus").html(sta["empBplus"]); $("#empB").html(sta["empB"]);
- * $("#empC").html(sta["empC"]); $("#empD").html(sta["empD"]);
- * $("#empSum").html(sta["empSum"]); } }) }
- */
 
 /** 获取当年当季绩效审核比例 * */
 function queryPercentage() {
@@ -45,8 +32,6 @@ function queryPercentage() {
 }
 var approvalAllFlag = true;
 function loadManageEvaSecondDUList() {
-	// var queryUrl = path +
-	// '/service/performanceManageEva/queryManageEvaSecondDUList';
 	var queryUrl = path + '/service/performanceManageEva/assessment/approval/list';
 	var columns = [ {
 		checkbox : true,
@@ -67,7 +52,7 @@ function loadManageEvaSecondDUList() {
 		field : 'quarter',
 		title : 'Quarter'
 	}, {
-		title : '状态',
+		title : 'Status',
 		formatter : function(value, row, index) {
 			var state = "";
 			$.ajax({

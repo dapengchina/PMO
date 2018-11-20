@@ -62,7 +62,7 @@ var path='<%=path%>';
 						<div class="box-inner" >
 							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management->绩效考评->审批->${bu}
+									<i class="glyphicon glyphicon-user"></i>  Management-绩效考评-审批-${bu}
 									<input type="text" value="${bu}" class="hidden" id="curBu"></input>
 								</h2>
 							</div>
@@ -75,7 +75,7 @@ var path='<%=path%>';
 
 									<table id="table1" border="1" width="100%" borderColor="green" >
 										<tr style="">
-										 <td colspan="7" style="text-align:center"><font color="green"> ${bu}绩效审核(参考比例要求控制)</font>	 </td>
+										 <td colspan="7" style="text-align:center"><font color="green"> ${bu}(参考比例要求控制)</font>	 </td>
 										</tr>
 									   <tr>
 										 <td> A <br/>(10-15%)</td>
@@ -145,7 +145,7 @@ var path='<%=path%>';
 												onclick="submit();"
 												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 												</div>
-										</div>
+									</div>
 
 						    </div>
 						 </div>
@@ -215,7 +215,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/charisma.js"></script>
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-	<script type="text/javascript" src="<%=path %>/js/pmo/performanceManageEvaSecondBU.js"></script>
+	<script type="text/javascript" src="<%=path %>/js/pmo/performance/management/performanceManageEvaSecondBU.js"></script>
 	
 </body>
 </html>
