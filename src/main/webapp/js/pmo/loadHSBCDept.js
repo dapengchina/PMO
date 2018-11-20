@@ -30,6 +30,14 @@ $(function(){
 		$("#staffLocation").val(regionMap.get(staffRegion));
 	});
 
+// 是team leader 显示team leader type，否则不显示
+function showType(value){
+	if(value == 1){
+		$(".tlType").css("display","block");
+	}else{
+		$(".tlType").css("display","none");
+	}
+}
 var lastConditionStr = "";
 function addEmployee(){
 	var emptype = $("#employeeType").val();
@@ -82,6 +90,16 @@ function addEmployee(){
 		var gbGf = $("#gbGf").val();
 		var entryDate = $('#entryDate1').val();
 		var rmName= $("#RM").val();
+		
+		//获取hsbc pod, team leader, team leader type的值
+		var hsbcPOD = $("#hsbcPOD").val();
+		var podtl = $("#podtl").val();
+		var tlType = "";
+		if($(".tlType").css("display") == "block"){
+			tlType = $("#tlType").val();
+		}
+		
+		
 		//拿到IT行业工作年限
 		var itWorkYear = $("#itworkyear").val();
 		//alert("毕业日期"+graduationDate);
@@ -137,7 +155,7 @@ function addEmployee(){
 				"staffCategory":staffCategory,"engagementType":engagementType,"hsbcDOJ":hsbcDOJ,"graduationDate":graduationDate,
 				"role":role,"skill":skill,"billingCurrency":billingCurrency,"billRate":billRate,"resourceStatus":'Active',"terminatedDate":'',
 				"email":email,"gbGf":gbGf,"entryDate":entryDate,"rmUserId":rmName,"terminationReason":terminationReason,"itindustryWorkYear":itWorkYear,
-				"chsoftiProNumber":chsoftiProNumber,"chsoftiProStartDate":chsoftiProStartDate1,"chsoftiProName":chsoftiProName},
+				"chsoftiProNumber":chsoftiProNumber,"chsoftiProStartDate":chsoftiProStartDate1,"chsoftiProName":chsoftiProName,"hsbcPOD":hsbcPOD,"podtl":podtl,"tlType":tlType},
 			async:true,
 			cache:false,
 			type:"post",

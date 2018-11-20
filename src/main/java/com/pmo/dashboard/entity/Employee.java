@@ -54,6 +54,9 @@ public class Employee
     private String hsbcDeptName;
     private String hsbcDeptSubName;
     
+    private String hsbcPOD;
+    private String podtl;
+    private String tlType;
     
     
     /**
@@ -96,6 +99,24 @@ public class Employee
 	}
 	public void setHsbcDeptSubName(String hsbcDeptSubName) {
 		this.hsbcDeptSubName = hsbcDeptSubName;
+	}
+	public String getHsbcPOD(){
+		return hsbcPOD;
+	}
+	public void setHsbcPOD(String hsbcPOD){
+		 this.hsbcPOD = hsbcPOD;
+	}
+	public String getPodtl(){
+		return podtl;
+	}
+	public void setPodtlD(String podtl){
+		 this.podtl = podtl;
+	}
+	public String getTlType(){
+		return tlType;
+	}
+	public void setTlType(String tlType){
+		 this.tlType = tlType;
 	}
 	public String getHsbcDeptName() {
 		return hsbcDeptName;
@@ -415,7 +436,7 @@ public class Employee
             String billingCurrency, String billRate, String resourceStatus,
             String terminatedDate, String terminationReason,String email, String gbGf,
             String entryDate,String rmUserId, Timestamp createTime, Timestamp updateTime,String itindustryWorkYear,
-            String chsoftiProNumber,String chsoftiProStartDate, String chsoftiProName)
+            String chsoftiProNumber,String chsoftiProStartDate, String chsoftiProName, String hsbcPOD,String podtl,String tlType)
     {
         super();
         this.employeeType = employeeType;
@@ -457,6 +478,9 @@ public class Employee
         this.chsoftiProNumber = chsoftiProNumber;
         this.chsoftiProStartdate = chsoftiProStartDate;
         this.chsoftiProName = chsoftiProName;
+        this.hsbcPOD = hsbcPOD;
+        this.podtl = podtl;
+        this.tlType = tlType;
     }
     public Employee(String employeeType,String billRateType,String employeeId, String eHr, String lob,
             String hsbcStaffId, String staffName, String ln, String staffRegion,
@@ -468,7 +492,8 @@ public class Employee
             String billingCurrency, String billRate, String resourceStatus,
             String terminatedDate, String terminationReason,String email, String gbGf,
             String entryDate,String rmUserId, Timestamp updateTime,String itindustryWorkYear,
-            String chsoftiProNumber,String chsoftiProStartDate, String chsoftiProName
+            String chsoftiProNumber,String chsoftiProStartDate, String chsoftiProName, 
+            String hsbcPOD,String podtl,String tlType
     		)
     {
         super();
@@ -510,6 +535,9 @@ public class Employee
         this.chsoftiProNumber = chsoftiProNumber;
         this.chsoftiProStartdate = chsoftiProStartDate;
         this.chsoftiProName = chsoftiProName;
+        this.hsbcPOD = hsbcPOD;
+        this.podtl = podtl;
+        this.tlType = tlType;
     }
     
 }

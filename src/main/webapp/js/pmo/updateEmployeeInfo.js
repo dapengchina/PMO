@@ -92,6 +92,14 @@ function updateEmployee() {
 		var chsoftiProStartDate1 = $('#chsoftiProStartDate1').val();
 		var chsoftiProName = $('#chsoftiProName').val();
 		
+		//HSBC POD名称
+		var hsbcPOD = $("#hsbcPOD").val();
+		var podtl = $("#podtl").val();
+		var tlType = "";
+		if($(".tlType").css("display") == "block"){
+			tlType = $("#tlType").val();
+		}
+		
 		//拿到IT行业工作年限
 		var itWorkYear = $("#itworkyear").val();
 		
@@ -121,7 +129,7 @@ function updateEmployee() {
 			dataType:"json",
 			data:{"employeetype":employeetype,"billRateType":billRateType,"udemandid":udemandid,"employeeId":employeeId,"eHr":eHr,"lob":lob,"hsbcStaffId":hsbcStaffId,"staffName":staffName,"LN":LN,"staffRegion":staffRegion,"staffLocation":staffLocation,"locationType":locationType,"onshoreOrOffshore":onshoreOrOffshore,"csSubDept":csSubDept,"hsbcSubDept":zuhe,"projectName":projectName,"projectManager":projectManager,"sow":sow,"sowExpiredDate":sowExpiredDate,"staffCategory":staffCategory,"engagementType":engagementType,"hsbcDOJ":hsbcDOJ,"graduationDate":graduationDate,"role":role,"skill":skill,"billingCurrency":billingCurrency,"billRate":billRate,"resourceStatus":resourceStatus,"terminatedDate":terminatedDate,"terminationReason":terminationReason,
 				"email":email,"entryDate":entryDate,"gbGf":gbGf,"itindustryWorkYear":itWorkYear,
-				"chsoftiProNumber":chsoftiProNumber,"chsoftiProStartDate":chsoftiProStartDate1,"chsoftiProName":chsoftiProName	
+				"chsoftiProNumber":chsoftiProNumber,"chsoftiProStartDate":chsoftiProStartDate1,"chsoftiProName":chsoftiProName, "hsbcPOD":hsbcPOD,"podtl":podtl,"tlType":tlType
 			},
 			async:true,
 			cache:false,
@@ -196,6 +204,13 @@ function loadEmployeeInfo() {
 			$('#chsoftiProNumber').val(employee.chsoftiProNumber);
 			$('#chsoftiProStartDate1').val(employee.chsoftiProStartdate);
 			$('#chsoftiProName').val(employee.chsoftiProName);
+			$("#hsbcPOD").val(employee.hsbcPOD);
+			$("#podtl").val(employee.podtl);
+			$("#tlType").val(employee.tlType);
+			
+			if(employee.podtl == "1"){
+				$(".tlType").css("display","block");
+			}
 			
 			var type = $("#senddemandtype").val();
 			if(type=="1"){
@@ -417,7 +432,15 @@ function changeHsbcDept(){
 	})
 }
 
-
+//是team leader 显示team leader type，否则不显示
+function showType(value){
+	if(value == 1){
+		$(".tlType").css("display","block");
+		$("#tlType").val("1");
+	}else{
+		$(".tlType").css("display","none");
+	}
+}
 
 function loadStaffCategory(employee) {
 	var url = path + '/json/staffCategory.json'

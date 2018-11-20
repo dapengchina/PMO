@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pmo.dashboard.constant.SysConstant;
 import com.pmo.dashboard.entity.CSDept;
 import com.pmo.dashboard.entity.CandidateInfo;
 import com.pmo.dashboard.entity.Demand;
@@ -227,7 +228,11 @@ public class EmployeeController {
         String chsoftiProStartDate1 = request.getParameter("chsoftiProStartDate");
         String chsoftiProName = request.getParameter("chsoftiProName");
         //add end
-
+        
+        String hsbcPOD = request.getParameter("hsbcPOD");
+        String podtl = request.getParameter("podtl");
+        String tlType = request.getParameter("tlType");
+        
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date curDate = new Date();
         Timestamp createTime = null;
@@ -249,7 +254,7 @@ public class EmployeeController {
                 billingCurrency, billRate, resourceStatus,
                 terminatedDate, terminationReason,email,gbGf,
                 entryDate,rmUserId, createTime, updateTime,itindustryWorkYear,
-                chsoftiProNumber,chsoftiProStartDate1,chsoftiProName);
+                chsoftiProNumber,chsoftiProStartDate1,chsoftiProName,hsbcPOD,podtl,tlType);
         
         String employeeid = "";
         if(employeeType!=null){
@@ -342,6 +347,11 @@ public class EmployeeController {
         String chsoftiProStartdate = request.getParameter("chsoftiProStartDate");
         String chsoftiProName = request.getParameter("chsoftiProName");
         //add end
+        
+        String hsbcPOD = request.getParameter("hsbcPOD");
+        String podtl = request.getParameter("podtl");
+        String tlType = request.getParameter("tlType");
+        
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date curDate = new Date();
         Timestamp updateTime = null;
@@ -364,7 +374,7 @@ public class EmployeeController {
                 graduationDate, role, skill,
                 billingCurrency, billRate, resourceStatus,
                 terminatedDate, terminationReason,email,gbGf,entryDate,rmUserId,updateTime,itindustryWorkYear,
-                chsoftiProNumber,chsoftiProStartdate,chsoftiProName
+                chsoftiProNumber,chsoftiProStartdate,chsoftiProName,hsbcPOD,podtl,tlType
         		);
 
         /**
@@ -929,6 +939,24 @@ public class EmployeeController {
                    //员工billrate类型
                    if(conditionList.contains("BillRateType")){
                        Label label= new Label(++j, i, listE.get(i-1).getBillRateType());
+                       ws.addCell(label);
+                   }
+                   
+                 //员工HSBC POD
+                   if(conditionList.contains("HSBC POD")){
+                       Label label= new Label(++j, i, listE.get(i-1).getHsbcPOD());
+                       ws.addCell(label);
+                   }
+                   
+                 //  是否是POD Tead Leader
+                   if(conditionList.contains("POD Team Leader")){
+                       Label label= new Label(++j, i, SysConstant.getTeamLeader().get(listE.get(i-1).getPodtl()).toString());
+                       ws.addCell(label);
+                   }
+                   
+               //  Tead Leader Type
+                   if(conditionList.contains("Team Leader Type")){
+                       Label label= new Label(++j, i, SysConstant.getTeamLeaderType().get(listE.get(i-1).getTlType()).toString());
                        ws.addCell(label);
                    }
 
