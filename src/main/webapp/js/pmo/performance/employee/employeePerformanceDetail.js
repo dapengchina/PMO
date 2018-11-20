@@ -10,14 +10,15 @@ function loadEmployeePerforDetail(){
 		cache:false,
 		type:"post",
 		success:function(result){
+			$("#ehr").val(result.ehr);
+			$("#staffname").val(result.staffname);
+			$("#du").val(result.department);
+			$("#position").val(result.role);
+			$("#assessmentSupervisor").val(result.assessmentSupervisor);
+			
 			$("#selfassessment").val(result.selfassessment);
 			$("#comments").val(result.comments);
-			//console.log("data==" + JSON.stringify(result));
-//			if(result.state=="1"){
-//				document.getElementById("Save").setAttribute("disabled", true);
-//				document.getElementById("Edit").setAttribute("disabled", true);
-//				document.getElementById("Submit").setAttribute("disabled", true);
-//			}
+			
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){
 					loadPriorityWork(result);

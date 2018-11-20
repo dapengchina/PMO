@@ -24,6 +24,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pmo.dashboard.constant.SysConstant;
 import com.pmo.dashboard.entity.CSDept;
+import com.pmo.dashboard.entity.Employee;
 import com.pmo.dashboard.entity.EmployeeImpplan;
 import com.pmo.dashboard.entity.EmployeeKeyevent;
 import com.pmo.dashboard.entity.EmployeeKpo;
@@ -37,6 +38,7 @@ import com.pom.dashboard.service.CSDeptService;
 import com.pom.dashboard.service.EmployeeImpplanService;
 import com.pom.dashboard.service.EmployeeKeyeventService;
 import com.pom.dashboard.service.EmployeeKpoService;
+import com.pom.dashboard.service.EmployeeService;
 import com.pom.dashboard.service.EmployeeperforgoalService;
 import com.pom.dashboard.service.PerformanceMatrixService;
 import com.pom.dashboard.service.PerformanceResultService;
@@ -68,6 +70,9 @@ public class PerformanceResultController {
 	
 	@Resource
 	private PerformanceResultService performanceResultService;
+	
+	@Resource
+	private EmployeeService employeeService;
 	
 	private ObjectMapper objectMapper = new ObjectMapper();
 	
@@ -127,10 +132,22 @@ public class PerformanceResultController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("loginUser");
 		String employeeid = user.getUserId();
+		Employee emp = employeeService.queryEmployeeById(employeeid);
 		Map<String,Object> map = new HashMap<String,Object>();
+		//Ehr
+		map.put("ehr", emp.geteHr());
+		//EmployeeName
+		map.put("staffname", emp.getStaffName());
 		//查询中软部门信息
-		CSDept csdept = cSDeptService.queryCSDeptById(user.getCsdeptId());
-		session.setAttribute("department", csdept!=null?csdept.getCsSubDeptName():"");
+		CSDept csdept = cSDeptService.queryCSDeptById(emp.getCsSubDept());
+		map.put("department", csdept!=null?csdept.getCsSubDeptName():"");
+		//查询职位信息
+		Employee employee = employeeService.queryEmployeeById(employeeid);
+		map.put("role", employee!=null?employee.getRole():"");
+		//查询考核主管
+		Employee employee2 = employeeService.queryEmployeeById(employee.getRmUserId());
+		map.put("assessmentSupervisor", employee2!=null?employee2.getStaffName():"");
+		
 		
 		//查询重点工作表
 		EmployeeKpo eo = new EmployeeKpo();
