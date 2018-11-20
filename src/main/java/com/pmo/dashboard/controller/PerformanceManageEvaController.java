@@ -1439,4 +1439,14 @@ public class PerformanceManageEvaController {
     	model.addAttribute("employeeid", employeeid);
     	return "performance/management/performanceLatestDetail";
     }
+    
+    /**
+     * Management-绩效结果-历史绩效-详情页面
+     * @return
+     */
+    @RequestMapping("/historyPerforDetailPage/{employeeid}")
+    public String historyPerforDetailPage(HttpServletRequest request,@PathVariable("employeeid") String employeeid,Model model){
+    	model.addAttribute("employeeid", employeeid);
+    	return "performance/management/performanceManageResultHistory";
+    }
 }

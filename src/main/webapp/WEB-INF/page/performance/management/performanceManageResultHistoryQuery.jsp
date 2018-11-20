@@ -66,153 +66,130 @@ var path='<%=path%>';
 </script>
 <body>
 	<c:import url="/service/manage/top" />
-
 	<c:import url="/service/performance/performanceLeft">
 	    <c:param name="currentPageName" value="<%=currentPageName%>"/>
-	</c:import> 
-
-
-<!-- middle content start -->
-			<div id="content" class="col-lg-10 col-sm-10">
-				<!-- content starts -->
-				
-				<div class="box col-md-12">
-						<div class="box-inner">
-							<div class="box-header well" data-original-title="">
-								<h2>
-									<i class="glyphicon glyphicon-user"></i>  Management-绩效结果-历史绩效
-								</h2>
+	</c:import>
+    <!-- middle content start -->
+	<div id="content" class="col-lg-10 col-sm-10">
+		<!-- content starts -->
+		<div class="box col-md-12">
+			<div class="box-inner">
+				<div class="box-header well" data-original-title="">
+					<h2>
+						<i class="glyphicon glyphicon-user"></i>  Management-绩效结果-历史绩效
+					</h2>
+				</div>
+				<div id="employeeInfo" class="box-content">
+				<!-- search box start -->
+				<div class="panel panel-default" id="searchPanel">
+					<div class="panel-heading" style="background-color:#00688B">
+						<font color="white"> Search for Records</font>
+					</div>
+                    <div class="panel-body">
+						<div class="group">
+							<label class="col-sm-2 control-label">E-HR</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="eHr" name="eHr" value="" />
 							</div>
-							<div id="employeeInfo" class="box-content">
-							
-							<!-- search box start -->							
-
-						<div class="panel panel-default" id="searchPanel">
-							 <div class="panel-heading" style="background-color:#00688B">
-									<font color="white"> Search for Records</font>
-							 </div>
-                             <div class="panel-body">
-
-										<div class="group">
-											<label class="col-sm-2 control-label">E-HR</label>
-											<div class="col-sm-4">
-												<input type="text" class="form-control" id="eHr" name="eHr" value="" />
-											</div>
-										</div>
-										<div class="group">
-											<label class="col-sm-2 control-label">Employee Name</label>
-											<div class="col-sm-4">
-												<input type="text" class="form-control" id="staffName" name="staffName" value="" />
-											</div>
-										</div>
-										</br></br></br>
-										<div class="group">
-											<label class="col-sm-2 control-label">BU</label>
-											<div class="col-sm-4">
-												<input readonly="readonly" type="text" class="form-control" id="bu" name="bu" value="${BU }" />
-											</div>
-										</div>
-										<div class="group">
-											<label class="col-sm-2 control-label">DU</label>
-											<div class="col-sm-4">
-												<input readonly="readonly" type="text" class="form-control" id="du" name="du" value="${DU }" />
-											</div>
-										</div>
-										</br></br></br>
-                                    <div class="group">
-										<label class="col-lg-2 control-label">Period Between</label>  
-                                        <div class="col-lg-2">
-                                        <div class='input-group date' id='datetimepicker1'>  
-                                            <input id="startYear" name="startYear" type='text' class="form-control" value="2010" />  
-                                            <span class="input-group-addon">  
-                                             <span class="glyphicon glyphicon-calendar"></span>  
-                                            </span>  
-                                        </div> 
-                                        </div> 
-										<div class="col-lg-2">
-                                            <select class="form-control" id="startQuarter" name="startQuarter">
-												<option value="1">Q1</option>
-												<option value="2">Q2</option>
-												<option value="3">Q3</option>
-												<option value="4">Q4</option>
-											</select>
-                                        </div> 
-								   </div>
-
-                                    <div class="group">
-										<label class="col-lg-2 control-label">To</label>  
-                                        <div class="col-lg-2">
-                                        <div class='input-group date' id='datetimepicker2'>  
-                                            <input type='text' name="endYear" class="form-control" id="endYear"  value="2018" />  
-                                            <span class="input-group-addon">  
-                                             <span class="glyphicon glyphicon-calendar"></span>  
-                                            </span>  
-                                        </div> 
-                                        </div> 
-										<div class="col-lg-2">
-                                            <select class="form-control"  id="endQuarter" name="endQuarter">
-												<option value="1">Q1</option>
-												<option value="2">Q2</option>
-												<option value="3">Q3</option>
-												<option value="4" selected>Q4</option>
-											</select>
-                                        </div> 
-								   </div>
-								   </br></br></br></br>
-								   	<div class="form-group" style="border-top: solid 1px #ddd;padding-top: 20px;margin-bottom:0px;">
-									    <div style="text-align:left;width:50%;">
-									    <input type="button" value="Search"
+						</div>
+						<div class="group">
+							<label class="col-sm-2 control-label">Employee Name</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="staffName" name="staffName" value="" />
+							</div>
+						</div>
+						</br></br></br>
+						<div class="group">
+							<label class="col-sm-2 control-label">BU</label>
+							<div class="col-sm-4">
+								<input readonly="readonly" type="text" class="form-control" id="bu" name="bu" value="${BU }" />
+							</div>
+						</div>
+						<div class="group">
+							<label class="col-sm-2 control-label">DU</label>
+							<div class="col-sm-4">
+								<input readonly="readonly" type="text" class="form-control" id="du" name="du" value="${DU }" />
+							</div>
+						</div>
+						</br></br></br>
+                        <div class="group">
+							<label class="col-lg-2 control-label">Period Between</label>  
+                            <div class="col-lg-2">
+                               <div class='input-group date' id='datetimepicker1'>  
+                                  <input id="startYear" name="startYear" type='text' class="form-control" value="2010" />  
+                                  <span class="input-group-addon">  
+                                     <span class="glyphicon glyphicon-calendar"></span>  
+                                  </span>  
+                               </div> 
+                             </div> 
+							 <div class="col-lg-2">
+                                <select class="form-control" id="startQuarter" name="startQuarter">
+									<option value="1">Q1</option>
+									<option value="2">Q2</option>
+									<option value="3">Q3</option>
+									<option value="4">Q4</option>
+								</select>
+                             </div> 
+						</div>
+                        <div class="group">
+							 <label class="col-lg-2 control-label">To</label>  
+                             <div class="col-lg-2">
+                                 <div class='input-group date' id='datetimepicker2'>  
+                                     <input type='text' name="endYear" class="form-control" id="endYear"  value="2018" />  
+                                     <span class="input-group-addon">  
+                                        <span class="glyphicon glyphicon-calendar"></span>  
+                                     </span>  
+                                 </div> 
+                             </div> 
+							 <div class="col-lg-2">
+                                  <select class="form-control"  id="endQuarter" name="endQuarter">
+										<option value="1">Q1</option>
+										<option value="2">Q2</option>
+										<option value="3">Q3</option>
+										<option value="4" selected>Q4</option>
+								  </select>
+                              </div> 
+						</div>
+						</br></br></br></br>
+						<div class="form-group" style="border-top: solid 1px #ddd;padding-top: 20px;margin-bottom:0px;">
+							<div style="text-align:left;width:50%;">
+								<input type="button" value="Search"
 										name="searchBtn" id="searchBtn" onClick="search();"
 										class="button btn btn-primary" data-dismiss="modal"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 50px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px;">
-									    <input type="button" value="Clear" href="#" onClick="clearParams();"
+								<input type="button" value="Clear" href="#" onClick="clearParams();"
 										class="button btn btn-primary" data-dismiss="modal"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px;">
-									    </div>
-									</div>
-						     </div>
+							</div>
+						</div>
+					</div>
 
 		
-                          </div>
-							<!-- search box end -->
-							<span>&nbsp;</span>
-							<!-- result box start -->
-
-									<table id="manageResultHistoryQueryList" class="table table-thead-background"></table>
-									
-									<br/>
-
-									<div class="form-group" >
-									    <div style="text-align:center;width:100%;">
-										    <input type="button" value="Select All"
+                </div>
+                <table id="manageResultHistoryQueryList" class="table table-thead-background"></table>
+				<span>&nbsp;</span>
+				<br/>
+				
+				<div class="form-group" >
+					<div style="text-align:center;width:100%;">
+						<input type="button" value="Select All"
 											name="searchBtn" id="searchBtn" href="#"
 											class="button btn btn-primary" data-dismiss="modal"
 											style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 50px 0px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px;">
-										    <input type="button" value="Export" href="#" onClick="historyResultExport();"
+						<input type="button" value="Export" href="#" onClick="historyResultExport();"
 											class="button btn btn-primary" data-dismiss="modal"
 											style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 0px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px;">
-									    </div>
-								</div>
-
-						     </div>
-                             </div>
-							<!-- result box end -->
-
-                            </div>        
-						</div>
-
-
-
-<!-- middle content end -->
-	
-	
-	
-	
-	
-	
-<div class="ch-container ">
-	<c:import url="/service/manage/footer" />
-</div>
+					</div>
+				</div>
+				</div>
+            </div>
+			<!-- result box end -->
+        </div>        
+	</div>
+    <!-- middle content end -->
+    <div class="ch-container ">
+	   <c:import url="/service/manage/footer" />
+    </div>
 
 	<!-- CSS引用 -->
     <link rel="stylesheet" href="<%=path %>/extensioncss/bootstarp-table/bootstrap-table.css" type="text/css" />
