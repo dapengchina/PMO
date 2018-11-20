@@ -96,33 +96,33 @@ function loadManageResultHistoryQueryList() {
 		   {
 			  field : 'beginDate',
 			  title : 'Begin Date',
+			  width:120,
 			  formatter : function(value, row, index) {
-				 return value;
-//				 if (row.quarter == "1") {
-//					return "01 / 01 / " + row.year;
-//				 } else if (row.quarter == "2") {
-//					return "01 / 04 / " + row.year;
-//				 } else if (row.quarter == "3") {
-//					return "01 / 07 / " + row.year;
-//				 } else if (row.quarter == "4") {
-//					return "01 / 10 / " + row.year;
-//				 }
+				 if (row.quarter == "1") {
+					return row.year + "/01/01";
+				 } else if (row.quarter == "2") {
+					return row.year + "/04/01";
+				 } else if (row.quarter == "3") {
+					return row.year + "/07/01 ";
+				 } else if (row.quarter == "4") {
+					return row.year + "/10/01";
+				 }
 			  }
 		    }, 
 		    {
 			  field : 'endDate',
 			  title : 'End Date',
+			  width:120,
 			  formatter : function(value, row, index) {
-				 return value;
-//				 if (row.quarter == "1") {
-//					return "31 / 03 / " + row.year;
-//				 } else if (row.quarter == "2") {
-//					return "30 / 06 / " + row.year;
-//				 } else if (row.quarter == "3") {
-//					return "30 / 09 / " + row.year;
-//				 } else if (row.quarter == "4") {
-//					return "31 / 12 / " + row.year;
-//				 }
+				 if (row.quarter == "1") {
+					return row.year + "/03/31";
+				 } else if (row.quarter == "2") {
+					return row.year + "/06/30";
+				 } else if (row.quarter == "3") {
+					return row.year + "/09/30";
+				 } else if (row.quarter == "4") {
+					return row.year + "/12/31";
+				 }
 			   }
 		    },
 		    {
@@ -208,8 +208,8 @@ function historyResultExport() {
 function clearParams() {
 	$("#eHr").val("");
 	$("#staffName").val("");
-	$("#bu").val("");
-	$("#du").val("");
+	//$("#bu").val("");
+	//$("#du").val("");
 	$("#startYear").val("2010");
 	$("#startQuarter").val("Q1");
 	$("#endYear").val("2018");
