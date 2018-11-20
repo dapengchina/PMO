@@ -91,6 +91,48 @@ public class SysConstant {
 		   return map;
 	   }
 	   
+	   /**
+	    *  是否为team leader
+	    */
+	   public static final String TLdefault = null;
+	   public static final String TLdefault1 = "";
+	   public static final String IsTeamLeader = "1";
+	   public static final String NotTeamLeader = "2";
+	   
+	   public static Map<String,Object> getTeamLeader(){
+		   Map<String,Object> map = new HashMap<String,Object>();
+		   
+		   map.put(TLdefault, "");
+		   map.put(TLdefault1, "");
+		   map.put(IsTeamLeader, "yes");
+		   map.put(NotTeamLeader, "no");;
+		   
+		   return map;
+	   }
+	   
+	   /**
+	    *  team leader Type
+	    */
+	   public static final String noTeamLeaderType = null;
+	   public static final String TeamLeaderType = "";
+	   public static final String TeamLeaderType1 = "1";
+	   public static final String TeamLeaderType2 = "2";
+	   public static final String TeamLeaderType3 = "3";
+	   public static final String TeamLeaderType4 = "4";
+	   
+	   public static Map<String,Object> getTeamLeaderType(){
+		   Map<String,Object> map = new HashMap<String,Object>();
+		   
+		   map.put(TeamLeaderType, "");
+		   map.put(noTeamLeaderType, "");
+		   map.put(TeamLeaderType1, "Qualified and is Team Leader");
+		   map.put(TeamLeaderType2, "Qualified but not Team Leader");
+		   map.put(TeamLeaderType3, "He/She is a culture");
+		   map.put(TeamLeaderType4, "Not a culture");
+		   
+		   return map;
+	   }
+	   
 	   //本地服务器地址
 	   public static final String serverurl="http://localhost:8082/Pmo/";
 

@@ -369,14 +369,40 @@ var path='<%=path%>';
 								</div> 
 								<br/><br/>
 								<div class="form-group">
-										<div class="group" style="display:none" id="terminatedDateDiv">
-										<label class="col-sm-2 control-label">LWD</label>
+									<div class="group">
+										<label class="col-sm-2 control-label">HSBC POD</label>
 										<div class="col-lg-4">
-											 <input type="text" readonly class="form-control" name="terminatedDate1"
-													id="terminatedDate1" />
+											 <input type="text" readonly class="form-control" name="hsbcPOD"
+													id="hsbcPOD" />
 										</div>
+									</div>
+									<div class="group">
+										<label class="col-sm-2 control-label">Team Leader</label>
+										<div class="col-sm-4">
+											<input type="text" readonly class="form-control" name="podtl"
+												id="podtl" />
+										</div>
+									</div>
+								</div>
+								<br/><br/>
+								<div class="form-group">
+										<div class="group">
+											<label class="col-sm-2 control-label">Team Leader Type</label>
+											<div class="col-lg-4">
+												 <input type="text" readonly class="form-control" name="tlType"
+														id="tlType" />
+										</div>
+										<div class="group" style="display:none" id="terminatedDateDiv">
+											<label class="col-sm-2 control-label">LWD</label>
+											<div class="col-lg-4">
+												 <input type="text" readonly class="form-control" name="terminatedDate1"
+														id="terminatedDate1" />
+											</div>
 									    </div>
-									    
+									</div>
+								</div>
+								<br/><br/>
+								<div class="form-group">
 										<div class="group" style="display:none" id="terminationReasonDiv">
 											<label class="col-sm-2 control-label">Reason for Termination</label>
 											<div class="col-sm-4">

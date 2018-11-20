@@ -447,9 +447,38 @@ var path='<%=path%>';
 										</div>
 									</div>
 								</div>
-								
 								<div class="form-group">
-										<div class="group" style="display:none" id="terminatedDateDiv">
+									<div class="group">
+										<label class="col-sm-2 control-label">HSBC POD</label>
+										<div class="col-md-4">
+											<input type="text" class="form-control" name="hsbcPOD"
+												   id="hsbcPOD" data-bv-group=".group"/>
+										</div>
+									</div>
+									<div class="group">
+										<label class="col-sm-2 control-label">Team Leader</label>
+										<div class="col-lg-4">
+											<select class="form-control" name="podtl" id="podtl" data-bv-group=".group" onchange="showType(this.value)">
+												<option value> -- Option -- </option>
+												<option value = "1"> yes </option>
+												<option value = "2"> no </option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="group tlType" style= "display: none;">
+										<label class="col-sm-2 control-label">Team Leader Type</label>
+										<div class="col-md-4">
+											<select class="form-control" name="tlType" id="tlType" data-bv-group=".group">
+												<option value = "1"> Qualified and is Team Leader</option>
+												<option value = "2"> Qualified but not Team Leader </option>
+												<option value = "3"> He/She is a culture </option>
+												<option value = "4"> Not a culture </option>
+											</select>
+										</div>
+									</div>
+									<div class="group" style="display:none" id="terminatedDateDiv">
 										<label class="col-sm-2 control-label">LWD</label>
 										<div class="col-md-4">
 											<div class="input-group date form_datetime col-sm-12"
@@ -461,8 +490,9 @@ var path='<%=path%>';
 													id="terminatedDate2" name="terminatedDate2" />
 											</div>
 										</div>
-									    </div>
-									    
+									</div>
+								</div>		
+								<div class="form-group">
 									    <div class="group" style="display:none" id="terminationReasonDiv">
 										<label class="col-lg-2 control-label">Reason for Termination</label>
 										<div class="col-lg-4">

@@ -43,14 +43,17 @@
 		<result property="chsoftiProNumber" column="CHSOFTI_PRO_NUMBER" javaType="String" />
 		<result property="chsoftiProStartdate" column="CHSOFTI_PRO_STARTDATE" javaType="String" />
 		<result property="chsoftiProName" column="CHSOFTI_PRO_NAME" javaType="String" />
+		<result property="hsbcPOD" column="HSBC_POD" javaType="String" />
+		<result property="podtl" column="PODTL" javaType="String" />
+		<result property="tlType" column="TL_TYPE" javaType="String" />
 	</resultMap>
 	
 	
 	<insert id="addEmployee" keyProperty="employeeId" parameterType="com.pmo.dashboard.entity.Employee">
-	    insert into t_employee (EMPLOYEE_TYPE,EMPLOYEE_ID,HSBC_STAFF_ID,STAFF_NAME,LN,STAFF_REGION,STAFF_LOCATION,LOCATION_TYPE,ONSHORE_OR_OFFSHORE,SOW,SOW_EXPIRED_DATE,STAFF_CATEGORY,ENGAGEMENT_TYPE,HSBC_DOJ,GRADUATION_DATE,BILL_CURRENCY,BILL_RATE_TYPE,BILL_RATE,RESOURCE_STATUS,MENTION_LWD,REASON_FOR_TERMINATION,E_HR,HSBC_SUBDEPT_ID,SKILL,ROLE,CS_SUBDEPT_ID,LOB,HSBC_MANAGER,HSBC_PROJECT_NAME,Email,GB_GF,ENTRY_DATE,RM_USER_ID,CREATE_TIME,UPDATE_TIME,ITINDUSTRY_WORK_YEAR,CHSOFTI_PRO_NUMBER,CHSOFTI_PRO_STARTDATE,CHSOFTI_PRO_NAME)
+	    insert into t_employee (EMPLOYEE_TYPE,EMPLOYEE_ID,HSBC_STAFF_ID,STAFF_NAME,LN,STAFF_REGION,STAFF_LOCATION,LOCATION_TYPE,ONSHORE_OR_OFFSHORE,SOW,SOW_EXPIRED_DATE,STAFF_CATEGORY,ENGAGEMENT_TYPE,HSBC_DOJ,GRADUATION_DATE,BILL_CURRENCY,BILL_RATE_TYPE,BILL_RATE,RESOURCE_STATUS,MENTION_LWD,REASON_FOR_TERMINATION,E_HR,HSBC_SUBDEPT_ID,SKILL,ROLE,CS_SUBDEPT_ID,LOB,HSBC_MANAGER,HSBC_PROJECT_NAME,Email,GB_GF,ENTRY_DATE,RM_USER_ID,CREATE_TIME,UPDATE_TIME,ITINDUSTRY_WORK_YEAR,CHSOFTI_PRO_NUMBER,CHSOFTI_PRO_STARTDATE,CHSOFTI_PRO_NAME,HSBC_POD,PODTL,TL_TYPE)
 	    values
 	    (#{employeeType},#{employeeId},#{hsbcStaffId},#{staffName},#{ln},#{staffRegion},#{staffLocation},#{locationType},#{onshoreOrOffshore},#{sow},#{sowExpiredDate},#{staffCategory},#{engagementType},#{hsbcDOJ},#{graduationDate},#{billingCurrency},#{billRateType},#{billRate},#{resourceStatus},#{terminatedDate},#{terminationReason},#{eHr},#{hsbcSubDept},#{skill},#{role},#{csSubDept},#{lob},#{projectManager},#{projectName},
-	    #{email},#{gbGf},#{entryDate},#{rmUserId},#{createTime},#{updateTime},#{itindustryWorkYear,jdbcType=VARCHAR},#{chsoftiProNumber},#{chsoftiProStartdate},#{chsoftiProName})
+	    #{email},#{gbGf},#{entryDate},#{rmUserId},#{createTime},#{updateTime},#{itindustryWorkYear,jdbcType=VARCHAR},#{chsoftiProNumber},#{chsoftiProStartdate},#{chsoftiProName},#{hsbcPOD},#{podtl},#{tlType})
 	</insert>  
 	<!--  <insert id="addEmployee" parameterType="com.pmo.dashboard.entity.Employee">
 	    insert into t_employee (EMPLOYEE_ID,HSBC_STAFF_ID,STAFF_NAME,LN,STAFF_REGION,STAFF_LOCATION,LOCATION_TYPE,ONSHORE_OR_OFFSHORE,SOW,SOW_EXPIRED_DATE,STAFF_CATEGORY,ENGAGEMENT_TYPE,HSBC_DOJ,GRADUATION_DATE,BILL_CURRENCY,BILL_RATE,RESOURCE_STATUS,MENTION_LWD,REASON_FOR_TERMINATION,E_HR,HSBC_SUBDEPT_ID,SKILL,ROLE,CS_SUBDEPT_ID,LOB,HSBC_MANAGER,HSBC_PROJECT_NAME,Email,GB_GF,ENTRY_DATE,RM_USER_ID,CREATE_TIME,UPDATE_TIME,ITINDUSTRY_WORK_YEAR,CHSOFTI_PRO_NUMBER,CHSOFTI_PRO_STARTDATE,CHSOFTI_PRO_NAME)
@@ -300,7 +303,7 @@
 			AND RESOURCE_STATUS = #{resourceStatus}
 		</if>
 		<if test="staffName != null and staffName != ''">
-			AND STAFF_NAME = #{staffName}
+			AND STAFF_NAME LIKE '%${staffName}%'
 		</if>
 		<if test="rmUserId != null and rmUserId != ''">
 			AND RM_USER_ID = #{rmUserId}
@@ -317,7 +320,7 @@
 	<update id="updateEmployee" parameterType="com.pmo.dashboard.entity.Employee">
 	    update t_employee set E_Hr = #{eHr},LOB = #{lob},HSBC_STAFF_ID = #{hsbcStaffId},STAFF_NAME = #{staffName},LN = #{ln},STAFF_REGION = #{staffRegion},STAFF_LOCATION = #{staffLocation},LOCATION_TYPE = #{locationType},ONSHORE_OR_OFFSHORE = #{onshoreOrOffshore},CS_SUBDEPT_ID = #{csSubDept},HSBC_SUBDEPT_ID = #{hsbcSubDept},HSBC_PROJECT_NAME = #{projectName},HSBC_MANAGER = #{projectManager},SOW = #{sow},SOW_EXPIRED_DATE = #{sowExpiredDate},STAFF_CATEGORY = #{staffCategory},ENGAGEMENT_TYPE = #{engagementType},HSBC_DOJ= #{hsbcDOJ},GRADUATION_DATE = #{graduationDate},BILL_CURRENCY = #{billingCurrency},BILL_RATE_TYPE = #{billRateType},BILL_RATE = #{billRate},RESOURCE_STATUS = #{resourceStatus},MENTION_LWD = #{terminatedDate},REASON_FOR_TERMINATION = #{terminationReason},ROLE = #{role},SKILL = #{skill},
 	     Email = #{email},GB_GF = #{gbGf},ENTRY_DATE = #{entryDate},UPDATE_TIME = #{updateTime},ITINDUSTRY_WORK_YEAR = #{itindustryWorkYear,jdbcType=VARCHAR},
-	     CHSOFTI_PRO_NUMBER = #{chsoftiProNumber},CHSOFTI_PRO_STARTDATE = #{chsoftiProStartdate},CHSOFTI_PRO_NAME = #{chsoftiProName} WHERE EMPLOYEE_ID = #{employeeId} 
+	     CHSOFTI_PRO_NUMBER = #{chsoftiProNumber},CHSOFTI_PRO_STARTDATE = #{chsoftiProStartdate},CHSOFTI_PRO_NAME = #{chsoftiProName},HSBC_POD = #{hsbcPOD},PODTL = #{podtl},TL_TYPE = #{tlType} WHERE EMPLOYEE_ID = #{employeeId} 
 	</update>
 	
 	<select id="queryEmployeeByCsSubDeptId" parameterType="java.util.HashMap" resultMap="employeeMap">
@@ -497,6 +500,15 @@
       <if test="chsoftiProName != null and chsoftiProName!=''" >
         CHSOFTI_PRO_NAME,
       </if>
+      <if test="hsbcPOD != null and hsbcPOD !=''" >
+        HSBC_POD,
+      </if>
+      <if test="podtl != null and podtl !=''" >
+        PODTL,
+      </if>
+      <if test="tlType != null and tlType!=''" >
+        TL_TYPE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="employeeId != null and employeeId!=''" >
@@ -618,6 +630,15 @@
       </if>
       <if test="chsoftiProName != null and chsoftiProName!=''" >
         #{chsoftiProName,jdbcType=VARCHAR},
+      </if>
+      <if test="hsbcPOD != null and hsbcPOD !=''" >
+      	#{hsbcPOD,jdbcType=VARCHAR},
+      </if>
+      <if test="podtl != null and podtl !=''" >
+        #{podtl,jdbcType=VARCHAR},
+      </if>
+      <if test="tlType != null and tlType!=''" >
+        #{tlType,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -741,6 +762,15 @@
       </if>
       <if test="chsoftiProName != null" >
         CHSOFTI_PRO_NAME = #{chsoftiProName,jdbcType=VARCHAR},
+      </if>
+      <if test="hsbcPOD != null" >
+        HSBC_POD = #{hsbcPOD,jdbcType=VARCHAR},
+      </if>
+      <if test="podtl != null" >
+        PODTL = #{podtl,jdbcType=VARCHAR},
+      </if>
+      <if test="tlType != null" >
+        TL_TYPE = #{tlType,jdbcType=VARCHAR},
       </if>
     </set>
     where EMPLOYEE_ID = #{employeeId,jdbcType=VARCHAR}

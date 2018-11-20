@@ -51,6 +51,21 @@ function loadEmployeeInfo(){
 			$('#chsoftiProNumber').val(employee.chsoftiProNumber);
 			$('#chsoftiProStartDate').val(employee.chsoftiProStartdate);
 			$('#chsoftiProName').val(employee.chsoftiProName);
+			$('#hsbcPOD').val(employee.hsbcPOD);
+			if(employee.podtl == "1"){
+				$("#podtl").val("yes");
+			}else if(employee.podtl == "2"){
+				$("#podtl").val("no");
+			}
+			if(employee.tlType == "1"){
+				$("#tlType").val("Qualified and is Team Leader");
+			}else if(employee.tlType == "2"){
+				$("#tlType").val("Qualified but not Team Leader");
+			}else if(employee.tlType == "3"){
+				$("#tlType").val("He/She is a culture");
+			}else if(employee.tlType == "4"){
+				$("#tlType").val("Not a culture");
+			}
 			
 			if ($('#resourceStatus').val() == "Active") {
 				$("#terminatedDateDiv").hide();

@@ -358,6 +358,9 @@ var path='<%=path%>';
 									<label><input type="checkbox" name="Ch Pro Name"/>Ch Pro Name&nbsp;&nbsp;</label>
 									<label><input type="checkbox" name="EmployeeType"/>EmployeeType&nbsp;&nbsp;</label>
 									<label><input type="checkbox" name="BillRateType"/>BillRateType&nbsp;&nbsp;</label>
+									<label><input type="checkbox" name="HSBC POD"/>Hsbc POD&nbsp;&nbsp;</label>
+									<label><input type="checkbox" name="POD Team Leader"/>Team Leader&nbsp;&nbsp;</label>
+									<label><input type="checkbox" name="Team Leader Type"/>Team Leader Type&nbsp;&nbsp;</label>
 								</tr>
 							</thead>
 							<tbody>
