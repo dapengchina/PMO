@@ -331,7 +331,25 @@ var path='<%=path%>';
 									</div>
 
 									<div class="group">
-										
+										<label class="col-lg-2 control-label">BillRateType</label>
+										<div class="col-lg-4">
+											<select class="form-control" name="billRateType"
+												 id="billRateType" data-bv-group=".group">
+											<option value="">--Option--</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<div class="group">
+										<label class="col-sm-2 control-label">Bill Rate</label>
+										<div class="col-lg-4">
+											<input type="text" class="form-control" name="billRate"
+												   id="billRate" data-bv-group=".group"/>
+										</div>
+									</div>
+									<div class="group">
 									</div>
 								</div>
 								

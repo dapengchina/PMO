@@ -331,12 +331,22 @@ var path='<%=path%>';
 										</div>
 									</div>
 									<div class="group">
-											
+										<label class="col-sm-2 control-label">BillRateType</label>
+										<div class="col-md-4">
+											<input type="text" readonly class="form-control" name="billRateType"
+													id="billRateType" data-bv-group=".group"/>
+										</div>
 									</div>
 								</div> 
 								<br/><br/>
 								<div class="form-group">
-									    
+									    <div class="group">
+										<label class="col-sm-2 control-label">Bill Rate</label>
+										<div class="col-lg-4">
+											<input type="text" readonly class="form-control" name="billRate"
+												   id="billRate" data-bv-group=".group"/>
+										</div>
+										</div>
 										<div class="group" style="display:none" id="terminationReasonDiv">
 											<label class="col-sm-2 control-label">Reason for Termination</label>
 											<div class="col-sm-4">
@@ -347,7 +357,7 @@ var path='<%=path%>';
 										
 										
 								</div>
-								
+								<br/><br/>
 								<div class="form-group">
 										<div style="text-align: center; width: 50%; float: left">
 											<input type="button" value="Back" name="subscribe"

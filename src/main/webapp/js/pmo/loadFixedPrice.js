@@ -6,6 +6,7 @@ $(function(){
 	loadGbGf();
 	loadBillingEntity();
 	loadBillingCurrency();
+	loadBillRateType(); //加载bill rate type
     //loadResourceStatus();
 	loadCSDept();
 	loadUserType();
@@ -63,6 +64,8 @@ function addEmployee(){
 		var chsoftiProStartDate1 = $('#chsoftiProStartDate1').val();
 		var chsoftiProName = $('#chsoftiProName').val();
 		
+		var billRateType = $("#billRateType").val();
+		
 		var email = $('#email').val();
 		var gbGf = $('#gbGf').val();
 		var entryDate = $('#entryDate1').val();
@@ -95,7 +98,7 @@ function addEmployee(){
 						+ projectManager + sow + sowExpiredDate + staffCategory
 						+ engagementType + hsbcDOJ + graduationDate + role + skill
 						+ billingCurrency + billRate + terminationReason + email + gbGf
-						+ entryDate + rmName + itWorkYear + chsoftiProNumber + chsoftiProStartDate1 + chsoftiProName;
+						+ entryDate + rmName + itWorkYear + chsoftiProNumber + chsoftiProStartDate1 + chsoftiProName + billRateType;
 		if (lastConditionStr != addEmpConditionStr) {
 			lastConditionStr = addEmpConditionStr;
 		} else {
@@ -119,7 +122,7 @@ function addEmployee(){
 				"staffCategory":staffCategory,"engagementType":engagementType,"hsbcDOJ":hsbcDOJ,"graduationDate":graduationDate,
 				"role":role,"skill":skill,"billingCurrency":billingCurrency,"billRate":billRate,"resourceStatus":'Active',"terminatedDate":'',
 				"email":email,"gbGf":gbGf,"entryDate":entryDate,"rmUserId":rmName,"terminationReason":terminationReason,"itindustryWorkYear":itWorkYear,
-				"chsoftiProNumber":chsoftiProNumber,"chsoftiProStartDate":chsoftiProStartDate1,"chsoftiProName":chsoftiProName	
+				"chsoftiProNumber":chsoftiProNumber,"chsoftiProStartDate":chsoftiProStartDate1,"chsoftiProName":chsoftiProName,"billRateType":billRateType	
 			},
 			async:true,
 			cache:false,
@@ -163,6 +166,17 @@ function addEmployee(){
 	
 }
 
+//加载bill rate type
+function loadBillRateType(){
+	var url = path+'/json/billRateType.json';
+	var html = "<option value=''>--Option--</option>";
+	$.getJSON(url,  function(data) {
+	       $.each(data, function(i, item) {
+	    	   html += "<option value='"+item.name+"'>"+item.name+"</option>";
+	       })
+	       $("#billRateType").html(html).val(data[0].name);
+	});
+}
 
 function dateType(){
 	$('.form_datetime').datetimepicker({

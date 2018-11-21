@@ -195,9 +195,6 @@ $(document).ready(function() {
             },
             billRate: {
                 validators: {
-                    notEmpty: {
-                        message: 'Please Choose  billRate'
-                    },
                     numeric:{
                     	message:'Please enter number'
                     },
