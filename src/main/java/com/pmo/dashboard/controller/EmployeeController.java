@@ -921,6 +921,9 @@ public class EmployeeController {
                 	   if(listE.get(i-1).getChsoftiProStartdate()!=null && !"".equals(listE.get(i-1).getChsoftiProStartdate())){
                 		   Label label= new Label(++j, i, listE.get(i-1).getChsoftiProStartdate().toString());
                            ws.addCell(label);
+                	   }else{
+                		   Label label= new Label(++j, i, "");
+                		   ws.addCell(label);
                 	   }
                    }
 

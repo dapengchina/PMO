@@ -846,6 +846,9 @@ function loadBillRateType(){
 	$.getJSON(url,  function(data) {
 	       $.each(data, function(i, item) {
 	    	   $("#billRateType").append("<option value='"+item.name+"'>"+item.name+"</option>");
+	    	   if(item.name=='Hour'){
+	    		   $("#billRateType").val(item.name);
+	    	   }
 	       })
 	});
 }

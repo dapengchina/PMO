@@ -130,7 +130,7 @@ var path='<%=path%>';
                                </tr>
 							   </thead>
                                <tr>
-                                 <td colspan="7"><a href='javascript:void(0);' class='btn btn-info btn-sm' onclick="addTr1('table1', -1, 6);")><span class="glyphicon glyphicon-plus"></span> Plus</a>
+                                 <td colspan="7"><button id="button1" href='javascript:void(0);' class='btn btn-info btn-sm' onclick="addTr1('table1', -1, 6);")><span class="glyphicon glyphicon-plus"></span> Plus</button>
 								 </td>
                                </tr>
                              </table>
@@ -140,7 +140,7 @@ var path='<%=path%>';
                              <table id="table2" border="1" width="100%" class="templateTable">
                                
                                <tr>
-                                 <td colspan="7"><a href='javascript:void(0);' class='btn btn-info btn-sm' onclick="addTr2('table2', -1, 7);")><span class="glyphicon glyphicon-plus"></span> Plus</a>
+                                 <td colspan="7"><button id="button2" href='javascript:void(0);' class='btn btn-info btn-sm' onclick="addTr2('table2', -1, 7);")><span class="glyphicon glyphicon-plus"></span> Plus</button>
 								 </td>
                                </tr>
 							 </table>
@@ -166,7 +166,7 @@ var path='<%=path%>';
                                </tr>
 							   </thead>
 							    <tr>
-                                 <td colspan="4"><a href='javascript:void(0);' class='btn btn-info btn-sm' onclick="addTr2('table3', -1, 4);")><span class="glyphicon glyphicon-plus"></span> Plus</a>
+                                 <td colspan="4"><button id="button3" href='javascript:void(0);' class='btn btn-info btn-sm' onclick="addTr2('table3', -1, 4);")><span class="glyphicon glyphicon-plus"></span> Plus</button>
 								 </td>
                                </tr>
 							 </table>
