@@ -249,16 +249,16 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
             String quarter = b.getQuarter();
             String start = "";
             String end = "";
-            if (quarter != null && quarter.equalsIgnoreCase("Q1")) {
+            if (quarter != null && quarter.equalsIgnoreCase("1")) {
                 start = "01/01/" + year;
                 end = "31/03/" + year;
-            } else if (quarter != null && quarter.equalsIgnoreCase("Q2")) {
+            } else if (quarter != null && quarter.equalsIgnoreCase("2")) {
                 start = "01/04/" + year;
                 end = "30/06/" + year;
-            } else if (quarter != null && quarter.equalsIgnoreCase("Q3")) {
+            } else if (quarter != null && quarter.equalsIgnoreCase("3")) {
                 start = "01/07/" + year;
                 end = "30/09/" + year;
-            } else if (quarter != null && quarter.equalsIgnoreCase("Q4")) {
+            } else if (quarter != null && quarter.equalsIgnoreCase("4")) {
                 start = "01/10/" + year;
                 end = "31/12/" + year;
             }

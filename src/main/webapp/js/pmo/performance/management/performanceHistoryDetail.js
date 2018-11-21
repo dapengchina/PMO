@@ -1,10 +1,10 @@
 $(function(){
-	loadEmployeePerforDetail();
+	loadPerforDetail();
 })
 
-function loadEmployeePerforDetail(){
+function loadPerforDetail(){
 	$.ajax({
-		url:path+"/service/performance/result/getDetailData",
+		url:path+"/service/performanceManageEva/approvalDetailData/"+$("#reemployeeid").val(),
 		dataType:"json",
 		async:true,
 		cache:false,
@@ -15,10 +15,10 @@ function loadEmployeePerforDetail(){
 			$("#du").val(result.department);
 			$("#position").val(result.role);
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
-			
-			$("#selfassessment").val(result.selfassessment);
+			//console.log("data==" + JSON.stringify(result));
+			$("#selfEvaluation").val(result.selfassessment);
 			$("#comments").val(result.comments);
-			
+			$("#rating").val(result.directresult);
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){
 					loadPriorityWork(result);
@@ -28,9 +28,6 @@ function loadEmployeePerforDetail(){
 				}
 			}
 			loadEmployeePlan(result);
-			document.getElementById("button1").setAttribute("disabled", 'disabled');
-			document.getElementById("button2").setAttribute("disabled", 'disabled');
-			document.getElementById("button3").setAttribute("disabled", 'disabled');
 		}
 	})
 }
@@ -178,4 +175,15 @@ function loadEmployeePlan(result){
 	href.appendTo(td1);
 	$("#table3").append("</tbdoy>");	
 }
+
+//ok
+function ok(){
+	window.location.href=path+"/service/performance/performanceManageResultHistoryQuery";
+}
+
+//取消
+function cancel(){
+	window.location.href=path+"/service/performance/performanceManageResultHistoryQuery";
+}
+
 

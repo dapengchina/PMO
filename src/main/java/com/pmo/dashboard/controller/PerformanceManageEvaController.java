@@ -83,10 +83,8 @@ import com.pom.dashboard.service.PerformanceService;
 @RequestMapping(value = "/performanceManageEva")
 public class PerformanceManageEvaController {
 
-    private static Logger                logger              = LoggerFactory.getLogger(PerformanceManageEvaController.class);
+    private static Logger logger = LoggerFactory.getLogger(PerformanceManageEvaController.class);
 
-   
-    
     @Resource
 	private EmployeeperforgoalService employeeperforgoalService;
 	
@@ -118,18 +116,25 @@ public class PerformanceManageEvaController {
     
     @Resource
     private PerformanceManageEvaService  manageEvaService;
+    
     @Resource
     private PerformanceEmpHistoryService empHistoryService;
+    
     @Resource
     private CSDeptService                csDeptService;
+    
     @Resource
     private EmployeeInfoService          employeeInfoService;
+    
     @Resource
     private PerformanceService           performanceService;
+    
     @Resource
     private EmployeeService              employeeService;
+    
     @Resource
     public PerformanceEmpPBCMapper       performanceEmpPBCMapper;
+    
     /** Management-绩效考评-事业部审批导出文件 **/
     private static String[]              approvalBUTitle     = new String[] { "NO.", "DU", "Year", "Quarter", "Status" };
     private static String[]              approvalBUContent   = new String[] { "NO.", "du", "year", "quarter", "status" };
@@ -392,7 +397,7 @@ public class PerformanceManageEvaController {
                 list = manageEvaService.groupStatByResultBU(user.getBu());
                 break;
             case "3":// 交付部经理
-                CSDept csDept = csDeptService.queryCSDeptById(user.getDu());// 查询交付部名称
+                CSDept csDept = csDeptService.queryCSDeptById(user.getCsdeptId());// 查询交付部名称
                 list = manageEvaService.groupStatByResultDU(csDept.getCsSubDeptName());
                 break;
             case "5":// 登录用户为RM
@@ -1438,5 +1443,15 @@ public class PerformanceManageEvaController {
     public String latestPerforDetailPage(HttpServletRequest request,@PathVariable("employeeid") String employeeid,Model model){
     	model.addAttribute("employeeid", employeeid);
     	return "performance/management/performanceLatestDetail";
+    }
+    
+    /**
+     * Management-绩效结果-历史绩效-详情页面
+     * @return
+     */
+    @RequestMapping("/historyPerforDetailPage/{employeeid}")
+    public String historyPerforDetailPage(HttpServletRequest request,@PathVariable("employeeid") String employeeid,Model model){
+    	model.addAttribute("employeeid", employeeid);
+    	return "performance/management/performanceManageResultHistory";
     }
 }

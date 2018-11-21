@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,7 +26,7 @@ import com.pom.dashboard.service.PerformanceManageTargetService;
 
 public class PerformanceManageTargetController {
 	
-	private static Logger logger = LoggerFactory.getLogger(PerformanceEmpHistoryController.class);
+	//private static Logger logger = LoggerFactory.getLogger(PerformanceEmpHistoryController.class);
 	
 	@Resource
 	PerformanceManageTargetService performanceManageTargetService;

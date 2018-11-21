@@ -34,7 +34,7 @@ function loadManageResultHistoryQueryList() {
 		singleSelect : false, // 禁止多选_____
 		// 得到查询的参数
 		queryParams : function(params) {
-			console.log(params);
+			//console.log(params);
 			// 获取查询条件
 			var eHr = $("#eHr").val();
 			var staffName = $("#staffName").val();
@@ -62,89 +62,81 @@ function loadManageResultHistoryQueryList() {
 			{
 			  title : 'No',
 			  sortable : true,
-			  width:'70px',
 			  formatter : function(value, row, index) {
 				 return index+1;
 			  }
 		    },
 		    {
-		      field: 'operation',
+		      field : 'operation',
 		      title : 'Detail',
-			  width:'100px',
-			  formatter : function(value, row, index) {
-				return "<a href='javascript:void(0);' onClick='detail(\"" + row.resultId + "\")' " + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
-			  }
+		      formatter : function(value,row, index){
+	                return "<a onclick='detail(\"" + row.employee_id + "\")' href='#' class='btn btn-info btn-sm'>"+
+	                "<span></span> Detail"+
+	              "</a>";
+	          }
 		    }, 
 		    {
 			  field : 'ehr',
-			  title : 'E-HR',
-			  sortable : true,
-			  width:'100px',
+			  title : 'E-HR'
 		    },
 		    {
 			  field : 'name',
-			  title : 'Employee Name',
-			  sortable : true,
-			  width:'130px',
+			  title : 'Employee Name'
 		    }, 
 		    {
 			  field : 'bu',
 			  title : 'BU',
-			  sortable : true,
-			  width:'380px',
+			  width:150
 		    }, 
 		    {
 			  field : 'du',
 			  title : 'DU',
-			  sortable : true,
-			  width:'280px',
+			  width:150
 		    }, 
-		    {
+		   {
 			  field : 'beginDate',
 			  title : 'Begin Date',
-			  width:'230px',
+			  width:120,
 			  formatter : function(value, row, index) {
 				 if (row.quarter == "1") {
-					return "01 / 01 / " + row.year;
+					return row.year + "/01/01";
 				 } else if (row.quarter == "2") {
-					return "01 / 04 / " + row.year;
+					return row.year + "/04/01";
 				 } else if (row.quarter == "3") {
-					return "01 / 07 / " + row.year;
+					return row.year + "/07/01 ";
 				 } else if (row.quarter == "4") {
-					return "01 / 10 / " + row.year;
+					return row.year + "/10/01";
 				 }
 			  }
 		    }, 
 		    {
 			  field : 'endDate',
 			  title : 'End Date',
-			  width:'230px',
+			  width:120,
 			  formatter : function(value, row, index) {
 				 if (row.quarter == "1") {
-					return "31 / 03 / " + row.year;
+					return row.year + "/03/31";
 				 } else if (row.quarter == "2") {
-					return "30 / 06 / " + row.year;
+					return row.year + "/06/30";
 				 } else if (row.quarter == "3") {
-					return "30 / 09 / " + row.year;
+					return row.year + "/09/30";
 				 } else if (row.quarter == "4") {
-					return "31 / 12 / " + row.year;
+					return row.year + "/12/31";
 				 }
 			   }
-		    }, 
+		    },
 		    {
 			  field : 'rm',
 			  title : 'RM',
-			  width:'150px',
+			  width:100
 		    }, 
 		    {
 			  field : 'result',
-			  title : 'Assessment Result',
-			  width:'130px',
+			  title : 'Assessment Result'
 		    }, 
 		    {
 			  field : 'resultComments',
-			  title : 'Remark',
-			  width:'130px',	
+			  title : 'Remark'
 		} ],
 		onLoadSuccess : function(sta) {
 			console.log("in onLoadSuccess");
@@ -157,7 +149,6 @@ function loadManageResultHistoryQueryList() {
 		onDblClickRow : function(row, $element) {
 
 		}
-
 	});
 }
 
@@ -191,24 +182,8 @@ function search() {
 	// $('#manageResultHistoryQueryList').bootstrapTable('refresh',
 	// queryParams);
 }
-function detail(resultId) {
-	// 页面跳转post提交
-	$("#detailForm").remove();
-	var url = path + '/service/performance/goalDetail.html';
-	var $eleForm = $("<form method='post' class='hidden' id='detailForm'></form>");
-	$eleForm.attr("action", url);
-	$(document.body).append($eleForm);
-
-	var idInput = $("<input type='text' name='resultId' class='hidden'></input>");
-	var titleInput = $("<input type='text' name='title' class='hidden'></input>");
-	var typeInput = $("<input type='text' name='type' class='hidden'></input>");
-	idInput.attr("value", resultId);
-	titleInput.attr("value", "Management->绩效结果->历史绩效");
-	typeInput.attr("value", "6");
-	$("#detailForm").append(idInput);
-	$("#detailForm").append(titleInput);
-	$("#detailForm").append(typeInput);
-	$eleForm.submit();
+function detail(employeeId) {
+	window.location.href = path+"/service/performanceManageEva/historyPerforDetailPage/"+employeeId;
 }
 
 /** 历史绩效导出 * */
@@ -233,8 +208,8 @@ function historyResultExport() {
 function clearParams() {
 	$("#eHr").val("");
 	$("#staffName").val("");
-	$("#bu").val("");
-	$("#du").val("");
+	//$("#bu").val("");
+	//$("#du").val("");
 	$("#startYear").val("2010");
 	$("#startQuarter").val("Q1");
 	$("#endYear").val("2018");

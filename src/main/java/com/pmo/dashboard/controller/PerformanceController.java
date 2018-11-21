@@ -1,7 +1,7 @@
 package com.pmo.dashboard.controller;
 
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,16 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pmo.dashboard.entity.CSDept;
-import com.pmo.dashboard.entity.EmployeeInfo;
-import com.pmo.dashboard.entity.EmployeePageCondition;
-import com.pmo.dashboard.entity.NewTree;
-import com.pmo.dashboard.entity.PerformanceQueryCondition;
 import com.pmo.dashboard.entity.Template;
 import com.pmo.dashboard.entity.User;
-import com.pmo.dashboard.entity.UserAuthority;
 import com.pmo.dashboard.util.Constants;
 import com.pom.dashboard.service.CSDeptService;
 import com.pom.dashboard.service.EmployeeInfoService;
@@ -52,28 +46,43 @@ import com.pom.dashboard.service.UserAuthorityService;
 @RequestMapping(value = "/performance")
 public class PerformanceController {
 
-    private static Logger                logger       = LoggerFactory.getLogger(PerformanceController.class);
+    @SuppressWarnings("unused")
+	private static Logger logger = LoggerFactory.getLogger(PerformanceController.class);
 
     @Resource
-    private UserAuthorityService         userAuthorityService;
+    private UserAuthorityService userAuthorityService;
+    
     @Resource
-    private PerformanceService           performanceService;
+    private PerformanceService performanceService;
+    
     @Resource
-    private EmployeeInfoService          employeeInfoService;
+    private EmployeeInfoService employeeInfoService;
+    
     @Resource
     private PerformanceEmpHistoryService empHistoryService;
+    
     @Resource
-    private CSDeptService                csDeptService;
+    private CSDeptService csDeptService;
+    
     @Resource
-    private EmployeeSkillService         employeeSkillService;
+    private EmployeeSkillService employeeSkillService;
+    
     @Resource
-    private TemplateService              templateService;
+    private TemplateService templateService;
+    
     @Resource
-    private PerformanceManageEvaService  performanceManageEvaService;
+    private PerformanceManageEvaService performanceManageEvaService;
 
     @SuppressWarnings("unused")
-    private ObjectMapper                 objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * 绩效模块左侧菜单页面
+     * @param request
+     * @param session
+     * @param response
+     * @return
+     */
     @RequestMapping("/performanceLeft")
     public ModelAndView left(final HttpServletRequest request, HttpSession session, final HttpServletResponse response) {
         ModelAndView v = new ModelAndView();
@@ -82,33 +91,11 @@ public class PerformanceController {
     }
 
     /**
-     * 生成slide menu所需要的符合treeview控件的json
+     * 绩效模块右侧：Employee,Management,HRBP,LOB选择页面
+     * @param request
+     * @param model
+     * @return
      */
-    @RequestMapping("/performanceLeftMenu/{currentPageName}")
-    @ResponseBody
-    public Object performanceLeftMenu(@PathVariable("currentPageName") String currentPageName, final HttpServletRequest request, HttpSession session, final HttpServletResponse response) {
-        User u = (User) session.getAttribute("loginUser");
-        List<UserAuthority> list = userAuthorityService.queryUserAuthority(u.getUserType());
-        List<UserAuthority> performanceList = new ArrayList<>();
-        for (UserAuthority user : list) {
-            if (user.getMenuId().indexOf("18") != -1 || user.getMenuId().indexOf("19") != -1) { //18为数据库中employee菜单的id
-                performanceList.add(user);
-            }
-        }
-        List<NewTree> topCateList = performanceService.transferToMenuList(currentPageName, performanceList);
-
-        ObjectMapper mapper = new ObjectMapper();
-        String resultString = "";
-        try {
-            resultString = mapper.writeValueAsString(topCateList);
-            logger.debug("left menu= " + resultString);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        return resultString;
-    }
-
     @RequestMapping("/listPage")
     public String listPage(HttpServletRequest request, Model model) {
         return "performance/performanceListPage";
@@ -157,12 +144,7 @@ public class PerformanceController {
     public String getPerformanceEmpEvaCurrentPeriod(final HttpServletRequest request, Model model) {
         return "performance/employee/performanceEmpEvaCurrentPeriod";
     }
-
-    @RequestMapping("/performanceEmpEvaCurrentPeriodDetail")
-    public String getPerformanceEmpEvaCurrentPeriodDetail(final HttpServletRequest request, Model model) {
-        return "performance/performanceEmpEvaCurrentPeriodDetail";
-    }
-
+    
     /**
      * Employee-绩效结果-历史绩效页面
      * @param request
@@ -185,26 +167,6 @@ public class PerformanceController {
         return "performance/management/performanceManageTargetApproval";
     }
 
-    @RequestMapping("/performanceManageTargetApprovalFilter")
-    public String getPerformanceManageTargetApprovalFilter(final HttpServletRequest request, Model model) {
-        return "performance/performanceManageTargetApprovalFilter";
-    }
-
-    @RequestMapping("/performanceManageTargetApprovalDetail")
-    public String getPerformanceManageTargetApprovalDetail(final HttpServletRequest request, Model model) {
-        return "performance/performanceManageTargetApprovalDetail";
-    }
-
-    @RequestMapping("/performanceManageEvaFirstDetail")
-    public String getPerformanceManageEvaFirstDetail(final HttpServletRequest request, Model model) {
-        return "performance/performanceManageEvaFirstDetail";
-    }
-
-    @RequestMapping("/performanceManageEvaFirst")
-    public String getPerformanceManageEvaFirst(final HttpServletRequest request, Model model) {
-        return "performance/performanceManageEvaFirst";
-    }
-
     /**
      * Management-绩效考评-初评页面
      * @param request
@@ -217,7 +179,7 @@ public class PerformanceController {
     }
 
     /**
-     * Management-绩效考评-审批页面
+     * Management-绩效考评-审批-交付部经理审批页面
      * @param request
      * @param model
      * @return
@@ -232,7 +194,7 @@ public class PerformanceController {
     }
 
     /**
-     * Management-绩效考评-审批-详情页面
+     * Management-绩效考评-审批-交付部经理审批页面-详情页面
      * @param rm
      * @param request
      * @param model
@@ -252,35 +214,6 @@ public class PerformanceController {
         return "performance/management/performanceManageEvaSecondQuery";
     }
 
-    private void getDUBU(final HttpServletRequest request, User user) {
-        PerformanceQueryCondition condition = new PerformanceQueryCondition();
-        condition.setUserId(user.getUserId());
-        String[] csBuNames = null;
-        if (user.getBu() != null && user.getBu() != "") {
-            csBuNames = user.getBu().split(",");
-            String csBuName = csBuNames[0];
-            request.setAttribute("BU", csBuName);
-            logger.debug("Get BU from user: " + csBuName);
-        }
-
-        String ehr = empHistoryService.queryCurrentLoginUserEhr(condition);
-        EmployeePageCondition employeePageCondition = new EmployeePageCondition();
-        employeePageCondition.setCurrentPage("0");
-        employeePageCondition.setPageRecordsNum(9);
-        employeePageCondition.seteHr(ehr);
-        List<EmployeeInfo> list = employeeInfoService.queryEmployeeList(employeePageCondition);
-        if (list != null && list.size() > 0) {
-            EmployeeInfo emp = list.get(0);
-            request.setAttribute("DU", emp.getCsSubDeptName());
-            List<CSDept> dus = csDeptService.queryAllCSDept();
-            for (CSDept du : dus) {
-                if (du.getCsSubDeptName().equalsIgnoreCase(emp.getCsSubDeptName())) {
-                    request.setAttribute("BU", du.getCsBuName());
-                }
-            }
-        }
-    }
-
     /**
      * Management-绩效考评-审批-事业部经理审批页面
      * @param request
@@ -296,7 +229,7 @@ public class PerformanceController {
     }
 
     /**
-     * Management-绩效考评-审批-事业部经理审批-详细页面
+     * Management-绩效考评-审批-事业部经理审批页面-详细页面
      * @param request
      * @param model
      * @return
@@ -338,11 +271,6 @@ public class PerformanceController {
         CSDept csDept = csDeptService.queryCSDeptById(user.getCsdeptId());
         model.addAttribute("DU", csDept.getCsSubDeptName());
         return "performance/management/performanceManageResultHistoryQuery";
-    }
-
-    @RequestMapping("/performanceManageResultHistory")
-    public String getPerformanceManageResultHistory(final HttpServletRequest request, Model model) {
-        return "performance/management/performanceManageResultHistory";
     }
 
     /**
@@ -484,6 +412,94 @@ public class PerformanceController {
 	
 	
 	
-	
-	
+    
+    /**
+     * 暂时无用代码
+     */
+    /**
+     * 生成slide menu所需要的符合treeview控件的json
+     */
+//    @RequestMapping("/performanceLeftMenu/{currentPageName}")
+//    @ResponseBody
+//    public Object performanceLeftMenu(@PathVariable("currentPageName") String currentPageName, final HttpServletRequest request, HttpSession session, final HttpServletResponse response) {
+//        User u = (User) session.getAttribute("loginUser");
+//        List<UserAuthority> list = userAuthorityService.queryUserAuthority(u.getUserType());
+//        List<UserAuthority> performanceList = new ArrayList<>();
+//        for (UserAuthority user : list) {
+//            if (user.getMenuId().indexOf("18") != -1 || user.getMenuId().indexOf("19") != -1) { //18为数据库中employee菜单的id
+//                performanceList.add(user);
+//            }
+//        }
+//        List<NewTree> topCateList = performanceService.transferToMenuList(currentPageName, performanceList);
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//        String resultString = "";
+//        try {
+//            resultString = mapper.writeValueAsString(topCateList);
+//            logger.debug("left menu= " + resultString);
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return resultString;
+//    }
+    
+//    @RequestMapping("/performanceEmpEvaCurrentPeriodDetail")
+//    public String getPerformanceEmpEvaCurrentPeriodDetail(final HttpServletRequest request, Model model) {
+//        return "performance/performanceEmpEvaCurrentPeriodDetail";
+//    }
+    
+//    @RequestMapping("/performanceManageTargetApprovalFilter")
+//    public String getPerformanceManageTargetApprovalFilter(final HttpServletRequest request, Model model) {
+//        return "performance/performanceManageTargetApprovalFilter";
+//    }
+//
+//    @RequestMapping("/performanceManageTargetApprovalDetail")
+//    public String getPerformanceManageTargetApprovalDetail(final HttpServletRequest request, Model model) {
+//        return "performance/performanceManageTargetApprovalDetail";
+//    }
+//
+//    @RequestMapping("/performanceManageEvaFirstDetail")
+//    public String getPerformanceManageEvaFirstDetail(final HttpServletRequest request, Model model) {
+//        return "performance/performanceManageEvaFirstDetail";
+//    }
+//
+//    @RequestMapping("/performanceManageEvaFirst")
+//    public String getPerformanceManageEvaFirst(final HttpServletRequest request, Model model) {
+//        return "performance/performanceManageEvaFirst";
+//    }
+
+//    @RequestMapping("/performanceManageResultHistory")
+//    public String getPerformanceManageResultHistory(final HttpServletRequest request, Model model) {
+//        return "performance/management/performanceManageResultHistory";
+//    }
+    
+//    private void getDUBU(final HttpServletRequest request, User user) {
+//        PerformanceQueryCondition condition = new PerformanceQueryCondition();
+//        condition.setUserId(user.getUserId());
+//        String[] csBuNames = null;
+//        if (user.getBu() != null && user.getBu() != "") {
+//            csBuNames = user.getBu().split(",");
+//            String csBuName = csBuNames[0];
+//            request.setAttribute("BU", csBuName);
+//            logger.debug("Get BU from user: " + csBuName);
+//        }
+//
+//        String ehr = empHistoryService.queryCurrentLoginUserEhr(condition);
+//        EmployeePageCondition employeePageCondition = new EmployeePageCondition();
+//        employeePageCondition.setCurrentPage("0");
+//        employeePageCondition.setPageRecordsNum(9);
+//        employeePageCondition.seteHr(ehr);
+//        List<EmployeeInfo> list = employeeInfoService.queryEmployeeList(employeePageCondition);
+//        if (list != null && list.size() > 0) {
+//            EmployeeInfo emp = list.get(0);
+//            request.setAttribute("DU", emp.getCsSubDeptName());
+//            List<CSDept> dus = csDeptService.queryAllCSDept();
+//            for (CSDept du : dus) {
+//                if (du.getCsSubDeptName().equalsIgnoreCase(emp.getCsSubDeptName())) {
+//                    request.setAttribute("BU", du.getCsBuName());
+//                }
+//            }
+//        }
+//    }
 }
