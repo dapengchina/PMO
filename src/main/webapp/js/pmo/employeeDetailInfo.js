@@ -33,6 +33,7 @@ function loadEmployeeInfo(){
 			$('#role').val(employee.role);
 			$('#skill').val(employee.skill);
 			$('#billingCurrency').val(employee.billingCurrency);
+			$('#billRateType').val(employee.billRateType);
 			$('#billRate').val(employee.billRate);
 			$('#resourceStatus').val(employee.resourceStatus);
 			$('#terminatedDate1').val(employee.terminatedDate);

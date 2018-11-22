@@ -289,6 +289,43 @@ var path='<%=path%>';
 											</select>
 										</div>
 									</div>
+									<div class="group">
+										 <label class="col-sm-2 control-label">IT Work Year</label>
+										 <div class="col-md-4">
+											<input type="text" class="form-control" name="itworkyear"
+													id="itworkyear" data-bv-group=".group"/>
+										 </div>
+									   </div>
+									
+								</div>
+								<div class="form-group">
+									<div class="group">
+										<label class="col-sm-2 control-label">Demand</label>
+										<div class="col-lg-4">
+											<input readonly="readonly" onclick="cdemand()" type="text" class="form-control" name="demandskill"
+												   id="demandskill" data-bv-group=".group"/>
+										</div>
+									</div>
+
+									<div class="group">
+										<label class="col-lg-2 control-label">BillRateType</label>
+										<div class="col-lg-4">
+											<select class="form-control" name="billRateType"
+												 id="billRateType" data-bv-group=".group">
+											<option value="">--Option--</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<div class="group">
+										<label class="col-sm-2 control-label">Bill Rate</label>
+										<div class="col-lg-4">
+											<input type="text" class="form-control" name="billRate"
+												   id="billRate" data-bv-group=".group"/>
+										</div>
+									</div>
 									<div class="group" style="display:none" id="terminatedDateDiv">
 										<label class="col-sm-2 control-label">LWD</label>
 										<div class="col-md-4">
@@ -301,10 +338,10 @@ var path='<%=path%>';
 													id="terminatedDate2" name="terminatedDate2" />
 											</div>
 										</div>
-									    </div>
+									</div>
 								</div>
 								<div class="form-group">
-									   <div class="group" style="display:none" id="terminationReasonDiv">
+									<div class="group" style="display:none" id="terminationReasonDiv">
 										 <label class="col-lg-2 control-label">Reason for Termination</label>
 										 <div class="col-lg-4">
 											<select class="form-control" name="terminationReason" 
@@ -312,26 +349,6 @@ var path='<%=path%>';
 												<option value="">--Option--</option>
 											</select>
 										 </div>
-									   </div>
-									   <div class="group">
-										 <label class="col-sm-2 control-label">IT Work Year</label>
-										 <div class="col-md-4">
-											<input type="text" class="form-control" name="itworkyear"
-													id="itworkyear" data-bv-group=".group"/>
-										 </div>
-									   </div>
-								</div>
-								<div class="form-group">
-									<div class="group">
-										<label class="col-sm-2 control-label">Demand</label>
-										<div class="col-lg-4">
-											<input readonly="readonly" onclick="cdemand()" type="text" class="form-control" name="demandskill"
-												   id="demandskill" data-bv-group=".group"/>
-										</div>
-									</div>
-
-									<div class="group">
-										
 									</div>
 								</div>
 								
