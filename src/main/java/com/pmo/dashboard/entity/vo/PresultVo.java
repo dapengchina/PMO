@@ -35,12 +35,16 @@ public class PresultVo {
     private String result;
 
     private String result_Comments;
+    
+    private String resultComments;
 
     private String clientFeedback;
 
     private String preassessmentResult;
 
     private String direct_Supervisor_Assessment_Result;
+    
+    private String directSupervisorAssessmentResult;
 
     private String groupAssessmentResult;
 
@@ -60,7 +64,23 @@ public class PresultVo {
     
     
 
-    public String getDirect_Supervisor_Assessment_Result() {
+    public String getResultComments() {
+		return resultComments;
+	}
+
+	public void setResultComments(String resultComments) {
+		this.resultComments = resultComments;
+	}
+
+	public String getDirectSupervisorAssessmentResult() {
+		return directSupervisorAssessmentResult;
+	}
+
+	public void setDirectSupervisorAssessmentResult(String directSupervisorAssessmentResult) {
+		this.directSupervisorAssessmentResult = directSupervisorAssessmentResult;
+	}
+
+	public String getDirect_Supervisor_Assessment_Result() {
 		return direct_Supervisor_Assessment_Result;
 	}
 

@@ -77,6 +77,7 @@ private ObjectMapper objectMapper = new ObjectMapper();
 		User user = (User) session.getAttribute("loginUser");
 		String employeeid = user.getUserId();
 		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("employeeid", employeeid);
 		//查询中软部门信息
 		CSDept csdept = cSDeptService.queryCSDeptById(user.getCsdeptId());
 		//session.setAttribute("department", csdept!=null?csdept.getCsSubDeptName():"");

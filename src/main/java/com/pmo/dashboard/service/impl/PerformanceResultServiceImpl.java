@@ -28,4 +28,9 @@ public class PerformanceResultServiceImpl implements PerformanceResultService{
 		   return performanceResultMapper.queryPerformanceList(pmb);
 	}
 
+	@Override
+	public int save(PresultVo pv) {
+		return performanceResultMapper.insert(pv);
+	}
+
 }

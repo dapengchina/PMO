@@ -52,6 +52,7 @@ import com.pmo.dashboard.entity.PerformanceEmpHistoryBean;
 import com.pmo.dashboard.entity.PerformanceEmpKPOBean;
 import com.pmo.dashboard.entity.PerformanceEmpKeyEventBean;
 import com.pmo.dashboard.entity.PerformanceEmpPBCPlanBean;
+import com.pmo.dashboard.entity.PerformanceEmpProcessBean;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
 import com.pmo.dashboard.entity.User;
@@ -70,6 +71,7 @@ import com.pom.dashboard.service.EmployeeperforgoalService;
 import com.pom.dashboard.service.PerformanceEmpHistoryService;
 import com.pom.dashboard.service.PerformanceManageEvaService;
 import com.pom.dashboard.service.PerformanceMatrixService;
+import com.pom.dashboard.service.PerformanceProgressService;
 import com.pom.dashboard.service.PerformanceResultService;
 import com.pom.dashboard.service.PerformanceService;
 
@@ -134,6 +136,9 @@ public class PerformanceManageEvaController {
     
     @Resource
     public PerformanceEmpPBCMapper       performanceEmpPBCMapper;
+    
+    @Resource
+	private PerformanceProgressService progressService;
     
     /** Management-绩效考评-事业部审批导出文件 **/
     private static String[]              approvalBUTitle     = new String[] { "NO.", "DU", "Year", "Quarter", "Status" };
@@ -755,7 +760,7 @@ public class PerformanceManageEvaController {
     public String approvalRMSubmit(@RequestParam("id") String resultId, @RequestParam("grade") String preAssessment) throws JsonProcessingException {
     	Map<String,Object> map = new HashMap<String,Object>();
     	try{
-    		manageEvaService.updatePreAssessmentResult(preAssessment,SysConstant.PRESULT_DRAFT, resultId);
+    		manageEvaService.updatePreAssessmentResult(preAssessment,SysConstant.PRESULT_PENDING_DU, resultId);
     	    map.put("msg", "初评成功");
     	    map.put("code", "1");
     	}catch(Exception e){
@@ -833,6 +838,10 @@ public class PerformanceManageEvaController {
         }else{
         	rv.setState(state);
         }
+        //获取当年当季度的开始日期并赋值
+        rv.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+      	//获取当年当季度的结束日期并赋值
+        rv.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
         // 分页获取该RM下所有员工
         PageHelper.startPage(pageNumber, pageSize);
         List<RmApprovalVo> list = employeeService.rmApprovalList(rv);
@@ -1166,6 +1175,19 @@ public class PerformanceManageEvaController {
 		pmb.setYear(sf.format(new Date()));
 		pmb.setQuarter(String.valueOf(DateUtils.getQuarterByMonth(Integer.parseInt(sf2.format(new Date())))));
 		PresultVo pv = performanceResultService.getPerformance(pmb);
+		
+		//查询绩效目标流程表，获取绩效目标审批comments
+		PerformanceEmpProcessBean pepb = new PerformanceEmpProcessBean();
+		pepb.setEmployeeid(employeeid);
+		pepb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		pepb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		List<PerformanceEmpProcessBean> processList = progressService.queryPerformanceProgressList(pepb);
+		
+		if(processList!=null && processList.size()>0){
+			map.put("processcomments", processList.get(0).getRemark());
+		}else{
+			map.put("processcomments", "");
+		}
 	    
 		map.put("comments", pv!=null?pv.getResult_Comments():"");
 		map.put("selfassessment", reperfor!=null?reperfor.getSelfassessment():"");
