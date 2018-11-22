@@ -313,6 +313,13 @@ var path='<%=path%>';
 														id="resourceStatus" />
 											</div>
 										</div>
+										<div class="group">
+										<label class="col-lg-2 control-label">Billing Currency</label>
+										<div class="col-lg-4">
+											 <input type="text" readonly class="form-control" name="billingCurrency"
+													id="billingCurrency" />
+										</div>
+										</div>
 										<div class="group" style="display:none" id="terminatedDateDiv">
 											<label class="col-sm-2 control-label">LWD</label>
 											<div class="col-lg-4">

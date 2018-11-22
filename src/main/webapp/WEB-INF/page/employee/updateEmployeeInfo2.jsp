@@ -308,6 +308,18 @@ var path='<%=path%>';
 									</div>
 
 									<div class="group">
+										<label class="col-lg-2 control-label">Billing Currency</label>
+										<div class="col-lg-4">
+											<select class="form-control" name="billingCurrency"
+												 id="billingCurrency" data-bv-group=".group">
+												<option value="">--Option--</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group">
+								    <div class="group">
 										<label class="col-lg-2 control-label">BillRateType</label>
 										<div class="col-lg-4">
 											<select class="form-control" name="billRateType"
@@ -316,9 +328,6 @@ var path='<%=path%>';
 											</select>
 										</div>
 									</div>
-								</div>
-								
-								<div class="form-group">
 									<div class="group">
 										<label class="col-sm-2 control-label">Bill Rate</label>
 										<div class="col-lg-4">
@@ -326,7 +335,9 @@ var path='<%=path%>';
 												   id="billRate" data-bv-group=".group"/>
 										</div>
 									</div>
-									<div class="group" style="display:none" id="terminatedDateDiv">
+								</div>
+								<div class="form-group">
+								   <div class="group" style="display:none" id="terminatedDateDiv">
 										<label class="col-sm-2 control-label">LWD</label>
 										<div class="col-md-4">
 											<div class="input-group date form_datetime col-sm-12"
@@ -339,8 +350,6 @@ var path='<%=path%>';
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="form-group">
 									<div class="group" style="display:none" id="terminationReasonDiv">
 										 <label class="col-lg-2 control-label">Reason for Termination</label>
 										 <div class="col-lg-4">
