@@ -204,4 +204,8 @@ function back(){
 	if(userType=='1'){
 		window.location.href = path + "/service/performance/performanceManageEvaSecondBU";
 	}
+	//HRBP
+	if(userType=='9'){
+		window.location.href = path + "/service/performance/performanceHRBPGroupEva";
+	}
 }

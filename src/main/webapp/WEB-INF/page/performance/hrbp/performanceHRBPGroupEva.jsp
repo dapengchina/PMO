@@ -108,7 +108,7 @@ var path='<%=path%>';
 				<div class="box-inner">
 					<div class="box-header well" data-original-title="">
 						<h2>
-							<i class="glyphicon glyphicon-briefcase"></i> HRBP->绩效考评->集体评议
+							<i class="glyphicon glyphicon-briefcase"></i> HRBP-绩效考评-集体评议
 						</h2>
 					</div>
 
@@ -270,8 +270,8 @@ var path='<%=path%>';
 	<script src="<%=path%>/js/charisma.js"></script>
 
 	<script type="text/javascript" src="<%=path%>/js/pmo/performance.js"></script>
-	<script type="text/javascript" src="<%=path%>/js/pmo/performanceTable.js"></script>
-	<script type="text/javascript" src="<%=path%>/js/pmo/performanceHRBPGroupEva.js"></script>
+	<!-- <script type="text/javascript" src="<%=path%>/js/pmo/performanceTable.js"></script> -->
+	<script type="text/javascript" src="<%=path%>/js/pmo/performance/hrbp/performanceHRBPGroupEva.js"></script>
 </body>
 </html>
 

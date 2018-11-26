@@ -36,6 +36,12 @@ function loadUserType(){
 				document.getElementById('getHR').style.opacity="0.5";
 				document.getElementById('getLOB').style.opacity="0.5";
 			}
+			//HRBP角色判断
+			if(result=='9'){
+				document.getElementById('getEmp').style.opacity="0.5";
+				document.getElementById('getManage').style.opacity="0.5";
+				document.getElementById('getLOB').style.opacity="0.5";
+			}
 			
 		}
 	})
@@ -53,7 +59,9 @@ $("#getManage").click(function(){
 	}
 });
 $("#getHR").click(function(){
-	window.open(path+"/service/performance/performanceHRBPGroupEva.html");
+	if(userType=='9'){
+		window.open(path+"/service/performance/performanceHRBPGroupEva.html");
+	}
 });
 $("#getLOB").click(function(){
 	window.open(path+"/service/performance/performanceEmpPBC.html");

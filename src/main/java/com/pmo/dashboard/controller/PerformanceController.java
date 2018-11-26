@@ -296,7 +296,7 @@ public class PerformanceController {
      */
     @RequestMapping("/performanceHRBPGroupEva")
     public String getPerformanceHRBPGroupEva(Model model) {
-        return "performance/performanceHRBPGroupEva";
+        return "performance/hrbp/performanceHRBPGroupEva";
     }
 
     /**
