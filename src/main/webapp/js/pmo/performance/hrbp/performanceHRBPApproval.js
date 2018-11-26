@@ -68,7 +68,9 @@ function loadHRBPApprovalList() {
 		title : 'Detail',
 		formatter : function(value, row, index) {
 			if (row.State == 6) {
-				return "<a href='performanceHRBPApprovalDetail.html?bu=" + row.BU + "' class='btn btn-info btn-small'><i class='glyphicon glyphicon-edit'></i></a>";
+				return "<a href='performanceHRBPApprovalDetail.html?bu=" + row.BU + "' class='btn btn-info btn-sm'>"+
+	            "<span></span> Detail"+
+	          "</a>";
 			}
 		}
 	} ];

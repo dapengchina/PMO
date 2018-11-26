@@ -433,7 +433,8 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
         PerformanceQueryCondition condition = new PerformanceQueryCondition();
         Calendar c = Calendar.getInstance();
         condition.setStartYear(c.get(Calendar.YEAR) + "");
-        condition.setStartQuarter("Q" + PerformanceEmpHistoryServiceImpl.getSeason());
+        //condition.setStartQuarter("Q" + PerformanceEmpHistoryServiceImpl.getSeason());
+        condition.setStartQuarter("" + PerformanceEmpHistoryServiceImpl.getSeason());
         return mapper.approvalList(condition);
     }
 

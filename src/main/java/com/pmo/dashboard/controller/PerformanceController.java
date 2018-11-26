@@ -308,7 +308,7 @@ public class PerformanceController {
      */
     @RequestMapping("/performanceHRBPApproval")
     public String getPerformanceHRBPApproval() {
-        return "performance/performanceHRBPApproval";
+        return "performance/hrbp/performanceHRBPApproval";
     }
 
     /**
@@ -340,13 +340,19 @@ public class PerformanceController {
         return "performance/performanceHRBPTemplateUpload";
     }
 
+    /**
+     * HRBP-绩效考评-审批-审批详情页面
+     * @param bu
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceHRBPApprovalDetail")
     public String getPerformanceHRBPApprovalDetail(@RequestParam String bu, Model model) {
         model.addAttribute("bu", bu);
         // 根据bu查询审批内容
         String resultComments = performanceManageEvaService.queryResultCommentsByBU(bu).getResultComments();
         model.addAttribute("resultComments", resultComments);
-        return "performance/performanceHRBPApprovalDetail";
+        return "performance/hrbp/performanceHRBPApprovalDetail";
     }
 
     @RequestMapping("/performanceLobApprove")
