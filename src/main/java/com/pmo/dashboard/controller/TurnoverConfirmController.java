@@ -86,6 +86,7 @@ public class TurnoverConfirmController{
 		if( "3".equals(user.getUserType()) && newDepartment.length() == 0){
 			newDepartment = cSDepts.get(0).getCsSubDeptId();
 		}
+		PageHelper.startPage(pageNumber, pageSize);
 		EmployeeTurnoverRecord record = new EmployeeTurnoverRecord(ehr, lob, staffId, staffname, olddepartment,newDepartment,null,null,null,state);
 		List<EmployeeTurnoverRecord> data = employeeTurnoverService.queryList(record);
 		for(int i=0;i<data.size();i++){
@@ -112,7 +113,6 @@ public class TurnoverConfirmController{
 				data.get(i).setStateName("Refused");;
 			}
 		}
-		PageHelper.startPage(pageNumber, pageSize);
 		PageInfo<OfflineOper> page = new PageInfo(data);
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("total", page.getTotal());

@@ -217,7 +217,7 @@ function loadEmployeeList(pageState,csDeptName,csSubDeptName,csBuName){
 						"<td>"+ result.data[i].engagementType +"</td>" +
 						"<td>"+ (result.data[i].resourceStatus?result.data[i].resourceStatus:"") +"</td>" +
 						"<td>"+ (result.data[i].nickname?result.data[i].nickname:"") +"</td>" +
-						"<td><a href='javascript:void(0);' class='btn btn-info btn-small' onclick=turnoverEmployee('"+result.data[i].employeeId+"')>turnover</a></td></tr>";
+						"<td><a href='javascript:void(0);' class='btn btn-info btn-small' onclick=turnoverEmployee('"+result.data[i].employeeId+"')>Turnover</a></td></tr>";
 			}
 			$("#employeeList tbody").html(html);
 			var pageNum = parseInt(result.pageInfo.currentPage);
