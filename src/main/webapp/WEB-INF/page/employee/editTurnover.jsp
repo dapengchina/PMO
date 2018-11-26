@@ -152,7 +152,7 @@ var path='<%=path%>';
 								<br/><br/>
 								<div class="form-group">
 										<div class="group">
-										<label class="col-lg-2 control-label">new CS Dept</label>
+										<label class="col-lg-2 control-label">New CS Dept</label>
 											<div class="col-lg-4">
 												<select class="form-control" name="newSubDept"
 													id="newSubDept" data-bv-group=".group" onchange = "loadRMList(this.value)">
@@ -161,7 +161,7 @@ var path='<%=path%>';
 											</div>
 										</div>
 										<div class="group">
-										<label class="col-lg-2 control-label">new RM</label>
+										<label class="col-lg-2 control-label">New RM</label>
 											<div class="col-lg-4">
 												<select class="form-control" name="newRM"
 													id="newRM" data-bv-group=".group">

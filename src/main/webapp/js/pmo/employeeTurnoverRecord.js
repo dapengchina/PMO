@@ -95,7 +95,7 @@ function loadTurnoverList(){
 	        },
 	        {
 	            field: 'olddepartmentName',
-	            title: 'old DU',
+	            title: 'Old DU',
 	            sortable: true
 	            , formatter : function(value, row, index){
 	            	  if(value == null){
@@ -108,7 +108,7 @@ function loadTurnoverList(){
 	        },
 	        {
 	        	field: 'newdepartmentName',
-	            title: 'new DU',
+	            title: 'New DU',
 	            sortable: true
 	            , formatter : function(value, row, index){
 	            	  if(value == null){
@@ -134,7 +134,7 @@ function loadTurnoverList(){
 	        },
 	        {
 	        	field: 'newRMName',
-	            title: 'new RM',
+	            title: 'New RM',
 	            sortable: true
 	            , formatter : function(value, row, index){
 	            	  if(value == null){
