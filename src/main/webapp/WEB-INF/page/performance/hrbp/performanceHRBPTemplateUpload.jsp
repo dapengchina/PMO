@@ -72,7 +72,7 @@ var path='<%=path%>';
 				<div class="box-inner">
 					<div class="box-header well" data-original-title="">
 						<h2>
-							<i class="glyphicon glyphicon-briefcase"></i> HRBP->Template->Data Upload
+							<i class="glyphicon glyphicon-briefcase"></i> HRBP-Template-Data Upload
 						</h2>
 					</div>
 					<div class="box-content">
@@ -195,7 +195,7 @@ var path='<%=path%>';
 	<script type="text/javascript" src="<%=path %>/js/pmo/ajaxfileupload.js"></script>
 
 	<script type="text/javascript" src="<%=path%>/js/pmo/performance.js"></script>
-	<script type="text/javascript" src="<%=path%>/js/pmo/performanceHRBPDataUpload.js"></script>
+	<script type="text/javascript" src="<%=path%>/js/pmo/performance/hrbp/performanceHRBPDataUpload.js"></script>
 
 </body>
 </html>

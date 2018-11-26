@@ -337,7 +337,7 @@ public class PerformanceController {
     public String getPerformanceHRBPTemplateUpload(Model model) {
         List<Template> list = templateService.list();
         model.addAttribute("list", list);
-        return "performance/performanceHRBPTemplateUpload";
+        return "performance/hrbp/performanceHRBPTemplateUpload";
     }
 
     /**
