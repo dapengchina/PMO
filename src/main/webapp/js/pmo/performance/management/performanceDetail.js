@@ -15,7 +15,7 @@ function loadPerforDetail(){
 			$("#du").val(result.department);
 			$("#position").val(result.role);
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
-			$("#comments").val(result.comments);
+			$("#comments").val(result.processcomments);
 			//console.log("data==" + JSON.stringify(result));
 			if(result.state=="2"){
 				document.getElementById("Reject").setAttribute("disabled", true);

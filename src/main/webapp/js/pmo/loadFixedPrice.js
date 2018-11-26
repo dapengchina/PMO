@@ -174,7 +174,7 @@ function loadBillRateType(){
 	       $.each(data, function(i, item) {
 	    	   html += "<option value='"+item.name+"'>"+item.name+"</option>";
 	       })
-	       $("#billRateType").html(html).val(data[0].name);
+	       $("#billRateType").html(html).val(data[2].name);
 	});
 }
 
@@ -350,6 +350,9 @@ function loadBillingCurrency(){
 	$.getJSON(url,  function(data) {
 	       $.each(data, function(i, item) {
 	    	   $("#billingCurrency").append("<option>"+item.name+"</option>");
+	    	   if(item.name=='CNY'){
+	    		   $("#billingCurrency").val(item.name);
+	    	   }
 	       })
 	});
 }

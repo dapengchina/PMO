@@ -13,12 +13,8 @@ function loadEmployeePerforself(){
 			$("#du").val(result.department);
 			$("#position").val(result.role);
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
-			//console.log("data==" + JSON.stringify(result));
-//			if(result.state=="1"){
-//				document.getElementById("Save").setAttribute("disabled", true);
-//				document.getElementById("Edit").setAttribute("disabled", true);
-//				document.getElementById("Submit").setAttribute("disabled", true);
-//			}
+			$("#reemployeeid").val(result.employeeid);
+			
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){
 					loadPriorityWork(result);
@@ -178,4 +174,37 @@ function loadEmployeePlan(result){
 	href.appendTo(td1);
 	$("#table3").append("</tbdoy>");	
 }
+
+//提交员工自评
+function submit(){
+	//获取自评
+	var selfevaluation = $("#selfevaluation").val();
+	//获取员工ID
+	var employeeid = $("#reemployeeid").val();
+	if(selfevaluation=='' || selfevaluation==undefined || selfevaluation==null){
+		alert("请填写自评");
+		return;
+	}
+	$.ajax({
+		url:path+"/service/performance/result/saveSelfEvaluation",
+		dataType:"json",
+		async:true,
+		cache:false,
+		type:"post",
+		data:{
+			selfevaluation:selfevaluation,
+			employeeid:employeeid
+		},
+		success:function(result){
+			if(result.code=="1"){
+				alert(result.msg);
+				window.location.href=path+"/service/performance/performanceEmpEvaSelf";
+			}else{
+				alert(result.msg);
+			}
+		}
+	})
+}
+
+
 

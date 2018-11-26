@@ -323,7 +323,7 @@ public class PerformanceController {
         List<Template> list = templateService.list();
         model.addAttribute("type", 2);
         model.addAttribute("list", list);
-        return "performance/performanceManageTemplateDownload";
+        return "performance/management/performanceManageTemplateDownload";
     }
 
     /**

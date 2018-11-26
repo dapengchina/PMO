@@ -34,6 +34,7 @@ import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.entity.vo.EmployeePerforGoalVo;
 import com.pmo.dashboard.entity.vo.PresultVo;
 import com.pmo.dashboard.util.DateUtils;
+import com.pmo.dashboard.util.Utils;
 import com.pom.dashboard.service.CSDeptService;
 import com.pom.dashboard.service.EmployeeImpplanService;
 import com.pom.dashboard.service.EmployeeKeyeventService;
@@ -42,6 +43,7 @@ import com.pom.dashboard.service.EmployeeService;
 import com.pom.dashboard.service.EmployeeperforgoalService;
 import com.pom.dashboard.service.PerformanceMatrixService;
 import com.pom.dashboard.service.PerformanceResultService;
+import com.pom.dashboard.service.UserService;
 
 @Controller
 @RequestMapping(value="/performance/result")
@@ -80,6 +82,9 @@ public class PerformanceResultController {
 	
 	private SimpleDateFormat sf2 = new SimpleDateFormat("MM");
 	
+	@Resource
+	private UserService userService;
+	
 	
 	/**
 	 * Employee-绩效结果-当期绩效数据
@@ -102,7 +107,9 @@ public class PerformanceResultController {
 		//第一个参数当前页码，第二个参数每页条数
 		PageHelper.startPage(1,500); 
 		PresultVo pv = performanceResultService.getPerformance(pmb);
-		list.add(pv);
+		if(pv!=null){
+			list.add(pv);
+		}
 		result.put("total", 1);
 		result.put("rows", list);
 		return objectMapper.writeValueAsString(result);
@@ -312,4 +319,59 @@ public class PerformanceResultController {
 		result.put("csSubDeptNames", csSubDeptNames);
 		return objectMapper.writeValueAsString(result);
 	}
+
+    
+	/**
+	 * Employee-绩效考评-员工自评
+	 * @param request
+	 * @return
+	 * @throws JsonProcessingException 
+	 */
+	@RequestMapping("/saveSelfEvaluation")
+	@ResponseBody
+    public String saveSelfEvaluation(HttpServletRequest request) throws JsonProcessingException{
+		User user = (User) request.getSession().getAttribute("loginUser");
+		Map<String,Object> map = new HashMap<String,Object>();
+		try{
+			String selfevaluation = request.getParameter("selfevaluation");
+			String employeeid = request.getParameter("employeeid");
+			Employee em = employeeService.queryEmployeeById(employeeid);
+			//查询中软部门信息
+			CSDept csdept = cSDeptService.queryCSDeptById(em.getCsSubDept());
+			User u = userService.queryUserById(em.getRmUserId());
+			
+			PresultVo pv = new PresultVo();
+			pv.setResultId(Utils.getUUID());//主键
+			pv.seteHr(user.getUserName());
+			pv.setYear(sf.format(new Date()));//当年
+			pv.setQuarter(DateUtils.getQuarterByMonth(Integer.parseInt(sf2.format(new Date())))+"");//当季度
+			pv.setBu(csdept!=null?csdept.getCsBuName():"");//事业部名称
+			pv.setDu(csdept!=null?csdept.getCsSubDeptName():"");//交付部名称
+			pv.setRm(u.getNickname());//RM名称
+			pv.setRole(em.getRole());
+			pv.setSkill(em.getSkill());
+			pv.setLocation(em.getStaffLocation());
+			pv.setBackbone("");//是否是业务先锋
+			pv.setAssessed("");//是否参评
+			pv.setDirectSupervisor(u.getNickname());//直接主管
+			pv.setFinalize("false");//是否是最终结果
+			pv.setState(SysConstant.PRESULT_PENDING_RM);//待RM审批
+			performanceResultService.save(pv);
+			
+			//修改自评信息
+			Employeeperforgoal epg = new Employeeperforgoal();
+			epg.setSelfassessment(selfevaluation);
+			epg.setEmployeeid(employeeid);
+			epg.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+			epg.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+			employeeperforgoalService.update(epg);
+			
+			map.put("msg", "自评成功");
+			map.put("code", "1");
+		}catch(Exception e){
+			map.put("msg", "自评失败");
+			map.put("code", "0");
+		}
+    	return objectMapper.writeValueAsString(map);
+    }
 }

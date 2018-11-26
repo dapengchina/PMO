@@ -23,8 +23,29 @@ public class RmApprovalVo {
 	
 	   
 	   
+    private String currentQuarterStartDate;
+    
+    private String currentQuarterEndDate;
+    
+    
+    
 	
-	
+
+	public String getCurrentQuarterStartDate() {
+		return currentQuarterStartDate;
+	}
+
+	public void setCurrentQuarterStartDate(String currentQuarterStartDate) {
+		this.currentQuarterStartDate = currentQuarterStartDate;
+	}
+
+	public String getCurrentQuarterEndDate() {
+		return currentQuarterEndDate;
+	}
+
+	public void setCurrentQuarterEndDate(String currentQuarterEndDate) {
+		this.currentQuarterEndDate = currentQuarterEndDate;
+	}
 
 	public String getStateName() {
 		return stateName;

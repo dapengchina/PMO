@@ -56,7 +56,7 @@ var path='<%=path%>';
 	    <c:param name="currentPageName" value="<%=currentPageName%>"/>
 	</c:import>
 
-
+    <input id="reemployeeid" type="hidden"></input>
 	<!-- middle content start -->
 			<div id="content" class="col-lg-10 col-sm-10">
 				<!-- content starts -->
@@ -177,7 +177,7 @@ var path='<%=path%>';
 								 <div class="panel-body" >										
 										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Self-Evaluation</label>
 										<div class="col-lg-10">
-											<textarea rows="3" style="border:1px solid black" class="form-control" id="changeInformation" ></textarea>
+											<textarea rows="3" style="border:1px solid black" class="form-control" id="selfevaluation" ></textarea>
 										</div>
 								 </div>
 							</div>
@@ -188,23 +188,10 @@ var path='<%=path%>';
 
 								<div class="form-group">
 									    <div style="text-align:center;width:100%;">
-									    <!--
-									    <input type="button" value="Save" name="Save" id="Save" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>  -->
-										<!--
-									    <input type="button" value="Edit" name="Edit" id="Edit" href="#"
-										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
-										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
 										<input type="button" value="Submit" name="Submit" id="Submit" href="#"
 										class="button btn btn-primary" data-dismiss="modal"
-										onclick=""
+										onclick="submit()"
 										style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
-
 									    </div>
 								</div>
 

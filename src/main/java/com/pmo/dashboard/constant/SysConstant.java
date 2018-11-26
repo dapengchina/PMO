@@ -71,22 +71,28 @@ public class SysConstant {
 	   /**
 	    * 绩效结果表状态
 	    */
-	   public static final String PRESULT_DRAFT = "1";//草稿
+	   public static final String PRESULT_PENDING_RM = "0";//待RM审批
+	   public static final String RPESULT_REJECT_RM = "1";//RM审批不通过
 	   public static final String PRESULT_PENDING_DU = "2";//待交付部审批
-	   public static final String PRESULT_PENDING_BU = "3";//待事业部审批
-	   public static final String PRESULT_PENDING_LOB = "4";//待lob总审批
-	   public static final String PRESULT_APPROVAL_PASS = "5";//审批通过
-	   public static final String PRESULT_APPROVAL_NOPASS = "6";//审批不通过
+	   public static final String PRESULT_REJECT_DU = "3";//交付部经理审批不通过
+	   public static final String PRESULT_PENDING_BU = "4";//待事业部审批
+	   public static final String PRESULT_REJECT_BU = "5";//事业部经理审批不通过
+	   public static final String PRESULT_PENDING_LOB = "6";//待lob总审批
+	   public static final String PRESULT_REJECT_LOB = "7";//LOB总审批不通过
+	   public static final String PRESULT_PASS_LOB = "8";//LOB总审批通过
 	   
 	   public static Map<String,Object> getPresultStateMap(){
 		   Map<String,Object> map = new HashMap<String,Object>();
 		   
-		   map.put(PRESULT_DRAFT, "草稿");
+		   map.put(PRESULT_PENDING_RM, "待RM审批");
+		   map.put(RPESULT_REJECT_RM, "RM审批不通过");
 		   map.put(PRESULT_PENDING_DU, "待交付部审批");
+		   map.put(PRESULT_REJECT_DU, "交付部经理审批不通过");
 		   map.put(PRESULT_PENDING_BU, "待事业部审批");
+		   map.put(PRESULT_REJECT_BU, "事业部经理审批不通过");
 		   map.put(PRESULT_PENDING_LOB, "待lob总审批");
-		   map.put(PRESULT_APPROVAL_PASS, "审批通过");
-		   map.put(PRESULT_APPROVAL_NOPASS, "审批不通过");
+		   map.put(PRESULT_REJECT_LOB, "LOB总审批不通过");
+		   map.put(PRESULT_PASS_LOB, "LOB总审批通过");
 		   
 		   return map;
 	   }

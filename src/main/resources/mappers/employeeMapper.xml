@@ -777,18 +777,30 @@
   </update>
   
   <select id="rmApprovalList" resultMap="rmApprovalListMap" parameterType="com.pmo.dashboard.entity.vo.RmApprovalVo">
-  	SELECT
-	  e.EMPLOYEE_ID,
+  	SELECT 
+      e.EMPLOYEE_ID,
 	  e.E_HR,
 	  e.STAFF_NAME,
 	  e.ROLE,
-	  e.SKILL,
-      e1.state
-    FROM
-	  t_employee e
-	LEFT JOIN
-      t_employeeperforgoal e1
-    ON e.EMPLOYEE_ID=e1.employeeid
+	  e.SKILL, 
+      z.state
+    FROM t_employee e
+    LEFT JOIN
+    (
+      SELECT
+	    e1.state,
+        e1.employeeid
+      FROM
+	  t_employeeperforgoal e1 
+      WHERE
+      1 = 1
+      <if test="currentQuarterStartDate != null and currentQuarterStartDate != ''" >
+        and DATE_FORMAT(createdate, '%Y-%m-%d') &gt;= #{currentQuarterStartDate}
+      </if>
+      <if test="currentQuarterEndDate != null and currentQuarterEndDate != ''" >
+        and DATE_FORMAT(createdate, '%Y-%m-%d') &lt;= #{currentQuarterEndDate}
+      </if>) z
+    on e.EMPLOYEE_ID=z.employeeid
     WHERE 1=1
   	<if test="rmUserID != null and rmUserID != ''">
   		and e.RM_USER_ID = #{rmUserID}

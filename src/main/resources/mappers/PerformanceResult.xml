@@ -404,6 +404,172 @@
 			AND Year &lt;= #{endYear}
 		</if>
 	</select>
+	
+	
+	
+	<insert id="insert" parameterType="com.pmo.dashboard.entity.vo.PresultVo" >
+    insert into p_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="resultId != null" >
+        Result_ID,
+      </if>
+      <if test="pbcId != null" >
+        PBC_ID,
+      </if>
+      <if test="eHr != null" >
+        E_HR,
+      </if>
+      <if test="year != null" >
+        Year,
+      </if>
+      <if test="quarter != null" >
+        Quarter,
+      </if>
+      <if test="bu != null" >
+        BU,
+      </if>
+      <if test="du != null" >
+        DU,
+      </if>
+      <if test="rm != null" >
+        RM,
+      </if>
+      <if test="role != null" >
+        Role,
+      </if>
+      <if test="skill != null" >
+        Skill,
+      </if>
+      <if test="location != null" >
+        Location,
+      </if>
+      <if test="backbone != null" >
+        Backbone,
+      </if>
+      <if test="assessed != null" >
+        Assessed,
+      </if>
+      <if test="directSupervisor != null" >
+        Direct_Supervisor,
+      </if>
+      <if test="result != null" >
+        Result,
+      </if>
+      <if test="resultComments != null" >
+        Result_Comments,
+      </if>
+      <if test="clientFeedback != null" >
+        Client_Feedback,
+      </if>
+      <if test="preassessmentResult != null" >
+        PreAssessment_Result,
+      </if>
+      <if test="directSupervisorAssessmentResult != null" >
+        Direct_Supervisor_Assessment_Result,
+      </if>
+      <if test="groupAssessmentResult != null" >
+        Group_Assessment_Result,
+      </if>
+      <if test="groupAssessmentManager != null" >
+        Group_Assessment_Manager,
+      </if>
+      <if test="performanceFacts != null" >
+        Performance_Facts,
+      </if>
+      <if test="performanceSkip != null" >
+        Performance_Skip,
+      </if>
+      <if test="finalize != null" >
+        Finalize,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+      <if test="state != null" >
+        State,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="resultId != null" >
+        #{resultId,jdbcType=VARCHAR},
+      </if>
+      <if test="pbcId != null" >
+        #{pbcId,jdbcType=VARCHAR},
+      </if>
+      <if test="eHr != null" >
+        #{eHr,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="quarter != null" >
+        #{quarter,jdbcType=VARCHAR},
+      </if>
+      <if test="bu != null" >
+        #{bu,jdbcType=VARCHAR},
+      </if>
+      <if test="du != null" >
+        #{du,jdbcType=VARCHAR},
+      </if>
+      <if test="rm != null" >
+        #{rm,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="skill != null" >
+        #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="backbone != null" >
+        #{backbone,jdbcType=VARCHAR},
+      </if>
+      <if test="assessed != null" >
+        #{assessed,jdbcType=VARCHAR},
+      </if>
+      <if test="directSupervisor != null" >
+        #{directSupervisor,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="resultComments != null" >
+        #{resultComments,jdbcType=VARCHAR},
+      </if>
+      <if test="clientFeedback != null" >
+        #{clientFeedback,jdbcType=VARCHAR},
+      </if>
+      <if test="preassessmentResult != null" >
+        #{preassessmentResult,jdbcType=VARCHAR},
+      </if>
+      <if test="directSupervisorAssessmentResult != null" >
+        #{directSupervisorAssessmentResult,jdbcType=VARCHAR},
+      </if>
+      <if test="groupAssessmentResult != null" >
+        #{groupAssessmentResult,jdbcType=VARCHAR},
+      </if>
+      <if test="groupAssessmentManager != null" >
+        #{groupAssessmentManager,jdbcType=VARCHAR},
+      </if>
+      <if test="performanceFacts != null" >
+        #{performanceFacts,jdbcType=VARCHAR},
+      </if>
+      <if test="performanceSkip != null" >
+        #{performanceSkip,jdbcType=VARCHAR},
+      </if>
+      <if test="finalize != null" >
+        #{finalize,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
 
 </mapper>
 
