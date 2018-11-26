@@ -1,4 +1,6 @@
+var userType=null;
 $(function(){
+	loadUserType();
 	loadPerforDetail();
 })
 
@@ -15,6 +17,9 @@ function loadPerforDetail(){
 			$("#du").val(result.department);
 			$("#position").val(result.role);
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
+			
+			$("#selfEvaluation").val(result.selfassessment);
+			$("#comments").val(result.processcomments);
 			//console.log("data==" + JSON.stringify(result));
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){
@@ -176,7 +181,27 @@ function loadEmployeePlan(result){
 	$("#table3").append("</tbdoy>");	
 }
 
+function loadUserType(){
+	$.ajax({
+		url:path+"/service/performance/getUserType",
+		dataType:"json",
+		async:true,
+		cache:false,
+		type:"post",
+		success:function(result){
+			userType=result;
+		}
+	})
+}
+
 //返回
 function back(){
-	window.location.href = path + "/service/performance/performanceManageEvaSecondDU";
+	//交付部
+	if(userType=='3'){
+		window.location.href = path + "/service/performance/performanceManageEvaSecondDU";
+	}
+	//事业部
+	if(userType=='1'){
+		window.location.href = path + "/service/performance/performanceManageEvaSecondBU";
+	}
 }

@@ -103,7 +103,7 @@ var path='<%=path%>';
 												class="well top-block" href="#"><i
 												class="glyphicon glyphicon-briefcase "></i>
 												<div>
-													HR</br> </br>
+													HRBP</br> </br>
 												</div> </a>
 										</div>
 									</div>

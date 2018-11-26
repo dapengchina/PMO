@@ -1314,6 +1314,19 @@ public class PerformanceManageEvaController {
 		pmb.setYear(sf.format(new Date()));
 		pmb.setQuarter(String.valueOf(DateUtils.getQuarterByMonth(Integer.parseInt(sf2.format(new Date())))));
 		PresultVo pv = performanceResultService.getPerformance(pmb);
+		
+		//查询绩效目标流程表，获取绩效目标审批comments
+		PerformanceEmpProcessBean pepb = new PerformanceEmpProcessBean();
+		pepb.setEmployeeid(employeeid);
+		pepb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		pepb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		List<PerformanceEmpProcessBean> processList = progressService.queryPerformanceProgressList(pepb);
+				
+		if(processList!=null && processList.size()>0){
+			map.put("processcomments", processList.get(0).getRemark());
+		}else{
+			map.put("processcomments", "");
+		}
 	    
 		map.put("comments", pv!=null?pv.getResult_Comments():"");
 		map.put("directresult", pv!=null?pv.getDirect_Supervisor_Assessment_Result():"");
@@ -1446,6 +1459,19 @@ public class PerformanceManageEvaController {
 		pmb.setYear(sf.format(new Date()));
 		pmb.setQuarter(String.valueOf(DateUtils.getQuarterByMonth(Integer.parseInt(sf2.format(new Date())))));
 		PresultVo pv = performanceResultService.getPerformance(pmb);
+		
+		//查询绩效目标流程表，获取绩效目标审批comments
+		PerformanceEmpProcessBean pepb = new PerformanceEmpProcessBean();
+		pepb.setEmployeeid(employeeid);
+		pepb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		pepb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		List<PerformanceEmpProcessBean> processList = progressService.queryPerformanceProgressList(pepb);
+						
+		if(processList!=null && processList.size()>0){
+			map.put("processcomments", processList.get(0).getRemark());
+		}else{
+			map.put("processcomments", "");
+		}
 	    
 		map.put("comments", pv!=null?pv.getResult_Comments():"");
 		map.put("directresult", pv!=null?pv.getDirect_Supervisor_Assessment_Result():"");

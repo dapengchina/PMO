@@ -1,9 +1,56 @@
+var userType=null;
+$(function(){
+	loadUserType();
+})
+
+function loadUserType(){
+	$.ajax({
+		url:path+"/service/performance/getUserType",
+		dataType:"json",
+		async:true,
+		cache:false,
+		type:"post",
+		success:function(result){
+			userType=result;
+			//普通员工角色判断
+			if(result=='16'){
+				document.getElementById('getManage').style.opacity="0.5";
+				document.getElementById('getHR').style.opacity="0.5";
+				document.getElementById('getLOB').style.opacity="0.5";
+			}
+			//RM角色判断 
+			if(result=='5'){
+				document.getElementById('getEmp').style.opacity="0.5";
+				document.getElementById('getHR').style.opacity="0.5";
+				document.getElementById('getLOB').style.opacity="0.5";
+			}
+			//交付部经理角色判断
+			if(result=='3'){
+				document.getElementById('getEmp').style.opacity="0.5";
+				document.getElementById('getHR').style.opacity="0.5";
+				document.getElementById('getLOB').style.opacity="0.5";
+			}
+			//事业部经理角色判断
+			if(result=='1'){
+				document.getElementById('getEmp').style.opacity="0.5";
+				document.getElementById('getHR').style.opacity="0.5";
+				document.getElementById('getLOB').style.opacity="0.5";
+			}
+			
+		}
+	})
+}
+
 $("#getEmp").click(function(){
-	window.open(path+"/service/performance/performanceEmpPBC.html");
+	if(userType=='16'){
+		window.open(path+"/service/performance/performanceEmpPBC.html");
+	}
 } );
 
 $("#getManage").click(function(){
-	window.open(path+"/service/performance/performanceManageTargetApproval.html");
+	if(userType=='5' || userType=='3' || userType=='1'){
+		window.open(path+"/service/performance/performanceManageTargetApproval.html");
+	}
 });
 $("#getHR").click(function(){
 	window.open(path+"/service/performance/performanceHRBPGroupEva.html");

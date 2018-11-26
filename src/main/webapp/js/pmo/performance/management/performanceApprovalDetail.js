@@ -17,7 +17,7 @@ function loadPerforDetail(){
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
 			//console.log("data==" + JSON.stringify(result));
 			$("#selfEvaluation").val(result.selfassessment);
-			$("#comments").val(result.comments);
+			$("#comments").val(result.processcomments);
 			$("#rating").val(result.directresult);
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){

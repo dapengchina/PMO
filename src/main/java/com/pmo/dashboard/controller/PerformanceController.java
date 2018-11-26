@@ -411,7 +411,19 @@ public class PerformanceController {
     }
 	
 	
-	
+    /**
+     * 返回用户类型-用作绩效主页权限判断
+     * @param request
+     */
+    @RequestMapping("/getUserType")
+    @ResponseBody
+	public String getUserType(final HttpServletRequest request){
+    	//获取当前登录用户
+    	User user = (User) request.getSession().getAttribute("loginUser");
+    	//获取用户类型
+    	String usertype = user.getUserType();
+		return usertype;
+	}
     
     /**
      * 暂时无用代码
