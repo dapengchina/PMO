@@ -1,15 +1,16 @@
-$().ready(function() {
+$(function() {
 	queryPercentage();
-	loadHRBPGroupEvaList();
+	loadManageEvaFinalList();
+
 });
-/** 获取当前事业部绩效审核比例 * */
+
+/** 获取当年-当季-定稿-绩效审核比例 * */
 function queryPercentage() {
-	var state_bu = $("#detail_bu").val();
 	$.ajax({
-		url : path + '/service/performanceHRBPEva/percentage?bu=' + state_bu,
+		url : path + '/service/performanceManageEva/finalize/percentage',
 		dataType : "json",
 		cache : false,
-		type : "get",
+		type : "GET",
 		success : function(data) {
 			$("#percentA").html(data["percentA"] == undefined ? 0 : data["percentA"]);
 			$("#percentBplus").html(data["percentB+"] == undefined ? 0 : data["percentB+"]);
@@ -28,34 +29,11 @@ function queryPercentage() {
 		}
 	});
 }
-/** 审批当前事业部 * */
-function submit(type) {
-	var state = type == 1 ? 8 : 7;// TODO xuexuan need to confirm state value
-	var state_bu = $("#detail_bu").val();
-	$.ajax({
-		url : path + '/service/performanceHRBPEva/approval/detail/submit',
-		data : {
-			"bu" : state_bu,
-			"state" : state
-		},
-		cache : false,
-		type : "POST",
-		success : function(data) {
-			alert("审批成功");
-			// 返回审批页面
-			window.location.href = path + "/service/performance/performanceHRBPApproval.html";
-		},
-		error : function(error) {
-			alert("审批失败");
-		}
-	});
-}
-var pageSize = 10;
-tableId = "HRBPGroupEvaList";
-/** 获取所有员工当年当季表格* */
-function loadHRBPGroupEvaList() {
-	var table = $('#HRBPGroupEvaList').bootstrapTable({
-		url : path + '/service/performanceHRBPEva/processing/result/list', // 请求后台的URL（*）
+tableId = "manageEvaFirstDetailList";
+function loadManageEvaFinalList() {
+	var queryUrl = path + '/service/performanceManageEva/finalize/result/list';
+	var table = $('#manageEvaFirstDetailList').bootstrapTable({
+		url : queryUrl, // 请求后台的URL（*）
 		method : 'GET', // 请求方式（*）
 		fixedColumns: true,
         fixedNumber: 5,
@@ -67,7 +45,7 @@ function loadHRBPGroupEvaList() {
 		sortOrder : "asc", // 排序方式
 		sidePagination : "server", // 分页方式：client客户端分页，server服务端分页（*）
 		pageNumber : 1, // 初始化加载第一页，默认第一页,并记录
-		pageSize : pageSize, // 每页的记录行数（*）
+		pageSize : 10, // 每页的记录行数（*）
 		pageList : [ 10, 25, 50, 100 ], // 可供选择的每页的行数（*）
 		search : false, // 是否显示表格搜索
 		strictSearch : false,
@@ -75,7 +53,7 @@ function loadHRBPGroupEvaList() {
 		// showRefresh: true, //是否显示刷新按钮
 		minimumCountColumns : 2, // 最少允许的列数
 		clickToSelect : true, // 是否启用点击选中行
-		//height : 500, // 行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+		// height : 500, // 行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 		uniqueId : "id", // 每一行的唯一标识，一般为主键列
 		showToggle : false, // 是否显示详细视图和列表视图的切换按钮
 		cardView : false, // 是否显示详细视图
@@ -83,22 +61,16 @@ function loadHRBPGroupEvaList() {
 		singleSelect : false, // 禁止多选_____
 		// 得到查询的参数
 		queryParams : function(params) {
-			// 获取查询条件
-			var eHr = $("#eHr").val();
-			var staffName = $("#staffName").val();
-			var bu = $("#bu").val();
-			var du = $("#du").val();
+			var showAchievement = $("#showAchievement").val();
 			return {
 				pageSize : params.limit,
 				pageNumber : params.offset / params.limit + 1,
-				eHr : eHr,
-				staffName : staffName,
-				bu : bu,
-				du : du
+				showAchievement : showAchievement
 			};
 		},
-		columns : [ 
-		       {
+		columns : 
+		[ 
+			       {
 					  title : 'No',
 					  width: "70px",
 					  formatter: function (value, row, index) {
@@ -251,45 +223,29 @@ function loadHRBPGroupEvaList() {
 		}],
 		onLoadSuccess : function(sta) {
 			console.log("in onLoadSuccess");
-			console.log(sta);
+			console.log(JSON.stringify(sta));
 		},
 		onLoadError : function(status, res) { // 加载失败时执行
-			console.log(res);
-			console.log("error.status:" + status);
+//			console.log(res);
+//			console.log("error.status:" + status);
 		},
 		onDblClickRow : function(row, $element) {
-		}
 
+		}
 	});
 }
-function detail(employeeid) {
-	window.location.href=path+"/service/performanceManageEva/approvalDuDetailPage/"+employeeid;
+
+function detail(employeeId) {
+	window.location.href = path+"/service/performanceManageEva/latestPerforDetailPage/"+employeeId;
 }
 
-/** search ** */
-function search() {
-	// 获取查询条件
-	var queryParams = {
-		query : {
-			eHr : $("#eHr").val(),
-			staffName : $("#staffName").val(),
-			bu : $("#bu").val(),
-			du : $("#du").val()
-		}
-	};
-	// 刷新表格
-	$('#HRBPGroupEvaList').bootstrapTable('refreshOptions', {
-		pageSize : 10,
-		pageNumber : 1
-	});
-}
-/** clear * */
-function clearParams() {
-	$("#eHr").val("");
-	$("#staffName").val("");
-	$("#du").val("");
-}
-
-function back() {
-	window.location.href = path + "/service/performance/performanceHRBPApproval.html";
+/** 导出绩效定稿数据 */
+function finalizeResultExport() {
+	var tableData = $('#manageEvaFirstDetailList').bootstrapTable("getData");
+	if (tableData.length == 0) {
+		alert("暂无数据导出");
+		return;
+	}
+	var url = path + '/service/performanceManageEva/finalize/result/export';
+	window.location.href = url;
 }

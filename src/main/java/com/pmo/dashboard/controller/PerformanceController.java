@@ -355,9 +355,25 @@ public class PerformanceController {
         return "performance/hrbp/performanceHRBPApprovalDetail";
     }
 
+    /**
+     * HRBP-绩效结果-当期绩效页面
+     * @param request
+     * @return
+     */
+    @RequestMapping("/performanceHRBPLatest")
+    public String performanceHRBPLatest(final HttpServletRequest request){
+    	return "performance/hrbp/performanceHRBPLatest";
+    }
+    
+    /**
+     * LOB-审批
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/performanceLobApprove")
     public String getPerformanceLobApprove(final HttpServletRequest request, Model model) {
-        return "performance/performanceLobApprove";
+        return "performance/lob/performanceLobApprove";
     }
 
 	@RequestMapping("/performanceLobApproveDetails")
@@ -366,6 +382,17 @@ public class PerformanceController {
 		return "performance/performanceLobApproveDetails";
 	}
 
+	/**
+	 * LOB-绩效结果-当期绩效页面
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/performanceLobLatest")
+	public String performanceLobLatest(final HttpServletRequest request, Model model){
+		return "performance/lob/performanceLobLatest";
+	}
+	
 	@RequestMapping("/performanceLobHRReport")
 	public String getPerformanceLobHRReport(final HttpServletRequest request, Model model){
 		return "performance/performanceLobHRReport";
@@ -387,36 +414,6 @@ public class PerformanceController {
         return map;
     }
 	
-	
-	/**
-     * 绩效目标详情页面
-     * @author: xuexuan
-     * 2018年10月31日 上午11:31:32
-     * @param employeeId
-     * @param resultId
-     * @param title
-     * @param type
-     * @param model
-     * @return 
-     * String
-     */
-    @RequestMapping("/goalDetail")
-    public String getGoalDetailPage(@RequestParam(value = "employeeId", required = false) String employeeId, @RequestParam(value = "resultId", required = false) String resultId,
-            @RequestParam("title") String title, @RequestParam("type") String type, Model model) {
-        model.addAttribute("title", title);
-        model.addAttribute("type", type);
-        if (StringUtils.isNotBlank(resultId)) {
-            Map<String, String> map = performanceManageEvaService.queryEmployeeIdByResultId(resultId);
-            model.addAttribute("resultId", resultId);
-            model.addAttribute("employeeId", map.get("employeeId"));
-            model.addAttribute("result", map.get("result"));
-        } else {
-            model.addAttribute("employeeId", employeeId);
-        }
-        return "performance/performanceDetail";
-    }
-	
-	
     /**
      * 返回用户类型-用作绩效主页权限判断
      * @param request
@@ -434,6 +431,33 @@ public class PerformanceController {
     /**
      * 暂时无用代码
      */
+    /**
+     * 绩效目标详情页面
+     * @author: xuexuan
+     * 2018年10月31日 上午11:31:32
+     * @param employeeId
+     * @param resultId
+     * @param title
+     * @param type
+     * @param model
+     * @return 
+     * String
+     */
+//    @RequestMapping("/goalDetail")
+//    public String getGoalDetailPage(@RequestParam(value = "employeeId", required = false) String employeeId, @RequestParam(value = "resultId", required = false) String resultId,
+//            @RequestParam("title") String title, @RequestParam("type") String type, Model model) {
+//        model.addAttribute("title", title);
+//        model.addAttribute("type", type);
+//        if (StringUtils.isNotBlank(resultId)) {
+//            Map<String, String> map = performanceManageEvaService.queryEmployeeIdByResultId(resultId);
+//            model.addAttribute("resultId", resultId);
+//            model.addAttribute("employeeId", map.get("employeeId"));
+//            model.addAttribute("result", map.get("result"));
+//        } else {
+//            model.addAttribute("employeeId", employeeId);
+//        }
+//        return "performance/performanceDetail";
+//    }
     /**
      * 生成slide menu所需要的符合treeview控件的json
      */

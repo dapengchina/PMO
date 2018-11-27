@@ -90,7 +90,7 @@ var path='<%=path%>';
 							<div style="display:none">跟performanceManageEvaFirstDetail.jsp页面几乎一样的内容， 只是下面的参数和标题不同</div>
 							<input type="hidden" id="showAchievement" value="true"></input>
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>   Management-绩效结果-绩效定稿 
+									<i class="glyphicon glyphicon-user"></i>   HRBP-绩效结果-当期绩效
 								</h2>
 							</div>
 
@@ -226,7 +226,7 @@ var path='<%=path%>';
 	
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
     <!--<script type="text/javascript" src="<%=path%>/js/pmo/performanceTable.js"></script>  -->
-	<script type="text/javascript" src="<%=path %>/js/pmo/performance/management/performanceManageEvaFinal.js"></script>
+	<script type="text/javascript" src="<%=path %>/js/pmo/performance/hrbp/performanceHRBPLatest.js"></script>
 </body>
 </html>
 

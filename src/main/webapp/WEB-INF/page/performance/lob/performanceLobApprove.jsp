@@ -62,7 +62,7 @@ var path='<%=path%>';
 						<div class="box-inner" >
 							<div class="box-header well" data-original-title="" >
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>  LOB - Approval
+									<i class="glyphicon glyphicon-user"></i>  LOB - 审批
 								</h2>
 							</div>
 
@@ -216,7 +216,7 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/bootstrap-dialog.js"></script>
 
     <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-	<script type="text/javascript" src="<%=path %>/js/pmo/performanceLobApprove.js"></script>
+	<script type="text/javascript" src="<%=path %>/js/pmo/performance/lob/performanceLobApprove.js"></script>
 	
 </body>
 </html>

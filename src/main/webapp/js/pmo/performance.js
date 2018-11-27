@@ -40,7 +40,6 @@ function loadUserType(){
 			if(result=='9'){
 				document.getElementById('getEmp').style.opacity="0.5";
 				document.getElementById('getManage').style.opacity="0.5";
-				document.getElementById('getLOB').style.opacity="0.5";
 			}
 			
 		}
@@ -64,7 +63,9 @@ $("#getHR").click(function(){
 	}
 });
 $("#getLOB").click(function(){
-	window.open(path+"/service/performance/performanceEmpPBC.html");
+	if(userType=='9'){
+		window.open(path+"/service/performance/performanceLobApprove.html");
+	}
 });
 if($("#id").length>0){}else{} 
 
