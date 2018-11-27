@@ -40,6 +40,13 @@ function loadUserType(){
 			if(result=='9'){
 				document.getElementById('getEmp').style.opacity="0.5";
 				document.getElementById('getManage').style.opacity="0.5";
+				document.getElementById('getLOB').style.opacity="0.5";
+			}
+			//业务线/LOB总
+			if(result=='15'){
+				document.getElementById('getEmp').style.opacity="0.5";
+				document.getElementById('getManage').style.opacity="0.5";
+				document.getElementById('getHR').style.opacity="0.5";
 			}
 			
 		}
@@ -63,7 +70,7 @@ $("#getHR").click(function(){
 	}
 });
 $("#getLOB").click(function(){
-	if(userType=='9'){
+	if(userType=='15'){
 		window.open(path+"/service/performance/performanceLobApprove.html");
 	}
 });

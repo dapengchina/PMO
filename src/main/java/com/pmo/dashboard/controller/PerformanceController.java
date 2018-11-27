@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -366,6 +367,16 @@ public class PerformanceController {
     }
     
     /**
+     * HRBP-绩效结果-历史绩效页面
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/hrbpHistoryPage", method = RequestMethod.GET)
+    public String hrbpHistoryPage(final HttpServletRequest request){
+    	return "performance/hrbp/performanceHRBPHistory";
+    }
+    
+    /**
      * LOB-审批
      * @param request
      * @param model
@@ -391,6 +402,17 @@ public class PerformanceController {
 	@RequestMapping("/performanceLobLatest")
 	public String performanceLobLatest(final HttpServletRequest request, Model model){
 		return "performance/lob/performanceLobLatest";
+	}
+	
+	/**
+	 * LOB-绩效结果-历史绩效页面
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/performanceLobHistory")
+	public String performanceLobHistory(final HttpServletRequest request, Model model){
+		return "performance/lob/performanceLobHistory";
 	}
 	
 	@RequestMapping("/performanceLobHRReport")

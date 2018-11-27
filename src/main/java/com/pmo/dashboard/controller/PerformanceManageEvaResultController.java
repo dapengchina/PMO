@@ -24,10 +24,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
@@ -53,6 +55,8 @@ public class PerformanceManageEvaResultController {
 
     @Resource
     private PerformanceManageEvaService manageEvaService;
+    
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @RequestMapping("/queryManageResultHistoryQueryList")
     @ResponseBody
@@ -137,4 +141,30 @@ public class PerformanceManageEvaResultController {
 
         return responseEntity;
     }
+
+    
+    
+    
+    /**
+     * HRBP-绩效结果-历史绩效数据
+     * @param request
+     * @return
+     * @throws JsonProcessingException 
+     */
+    @RequestMapping(value = "/hrbpHistoryData", method = RequestMethod.GET)
+    @ResponseBody
+    public String hrbpHistoryData(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize, PerformanceQueryCondition condition,
+            HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException{
+    	logger.debug("query condition:" + condition);
+        // update by xuexuan 客户端分页改为服务器端分页
+        PageHelper.startPage(pageNumber, pageSize);
+        List<PerformanceManageEvaBean> data = manageEvaService.finalizeResultList(condition);
+        PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
+        Map<String, Object> map = new HashMap<>();
+        map.put("total", page.getTotal());
+        map.put("rows", data);
+        return objectMapper.writeValueAsString(map);
+    }
+
+
 }
