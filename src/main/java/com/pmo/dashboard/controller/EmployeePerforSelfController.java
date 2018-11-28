@@ -2,6 +2,7 @@ package com.pmo.dashboard.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +25,11 @@ import com.pmo.dashboard.entity.Employee;
 import com.pmo.dashboard.entity.EmployeeImpplan;
 import com.pmo.dashboard.entity.EmployeeKeyevent;
 import com.pmo.dashboard.entity.EmployeeKpo;
+import com.pmo.dashboard.entity.Employeeperforgoal;
+import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.entity.vo.EmployeePerforGoalVo;
+import com.pmo.dashboard.entity.vo.PresultVo;
 import com.pmo.dashboard.util.DateUtils;
 import com.pom.dashboard.service.CSDeptService;
 import com.pom.dashboard.service.EmployeeImpplanService;
@@ -34,6 +38,7 @@ import com.pom.dashboard.service.EmployeeKpoService;
 import com.pom.dashboard.service.EmployeeService;
 import com.pom.dashboard.service.EmployeeperforgoalService;
 import com.pom.dashboard.service.PerformanceMatrixService;
+import com.pom.dashboard.service.PerformanceResultService;
 
 @Controller
 @RequestMapping(value="/empPerforSelf")
@@ -64,7 +69,14 @@ private ObjectMapper objectMapper = new ObjectMapper();
 	@Resource
 	private EmployeeService employeeService;
 	
+	@Resource
+	private PerformanceResultService performanceResultService;
+	
 	private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+	
+    private SimpleDateFormat sf2 = new SimpleDateFormat("yyyy");
+	
+	private SimpleDateFormat sf3 = new SimpleDateFormat("MM");
 	
 	
 	
@@ -155,7 +167,20 @@ private ObjectMapper objectMapper = new ObjectMapper();
 	    		}
 		    }
 	    }
+	    
+	    //查询员工设定的当年当季度绩效目标，是否已经通过审批
+	    Employeeperforgoal epg = new Employeeperforgoal();
+	    epg.setEmployeeid(employeeid);
+	    epg.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+	    epg.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+	    Employeeperforgoal reperfor = employeeperforgoalService.getEmpPerforgoal(epg);
 		
+	    if(reperfor!=null){
+	    	map.put("state", reperfor.getState());
+	    }else{
+	    	map.put("state", "");
+	    }
+	    
 		map.put("data", data1);
 		map.put("plan", planList);
 		

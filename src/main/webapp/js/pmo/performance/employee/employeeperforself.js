@@ -1,3 +1,4 @@
+var state = null;//员工当年当季度设定的绩效目标状态
 $(function(){
 	loadEmployeePerforself();
 })
@@ -10,6 +11,7 @@ function loadEmployeePerforself(){
 		cache:false,
 		type:"post",
 		success:function(result){
+			state = result.state;
 			$("#du").val(result.department);
 			$("#position").val(result.role);
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
@@ -183,6 +185,10 @@ function submit(){
 	var employeeid = $("#reemployeeid").val();
 	if(selfevaluation=='' || selfevaluation==undefined || selfevaluation==null){
 		alert("请填写自评");
+		return;
+	}
+	if(state!='2'){
+		alert("绩效目标还未通过审批");
 		return;
 	}
 	$.ajax({

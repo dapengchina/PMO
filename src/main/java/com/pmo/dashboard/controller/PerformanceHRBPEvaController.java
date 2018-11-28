@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -26,8 +27,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.pmo.dashboard.constant.SysConstant;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
+import com.pmo.dashboard.entity.User;
+import com.pmo.dashboard.entity.vo.PresultVo;
 import com.pmo.dashboard.util.Constants;
 import com.pom.dashboard.service.PerformanceManageEvaService;
 import com.pom.dashboard.service.PerformanceService;
@@ -41,10 +45,15 @@ import com.pom.dashboard.service.PerformanceService;
 @Controller
 @RequestMapping("/performanceHRBPEva")
 public class PerformanceHRBPEvaController {
+	
     @Resource
     private PerformanceManageEvaService performanceManageEvaService;
+    
     @Resource
-    private PerformanceService          performanceService;
+    private PerformanceService performanceService;
+    
+    private ObjectMapper objectMapper = new ObjectMapper();
+    
     /** HRBP-绩效考评-审批导出文件 **/
     private static String[]             approvalTitle   = new String[] { "NO.", "Bu", "Year", "Quarter", "Status" };
     private static String[]             approvalContent = new String[] { "NO.", "BU", "Year", "Quarter", "State" };
@@ -140,7 +149,11 @@ public class PerformanceHRBPEvaController {
      */
     @RequestMapping("/approval/list")
     @ResponseBody
-    public String buGroupEvaList() throws JsonProcessingException {
+    public String buGroupEvaList(HttpServletRequest request) throws JsonProcessingException {
+    	// 判断登录用户类别，根据类别统计
+//        User user = (User) request.getSession().getAttribute("loginUser");
+//        List<Map<String, Object>> list = null;
+    	//list = performanceManageEvaService.groupStatByResultBU(user.getBu());
         List<Map<String, Object>> data = performanceManageEvaService.approvalList();
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(data);
@@ -154,12 +167,28 @@ public class PerformanceHRBPEvaController {
      * @param state 审批状态
      * @return 
      * String
+     * @throws JsonProcessingException 
      */
     @RequestMapping("/approval/detail/submit")
     @ResponseBody
-    public String approvalDetailSubmit(@RequestParam String bu, @RequestParam String state) {
-        performanceManageEvaService.updateStateByBU(bu, state);
-        return "";
+    public String approvalDetailSubmit(@RequestParam String bu, @RequestParam String state) throws JsonProcessingException {
+        Map<String,Object> map = new HashMap<String,Object>();
+        try{
+        	//performanceManageEvaService.updateStateByBU(bu, state);
+        	PresultVo pv = new PresultVo();
+        	pv.setState(state);
+        	pv.setResult("A");
+        	pv.setBu(bu);
+        	pv.setFinalize(SysConstant.ISFINAL);
+        	performanceManageEvaService.update(pv);
+        	map.put("msg", "审批成功");
+        	map.put("code", "1");
+        }catch(Exception e){
+        	map.put("msg", "审批失败");
+        	map.put("code", "0");
+        }
+    	
+        return objectMapper.writeValueAsString(map);
     }
 
     /**

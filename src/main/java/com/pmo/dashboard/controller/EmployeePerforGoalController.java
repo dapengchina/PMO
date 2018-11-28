@@ -118,8 +118,15 @@ public class EmployeePerforGoalController {
 		 */
 		if(employperforgoal==null){
 			Performancematrix pm = new Performancematrix();
+			pm.setDepartment(user.getCsdeptId());//查询员工所在交付部的绩效模板参数数据
 			List<Performancematrix> basePerforList = performanceMatrixService.getBasePerforTemplate(pm);
-		    map.put("data", basePerforList);
+		    //部门汉字转换
+			if(basePerforList!=null && basePerforList.size()>0){
+		    	for(int i=0;i<basePerforList.size();i++){
+		    		basePerforList.get(i).setDepartment(csdept!=null?csdept.getCsSubDeptName():"");
+		    	}
+		    }
+			map.put("data", basePerforList);
 			map.put("plan", new ArrayList());
 			map.put("state", SysConstant.PERFOR_DRAFT_STATE);
 		}else{

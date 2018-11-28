@@ -126,4 +126,6 @@ public interface PerformanceResultMapper {
     public List<PresultVo> queryPerformanceList(PerformanceManageEvaBean pmb);
     
     public int insert(PresultVo pv);
+    
+    public int update(PresultVo pv);
 }

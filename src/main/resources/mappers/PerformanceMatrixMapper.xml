@@ -16,6 +16,9 @@
   <select id="selectBasePerforTemplate" resultMap="BaseResultMap" parameterType="com.pmo.dashboard.entity.Performancematrix" >
     select * from t_performancematrix
     where 1=1
+    <if test="department != null and department != ''" >
+        and department = #{department}
+    </if>
   </select>
   
   <delete id="delete" parameterType="java.lang.String" >

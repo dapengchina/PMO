@@ -66,6 +66,7 @@ public class PerformanceEmpProgressController {
 				if(rept!=null){
 					list.get(i).setProcessname(rept.getProcess());
 				}
+				list.get(i).setRemark(list.get(i).getRemark()!=null?list.get(i).getRemark():"");
 				list.get(i).setStatename(SysConstant.getEvaProgressStateMap().get(list.get(i).getState()).toString());
 			}
 		}

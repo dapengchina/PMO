@@ -19,6 +19,7 @@ import com.pmo.dashboard.entity.PerformanceEmpHistoryBean;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceManageResultHistoryBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
+import com.pmo.dashboard.entity.vo.PresultVo;
 import com.pom.dashboard.service.PerformanceManageEvaService;
 
 @Service
@@ -529,5 +530,10 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
     public Map<String, String> queryEmployeeIdByResultId(String resultId) {
         return mapper.queryEmployeeIdByResultId(resultId);
     }
+
+	@Override
+	public int update(PresultVo pv) {
+		return mapper.update(pv);
+	}
 
 }

@@ -570,6 +570,104 @@
       </if>
     </trim>
   </insert>
+  
+  <update id="update" parameterType="com.pmo.dashboard.entity.vo.PresultVo" >
+    update p_result
+    <set >
+      <if test="pbcId != null" >
+        PBC_ID = #{pbcId,jdbcType=VARCHAR},
+      </if>
+      <if test="eHr != null" >
+        E_HR = #{eHr,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        Year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="quarter != null" >
+        Quarter = #{quarter,jdbcType=VARCHAR},
+      </if>
+      <if test="bu != null" >
+        BU = #{bu,jdbcType=VARCHAR},
+      </if>
+      <if test="du != null" >
+        DU = #{du,jdbcType=VARCHAR},
+      </if>
+      <if test="rm != null" >
+        RM = #{rm,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        Role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="skill != null" >
+        Skill = #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        Location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="backbone != null" >
+        Backbone = #{backbone,jdbcType=VARCHAR},
+      </if>
+      <if test="assessed != null" >
+        Assessed = #{assessed,jdbcType=VARCHAR},
+      </if>
+      <if test="directSupervisor != null" >
+        Direct_Supervisor = #{directSupervisor,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        Result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="resultComments != null" >
+        Result_Comments = #{resultComments,jdbcType=VARCHAR},
+      </if>
+      <if test="clientFeedback != null" >
+        Client_Feedback = #{clientFeedback,jdbcType=VARCHAR},
+      </if>
+      <if test="preassessmentResult != null" >
+        PreAssessment_Result = #{preassessmentResult,jdbcType=VARCHAR},
+      </if>
+      <if test="directSupervisorAssessmentResult != null" >
+        Direct_Supervisor_Assessment_Result = #{directSupervisorAssessmentResult,jdbcType=VARCHAR},
+      </if>
+      <if test="groupAssessmentResult != null" >
+        Group_Assessment_Result = #{groupAssessmentResult,jdbcType=VARCHAR},
+      </if>
+      <if test="groupAssessmentManager != null" >
+        Group_Assessment_Manager = #{groupAssessmentManager,jdbcType=VARCHAR},
+      </if>
+      <if test="performanceFacts != null" >
+        Performance_Facts = #{performanceFacts,jdbcType=VARCHAR},
+      </if>
+      <if test="performanceSkip != null" >
+        Performance_Skip = #{performanceSkip,jdbcType=VARCHAR},
+      </if>
+      <if test="finalize != null" >
+        Finalize = #{finalize,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        State = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <where>
+		<if test="null != bu and '' != bu">
+			and BU = #{bu}
+		</if>
+		<if test="null != du and '' != du">
+			and DU = #{du}
+		</if>
+		<if test="null != rm and '' != rm">
+			and RM = #{rm}
+		</if>
+		<if test="null != list and list.size() > 0">
+			Result_ID in
+			<foreach collection="list" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</where>
+  </update>
 
 </mapper>
 

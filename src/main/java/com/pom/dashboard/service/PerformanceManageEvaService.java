@@ -7,6 +7,7 @@ import com.pmo.dashboard.entity.PerformanceEmpHistoryBean;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceManageResultHistoryBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
+import com.pmo.dashboard.entity.vo.PresultVo;
 
 public interface PerformanceManageEvaService {
 
@@ -278,5 +279,7 @@ public interface PerformanceManageEvaService {
      * void
      */
     public Map<String, String> queryEmployeeIdByResultId(String resultId);
+    
+    public int update(PresultVo pv);
 
 }

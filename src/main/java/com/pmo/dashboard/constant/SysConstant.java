@@ -139,6 +139,7 @@ public class SysConstant {
 		   return map;
 	   }
 	   
+	   public static final String ISFINAL = "True";
 	   //本地服务器地址
 	   public static final String serverurl="http://localhost:8082/Pmo/";
 

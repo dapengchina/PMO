@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -103,13 +102,13 @@ public class PerformanceController {
     }
 
     /**
-     * Employee-绩效目标-绩效目标设定
+     * Employee-绩效目标-绩效目标设定页面
      * @param request
      * @param model
      * @return
      */
     @RequestMapping("/performanceEmpPBC")
-    public String getTMemployee(final HttpServletRequest request, Model model) {
+    public String performanceEmpPBC(final HttpServletRequest request, Model model) {
         return "performance/employee/performanceEmpPBC";
     }
 
@@ -386,12 +385,21 @@ public class PerformanceController {
     public String getPerformanceLobApprove(final HttpServletRequest request, Model model) {
         return "performance/lob/performanceLobApprove";
     }
-
-	@RequestMapping("/performanceLobApproveDetails")
-	public String getPerformanceLobDetails(final HttpServletRequest request, Model model){
-    	request.setAttribute("bu", request.getParameter("bu"));
-		return "performance/performanceLobApproveDetails";
-	}
+    
+    /**
+     * LOB-审批-审批详情页面
+     * @param bu
+     * @param model
+     * @return
+     */
+    @RequestMapping("/performanceLobApproveDetails")
+    public String performanceLobApproveDetails(@RequestParam String bu, Model model) {
+        model.addAttribute("bu", bu);
+        // 根据bu查询审批内容
+        String resultComments = performanceManageEvaService.queryResultCommentsByBU(bu).getResultComments();
+        model.addAttribute("resultComments", resultComments);
+        return "performance/lob/performanceLobApproveDetails";
+    }
 
 	/**
 	 * LOB-绩效结果-当期绩效页面
