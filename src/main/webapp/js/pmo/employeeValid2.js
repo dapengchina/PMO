@@ -254,7 +254,7 @@ $(document).ready(function() {
                         message: 'Exceeded the maxlength'
                     },
                     regexp:{
-            			regexp:/^([1-9]\d*(\.\d*[0-9])?(\/(m|M))?)$|^(0\.\d*[0-9](\/(m|M))?)$/,
+            			regexp:/^([0-9]\d*(\.\d*[0-9])?(\/(m|M))?)$|^(0\.\d*[0-9](\/(m|M))?)$/,
             			message:'Please enter the correct format.'
             		},
                 }
@@ -539,7 +539,7 @@ $(document).ready(function() {
                         message: 'Exceeded the maxlength'
                     },
                     regexp:{
-            			regexp:/^([1-9]\d*(\.\d*[0-9])?(\/(m|M))?)$|^(0\.\d*[0-9](\/(m|M))?)$/,
+            			regexp:/^([0-9]\d*(\.\d*[0-9])?(\/(m|M))?)$|^(0\.\d*[0-9](\/(m|M))?)$/,
             			message:'Please enter the correct format.'
             		},
 

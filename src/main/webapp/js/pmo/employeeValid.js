@@ -203,7 +203,7 @@ $(document).ready(function() {
                         message: 'Exceeded the maxLength'
                     },
                     regexp:{
-            			regexp:/^([1-9]\d*(\.\d*[1-9])?)|(0\.\d*[1-9])$/,
+            			regexp:/^([0-9]\d*(\.\d*[1-9])?)|(0\.\d*[1-9])$/,
             			message:'billRate is not zero.'
             		},
                 }
@@ -361,7 +361,7 @@ $(document).ready(function() {
                         message: 'Exceeded the maxLength'
                     },
                     regexp:{
-            			regexp:/^([1-9]\d*(\.\d*[1-9])?)|(0\.\d*[1-9])$/,
+            			regexp:/^([0-9]\d*(\.\d*[1-9])?)|(0\.\d*[1-9])$/,
             			message:'billRate is not zero.'
             		},
 
