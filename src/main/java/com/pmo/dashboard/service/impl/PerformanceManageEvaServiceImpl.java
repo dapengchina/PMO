@@ -512,8 +512,9 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
     }
 
     @Override
-    public void updatePreAssessmentResult(String preAssessment,String state, String id) {
-        mapper.preAssessment(preAssessment,state, id);
+    public void updatePreAssessmentResult(String manager,String groupresult,String result,String preAssessment,String state, String id) {
+        //mapper.preAssessment(preAssessment,state, id);
+        mapper.preAssessment(manager, groupresult, result, preAssessment, state, id);
     }
 
     @Override

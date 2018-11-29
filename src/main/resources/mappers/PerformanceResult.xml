@@ -272,7 +272,7 @@
 	</update>
 	<!-- rm绩效初评 -->
 	<update id="preAssessment" parameterType="string" >
-		update p_result set Direct_Supervisor_Assessment_Result = #{preAssessment},State = #{state} where Result_ID = #{id}
+		update p_result set Group_Assessment_Manager = #{groupassessmentmanager},Group_Assessment_Result = #{groupassessmentresult},Result = #{result},Direct_Supervisor_Assessment_Result = #{preAssessment},State = #{state} where Result_ID = #{id}
 	</update>
 	<!-- 条件查询 -->
 	<select id="filterQuery" parameterType="hashMap" resultMap="PerformanceResultMap">

@@ -771,10 +771,13 @@ public class PerformanceManageEvaController {
      */
     @RequestMapping("/assessment/grade/rm/submit")
     @ResponseBody
-    public String approvalRMSubmit(@RequestParam("id") String resultId, @RequestParam("grade") String preAssessment) throws JsonProcessingException {
+    public String approvalRMSubmit(
+    		@RequestParam("id") String resultId, 
+    		@RequestParam("grade") String preAssessment
+    		) throws JsonProcessingException {
     	Map<String,Object> map = new HashMap<String,Object>();
     	try{
-    		manageEvaService.updatePreAssessmentResult(preAssessment,SysConstant.PRESULT_PENDING_DU, resultId);
+    		manageEvaService.updatePreAssessmentResult("周鹏",preAssessment,preAssessment,preAssessment,SysConstant.PRESULT_PENDING_DU, resultId);
     	    map.put("msg", "初评成功");
     	    map.put("code", "1");
     	}catch(Exception e){
