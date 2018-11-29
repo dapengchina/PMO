@@ -9,10 +9,11 @@
 		<result property="userType" column="USER_TYPE" javaType="String" />
 		<result property="du" column="CS_SUBDEPT_NAME" javaType="String" />
 		<result property="bu" column="BU" javaType="String" />
+		<result property="loginStatus" column="LOGIN_STATUS" javaType="String" />
 	</resultMap>
 	
 	<select id="queryUserList" parameterType="com.pmo.dashboard.entity.UserPageCondition" resultMap="userInfoMap" >
-	    SELECT u.USER_ID, u.USER_NAME, u.NICKNAME, u.USER_TYPE, u.BU, d.CS_SUBDEPT_NAME
+	    SELECT u.USER_ID, u.USER_NAME, u.NICKNAME, u.USER_TYPE, u.BU, u.LOGIN_STATUS, d.CS_SUBDEPT_NAME
 		FROM t_user AS u
 		LEFT JOIN t_cs_dept d
 		ON u.CSDEPT_ID = d.CS_SUBDEPT_ID

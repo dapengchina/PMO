@@ -141,6 +141,8 @@ public class SysConstant {
 	   
 	   public static final String ISFINAL = "True";
 	   public static final String ISNOTFINAL = "False";
+	   public static final String USER_FORBIDDEN = "1";//用户禁用
+	   public static final String USER_START = "0";//用户启用
 	   //本地服务器地址
 	   public static final String serverurl="http://localhost:8082/Pmo/";
 

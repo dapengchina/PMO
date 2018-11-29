@@ -119,7 +119,13 @@ function loadUserList(pageState,csSubDeptName,csBuName){
 						+ (result.data[i].du == null? '' : result.data[i].du)
 						+ "</td>");
 				var td6 = null;
-				td6 = $("<td><a href='javascript:void(0);' class='btn btn-info btn-small' onclick=editUserInfo('"+result.data[i].userId+"')>Edit</a></td>");
+				if(result.data[i].loginStatus=="0"){
+					td6 = $("<td><a href='javascript:void(0);' class='btn btn-info btn-small' onclick=editUserInfo('"+result.data[i].userId+"')>Edit</a><a href='javascript:void(0);' class='btn btn-info btn-small' onclick=userRights('"+result.data[i].userId+"','"+1+"')>Forbidden</a></td>");
+				}
+				if(result.data[i].loginStatus=="1"){
+					td6 = $("<td><a href='javascript:void(0);' class='btn btn-info btn-small' onclick=editUserInfo('"+result.data[i].userId+"')>Edit</a><a href='javascript:void(0);' class='btn btn-info btn-small' onclick=userRights('"+result.data[i].userId+"','"+0+"')>Startusing</a></td>");
+				}
+				
 				td1.appendTo(tr);
 				td2.appendTo(tr);
 				td3.appendTo(tr);
@@ -155,3 +161,24 @@ function editUserInfo(userId){
 	$("#userId").val(userId);
 	$("#editForm").submit();
 }
+
+//禁用/启用
+function userRights(userid,state){
+	//alert(state);
+	$.ajax({
+		url:path+"/service/user/userRights/"+userid+"/"+state,
+		dataType:"json",
+		async:true,
+		cache:false,
+		type:"post",
+		success:function(result){
+			if(result.code=='1'){
+				alert(result.msg);
+				window.location.href = path + "/service/user/userInfo.html";
+			}else{
+				alert(result.msg);
+			}
+		}
+	})
+}
+

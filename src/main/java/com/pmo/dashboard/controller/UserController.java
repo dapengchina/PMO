@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,6 +34,8 @@ public class UserController {
 	@Resource
 	private UserService userService;
 //	private String user;
+	
+	private ObjectMapper objectMapper = new ObjectMapper();
 	
 	/**
 	 * 验证用户名存在的方法法
@@ -189,6 +192,29 @@ public class UserController {
 	        return user;
 	    }
 		// Felix, 180103, End
+		/**
+		 * 用户禁用/启用
+		 * @param request
+		 * @throws JsonProcessingException 
+		 */
+		@RequestMapping("/userRights/{userid}/{state}")
+	    @ResponseBody
+		public String userRights(@PathVariable("userid") String userid,@PathVariable("state") String state,final HttpServletRequest request) throws JsonProcessingException{
+			Map<String,Object> map = new HashMap<String,Object>();
+			try{
+				User u = new User();
+				u.setUserId(userid);
+				u.setLoginStatus(state);
+				userService.update(u);
+				
+				map.put("msg", "操作成功");
+				map.put("code", "1");
+			}catch(Exception e){
+				map.put("msg", "操作失败");
+				map.put("code", "0");
+			}
+			return objectMapper.writeValueAsString(map);
+		}
 }
 
 
