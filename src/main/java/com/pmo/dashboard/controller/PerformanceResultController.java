@@ -29,6 +29,7 @@ import com.pmo.dashboard.entity.EmployeeImpplan;
 import com.pmo.dashboard.entity.EmployeeKeyevent;
 import com.pmo.dashboard.entity.EmployeeKpo;
 import com.pmo.dashboard.entity.Employeeperforgoal;
+import com.pmo.dashboard.entity.PerformanceEmpProcessBean;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.entity.vo.EmployeePerforGoalVo;
@@ -42,6 +43,7 @@ import com.pom.dashboard.service.EmployeeKpoService;
 import com.pom.dashboard.service.EmployeeService;
 import com.pom.dashboard.service.EmployeeperforgoalService;
 import com.pom.dashboard.service.PerformanceMatrixService;
+import com.pom.dashboard.service.PerformanceProgressService;
 import com.pom.dashboard.service.PerformanceResultService;
 import com.pom.dashboard.service.UserService;
 
@@ -84,6 +86,9 @@ public class PerformanceResultController {
 	
 	@Resource
 	private UserService userService;
+	
+	@Resource
+	private PerformanceProgressService progressService;
 	
 	
 	/**
@@ -236,6 +241,19 @@ public class PerformanceResultController {
 		pmb.setYear(sf.format(new Date()));
 		pmb.setQuarter(String.valueOf(DateUtils.getQuarterByMonth(Integer.parseInt(sf2.format(new Date())))));
 		PresultVo pv = performanceResultService.getPerformance(pmb);
+		
+		//查询绩效目标流程表，获取绩效目标审批comments
+		PerformanceEmpProcessBean pepb = new PerformanceEmpProcessBean();
+		pepb.setEmployeeid(employeeid);
+		pepb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+		pepb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+		List<PerformanceEmpProcessBean> processList = progressService.queryPerformanceProgressList(pepb);
+								
+		if(processList!=null && processList.size()>0){
+			map.put("processcomments", processList.get(0).getRemark());
+		}else{
+			map.put("processcomments", "");
+		}
 	    
 		map.put("comments", pv!=null?pv.getResult_Comments():"");
 		map.put("selfassessment", reperfor!=null?reperfor.getSelfassessment():"");
@@ -354,7 +372,7 @@ public class PerformanceResultController {
 			pv.setBackbone("");//是否是业务先锋
 			pv.setAssessed("");//是否参评
 			pv.setDirectSupervisor(u.getNickname());//直接主管
-			pv.setFinalize("false");//是否是最终结果
+			pv.setFinalize(SysConstant.ISNOTFINAL);//是否是最终结果
 			pv.setState(SysConstant.PRESULT_PENDING_RM);//待RM审批
 			performanceResultService.save(pv);
 			

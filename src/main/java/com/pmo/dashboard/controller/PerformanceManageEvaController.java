@@ -642,10 +642,24 @@ public class PerformanceManageEvaController {
      */
     @RequestMapping("/assessment/approval/du/detail/submit")
     @ResponseBody
-    public String approvalDUDetailSubmit(@RequestParam String rm, @RequestParam String state) throws JsonProcessingException {
-        Map<String,Object> map = new HashMap<String,Object>();
+    public String approvalDUDetailSubmit(
+    		HttpServletRequest request,
+    		@RequestParam String rm, 
+    		@RequestParam String state,
+    		@RequestParam String resultComments
+    		) throws JsonProcessingException {
+    	User user = (User) request.getSession().getAttribute("loginUser");
+    	Map<String,Object> map = new HashMap<String,Object>();
     	try{
-        	manageEvaService.updateStateByRM(rm, state);
+        	//manageEvaService.updateStateByRM(rm, state);
+    		PresultVo pv = new PresultVo();
+    		//pv.setResult(result);
+    		pv.setResultComments(resultComments);
+    		pv.setGroupAssessmentManager(user.getNickname());
+    		//pv.setGroupAssessmentResult(result);
+    		pv.setState(state);
+    		pv.setRm(rm);
+    		manageEvaService.update(pv);
         	map.put("msg", "审批成功");
         	map.put("code", "1");
         }catch(Exception e){

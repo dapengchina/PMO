@@ -17,7 +17,7 @@ function loadEmployeePerforDetail(){
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
 			
 			$("#selfassessment").val(result.selfassessment);
-			$("#comments").val(result.comments);
+			$("#comments").val(result.processcomments);
 			
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){

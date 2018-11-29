@@ -825,6 +825,7 @@
   	<if test="state == 3">
   		and e1.state = '3'
   	</if>
+  	and e.RESOURCE_STATUS in ('Active','Released')
   	<!-- backbone -->
   	
   </select>

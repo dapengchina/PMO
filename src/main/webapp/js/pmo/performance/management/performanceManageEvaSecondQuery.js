@@ -286,13 +286,16 @@ function goBack() {
 
 /** 审批-指定rm下所有员工 * */
 function approval(state) {
-	alert(state);
+	//alert(state);
+	//获取result_comments
+	var resultComments = $("#resultComments").val();
 	var rm = $("#curRm").val();
 	$.ajax({
 		url : path + '/service/performanceManageEva/assessment/approval/du/detail/submit',
 		data : {
 			"rm" : rm,
-			"state" : state
+			"state" : state,
+			"resultComments" : resultComments
 		},
 		cache : false,
 		dataType:"json",

@@ -60,8 +60,17 @@ $("#getEmp").click(function(){
 } );
 
 $("#getManage").click(function(){
-	if(userType=='5' || userType=='3' || userType=='1'){
+	//RM
+	if(userType=='5'){
 		window.open(path+"/service/performance/performanceManageTargetApproval.html");
+	}
+	//交付部经理
+	if(userType=='3'){
+		window.open(path+"/service/performance/performanceManageEvaSecondDU.html");
+	}
+	//事业部经理
+	if(userType=='1'){
+		window.open(path+"/service/performance/performanceManageEvaSecondBU.html");
 	}
 });
 $("#getHR").click(function(){
