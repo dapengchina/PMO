@@ -50,7 +50,10 @@ function loadManageEvaSecondDUList() {
 		title : 'Year'
 	}, {
 		field : 'quarter',
-		title : 'Quarter'
+		title : 'Quarter',
+		formatter : function(value, row, index) {
+			return "Q"+value;
+		}
 	}, {
 		title : 'Status',
 		formatter : function(value, row, index) {

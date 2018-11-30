@@ -74,6 +74,7 @@ import com.pom.dashboard.service.PerformanceMatrixService;
 import com.pom.dashboard.service.PerformanceProgressService;
 import com.pom.dashboard.service.PerformanceResultService;
 import com.pom.dashboard.service.PerformanceService;
+import com.pom.dashboard.service.UserService;
 
 /**
  * Performance Management 绩效考评  页面的controller
@@ -139,6 +140,9 @@ public class PerformanceManageEvaController {
     
     @Resource
 	private PerformanceProgressService progressService;
+    
+    @Resource
+    private UserService userService;
     
     /** Management-绩效考评-事业部审批导出文件 **/
     private static String[]              approvalBUTitle     = new String[] { "NO.", "DU", "Year", "Quarter", "Status" };
@@ -772,12 +776,24 @@ public class PerformanceManageEvaController {
     @RequestMapping("/assessment/grade/rm/submit")
     @ResponseBody
     public String approvalRMSubmit(
+    		HttpServletRequest request,
     		@RequestParam("id") String resultId, 
     		@RequestParam("grade") String preAssessment
     		) throws JsonProcessingException {
+    	User user = (User) request.getSession().getAttribute("loginUser");
     	Map<String,Object> map = new HashMap<String,Object>();
     	try{
-    		manageEvaService.updatePreAssessmentResult("周鹏",preAssessment,preAssessment,preAssessment,SysConstant.PRESULT_PENDING_DU, resultId);
+    		Map<String,Object> param = new HashMap<String,Object>();
+    		param.put("csdeptID", user.getCsdeptId());
+    		param.put("rmtype", "3");
+    		List<User> lu = userService.getUser(param);
+    		manageEvaService.updatePreAssessmentResult(
+    				lu.get(0).getNickname(),//集体评议主管
+    				preAssessment,//部门集体评议结果
+    				preAssessment,//绩效结果
+    				preAssessment,//直接主管初评结果
+    				SysConstant.PRESULT_PENDING_DU,//状态 
+    				resultId);
     	    map.put("msg", "初评成功");
     	    map.put("code", "1");
     	}catch(Exception e){

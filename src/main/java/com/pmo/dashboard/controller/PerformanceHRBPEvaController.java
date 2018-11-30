@@ -29,8 +29,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pmo.dashboard.constant.SysConstant;
 import com.pmo.dashboard.entity.PerformanceManageEvaBean;
-import com.pmo.dashboard.entity.PerformanceQueryCondition;
-import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.entity.vo.PresultVo;
 import com.pmo.dashboard.util.Constants;
 import com.pom.dashboard.service.PerformanceManageEvaService;
@@ -177,7 +175,6 @@ public class PerformanceHRBPEvaController {
         	//performanceManageEvaService.updateStateByBU(bu, state);
         	PresultVo pv = new PresultVo();
         	pv.setState(state);
-        	pv.setResult("A");
         	pv.setBu(bu);
         	pv.setFinalize(SysConstant.ISFINAL);
         	performanceManageEvaService.update(pv);

@@ -660,12 +660,12 @@
 		<if test="null != rm and '' != rm">
 			and RM = #{rm}
 		</if>
-		<if test="null != list and list.size() > 0">
+		<!--<if test="null != list and list.size() > 0">
 			Result_ID in
 			<foreach collection="list" item="item" open="(" separator="," close=")">
 				#{item}
 			</foreach>
-		</if>
+		</if>  -->
 	</where>
   </update>
 

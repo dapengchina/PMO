@@ -133,7 +133,7 @@ var path='<%=path%>';
 								 <div class="panel-body" >										
 										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Comments</label>
 										<div class="col-lg-10">
-											<textarea rows="3" style="border:1px solid black" class="form-control" readonly>${resultComments}</textarea>
+											<textarea rows="3" style="border:1px solid black" class="form-control">${resultComments}</textarea>
 										</div>
 								 </div>
 							</div>						
