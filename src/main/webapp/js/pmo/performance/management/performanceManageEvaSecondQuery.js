@@ -1,4 +1,12 @@
 $(function() {
+	var state = $("#restate").val();
+	if(state=="2" || state=="3" || state=="5"){
+		
+	}else{
+		document.getElementById("button1").setAttribute("disabled", 'disabled');
+		document.getElementById("button2").setAttribute("disabled", 'disabled');
+		document.getElementById("resultComments").setAttribute("disabled", 'disabled');
+	}
 	queryPercentage();
 	loadManageEvaSecondQueryList();
 

@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pmo.dashboard.entity.CSDept;
+import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.Template;
 import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.util.Constants;
@@ -209,8 +210,10 @@ public class PerformanceController {
         CSDept csDept = csDeptService.queryCSDeptById(user.getCsdeptId());
         model.addAttribute("du", csDept.getCsSubDeptName());
         // 根据du查询审批内容
-        String resultComments = performanceManageEvaService.queryResultCommentsByDU(csDept.getCsSubDeptName()).getResultComments();
-        model.addAttribute("resultComments", resultComments);
+        PerformanceManageEvaBean pmeb = performanceManageEvaService.queryResultCommentsByDU(csDept.getCsSubDeptName());
+        //String resultComments = performanceManageEvaService.queryResultCommentsByDU(csDept.getCsSubDeptName()).getResultComments();
+        model.addAttribute("resultComments", pmeb.getResultComments());
+        model.addAttribute("state", pmeb.getState());
         return "performance/management/performanceManageEvaSecondQuery";
     }
 
@@ -241,8 +244,10 @@ public class PerformanceController {
         model.addAttribute("du", du);
         model.addAttribute("bu", user.getBu());
         // 根据bu查询审批内容
-        String resultComments = performanceManageEvaService.queryResultCommentsByBU(user.getBu()).getResultComments();
-        model.addAttribute("resultComments", resultComments);
+        PerformanceManageEvaBean pmeb = performanceManageEvaService.queryResultCommentsByBU(user.getBu());
+        //String resultComments = performanceManageEvaService.queryResultCommentsByBU(user.getBu()).getResultComments();
+        model.addAttribute("resultComments", pmeb.getResultComments());
+        model.addAttribute("state", pmeb.getState());
         return "performance/management/performanceManageEvaSecondQueryDU";
     }
 
@@ -396,8 +401,10 @@ public class PerformanceController {
     public String performanceLobApproveDetails(@RequestParam String bu, Model model) {
         model.addAttribute("bu", bu);
         // 根据bu查询审批内容
-        String resultComments = performanceManageEvaService.queryResultCommentsByBU(bu).getResultComments();
-        model.addAttribute("resultComments", resultComments);
+        PerformanceManageEvaBean pmeb = performanceManageEvaService.queryResultCommentsByBU(bu);
+        //String resultComments = performanceManageEvaService.queryResultCommentsByBU(bu).getResultComments();
+        model.addAttribute("resultComments", pmeb.getResultComments());
+        model.addAttribute("state", pmeb.getState());
         return "performance/lob/performanceLobApproveDetails";
     }
 

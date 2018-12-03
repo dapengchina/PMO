@@ -1,4 +1,5 @@
 $().ready(function() {
+	
 	queryPercentage();
 	loadLobApprovalList();
 });
@@ -70,11 +71,11 @@ function loadLobApprovalList() {
 	}, {
 		title : 'Detail',
 		formatter : function(value, row, index) {
-			if (row.State == 6) {
+			//if (row.State == 6) {
 				return "<a href='performanceLobApproveDetails.html?bu=" + row.BU + "' class='btn btn-info btn-sm'>"+
 	            "<span></span> Detail"+
 	          "</a>";
-			}
+			//}
 		}
 	} ];
 
