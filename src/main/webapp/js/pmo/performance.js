@@ -12,6 +12,7 @@ function loadUserType(){
 		type:"post",
 		success:function(result){
 			userType=result;
+			console.log("userType : " + userType);
 			//普通员工角色判断
 			if(result=='16'){
 				document.getElementById('getManage').style.opacity="0.5";
@@ -20,7 +21,6 @@ function loadUserType(){
 			}
 			//RM角色判断 
 			if(result=='5'){
-				document.getElementById('getEmp').style.opacity="0.5";
 				document.getElementById('getHR').style.opacity="0.5";
 				document.getElementById('getLOB').style.opacity="0.5";
 			}
@@ -38,7 +38,6 @@ function loadUserType(){
 			}
 			//HRBP角色判断
 			if(result=='9'){
-				document.getElementById('getEmp').style.opacity="0.5";
 				document.getElementById('getManage').style.opacity="0.5";
 				document.getElementById('getLOB').style.opacity="0.5";
 			}
@@ -60,7 +59,7 @@ function loadUserType(){
 }
 
 $("#getEmp").click(function(){
-	if(userType=='16'){
+	if(userType=='16' || userType=='5' || userType=='9'){
 		window.open(path+"/service/performance/performanceEmpPBC.html");
 	}
 } );
