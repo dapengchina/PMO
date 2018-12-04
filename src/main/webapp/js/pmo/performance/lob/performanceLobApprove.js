@@ -171,11 +171,17 @@ function submit() {
 		},
 		cache : false,
 		type : "POST",
-		success : function(data) {
-			alert("审批成功");
+		dataType:"json",
+		success : function(result) {
+			if(result.code=="1"){
+				alert(result.msg);
+				window.location.href=path+"/service/performance/performanceLobApprove";
+			}else{
+				alert(result.msg);
+			}
 		},
 		error : function(error) {
-			alert("审批失败");
+			alert("提交失败");
 		}
 	});
 }

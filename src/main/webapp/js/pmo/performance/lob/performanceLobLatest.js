@@ -236,7 +236,7 @@ function loadManageEvaFinalList() {
 }
 
 function detail(employeeId) {
-	window.location.href = path+"/service/performanceManageEva/latestPerforDetailPage/"+employeeId;
+	window.location.href = path+"/service/performanceLobApprove/lobDetailPage2/"+employeeId;
 }
 
 /** 导出绩效定稿数据 */

@@ -183,7 +183,7 @@ function search() {
 	// queryParams);
 }
 function detail(employeeId) {
-	window.location.href = path+"/service/performanceManageEva/historyPerforDetailPage/"+employeeId;
+	window.location.href = path+"/service/performanceLobApprove/lobDetailPage3/"+employeeId;
 }
 
 /** 历史绩效导出 * */

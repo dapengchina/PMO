@@ -274,7 +274,7 @@ function loadHRBPGroupEvaList() {
 	});
 }
 function detail(employeeid) {
-	window.location.href=path+"/service/performanceManageEva/approvalDuDetailPage/"+employeeid;
+	window.location.href=path+"/service/performanceLobApprove/lobDetailPage1/"+employeeid;
 }
 
 /** search ** */

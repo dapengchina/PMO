@@ -198,9 +198,20 @@ public class PerformanceHRBPEvaController {
      * 
      */
     @RequestMapping("/approval/submit")
+    @ResponseBody
     public String approvalSubmit(@RequestParam String comments) throws JsonProcessingException {
-        performanceManageEvaService.updateComments(comments);
-        return "performance/performanceHRBPApproval";
+        Map<String,Object> map = new HashMap<String,Object>();
+        try{
+        	performanceManageEvaService.updateComments(comments);
+        	
+        	map.put("msg", "提交成功");
+        	map.put("code", "1");
+        }catch(Exception e){
+        	map.put("msg", "提交失败");
+        	map.put("code", "0");
+        }
+    	
+        return objectMapper.writeValueAsString(map);
     }
 
     /**
