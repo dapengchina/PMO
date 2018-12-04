@@ -64,15 +64,15 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
     private PerformanceManageEvaBean getPreResult(String ehr, String year, String quarter) {
         PerformanceQueryCondition condition2 = new PerformanceQueryCondition();
         condition2.seteHr(ehr);
-        if ("Q4".equalsIgnoreCase(quarter)) {
-            quarter = "Q3";
-        } else if ("Q3".equalsIgnoreCase(quarter)) {
-            quarter = "Q2";
-        } else if ("Q2".equalsIgnoreCase(quarter)) {
-            quarter = "Q1";
-        } else if ("Q1".equalsIgnoreCase(quarter)) {
+        if ("4".equalsIgnoreCase(quarter)) {
+            quarter = "3";
+        } else if ("3".equalsIgnoreCase(quarter)) {
+            quarter = "2";
+        } else if ("2".equalsIgnoreCase(quarter)) {
+            quarter = "1";
+        } else if ("1".equalsIgnoreCase(quarter)) {
             year = "" + (Integer.parseInt(year) - 1);
-            quarter = "Q4";
+            quarter = "4";
         }
         condition2.setStartYear(year);
         condition2.setStartQuarter(quarter);
