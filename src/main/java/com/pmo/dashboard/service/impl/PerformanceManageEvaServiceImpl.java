@@ -20,6 +20,7 @@ import com.pmo.dashboard.entity.PerformanceManageEvaBean;
 import com.pmo.dashboard.entity.PerformanceManageResultHistoryBean;
 import com.pmo.dashboard.entity.PerformanceQueryCondition;
 import com.pmo.dashboard.entity.vo.PresultVo;
+import com.pmo.dashboard.util.Utils;
 import com.pom.dashboard.service.PerformanceManageEvaService;
 
 @Service
@@ -52,10 +53,11 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
                     if (prePrePreB != null) {
                         b.setPrevious3Quarter(prePrePreB.getResult());
                     }
-
                 }
-            }
-
+	            b.setJump(new Utils().skip(b.getResult(), preB.getResult()));
+	        } else {
+	            b.setJump(new Utils().skip(b.getResult(), null));
+	        }
         }
         return list;
 
@@ -105,7 +107,10 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
                     }
 
                 }
-            }
+	            b.setJump(new Utils().skip(b.getResult(), preB.getResult()));
+	        } else {
+	            b.setJump(new Utils().skip(b.getResult(), null));
+	        }
 
         }
         return list;
@@ -422,14 +427,15 @@ public class PerformanceManageEvaServiceImpl implements PerformanceManageEvaServ
                     if (prePrePreB != null) {
                         b.setPrevious3Quarter(prePrePreB.getResult());
                     }
-
                 }
-            }
-
+	            b.setJump(new Utils().skip(b.getResult(), preB.getResult()));
+	        } else {
+	            b.setJump(new Utils().skip(b.getResult(), null));
+	        }
         }
     }
 
-    @Override
+	@Override
     public List<Map<String, Object>> approvalList() {
         PerformanceQueryCondition condition = new PerformanceQueryCondition();
         Calendar c = Calendar.getInstance();

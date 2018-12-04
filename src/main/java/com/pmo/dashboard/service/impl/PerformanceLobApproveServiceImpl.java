@@ -3,6 +3,7 @@ package com.pmo.dashboard.service.impl;
 import com.pmo.dashboard.dao.PerformanceLobApproveMapper;
 import com.pmo.dashboard.dao.PerformanceResultMapper;
 import com.pmo.dashboard.entity.*;
+import com.pmo.dashboard.util.Utils;
 import com.pom.dashboard.service.PerformanceLobApproveService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
@@ -69,6 +70,9 @@ public class PerformanceLobApproveServiceImpl implements PerformanceLobApproveSe
                         b.setPrevious3Quarter(prePrePreB.getResult());
                     }
                 }
+                b.setPerformanceSkip(new Utils().skip(b.getResult(), preB.getResult()));
+            } else {
+                b.setPerformanceSkip(new Utils().skip(b.getResult(), null));
             }
         }
         return list;
@@ -144,8 +148,10 @@ public class PerformanceLobApproveServiceImpl implements PerformanceLobApproveSe
                     }
 
                 }
-            }
-
+	            b.setJump(new Utils().skip(b.getResult(), preB.getResult()));
+	        } else {
+	            b.setJump(new Utils().skip(b.getResult(), null));
+	        }
         }
     }
 	

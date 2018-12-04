@@ -2,10 +2,34 @@ package com.pmo.dashboard.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+
+import org.springframework.util.StringUtils;
 
 public class Utils
 {
+
+	public String skip(String first, String second) {
+	
+		String isSkip = "否";
+		if (StringUtils.isEmpty(first) || StringUtils.isEmpty(second)){
+			return isSkip;
+		}
+		Map<String,Integer> a = new HashMap<String,Integer>();
+		a.put("A",1);
+		a.put("B+",2);
+		a.put("B",3);
+		a.put("C",4);
+		a.put("D",5);
+		int skip = Math.abs(a.get(first) - a.get(second));
+		// 大于1， 跳变
+		if (skip > 1){
+			isSkip = "是";
+		}
+		return isSkip;
+	}
 
     public static String getUUID()
     {
