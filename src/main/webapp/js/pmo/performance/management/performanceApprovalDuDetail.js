@@ -18,8 +18,11 @@ function loadPerforDetail(){
 			$("#position").val(result.role);
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
 			
+			//RM对于员工填写的绩效目标的审批意见
+			$("#perSettingComments").val(result.processcomments);
+			//自评
 			$("#selfEvaluation").val(result.selfassessment);
-			$("#comments").val(result.processcomments);
+			//初评
 			$("#initialEvaluation").val(result.directresult);
 			//console.log("data==" + JSON.stringify(result));
 			for(var i = 0; i < result.data.length; i++){

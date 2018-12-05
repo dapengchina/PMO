@@ -123,7 +123,7 @@ var path='<%=path%>';
 
 							<div class="panel panel-default"  style="border:1px solid black">	
 								 <div class="panel-body" >										
-										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Approval Feedback</label>
+										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">ResultComments</label>
 										<div class="col-lg-10">
 											<textarea rows="3" style="border:1px solid black" class="form-control" id="approval_feedback"></textarea>
 										</div>
