@@ -256,6 +256,8 @@ public class PerformanceResultController {
 		}
 	    
 		map.put("comments", pv!=null?pv.getResult_Comments():"");
+		map.put("directresult", pv!=null?pv.getDirect_Supervisor_Assessment_Result():"");
+		map.put("finalResult", pv!=null?pv.getResult():"");
 		map.put("selfassessment", reperfor!=null?reperfor.getSelfassessment():"");
 		map.put("data", data1);
 		map.put("plan", planList);

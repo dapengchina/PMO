@@ -16,9 +16,9 @@ function loadPerforDetail(){
 			$("#position").val(result.role);
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
 			//console.log("data==" + JSON.stringify(result));
+			$("#perSettingComments").val(result.processcomments);
 			$("#selfEvaluation").val(result.selfassessment);
-			$("#comments").val(result.processcomments);
-			$("#rating").val(result.directresult);
+			$("#initialEvaluation").val(result.directresult);
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){
 					loadPriorityWork(result);

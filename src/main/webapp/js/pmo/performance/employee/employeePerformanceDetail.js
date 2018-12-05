@@ -16,8 +16,10 @@ function loadEmployeePerforDetail(){
 			$("#position").val(result.role);
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
 			
-			$("#selfassessment").val(result.selfassessment);
-			$("#comments").val(result.processcomments);
+			$("#perSettingComments").val(result.processcomments);//RM对员工设定的绩效目标审批意见
+			$("#selfEvaluation").val(result.selfassessment);//自评
+			$("#initialEvaluation").val(result.directresult);//初评
+			$("#finalResult").val(result.finalResult);//最终结果
 			
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){

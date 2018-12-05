@@ -1362,6 +1362,7 @@ public class PerformanceManageEvaController {
 		}
 	    
 		map.put("comments", pv!=null?pv.getResult_Comments():"");
+		map.put("finalResult", pv!=null?pv.getResult():"");
 		map.put("directresult", pv!=null?pv.getDirect_Supervisor_Assessment_Result():"");
 		map.put("selfassessment", reperfor!=null?reperfor.getSelfassessment():"");
 		map.put("state", reperfor!=null?reperfor.getState():"");

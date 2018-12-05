@@ -20,6 +20,7 @@ function loadPerforDetail(){
 			
 			$("#selfEvaluation").val(result.selfassessment);
 			$("#comments").val(result.processcomments);
+			$("#initialEvaluation").val(result.directresult);
 			//console.log("data==" + JSON.stringify(result));
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){

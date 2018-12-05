@@ -76,7 +76,7 @@ function loadEmpHistoryList(){
 	        }, 
 	        {
 	            field: 'result_Comments',
-	            title: 'Comments'
+	            title: 'ResultComments'
 	        },
 	        {
 	            field: 'operation',

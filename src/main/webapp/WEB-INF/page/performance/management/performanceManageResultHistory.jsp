@@ -177,6 +177,15 @@ var path='<%=path%>';
 							
 							<div class="panel panel-default"  style="border:1px solid black">	
 								 <div class="panel-body" >										
+										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">PerSettingComments</label>
+										<div class="col-lg-10">
+											<textarea readonly="readonly" rows="3" style="border:1px solid black" class="form-control" id="perSettingComments" ></textarea>
+										</div>
+								 </div>
+							</div>
+							
+							<div class="panel panel-default"  style="border:1px solid black">	
+								 <div class="panel-body" >										
 										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Self-Evaluation</label>
 										<div class="col-lg-10">
 											<textarea readonly="readonly" rows="3" style="border:1px solid black" class="form-control" id="selfEvaluation" ></textarea>
@@ -186,18 +195,18 @@ var path='<%=path%>';
 							
 							<div class="panel panel-default"  style="border:1px solid black">	
 								 <div class="panel-body" >										
-										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Comments</label>
+										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Initial-Evaluation</label>
 										<div class="col-lg-10">
-											<textarea readonly="readonly" rows="3" style="border:1px solid black" class="form-control" id="comments" ></textarea>
+											<textarea readonly="readonly" rows="3" style="border:1px solid black" class="form-control" id="initialEvaluation" ></textarea>
 										</div>
 								 </div>
 							</div>
 							
 							<div class="panel panel-default"  style="border:1px solid black">	
 								 <div class="panel-body" >										
-										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Rating</label>
+										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">FinalResult</label>
 										<div class="col-lg-10">
-											<textarea readonly="readonly" rows="3" style="border:1px solid black" class="form-control" id="rating" ></textarea>
+											<textarea readonly="readonly" rows="3" style="border:1px solid black" class="form-control" id="finalResult" ></textarea>
 										</div>
 								 </div>
 							</div>

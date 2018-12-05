@@ -191,6 +191,15 @@ var path='<%=path%>';
 										</div>
 								 </div>
 							</div>
+							
+							<div class="panel panel-default"  style="border:1px solid black">	
+								 <div class="panel-body" >										
+										<label class="col-lg-2" style="text-align:right; vertical-align:middle;display:inline-block;line-height:75px;">Initial-Evaluation</label>
+										<div class="col-lg-10">
+											<textarea readonly="readonly" rows="3" style="border:1px solid black" class="form-control" id="initialEvaluation" ></textarea>
+										</div>
+								 </div>
+							</div>
 		
 			
 
