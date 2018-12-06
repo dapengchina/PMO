@@ -261,12 +261,12 @@ function loadHRBPGroupEvaList() {
 					  width: "100px"
 		}],
 		onLoadSuccess : function(sta) {
-			console.log("in onLoadSuccess");
-			console.log(sta);
+//			console.log("in onLoadSuccess");
+//			console.log(sta);
 		},
 		onLoadError : function(status, res) { // 加载失败时执行
-			console.log(res);
-			console.log("error.status:" + status);
+//			console.log(res);
+//			console.log("error.status:" + status);
 		},
 		onDblClickRow : function(row, $element) {
 		}

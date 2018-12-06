@@ -29,6 +29,9 @@ function loadPerforDetail(){
 				}
 			}
 			loadEmployeePlan(result);
+			document.getElementById("button1").setAttribute("disabled", 'disabled');
+			document.getElementById("button2").setAttribute("disabled", 'disabled');
+			document.getElementById("button3").setAttribute("disabled", 'disabled');
 		}
 	})
 }

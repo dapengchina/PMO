@@ -15,9 +15,14 @@ function loadPerforDetail(){
 			$("#du").val(result.department);
 			$("#position").val(result.role);
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
-			$("#comments").val(result.processcomments);
+			//RM对员工填写的绩效目标的审批意见
+			$("#perSettingComments").val(result.processcomments);
+			//员工自评
 			$("#selfAssessment").val(result.selfassessment);
+			//RM初评
 			$("#initialEvaluation").val(result.initialevaluation);
+			//最终结果
+			$("#finalResult").val(result.finalResult);
 			//console.log("data==" + JSON.stringify(result));
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){

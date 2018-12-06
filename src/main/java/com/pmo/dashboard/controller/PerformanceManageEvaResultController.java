@@ -65,6 +65,7 @@ public class PerformanceManageEvaResultController {
         logger.debug("query condition:" + condition);
         // update by xuexuan 客户端分页改为服务器端分页
         PageHelper.startPage(pageNumber, pageSize);
+        condition.setDu(null);//查询自己事业部下所有员工的
         List<PerformanceManageEvaBean> data = manageEvaService.finalizeResultList(condition);
         PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
         Map<String, Object> map = new HashMap<>();

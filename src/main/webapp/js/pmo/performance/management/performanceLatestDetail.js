@@ -16,9 +16,14 @@ function loadPerforDetail(){
 			$("#position").val(result.role);
 			$("#assessmentSupervisor").val(result.assessmentSupervisor);
 			//console.log("data==" + JSON.stringify(result));
-			$("#selfEvaluation").val(result.selfassessment);
-			$("#comments").val(result.comments);
-			$("#rating").val(result.directresult);
+			//RM对员工填写的绩效目标的审批意见
+			$("#perSettingComments").val(result.processcomments);
+			//员工自评
+			$("#selfAssessment").val(result.selfassessment);
+			//RM初评
+			$("#initialEvaluation").val(result.directresult);
+			//最终结果
+			$("#finalResult").val(result.finalResult);
 			for(var i = 0; i < result.data.length; i++){
 				if(result.data[i].type == "0"){
 					loadPriorityWork(result);
@@ -28,6 +33,9 @@ function loadPerforDetail(){
 				}
 			}
 			loadEmployeePlan(result);
+			document.getElementById("button1").setAttribute("disabled", 'disabled');
+			document.getElementById("button2").setAttribute("disabled", 'disabled');
+			document.getElementById("button3").setAttribute("disabled", 'disabled');
 		}
 	})
 }
