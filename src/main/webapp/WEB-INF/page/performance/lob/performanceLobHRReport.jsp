@@ -37,6 +37,7 @@
 <link href='<%=path %>/css/animate.min.css' rel='stylesheet'/>
 <link href='<%=path%>/css/bootstrap-datetimepicker.css' rel='stylesheet'/>
 <link href='<%=path%>/css/bootstrap-datetimepicker.min.css' rel='stylesheet'/>
+<link href='<%=path%>/css/style.css' rel='stylesheet'>
 <style type="text/css">
 .templateTable thead, .templateTable td { 
 	text-align: center;
@@ -86,9 +87,10 @@ var path='<%=path%>';
 				<div class="box col-md-12">
 						<div class="box-inner" >
 							<div class="box-header well" data-original-title="" > 
-							<div style="display:none"></div>
+							<div style="display:none">跟performanceManageEvaFirstDetail.jsp页面几乎一样的内容， 只是下面的参数和标题不同</div>
+							<input type="hidden" id="showAchievement" value="true"></input>
 								<h2>
-									<i class="glyphicon glyphicon-user"></i>   Lob - HR Report
+									<i class="glyphicon glyphicon-user"></i>   LOB-HR Report
 								</h2>
 							</div>
 
@@ -115,27 +117,27 @@ var path='<%=path%>';
 										 <td> D <br/>(0-5%) </td>
 										 <td> 参评比例合计 </td>
 									   </tr>
-										<tr>
-											<td>  <div id="cola"></div>	 </td>
-											<td> <div id="colbplus"></div> </td>
-											<td> <div id="colb"></div> </td>
-											<td><div id="colc"></div> </td>
-											<td> <div id="cold"></div> </td>
-											<td> <div id="total"></div> </td>
-										</tr>
-										<tr>
-											<td>  <div id="rounda"></div>	 </td>
-											<td> <div id="roundbplus"></div> </td>
-											<td> <div id="roundb"></div> </td>
-											<td><div id="roundc"></div> </td>
-											<td> <div id="roundd"></div> </td>
-											<td> <div id="roundTotal"></div> </td>
-										</tr>
+									   <tr>			
+										 <td>  <div id="empA"></div>	 </td>
+										 <td> <div id="empBplus"></div> </td>
+										 <td> <div id="empB"></div> </td>
+										 <td><div id="empC"></div> </td>
+										 <td> <div id="empD"></div> </td>
+										 <td> <div id="empSum"></div> </td>
+									   </tr>
+									   <tr>
+										 <td>  <div id="percentA"></div>	 </td>
+										 <td> <div id="percentBplus"></div> </td>
+										 <td> <div id="percentB"></div> </td>
+										 <td><div id="percentC"></div> </td>
+										 <td> <div id="percentD"></div> </td>
+										 <td> <div id="percentSum"></div> </td>
+									   </tr>
 									</table>
 
 									<br/>
 
-						<table id="lobApproveReportDetailList" class="table table-thead-background"></table>
+								<table id="manageEvaFirstDetailList" class="table table-thead-background"></table>
 
 						 
 						     </div>
@@ -144,16 +146,15 @@ var path='<%=path%>';
 									<span>&nbsp;</span>
 									<div class="form-group">
 												<div style="text-align:center;width:100%;">
-													<a href="<%=path%>/service/performanceLobApprove/exportLobHRReport.html" class="button btn btn-primary" data-dismiss="modal" style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">Export</a>
-												<%--<input type="button" value="Select All" name="Save" id="Save" href="#"
+												<input type="button" value="Select All" name="Save" id="Save" href="#"
 												class="button btn btn-primary" data-dismiss="modal"
 												onclick=""
 												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 												<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 												<input type="button" value="Export" name="Edit" id="Edit" href="#"
 												class="button btn btn-primary" data-dismiss="modal"
-												onclick=""
-												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">--%>
+												onclick="finalizeResultExport();"
+												style="background-color: #D5D5D5; border: 0 none; border-radius: 4px; color: #FFFFFF; cursor: pointer; display: inline-block; font-size: 15px; font-weight: bold; height: 32px; line-height: 32px; margin: 0 5px 10px 0; padding: 0; text-align: center; text-decoration: none; vertical-align: top; white-space: nowrap; width: 100px; margin:auto ;">
 												</div>
 										</div>
 
@@ -222,12 +223,10 @@ var path='<%=path%>';
 	<script src="<%=path %>/js/jquery.history.js"></script>
 	<!-- application script for Charisma demo -->
 	<script src="<%=path %>/js/charisma.js"></script>
-
-	<script src="<%=path %>/extensionjs/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
-	<script src="<%=path %>/extensionjs/table-export/tableExport.js"></script>
-
-	<script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
-	<script type="text/javascript" src="<%=path %>/js/pmo/performanceLobHRReport.js"></script>
+	
+    <script type="text/javascript" src="<%=path %>/js/pmo/performance.js"></script>
+    <!--<script type="text/javascript" src="<%=path%>/js/pmo/performanceTable.js"></script>  -->
+	<script type="text/javascript" src="<%=path %>/js/pmo/performance/lob/performanceLobHRReport.js"></script>
 </body>
 </html>
 

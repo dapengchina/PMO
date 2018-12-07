@@ -430,9 +430,15 @@ public class PerformanceController {
 		return "performance/lob/performanceLobHistory";
 	}
 	
+	/**
+	 * LOB-HR Report
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/performanceLobHRReport")
 	public String getPerformanceLobHRReport(final HttpServletRequest request, Model model){
-		return "performance/performanceLobHRReport";
+		return "performance/lob/performanceLobHRReport";
 	}
 	
 	/**
