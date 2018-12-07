@@ -61,6 +61,8 @@ public class PerformanceManageEvaBean {
     private String resultId;         // add by xuexan
     private String state;
     
+    private String finalize;
+    
     
     /**
      * 不匹配字段
@@ -81,7 +83,15 @@ public class PerformanceManageEvaBean {
 
     
     
-    public String getDirectSupervisorAssessmentResult() {
+    public String getFinalize() {
+		return finalize;
+	}
+
+	public void setFinalize(String finalize) {
+		this.finalize = finalize;
+	}
+
+	public String getDirectSupervisorAssessmentResult() {
 		return directSupervisorAssessmentResult;
 	}
 

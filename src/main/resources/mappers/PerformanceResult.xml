@@ -370,6 +370,9 @@
 		<if test="quarter != null and quarter != ''">
 			AND Quarter = #{quarter}
 		</if>
+		<if test="finalize != null and finalize != ''">
+			AND Finalize = #{finalize}
+		</if>
 	</select>
 	
 	<!-- Employee-绩效结果-历史绩效 -->
@@ -384,6 +387,9 @@
 		</if>
 		<if test="quarter != null and quarter != ''">
 			AND Quarter = #{quarter}
+		</if>
+		<if test="finalize != null and finalize != ''">
+			AND Finalize = #{finalize}
 		</if>
 		<if test="role != null and role != ''">
 			AND Role = #{role}

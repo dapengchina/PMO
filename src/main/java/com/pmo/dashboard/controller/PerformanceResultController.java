@@ -106,9 +106,14 @@ public class PerformanceResultController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("loginUser");
 		PerformanceManageEvaBean pmb = new PerformanceManageEvaBean();
+		//员工Ehr
 		pmb.setEhr(user.getUserName());
+		//当年
 		pmb.setYear(sf.format(new Date()));
+		//当季度
 		pmb.setQuarter(String.valueOf(DateUtils.getQuarterByMonth(Integer.parseInt(sf2.format(new Date())))));
+		//最终结果
+		pmb.setFinalize(SysConstant.ISFINAL);
 		//第一个参数当前页码，第二个参数每页条数
 		PageHelper.startPage(1,500); 
 		PresultVo pv = performanceResultService.getPerformance(pmb);
@@ -303,6 +308,7 @@ public class PerformanceResultController {
 		Map<String,Object> result = new HashMap<String,Object>();
 		PerformanceManageEvaBean pmb = new PerformanceManageEvaBean();
 		pmb.setEhr(user.getUserName());
+		pmb.setFinalize(SysConstant.ISFINAL);//最终结果
 		if(msaRole!=null && !"".equals(msaRole) && !msaRole.equals("null")){
 			pmb.setRole(msaRole);
 		}
