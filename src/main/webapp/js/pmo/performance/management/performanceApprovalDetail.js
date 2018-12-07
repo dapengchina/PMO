@@ -181,7 +181,7 @@ function loadEmployeePlan(result){
 
 //ok
 function ok(){
-	var result = $("#rating").val();//直接主管初评结果(RM)
+	var result = $("#initialEvaluation").val();//直接主管初评结果(RM)
 	var pid = $("#pid").val();//绩效结果表主键
 	$.ajax({
 		url:path+"/service/performanceManageEva/assessment/grade/rm/submit",

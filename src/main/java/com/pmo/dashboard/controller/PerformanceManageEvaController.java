@@ -517,6 +517,15 @@ public class PerformanceManageEvaController {
         PageHelper.startPage(pageNumber, pageSize);
         // 查询数据,条件：年-季-finalize
         List<PerformanceManageEvaBean> data = manageEvaService.finalizeResultList();
+        //是否骨干，是否参评转换为汉字
+        for(int i=0;i<data.size();i++){
+        	if(data.get(i).getKeymember()!=null && !"".equals(data.get(i).getKeymember())){
+        		data.get(i).setKeymember(SysConstant.getBackBoneMap().get(data.get(i).getKeymember()).toString());
+        	}
+        	if(data.get(i).getParticipate()!=null && !"".equals(data.get(i).getParticipate())){
+        		data.get(i).setParticipate(SysConstant.getAssessedMap().get(data.get(i).getParticipate()).toString());
+        	}
+        }
         PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
         // 返回数据
         Map<String, Object> map = new HashMap<String, Object>();
@@ -546,6 +555,15 @@ public class PerformanceManageEvaController {
         PageHelper.startPage(pageNumber, pageSize);
         // 查询条件：当年-当季-rm
         List<PerformanceManageEvaBean> data = manageEvaService.processingResultListRM(user.getNickname());
+        //是否骨干，是否参评转换为汉字
+        for(int i=0;i<data.size();i++){
+        	if(data.get(i).getKeymember()!=null && !"".equals(data.get(i).getKeymember())){
+        		data.get(i).setKeymember(SysConstant.getBackBoneMap().get(data.get(i).getKeymember()).toString());
+        	}
+        	if(data.get(i).getParticipate()!=null && !"".equals(data.get(i).getParticipate())){
+        		data.get(i).setParticipate(SysConstant.getAssessedMap().get(data.get(i).getParticipate()).toString());
+        	}
+        }
         PageInfo<PerformanceManageEvaBean> page = new PageInfo<>(data);
         // 返回数据
         Map<String, Object> map = new HashMap<String, Object>();

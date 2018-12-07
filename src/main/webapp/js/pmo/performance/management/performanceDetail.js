@@ -185,7 +185,7 @@ function loadEmployeePlan(result){
 
 //审批不通过
 function reject(){
-	var comments = $("#comments").val();
+	var comments = $("#perSettingComments").val();
 	$.ajax({
 		url:path+"/service/empPerforGoal/reject/"+$("#reemployeeid").val(),
 		dataType:"json",
@@ -206,7 +206,7 @@ function reject(){
 
 //审批通过
 function approval(){
-	var comments = $("#comments").val();
+	var comments = $("#perSettingComments").val();
 	$.ajax({
 		url:path+"/service/empPerforGoal/approval/"+$("#reemployeeid").val(),
 		dataType:"json",

@@ -371,8 +371,8 @@ public class PerformanceResultController {
 			pv.setRole(em.getRole());
 			pv.setSkill(em.getSkill());
 			pv.setLocation(em.getStaffLocation());
-			pv.setBackbone("");//是否是业务先锋
-			pv.setAssessed("");//是否参评
+			pv.setBackbone(em.getBackbone());//是否是业务先锋
+			pv.setAssessed(em.getAssessed());//是否参评
 			pv.setDirectSupervisor(u.getNickname());//直接主管
 			pv.setFinalize(SysConstant.ISNOTFINAL);//是否是最终结果
 			pv.setState(SysConstant.PRESULT_PENDING_RM);//待RM审批

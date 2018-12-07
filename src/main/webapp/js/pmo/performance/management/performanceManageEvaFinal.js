@@ -222,8 +222,8 @@ function loadManageEvaFinalList() {
 					  width: "100px"
 		}],
 		onLoadSuccess : function(sta) {
-//			console.log("in onLoadSuccess");
-//			console.log(JSON.stringify(sta));
+			console.log("in onLoadSuccess");
+			console.log(JSON.stringify(sta));
 		},
 		onLoadError : function(status, res) { // 加载失败时执行
 //			console.log(res);

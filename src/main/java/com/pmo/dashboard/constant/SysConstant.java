@@ -143,6 +143,29 @@ public class SysConstant {
 	   public static final String ISNOTFINAL = "False";
 	   public static final String USER_FORBIDDEN = "1";//用户禁用
 	   public static final String USER_START = "0";//用户启用
+	   
+	   //员工是否骨干
+	   public static final String IS_BACK_BONE = "0";//是骨干
+	   public static final String ISNOT_BACK_BONE ="1";//不是骨干
+	   public static Map<String,Object> getBackBoneMap(){
+		   Map<String,Object> map = new HashMap<String,Object>();
+		   map.put(IS_BACK_BONE, "骨干");
+		   map.put(ISNOT_BACK_BONE, "非骨干");
+		   
+		   return map;
+	   }
+	   
+	   //员工是否参评
+	   public static final String IS_ASSESSED = "0";//参评
+	   public static final String IS_NOT_ASSESSED = "1";//不参评
+	   public static Map<String,Object> getAssessedMap(){
+		   Map<String,Object> map = new HashMap<String,Object>();
+		   map.put(IS_ASSESSED, "参评");
+		   map.put(IS_NOT_ASSESSED, "不参评");
+		   
+		   return map;
+	   }
+	   
 	   //本地服务器地址
 	   public static final String serverurl="http://localhost:8082/Pmo/";
 
