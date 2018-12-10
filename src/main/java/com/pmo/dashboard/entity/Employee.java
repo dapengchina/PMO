@@ -57,6 +57,8 @@ public class Employee
     private String hsbcPOD;
     private String podtl;
     private String tlType;
+    private String backbone;
+    private String assessed;
     
     
     /**
@@ -70,6 +72,21 @@ public class Employee
     
     
     
+	public String getBackbone() {
+		return backbone;
+	}
+	public void setBackbone(String backbone) {
+		this.backbone = backbone;
+	}
+	public String getAssessed() {
+		return assessed;
+	}
+	public void setAssessed(String assessed) {
+		this.assessed = assessed;
+	}
+	public void setPodtl(String podtl) {
+		this.podtl = podtl;
+	}
 	public String getEmployeeType() {
 		return employeeType;
 	}
