@@ -272,6 +272,7 @@ public class PerformanceLobApproveController {
 		//查询绩效目标流程表，获取绩效目标审批comments
 		PerformanceEmpProcessBean pepb = new PerformanceEmpProcessBean();
 		pepb.setEmployeeid(employeeid);
+		pepb.setProcessid(SysConstant.PROCESS_TYPE1);
 		pepb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
 		pepb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
 		List<PerformanceEmpProcessBean> processList = progressService.queryPerformanceProgressList(pepb);

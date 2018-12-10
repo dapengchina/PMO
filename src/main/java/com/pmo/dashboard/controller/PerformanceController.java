@@ -355,8 +355,9 @@ public class PerformanceController {
     public String getPerformanceHRBPApprovalDetail(@RequestParam String bu, Model model) {
         model.addAttribute("bu", bu);
         // 根据bu查询审批内容
-        String resultComments = performanceManageEvaService.queryResultCommentsByBU(bu).getResultComments();
-        model.addAttribute("resultComments", resultComments);
+        PerformanceManageEvaBean pmeb = performanceManageEvaService.queryResultCommentsByBU(bu);
+        model.addAttribute("resultComments", pmeb!=null?pmeb.getResultComments():"");
+        model.addAttribute("state", pmeb.getState());
         return "performance/hrbp/performanceHRBPApprovalDetail";
     }
 

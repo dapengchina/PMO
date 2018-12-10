@@ -5,6 +5,7 @@ package com.pmo.dashboard.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,7 @@ import com.pmo.dashboard.entity.Performancematrix;
 import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.entity.vo.EmployeePerforGoalVo;
 import com.pmo.dashboard.util.DateUtils;
+import com.pmo.dashboard.util.Utils;
 import com.pom.dashboard.service.CSDeptService;
 import com.pom.dashboard.service.EmployeeImpplanService;
 import com.pom.dashboard.service.EmployeeKeyeventService;
@@ -293,6 +295,18 @@ public class EmployeePerforGoalController {
 		pb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
 		pb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
 		performanceProgressService.updateState(pb);
+		
+		/**
+		 * 绩效目标审批通过-流程到-待员工自评
+		 */
+		PerformanceEmpProcessBean pb2 = new PerformanceEmpProcessBean();
+		pb2.setId(Utils.getUUID());
+		pb2.setEmployeeid(employeeid);
+		pb2.setProcessid(SysConstant.PROCESS_TYPE2);
+		pb2.setOwner("");
+		pb2.setCreatedate(new Date());
+		pb2.setState(SysConstant.PERFORMANCE_STATE1);
+		performanceProgressService.saveProcess(pb2);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		if(i>0){

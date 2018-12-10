@@ -1,4 +1,10 @@
 $().ready(function() {
+	var state = $("#restate").val();
+	if(state=="8"){
+		document.getElementById("button1").setAttribute("disabled", 'disabled');
+		document.getElementById("button2").setAttribute("disabled", 'disabled');
+		//document.getElementById("resultComments").setAttribute("disabled", 'disabled');
+	}
 	queryPercentage();
 	loadHRBPGroupEvaList();
 });

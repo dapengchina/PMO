@@ -61,6 +61,7 @@ import com.pmo.dashboard.entity.vo.PresultVo;
 import com.pmo.dashboard.entity.vo.RmApprovalVo;
 import com.pmo.dashboard.util.Constants;
 import com.pmo.dashboard.util.DateUtils;
+import com.pmo.dashboard.util.Utils;
 import com.pom.dashboard.service.CSDeptService;
 import com.pom.dashboard.service.EmployeeImpplanService;
 import com.pom.dashboard.service.EmployeeInfoService;
@@ -812,6 +813,28 @@ public class PerformanceManageEvaController {
     				preAssessment,//直接主管初评结果
     				SysConstant.PRESULT_PENDING_DU,//状态 
     				resultId);
+    		
+//    		PerformanceEmpProcessBean pb = new PerformanceEmpProcessBean();
+//    		pb.setEmployeeid(employeeid);
+//    		pb.setState(SysConstant.PERFORMANCE_PASS);
+//    		pb.setRemark(comments);
+//    		pb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+//    		pb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+//    		progressService.updateState(pb);
+//    		
+//    		/**
+//    		 * 绩效目标审批通过-流程到-待员工自评
+//    		 */
+//    		PerformanceEmpProcessBean pb2 = new PerformanceEmpProcessBean();
+//    		pb2.setId(Utils.getUUID());
+//    		pb2.setEmployeeid(employeeid);
+//    		pb2.setProcessid(SysConstant.PROCESS_TYPE4);
+//    		pb2.setOwner("");
+//    		pb2.setCreatedate(new Date());
+//    		pb2.setState(SysConstant.PERFORMANCE_STATE3);
+//    		progressService.saveProcess(pb2);
+    		
+    		
     	    map.put("msg", "初评成功");
     	    map.put("code", "1");
     	}catch(Exception e){
@@ -1230,6 +1253,7 @@ public class PerformanceManageEvaController {
 		//查询绩效目标流程表，获取绩效目标审批comments
 		PerformanceEmpProcessBean pepb = new PerformanceEmpProcessBean();
 		pepb.setEmployeeid(employeeid);
+		pepb.setProcessid(SysConstant.PROCESS_TYPE1);
 		pepb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
 		pepb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
 		List<PerformanceEmpProcessBean> processList = progressService.queryPerformanceProgressList(pepb);
@@ -1369,6 +1393,7 @@ public class PerformanceManageEvaController {
 		//查询绩效目标流程表，获取绩效目标审批comments
 		PerformanceEmpProcessBean pepb = new PerformanceEmpProcessBean();
 		pepb.setEmployeeid(employeeid);
+		pepb.setProcessid(SysConstant.PROCESS_TYPE1);
 		pepb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
 		pepb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
 		List<PerformanceEmpProcessBean> processList = progressService.queryPerformanceProgressList(pepb);
@@ -1515,6 +1540,7 @@ public class PerformanceManageEvaController {
 		//查询绩效目标流程表，获取绩效目标审批comments
 		PerformanceEmpProcessBean pepb = new PerformanceEmpProcessBean();
 		pepb.setEmployeeid(employeeid);
+		pepb.setProcessid(SysConstant.PROCESS_TYPE1);
 		pepb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
 		pepb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
 		List<PerformanceEmpProcessBean> processList = progressService.queryPerformanceProgressList(pepb);

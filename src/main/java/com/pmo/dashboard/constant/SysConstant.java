@@ -46,12 +46,39 @@ public class SysConstant {
 	   public static final String PENDING_APPROVAL="1";//员工绩效目标待RM审批
 	   public static final String PERFORMANCE_PASS = "2";//绩效目标审批通过
 	   public static final String PERFORMANCE_NOPASS = "3";//绩效目标审批未通过
+	   public static final String PERFORMANCE_STATE1 = "4";//待员工自评
+	   public static final String PERFORMANCE_STATE2 = "5";//待RM初评
+	   public static final String PERFORMANCE_STATE3 = "6";//待交付部审批
+	   public static final String PERFORMANCE_STATE4 = "7";//交付部审批不通过
+	   public static final String PERFORMANCE_STATE5 = "8";//交付部审批通过
+	   public static final String PERFORMANCE_STATE6 = "9";//待事业部审批
+	   public static final String PERFORMANCE_STATE7 = "10";//事业部审批不通过
+	   public static final String PERFORMANCE_STATE8 = "11";//事业部审批通过
+	   public static final String PERFORMANCE_STATE9 = "12";//待LOB总审批
+	   public static final String PERFORMANCE_STATE10 = "13";//LOB总审批不通过
+	   public static final String PERFORMANCE_STATE11 = "14";//LOB总审批通过
+	   
+	   public static final String PERFORMANCE_STATE12 = "15";//自评完成
+	   
 	   public static Map<String,Object> getEvaProgressStateMap(){
 		   Map<String,Object> map = new HashMap<String,Object>();
 		   
 		   map.put(PENDING_APPROVAL, "待审批");
 		   map.put(PERFORMANCE_PASS, "审批通过");
 		   map.put(PERFORMANCE_NOPASS, "审批未通过");
+		   map.put(PERFORMANCE_STATE1, "待员工自评");
+		   map.put(PERFORMANCE_STATE2, "待RM初评");
+		   map.put(PERFORMANCE_STATE3, "待交付部审批");
+		   map.put(PERFORMANCE_STATE4, "交付部审批不通过");
+		   map.put(PERFORMANCE_STATE5, "交付部审批通过");
+		   map.put(PERFORMANCE_STATE6, "待事业部审批");
+		   map.put(PERFORMANCE_STATE7, "事业部审批不通过");
+		   map.put(PERFORMANCE_STATE8, "事业部审批通过");
+		   map.put(PERFORMANCE_STATE9, "待LOB总审批");
+		   map.put(PERFORMANCE_STATE10, "LOB总审批不通过");
+		   map.put(PERFORMANCE_STATE11, "LOB总审批通过");
+		   
+		   map.put(PERFORMANCE_STATE12, "自评完成");
 		   
 		   return map;
 	   }
@@ -60,10 +87,20 @@ public class SysConstant {
 	    * 员工考评流程类型
 	    */
 	   public static final String PROCESS_TYPE1="1";//绩效目标审批
+	   public static final String PROCESS_TYPE2="2";//员工自评
+	   public static final String PROCESS_TYPE3="3";//RM初评
+	   public static final String PROCESS_TYPE4="4";//交付部审批初评
+	   public static final String PROCESS_TYPE5="5";//事业部审批
+	   public static final String PROCESS_TYPE6="6";//LOB总审批
 	   public static Map<String,Object> getPerforProcessTypeMap(){
 		   Map<String,Object> map = new HashMap<String,Object>();
 		   
 		   map.put(PROCESS_TYPE1, "绩效目标审批");
+		   map.put(PROCESS_TYPE2, "员工自评");
+		   map.put(PROCESS_TYPE3, "RM初评");
+		   map.put(PROCESS_TYPE4, "交付部审批初评");
+		   map.put(PROCESS_TYPE5, "事业部审批");
+		   map.put(PROCESS_TYPE6, "LOB总审批");
 		   
 		   return map;
 	   }
@@ -167,6 +204,6 @@ public class SysConstant {
 	   }
 	   
 	   //本地服务器地址
-	   public static final String serverurl="http://localhost:8082/Pmo/";
+	   public static final String serverurl="http://pbox.chinasoftinc.com/Pmo/";
 
 }

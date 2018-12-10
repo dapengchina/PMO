@@ -90,6 +90,9 @@ public class PerformanceResultController {
 	@Resource
 	private PerformanceProgressService progressService;
 	
+	@Resource
+	private PerformanceProgressService performanceProgressService;
+	
 	
 	/**
 	 * Employee-绩效结果-当期绩效数据
@@ -391,6 +394,28 @@ public class PerformanceResultController {
 			epg.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
 			epg.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
 			employeeperforgoalService.update(epg);
+			
+			
+			PerformanceEmpProcessBean pb = new PerformanceEmpProcessBean();
+			pb.setEmployeeid(employeeid);
+			pb.setState(SysConstant.PERFORMANCE_STATE12);
+			pb.setProcessid(SysConstant.PROCESS_TYPE2);
+			pb.setRemark(selfevaluation);
+			pb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
+			pb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
+			performanceProgressService.updateState(pb);
+			
+			/**
+			 * 员工自评完成-流程到-待RM初评
+			 */
+			PerformanceEmpProcessBean pb2 = new PerformanceEmpProcessBean();
+			pb2.setId(Utils.getUUID());
+			pb2.setEmployeeid(employeeid);
+			pb2.setProcessid(SysConstant.PROCESS_TYPE3);
+			pb2.setOwner(u.getNickname());
+			pb2.setCreatedate(new Date());
+			pb2.setState(SysConstant.PERFORMANCE_STATE2);
+			performanceProgressService.saveProcess(pb2);
 			
 			map.put("msg", "自评成功");
 			map.put("code", "1");

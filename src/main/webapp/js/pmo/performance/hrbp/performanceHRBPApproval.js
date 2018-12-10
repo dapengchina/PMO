@@ -47,7 +47,10 @@ function loadHRBPApprovalList() {
 		title : 'Year'
 	}, {
 		field : 'Quarter',
-		title : 'Quarter'
+		title : 'Quarter',
+		formatter : function(value, row, index) {
+			return "Q"+value;
+		}
 	}, {
 		field : 'State',
 		title : 'Status',
@@ -67,11 +70,11 @@ function loadHRBPApprovalList() {
 	}, {
 		title : 'Detail',
 		formatter : function(value, row, index) {
-			if (row.State == 6) {
+			//if (row.State == 6) {
 				return "<a href='performanceHRBPApprovalDetail.html?bu=" + row.BU + "' class='btn btn-info btn-sm'>"+
 	            "<span></span> Detail"+
 	          "</a>";
-			}
+			//}
 		}
 	} ];
 

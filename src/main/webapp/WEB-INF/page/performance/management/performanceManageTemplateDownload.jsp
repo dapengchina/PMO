@@ -80,7 +80,7 @@ var currentPageName = '<%=currentPageName%>'
 								<td colspan="10"><font color="white"> Template Download</font></td>
 							</tr>
 							<tr style="">
-								<td colspan="10"><span style="color:red;font-size:20px">Instruction: </span> <span style="font-size:20px">XXXXXX </span></td>
+								<!--<td colspan="10"><span style="color:red;font-size:20px">Instruction: </span> <span style="font-size:20px">XXXXXX </span></td>  -->
 							</tr>
 							<c:forEach items="${list}" var="item" varStatus="status">
 								<tr>

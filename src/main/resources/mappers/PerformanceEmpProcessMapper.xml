@@ -17,6 +17,9 @@
     <if test="employeeid != null and employeeid != ''" >
        and employeeid = #{employeeid}
     </if>
+    <if test="processid != null and processid != ''" >
+       and processid = #{processid}
+    </if>
     <if test="currentQuarterStartDate != null and currentQuarterStartDate != ''" >
        and DATE_FORMAT(createdate, '%Y-%m-%d') &gt;= #{currentQuarterStartDate}
     </if>
@@ -124,6 +127,9 @@
     </if>
     <if test="currentQuarterEndDate != null and currentQuarterEndDate != ''" >
        and DATE_FORMAT(createdate, '%Y-%m-%d') &lt;= #{currentQuarterEndDate}
+    </if>
+    <if test="processid != null and processid != ''" >
+       and processid = #{processid}
     </if>
   </update>
   
