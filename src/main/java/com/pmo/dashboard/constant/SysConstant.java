@@ -148,7 +148,7 @@ public class SysConstant {
 		   map.put(TLdefault, "");
 		   map.put(TLdefault1, "");
 		   map.put(IsTeamLeader, "yes");
-		   map.put(NotTeamLeader, "no");;
+		   map.put(NotTeamLeader, "no");
 		   
 		   return map;
 	   }
@@ -204,6 +204,8 @@ public class SysConstant {
 	   }
 	   
 	   //本地服务器地址
-	   public static final String serverurl="http://pbox.chinasoftinc.com/Pmo/";
+	   public static final String serverurl="http://localhost:8082/Pmo/";
+	   //服务器地址
+	   //public static final String serverurl="http://pbox.chinasoftinc.com/Pmo/";
 
 }

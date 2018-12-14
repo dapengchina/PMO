@@ -70,7 +70,7 @@ function loadManageResultHistoryQueryList() {
 		      field : 'operation',
 		      title : 'Detail',
 		      formatter : function(value,row, index){
-	                return "<a onclick='detail(\"" + row.employee_id + "\")' href='#' class='btn btn-info btn-sm'>"+
+	                return "<a onclick='detail(\"" + row.employee_id + "\",\"" + row.quarter + "\",\"" + row.year + "\")' href='#' class='btn btn-info btn-sm'>"+
 	                "<span></span> Detail"+
 	              "</a>";
 	          }
@@ -182,8 +182,8 @@ function search() {
 	// $('#manageResultHistoryQueryList').bootstrapTable('refresh',
 	// queryParams);
 }
-function detail(employeeId) {
-	window.location.href = path+"/service/performanceManageEva/historyPerforDetailPage/"+employeeId;
+function detail(employeeId,quarter,year) {
+	window.location.href = path+"/service/performanceManageEva/historyPerforDetailPage/"+employeeId+"/"+quarter+"/"+year;
 }
 
 /** 历史绩效导出 * */

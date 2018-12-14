@@ -4,7 +4,7 @@ $(function(){
 
 function loadPerforDetail(){
 	$.ajax({
-		url:path+"/service/performanceManageEva/approvalDetailData/"+$("#reemployeeid").val(),
+		url:path+"/service/performance/history/historyDetailData/"+$("#reemployeeid").val()+"/"+$("#reyear").val()+"/"+$("#requarter").val(),
 		dataType:"json",
 		async:true,
 		cache:false,

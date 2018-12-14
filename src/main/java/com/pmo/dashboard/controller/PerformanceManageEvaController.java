@@ -1575,9 +1575,16 @@ public class PerformanceManageEvaController {
      * Management-绩效结果-历史绩效-详情页面
      * @return
      */
-    @RequestMapping("/historyPerforDetailPage/{employeeid}")
-    public String historyPerforDetailPage(HttpServletRequest request,@PathVariable("employeeid") String employeeid,Model model){
-    	model.addAttribute("employeeid", employeeid);
+    @RequestMapping("/historyPerforDetailPage/{employeeid}/{quarter}/{year}")
+    public String historyPerforDetailPage(
+    		HttpServletRequest request,
+    		@PathVariable("employeeid") String employeeid,
+    		@PathVariable("quarter") String quarter,
+    		@PathVariable("year") String year,
+    		Model model){
+    	model.addAttribute("employeeid", employeeid);//员工ID
+    	model.addAttribute("year", year);//年
+    	model.addAttribute("quarter", quarter);//季度
     	return "performance/management/performanceManageResultHistory";
     }
 }
