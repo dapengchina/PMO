@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -140,6 +142,27 @@ public class PerformanceResultController {
 	}
 	
 	/**
+	 * Employee-绩效结果-历史绩效-员工详情页面
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/getHistoryDetail/{employeeid}/{quarter}/{year}")
+    public String getHistoryDetail(
+    		final HttpServletRequest request, 
+    		final HttpServletResponse response,
+    		@PathVariable("employeeid") String employeeid,
+    		@PathVariable("quarter") String quarter,
+    		@PathVariable("year") String year,
+    		Model model
+    		){
+		model.addAttribute("employeeid", employeeid);//员工ID
+    	model.addAttribute("year", year);//年
+    	model.addAttribute("quarter", quarter);//季度
+		return "performance/employee/performanceEmpHistoryDetail";
+	}
+	
+	/**
 	 * Employee-绩效结果-当期绩效详情页面数据
 	 * @param request
 	 * @param response
@@ -253,6 +276,7 @@ public class PerformanceResultController {
 		//查询绩效目标流程表，获取绩效目标审批comments
 		PerformanceEmpProcessBean pepb = new PerformanceEmpProcessBean();
 		pepb.setEmployeeid(employeeid);
+		pepb.setProcessid(SysConstant.PROCESS_TYPE1);
 		pepb.setCurrentQuarterStartDate(DateUtils.format(DateUtils.getThisQuarter().getStart()));
 		pepb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
 		List<PerformanceEmpProcessBean> processList = progressService.queryPerformanceProgressList(pepb);
@@ -339,6 +363,11 @@ public class PerformanceResultController {
 		//第一个参数当前页码，第二个参数每页条数
 		PageHelper.startPage(pageNumber,pageSize); 
 		List<PresultVo> list = performanceResultService.getPerformanceList(pmb);
+		if(list!=null && list.size()>0){
+			for(int i=0;i<list.size();i++){
+				list.get(i).setEmployeeid(user.getUserId());
+			}
+		}
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		PageInfo<PresultVo> page = new PageInfo(list);
 		result.put("total", page.getTotal());

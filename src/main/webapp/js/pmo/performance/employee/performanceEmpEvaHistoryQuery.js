@@ -5,6 +5,7 @@ $(function(){
 	
 });
 
+
 function loadEmpHistoryList(){
     var queryUrl = path+'/service/performance/result/getPerforEmployeeHistory';
     var table = $('#empHistoryList').bootstrapTable({
@@ -83,7 +84,7 @@ function loadEmpHistoryList(){
 	            title: 'Operation',
 	            sortable: true,
 	            formatter : function(value,row, index){
-	                return "<a onclick='detail()' href='#' class='btn btn-info btn-sm'>"+
+	                return "<a onclick='detail(\"" + row.employeeid + "\",\"" + row.quarter + "\",\"" + row.year + "\")' href='#' class='btn btn-info btn-sm'>"+
 	                "<span class='glyphicon glyphicon-pencil'></span> Detail"+
 	              "</a>";
 	            }
@@ -99,8 +100,11 @@ function loadEmpHistoryList(){
     });
 }
 
-function detail(){
-	window.location.href=path+"/service/performance/result/getDetail.html";
+function detail(employeeid,quarter,year){
+//	alert(employeeid);
+//	alert(quarter);
+//	alert(year);
+	window.location.href=path+"/service/performance/result/getHistoryDetail/"+employeeid+"/"+quarter+"/"+year;
 }
 
 function loadSkill(){

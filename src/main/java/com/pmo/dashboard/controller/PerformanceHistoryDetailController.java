@@ -122,20 +122,20 @@ public class PerformanceHistoryDetailController {
     	String startDate = null;
     	String endDate = null;
     	if(quarter.equals("1")){
-    		startDate = year+"01-01";
-    		endDate = year+"03-31";
+    		startDate = year+"-01-01";
+    		endDate = year+"-03-31";
     	}
         if(quarter.equals("2")){
-    		startDate = year+"04-01";
-    		endDate = year+"06-30";
+    		startDate = year+"-04-01";
+    		endDate = year+"-06-30";
     	}
         if(quarter.equals("3")){
-    		startDate = year+"07-01";
-    		endDate = year+"09-30";
+    		startDate = year+"-07-01";
+    		endDate = year+"-09-30";
     	}
         if(quarter.equals("4")){
-    		startDate = year+"10-01";
-    		endDate = year+"12-31";
+    		startDate = year+"-10-01";
+    		endDate = year+"-12-31";
     	}
     	
     	

@@ -62,9 +62,26 @@ public class PresultVo {
     
     
     
+    /**
+     * 表外字段
+     * @return
+     */
+    private String employeeid;
+    
+    
+    
+    
     
 
-    public String getResultComments() {
+    public String getEmployeeid() {
+		return employeeid;
+	}
+
+	public void setEmployeeid(String employeeid) {
+		this.employeeid = employeeid;
+	}
+
+	public String getResultComments() {
 		return resultComments;
 	}
 
