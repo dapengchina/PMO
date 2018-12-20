@@ -182,7 +182,12 @@ function loadEmployeePlan(result){
 
 //ok
 function ok(){
-	window.location.href=path+"/service/performance/performanceManageResultHistoryQuery";
+	if(userType=="9"){
+		window.location.href=path+"/service/performance/hrbpHistoryPage";
+	}else{
+		window.location.href=path+"/service/performance/performanceManageResultHistoryQuery";
+	}
+	
 }
 
 //取消

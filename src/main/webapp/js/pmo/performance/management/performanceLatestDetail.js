@@ -186,7 +186,12 @@ function loadEmployeePlan(result){
 
 //ok
 function ok(){
-	window.location.href=path+"/service/performance/performanceManageEvaFinal";
+	if(userType=='9'){
+		window.location.href=path+"/service/performance/performanceHRBPLatest";
+	}else{
+		window.location.href=path+"/service/performance/performanceManageEvaFinal";
+	}
+	
 }
 
 //取消
