@@ -86,6 +86,8 @@ public class PerformanceResultController {
 	
 	private SimpleDateFormat sf2 = new SimpleDateFormat("MM");
 	
+	//private SimpleDateFormat sf4 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
 	@Resource
 	private UserService userService;
 	
@@ -398,23 +400,23 @@ public class PerformanceResultController {
 			CSDept csdept = cSDeptService.queryCSDeptById(em.getCsSubDept());
 			User u = userService.queryUserById(em.getRmUserId());
 			
-			PresultVo pv = new PresultVo();
-			pv.setResultId(Utils.getUUID());//主键
-			pv.seteHr(user.getUserName());
-			pv.setYear(sf.format(new Date()));//当年
-			pv.setQuarter(DateUtils.getQuarterByMonth(Integer.parseInt(sf2.format(new Date())))+"");//当季度
-			pv.setBu(csdept!=null?csdept.getCsBuName():"");//事业部名称
-			pv.setDu(csdept!=null?csdept.getCsSubDeptName():"");//交付部名称
-			pv.setRm(u.getNickname());//RM名称
-			pv.setRole(em.getRole());
-			pv.setSkill(em.getSkill());
-			pv.setLocation(em.getStaffLocation());
-			pv.setBackbone(em.getBackbone());//是否是业务先锋
-			pv.setAssessed(em.getAssessed());//是否参评
-			pv.setDirectSupervisor(u.getNickname());//直接主管
-			pv.setFinalize(SysConstant.ISNOTFINAL);//是否是最终结果
-			pv.setState(SysConstant.PRESULT_PENDING_RM);//待RM审批
-			performanceResultService.save(pv);
+//			PresultVo pv = new PresultVo();
+//			pv.setResultId(Utils.getUUID());//主键
+//			pv.seteHr(user.getUserName());
+//			pv.setYear(sf.format(new Date()));//当年
+//			pv.setQuarter(DateUtils.getQuarterByMonth(Integer.parseInt(sf2.format(new Date())))+"");//当季度
+//			pv.setBu(csdept!=null?csdept.getCsBuName():"");//事业部名称
+//			pv.setDu(csdept!=null?csdept.getCsSubDeptName():"");//交付部名称
+//			pv.setRm(u.getNickname());//RM名称
+//			pv.setRole(em.getRole());
+//			pv.setSkill(em.getSkill());
+//			pv.setLocation(em.getStaffLocation());
+//			pv.setBackbone(em.getBackbone());//是否是业务先锋
+//			pv.setAssessed(em.getAssessed());//是否参评
+//			pv.setDirectSupervisor(u.getNickname());//直接主管
+//			pv.setFinalize(SysConstant.ISNOTFINAL);//是否是最终结果
+//			pv.setState(SysConstant.PRESULT_PENDING_RM);//待RM审批
+//			performanceResultService.save(pv);
 			
 			//修改自评信息
 			Employeeperforgoal epg = new Employeeperforgoal();
@@ -434,17 +436,17 @@ public class PerformanceResultController {
 			pb.setCurrentQuarterEndDate(DateUtils.format(DateUtils.getThisQuarter().getEnd()));
 			performanceProgressService.updateState(pb);
 			
-			/**
-			 * 员工自评完成-流程到-待RM初评
-			 */
-			PerformanceEmpProcessBean pb2 = new PerformanceEmpProcessBean();
-			pb2.setId(Utils.getUUID());
-			pb2.setEmployeeid(employeeid);
-			pb2.setProcessid(SysConstant.PROCESS_TYPE3);
-			pb2.setOwner(u.getNickname());
-			pb2.setCreatedate(new Date());
-			pb2.setState(SysConstant.PERFORMANCE_STATE2);
-			performanceProgressService.saveProcess(pb2);
+//			/**
+//			 * 员工自评完成-流程到-待RM初评
+//			 */
+//			PerformanceEmpProcessBean pb2 = new PerformanceEmpProcessBean();
+//			pb2.setId(Utils.getUUID());
+//			pb2.setEmployeeid(employeeid);
+//			pb2.setProcessid(SysConstant.PROCESS_TYPE3);
+//			pb2.setOwner(u.getNickname());
+//			pb2.setCreatedate(new Date());
+//			pb2.setState(SysConstant.PERFORMANCE_STATE2);
+//			performanceProgressService.saveProcess(pb2);
 			
 			map.put("msg", "自评成功");
 			map.put("code", "1");

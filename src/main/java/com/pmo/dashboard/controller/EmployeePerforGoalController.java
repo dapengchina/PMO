@@ -35,6 +35,7 @@ import com.pmo.dashboard.entity.PerformanceEmpProcessBean;
 import com.pmo.dashboard.entity.Performancematrix;
 import com.pmo.dashboard.entity.User;
 import com.pmo.dashboard.entity.vo.EmployeePerforGoalVo;
+import com.pmo.dashboard.entity.vo.PresultVo;
 import com.pmo.dashboard.util.DateUtils;
 import com.pmo.dashboard.util.Utils;
 import com.pom.dashboard.service.CSDeptService;
@@ -45,6 +46,7 @@ import com.pom.dashboard.service.EmployeeService;
 import com.pom.dashboard.service.EmployeeperforgoalService;
 import com.pom.dashboard.service.PerformanceMatrixService;
 import com.pom.dashboard.service.PerformanceProgressService;
+import com.pom.dashboard.service.PerformanceResultService;
 import com.pom.dashboard.service.UserService;
 
 @Controller
@@ -81,7 +83,14 @@ public class EmployeePerforGoalController {
 	@Resource
 	private UserService userService;
 	
+	@Resource
+	private PerformanceResultService performanceResultService;
+	
 	private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+	
+    private SimpleDateFormat sf3 = new SimpleDateFormat("yyyy");
+	
+	private SimpleDateFormat sf2 = new SimpleDateFormat("MM");
 	
 	
 	@SuppressWarnings("rawtypes")
@@ -225,6 +234,33 @@ public class EmployeePerforGoalController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		try{
 			employeeperforgoalService.saveEmpPerforgoal(employeeid,jsonArray1, jsonArray2, jsonArray3,state);
+			
+			/**
+			 * 保存到绩效结果表
+			 */
+			Employee em = employeeService.queryEmployeeById(employeeid);
+			//查询中软部门信息
+			CSDept csdept = cSDeptService.queryCSDeptById(em.getCsSubDept());
+			User u = userService.queryUserById(em.getRmUserId());
+			
+			PresultVo pv = new PresultVo();
+			pv.setResultId(Utils.getUUID());//主键
+			pv.seteHr(user.getUserName());
+			pv.setYear(sf3.format(new Date()));//当年
+			pv.setQuarter(DateUtils.getQuarterByMonth(Integer.parseInt(sf2.format(new Date())))+"");//当季度
+			pv.setBu(csdept!=null?csdept.getCsBuName():"");//事业部名称
+			pv.setDu(csdept!=null?csdept.getCsSubDeptName():"");//交付部名称
+			pv.setRm(u.getNickname());//RM名称
+			pv.setRole(em.getRole());
+			pv.setSkill(em.getSkill());
+			pv.setLocation(em.getStaffLocation());
+			pv.setBackbone(em.getBackbone());//是否是业务先锋
+			pv.setAssessed(em.getAssessed());//是否参评
+			pv.setDirectSupervisor(u.getNickname());//直接主管
+			pv.setFinalize(SysConstant.ISNOTFINAL);//是否是最终结果
+			pv.setState(SysConstant.PRESULT_PENDING_RM);//待RM审批
+			performanceResultService.save(pv);
+			
 			map.put("msg", "保存成功");
 		    map.put("code", "1");
 		    return objectMapper.writeValueAsString(map);

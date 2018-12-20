@@ -55,6 +55,8 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 	
 	private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 	
+	private SimpleDateFormat sf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
 	@Override
 	public Employeeperforgoal getEmpPerforgoal(Employeeperforgoal epg) {
 		return employeeperforgoalMapper.selectEmpPerforgoal(epg);
@@ -113,7 +115,7 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 			     eo.setWeightrate(weightrate!=""?weightrate:"");
 			     eo.setPhasegoal(phasegoal!=""?phasegoal:"");
 			     eo.setKeyaction(keyaction!=""?keyaction:"");
-			     eo.setCreatedate(new Date());
+			     eo.setCreatedate(sf2.parse(sf2.format(new Date())));
 			     
 			     employeeKpoMapper.insert(eo);
 			}
@@ -138,7 +140,7 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 			     ek.setWeightrate(weightrate!=""?weightrate:"");
 			     ek.setPhasegoal(phasegoal!=""?phasegoal:"");
 			     ek.setKeyaction(keyaction!=""?keyaction:"");
-			     ek.setCreatedate(new Date());
+			     ek.setCreatedate(sf2.parse(sf2.format(new Date())));
 			     
 			     employeeKeyeventMapper.insert(ek);
 			}
@@ -164,7 +166,7 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 			     if(dealine!=null && !"".equals(dealine) && !dealine.equals("null")){
 			    	 ep.setDealine(sf.parse(dealine));
 			     }
-			     ep.setCreatedate(new Date());
+			     ep.setCreatedate(sf2.parse(sf2.format(new Date())));
 			     
 			     employeeImpplanMapper.insert(ep);
 			}
@@ -193,7 +195,7 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 				per1.setDepartment(emp.getCsSubDept());
 				per1.setPosition(emp.getRole());
 				per1.setAssessmensupervisor(emp.getRmUserId());
-				per1.setCreatedate(new Date());
+				per1.setCreatedate(sf2.parse(sf2.format(new Date())));
 				per1.setState(state);
 				employeeperforgoalMapper.insert(per1);
 				
@@ -207,7 +209,7 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 					pb.setEmployeeid(employeeid);
 					pb.setProcessid(SysConstant.PROCESS_TYPE1);
 					pb.setOwner(emp2.getStaffName());
-					pb.setCreatedate(new Date());
+					pb.setCreatedate(sf2.parse(sf2.format(new Date())));
 					pb.setState(SysConstant.PENDING_APPROVAL);
 					performanceProgressService.saveProcess(pb);
 				}
@@ -236,7 +238,7 @@ public class EmployeeperforgoalServiceImpl implements EmployeeperforgoalService{
 						pb3.setEmployeeid(employeeid);
 						pb3.setProcessid(SysConstant.PROCESS_TYPE1);
 						pb3.setOwner(emp2.getStaffName());
-						pb3.setCreatedate(new Date());
+						pb3.setCreatedate(sf2.parse(sf2.format(new Date())));
 						pb3.setState(SysConstant.PENDING_APPROVAL);
 						performanceProgressService.saveProcess(pb3);
 					}else{
