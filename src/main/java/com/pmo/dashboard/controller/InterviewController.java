@@ -1,5 +1,7 @@
 package com.pmo.dashboard.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,8 @@ public class InterviewController {
 	
 	@Resource
     private HSBCDeptService hsbcDeptService;
+	
+	private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 	
 
 	@RequestMapping("/interviewRecordInfo")
@@ -127,13 +131,18 @@ public class InterviewController {
 
 	@RequestMapping("/queryEmployeeById")
 	@ResponseBody
-	public Employee queryEmployeeDetailById(String employeeId,HttpServletRequest request) {
+	public Employee queryEmployeeDetailById(String employeeId,HttpServletRequest request) throws ParseException {
 		 User user = (User) request.getSession().getAttribute("loginUser");
 		 String userType = user.getUserType();
 
 		 Employee employee = interviewService.queryEmployeeById(employeeId);
 		 if("6".equals(userType)||"7".equals(userType)||"8".equals(userType)||"10".equals(userType)||"11".equals(userType)||"12".equals(userType)){
 			 employee.setBillRate("****");
+		 }
+		 
+		 //中软项目开始日期处理
+		 if(employee.getChsoftiProStartdate()!=null && !"".equals(employee.getChsoftiProStartdate())){
+			 employee.setChsoftiProStartdate(sf.format(sf.parse(employee.getChsoftiProStartdate())));
 		 }
 		 
 		 //获取GBGF

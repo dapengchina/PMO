@@ -90,6 +90,8 @@ public class EmployeeController {
 	
 	@Resource
 	private DemandService demandService;
+	
+	private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 
 
 
@@ -162,11 +164,15 @@ public class EmployeeController {
     @RequestMapping("/queryEmployeeById")
     @ResponseBody
     public Object queryEmployeeById(final HttpServletRequest request,
-            final HttpServletResponse response)
+            final HttpServletResponse response) throws ParseException
     {
         String employeeId = request.getParameter("employeeId");
 
         Employee employee = employeeService.queryEmployeeById(employeeId);
+        //处理中软项目开始日期
+        if(employee.getChsoftiProStartdate()!=null && !"".equals(employee.getChsoftiProStartdate())){
+        	employee.setChsoftiProStartdate(sf.format(sf.parse(employee.getChsoftiProStartdate())));
+        }
         //根据employeeid获取需求
         QueryModel qm = new QueryModel();
         qm.setEmployeeid(employee.getEmployeeId());
