@@ -29,5 +29,7 @@
         {"name":"Tester"},
         {"name":"Trainee"},
         {"name":"Trainee Developer"},
-        {"name":"UX Desiger"}
+        {"name":"UX Desiger"},
+        {"name":"CS"},
+        {"name":"Senior MuleSoft"}
     ]

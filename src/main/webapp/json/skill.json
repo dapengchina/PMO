@@ -49,5 +49,7 @@
         {"name":"PM"},
         {"name":"BMO"},
         {"name":"Devops"},
-        {"name":"Dynamic"}
+        {"name":"Dynamic"},
+        {"name":"CS"},
+        {"name":"Senior MuleSoft"}
 ]

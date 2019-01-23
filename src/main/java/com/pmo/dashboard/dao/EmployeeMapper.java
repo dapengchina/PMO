@@ -43,4 +43,6 @@ public interface EmployeeMapper
 	 * List<Map<String,Object>>
 	 */
 	public List<RmApprovalVo> rmApprovalList(RmApprovalVo rv);
+	
+	public List<Employee> findByEhr(String eHr);
 }

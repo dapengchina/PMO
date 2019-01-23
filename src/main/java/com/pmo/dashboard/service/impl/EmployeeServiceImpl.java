@@ -128,4 +128,9 @@ public class EmployeeServiceImpl implements EmployeeService
     public List<RmApprovalVo> rmApprovalList(RmApprovalVo rv) {
         return employeeMapper.rmApprovalList(rv);
     }
+
+	@Override
+	public List<Employee> findByEhr(String eHr) {
+		return employeeMapper.findByEhr(eHr);
+	}
 }

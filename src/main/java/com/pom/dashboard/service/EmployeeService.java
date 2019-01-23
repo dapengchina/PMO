@@ -41,4 +41,12 @@ public interface EmployeeService
      * List<Map<String,Object>>
      */
 	public List<RmApprovalVo> rmApprovalList(RmApprovalVo rv);
+	
+	
+	/**
+	 * 对外API
+	 * @param eHr
+	 * @return
+	 */
+	public List<Employee> findByEhr(String eHr);
 }

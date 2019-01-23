@@ -838,5 +838,13 @@
 		<result property="skill" column="SKILL" javaType="String" />
 		<result property="state" column="state" javaType="String" />
   </resultMap>
+  
+  <!-- 对外开放API -->
+  <select id="findByEhr" parameterType="String" resultMap="employeeMap">
+	    SELECT e.*,c.CS_SUBDEPT_NAME as csSubDeptName,u.NICKNAME  FROM t_employee e 
+	    left join  t_cs_dept c on e.CS_SUBDEPT_ID= c.CS_SUBDEPT_ID 
+	    left join t_user u on e.RM_USER_ID = u.USER_ID
+	    WHERE E_hr = #{ehr};
+  </select>
 	
 </mapper>

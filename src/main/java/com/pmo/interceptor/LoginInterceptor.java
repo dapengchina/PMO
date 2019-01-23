@@ -41,6 +41,9 @@ public class LoginInterceptor implements HandlerInterceptor{
             Object handler) throws Exception {  
         //获取请求的URL  
         String url = request.getRequestURI();
+        if(url.indexOf("service/api")>=0){
+        	return true;  
+        }
         if(url.indexOf("service/syncEmployInfo")>=0){  
             return true;  
         } 
