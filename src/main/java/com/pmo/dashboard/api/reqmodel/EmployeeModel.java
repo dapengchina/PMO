@@ -1,6 +1,5 @@
 package com.pmo.dashboard.api.reqmodel;
 
-import java.sql.Timestamp;
 
 public class EmployeeModel {
 
@@ -14,50 +13,32 @@ public class EmployeeModel {
 	private String staffLocation;
 	private String locationType;
 	private String onshoreOrOffshore;
-	private String projectName;
-	private String projectManager;
-	private String sow;
-	private String sowExpiredDate;
 	private String staffCategory;
 	private String engagementType;
 	private String hsbcDOJ;
 	private String graduationDate;
 	private String role;
 	private String skill;
-	private String billingCurrency;
-	private String billRateType;
-	private String billRate;
 	private String resourceStatus;
 	private String terminatedDate;
 	private String terminationReason;
-	private String interviewStatus;
-
 	private String email;
 	private String gbGf;
 	private String entryDate;
 	private String rm;
 	private String csSubDeptName;
+	private String csBuName;
+	
+	
 
-	private Timestamp createTime;
 
-	private String chsoftiProNumber;
-	private String chsoftiProStartdate;
-	private String chsoftiProName;
+	public String getCsBuName() {
+		return csBuName;
+	}
 
-	private String itindustryWorkYear;
-	private String hsbcDeptSubName;
-
-	private String hsbcPOD;
-	private String podtl;
-	private String tlType;
-
-	/**
-	 * 表外字段
-	 * 
-	 * @return
-	 */
-	private String demandrr;
-	private String demandskill;
+	public void setCsBuName(String csBuName) {
+		this.csBuName = csBuName;
+	}
 
 	public String getEmployeeType() {
 		return employeeType;
@@ -139,38 +120,6 @@ public class EmployeeModel {
 		this.onshoreOrOffshore = onshoreOrOffshore;
 	}
 
-	public String getProjectName() {
-		return projectName;
-	}
-
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
-
-	public String getProjectManager() {
-		return projectManager;
-	}
-
-	public void setProjectManager(String projectManager) {
-		this.projectManager = projectManager;
-	}
-
-	public String getSow() {
-		return sow;
-	}
-
-	public void setSow(String sow) {
-		this.sow = sow;
-	}
-
-	public String getSowExpiredDate() {
-		return sowExpiredDate;
-	}
-
-	public void setSowExpiredDate(String sowExpiredDate) {
-		this.sowExpiredDate = sowExpiredDate;
-	}
-
 	public String getStaffCategory() {
 		return staffCategory;
 	}
@@ -219,30 +168,6 @@ public class EmployeeModel {
 		this.skill = skill;
 	}
 
-	public String getBillingCurrency() {
-		return billingCurrency;
-	}
-
-	public void setBillingCurrency(String billingCurrency) {
-		this.billingCurrency = billingCurrency;
-	}
-
-	public String getBillRateType() {
-		return billRateType;
-	}
-
-	public void setBillRateType(String billRateType) {
-		this.billRateType = billRateType;
-	}
-
-	public String getBillRate() {
-		return billRate;
-	}
-
-	public void setBillRate(String billRate) {
-		this.billRate = billRate;
-	}
-
 	public String getResourceStatus() {
 		return resourceStatus;
 	}
@@ -265,14 +190,6 @@ public class EmployeeModel {
 
 	public void setTerminationReason(String terminationReason) {
 		this.terminationReason = terminationReason;
-	}
-
-	public String getInterviewStatus() {
-		return interviewStatus;
-	}
-
-	public void setInterviewStatus(String interviewStatus) {
-		this.interviewStatus = interviewStatus;
 	}
 
 	public String getEmail() {
@@ -317,93 +234,6 @@ public class EmployeeModel {
 		this.csSubDeptName = csSubDeptName;
 	}
 
-	public Timestamp getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Timestamp createTime) {
-		this.createTime = createTime;
-	}
-
-
-	public String getChsoftiProNumber() {
-		return chsoftiProNumber;
-	}
-
-	public void setChsoftiProNumber(String chsoftiProNumber) {
-		this.chsoftiProNumber = chsoftiProNumber;
-	}
-
-	public String getChsoftiProStartdate() {
-		return chsoftiProStartdate;
-	}
-
-	public void setChsoftiProStartdate(String chsoftiProStartdate) {
-		this.chsoftiProStartdate = chsoftiProStartdate;
-	}
-
-	public String getChsoftiProName() {
-		return chsoftiProName;
-	}
-
-	public void setChsoftiProName(String chsoftiProName) {
-		this.chsoftiProName = chsoftiProName;
-	}
-
-	public String getItindustryWorkYear() {
-		return itindustryWorkYear;
-	}
-
-	public void setItindustryWorkYear(String itindustryWorkYear) {
-		this.itindustryWorkYear = itindustryWorkYear;
-	}
-
-	public String getHsbcDeptSubName() {
-		return hsbcDeptSubName;
-	}
-
-	public void setHsbcDeptSubName(String hsbcDeptSubName) {
-		this.hsbcDeptSubName = hsbcDeptSubName;
-	}
-
-	public String getHsbcPOD() {
-		return hsbcPOD;
-	}
-
-	public void setHsbcPOD(String hsbcPOD) {
-		this.hsbcPOD = hsbcPOD;
-	}
-
-	public String getPodtl() {
-		return podtl;
-	}
-
-	public void setPodtl(String podtl) {
-		this.podtl = podtl;
-	}
-
-	public String getTlType() {
-		return tlType;
-	}
-
-	public void setTlType(String tlType) {
-		this.tlType = tlType;
-	}
-
-	public String getDemandrr() {
-		return demandrr;
-	}
-
-	public void setDemandrr(String demandrr) {
-		this.demandrr = demandrr;
-	}
-
-	public String getDemandskill() {
-		return demandskill;
-	}
-
-	public void setDemandskill(String demandskill) {
-		this.demandskill = demandskill;
-	}
+	
 
 }

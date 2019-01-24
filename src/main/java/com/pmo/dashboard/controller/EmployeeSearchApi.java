@@ -2,7 +2,9 @@ package com.pmo.dashboard.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -59,8 +61,17 @@ public class EmployeeSearchApi {
 	@RequestMapping(value="/search/{ehr}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE+";charset=utf-8")  
 	@ResponseBody
 	public String search(@PathVariable("ehr") String ehr) throws ParseException, JsonProcessingException{
+		Map<String,Object> map = new HashMap<String,Object>();
 		List<Employee> employee = employeeService.findByEhr(ehr);
-        //处理中软项目开始日期
+        if(employee==null || employee.size()==0){
+        	map.put("msg", "Record Not Found");
+        	map.put("code", "0");
+        	
+        	return objectMapper.writeValueAsString(map);
+        }
+		
+		
+		//处理中软项目开始日期
         if(employee.get(0).getChsoftiProStartdate()!=null && !"".equals(employee.get(0).getChsoftiProStartdate())){
         	employee.get(0).setChsoftiProStartdate(sf.format(sf.parse(employee.get(0).getChsoftiProStartdate())));
         }
@@ -74,8 +85,9 @@ public class EmployeeSearchApi {
         }
         
         //部门汉字转换
+        CSDept csdept = null;
         if(employee.get(0).getCsSubDept()!=null && !"".equals(employee.get(0).getCsSubDept())){
-        	CSDept csdept = csdeptService.queryCSDeptById(employee.get(0).getCsSubDept());
+        	csdept = csdeptService.queryCSDeptById(employee.get(0).getCsSubDept());
     		employee.get(0).setCsSubDeptName(csdept.getCsSubDeptName());
         }
         
@@ -107,16 +119,7 @@ public class EmployeeSearchApi {
         
         //返回model转换
         EmployeeModel em = new EmployeeModel();
-        em.setBillingCurrency(employee.get(0).getBillingCurrency());
-        em.setBillRate(employee.get(0).getBillRate());
-        em.setBillRateType(employee.get(0).getBillRateType());
-        em.setChsoftiProName(employee.get(0).getChsoftiProName());
-        em.setChsoftiProNumber(employee.get(0).getChsoftiProNumber());
-        em.setChsoftiProStartdate(employee.get(0).getChsoftiProStartdate());
-        em.setCreateTime(employee.get(0).getCreateTime());
         em.setCsSubDeptName(employee.get(0).getCsSubDeptName());
-        em.setDemandrr(employee.get(0).getDemandrr());
-        em.setDemandskill(employee.get(0).getDemandskill());
         em.seteHr(employee.get(0).geteHr());
         em.setEmail(employee.get(0).getEmail());
         em.setEmployeeType(employee.get(0).getEmployeeType());
@@ -124,32 +127,23 @@ public class EmployeeSearchApi {
         em.setEntryDate(employee.get(0).getEntryDate());
         em.setGbGf(employee.get(0).getGbGf());
         em.setGraduationDate(employee.get(0).getGraduationDate());
-        em.setHsbcDeptSubName(employee.get(0).getHsbcDeptSubName());
         em.setHsbcDOJ(employee.get(0).getHsbcDOJ());
-        em.setHsbcPOD(employee.get(0).getHsbcPOD());
         em.setHsbcStaffId(employee.get(0).getHsbcStaffId());
-        em.setInterviewStatus(employee.get(0).getInterviewStatus());
-        em.setItindustryWorkYear(employee.get(0).getItindustryWorkYear());
         em.setLn(employee.get(0).getLn());
         em.setLob(employee.get(0).getLob());
         em.setLocationType(employee.get(0).getLocationType());
         em.setOnshoreOrOffshore(employee.get(0).getOnshoreOrOffshore());
-        em.setPodtl(employee.get(0).getPodtl());
-        em.setProjectManager(employee.get(0).getProjectManager());
-        em.setProjectName(employee.get(0).getProjectName());
         em.setResourceStatus(employee.get(0).getResourceStatus());
         em.setRm(employee.get(0).getRmUserId());
         em.setRole(employee.get(0).getRole());
         em.setSkill(employee.get(0).getSkill());
-        em.setSow(employee.get(0).getSow());
-        em.setSowExpiredDate(employee.get(0).getSowExpiredDate());
         em.setStaffCategory(employee.get(0).getStaffCategory());
         em.setStaffLocation(employee.get(0).getStaffLocation());
         em.setStaffName(employee.get(0).getStaffName());
         em.setStaffRegion(employee.get(0).getStaffRegion());
         em.setTerminatedDate(employee.get(0).getTerminatedDate());
         em.setTerminationReason(employee.get(0).getTerminationReason());
-        em.setTlType(employee.get(0).getTlType());
+        em.setCsBuName(csdept.getCsBuName());
         
         return objectMapper.writeValueAsString(em);
 	}
