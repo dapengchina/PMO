@@ -2,5 +2,6 @@
     [
         {"name":"CNY"},
         {"name":"HKD"},
-        {"name":"MYR"}
+        {"name":"MYR"},
+        {"name":"USD"}
     ]
