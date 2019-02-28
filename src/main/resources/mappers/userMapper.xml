@@ -12,6 +12,7 @@
 		<result property="bu" column="BU" javaType="String" />
 		<result property="loginStatus" column="LOGIN_STATUS" jdbcType="VARCHAR" />
 		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
+		<result column="USER_LOCATION" property="userLocation" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	

@@ -41,8 +41,17 @@ public class User {
 	//邮箱
 	private String email;
 	
+	private String userLocation;
 	
-	public String getEmail() {
+	public String getUserLocation() {
+        return userLocation;
+    }
+
+    public void setUserLocation(String userLocation) {
+        this.userLocation = userLocation;
+    }
+
+    public String getEmail() {
 		return email;
 	}
 

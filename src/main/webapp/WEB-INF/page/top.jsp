@@ -56,7 +56,7 @@
 
 <body>
 	
-		
+	<input type="hidden" id="is_malaysia" value="${sessionScope.loginUser.userLocation}"/>
     <!-- topbar starts -->
     <div class="navbar navbar-default" role="navigation">
 
@@ -152,6 +152,10 @@
     <!-- external javascript -->
 	<script type="text/javascript">
 		var path = "<%=path%>";
+		var showBankbone = true;
+		if("MALAYSIA" == $("#is_malaysia").val().toUpperCase()){
+			showBankbone = false;
+		}
 	</script>
 
 <script src="<%=path %>/js/pmo/updatePassword.js"></script>
