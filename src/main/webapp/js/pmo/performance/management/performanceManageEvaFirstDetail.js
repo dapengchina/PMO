@@ -134,7 +134,8 @@ function loadManageEvaFirstDetailList() {
 		    {
 			  field : 'keymember',
 			  title : 'Backbone',
-			  width: "100px"
+			  width: "100px",
+			  visible: showBankbone
 		    }, 
 		    {
 			  field : 'participate',

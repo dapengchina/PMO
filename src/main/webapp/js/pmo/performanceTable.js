@@ -41,7 +41,8 @@ var columns = [ {
 	title : 'Location'
 }, {
 	field : 'keymember',
-	title : 'Backbone'
+	title : 'Backbone',
+	visible: showBankbone
 }, {
 	field : 'participate',
 	title : 'Assessed'

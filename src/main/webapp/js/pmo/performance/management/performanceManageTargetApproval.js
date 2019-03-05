@@ -40,7 +40,8 @@ function loadManageTargetApprovalList() {
 		}
 	}, {
 		field : 'ifbackone',
-		title : 'Backbone&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(2);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="backboneTips"></div>'
+		title : 'Backbone&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(2);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="backboneTips"></div>',
+		visible: showBankbone
 	}, {
 		field : 'stateName',
 		title : 'Status&nbsp;<a href="javascript:void(0);" style="color:#555" onClick="showFilter(3);" class="link"><i class="glyphicon glyphicon-chevron-down"></i></a><div class="stateTips"></div>',
@@ -118,8 +119,10 @@ function loadManageTargetApprovalList() {
 			if ($(".submitTips").html() == "") {
 				$(".submitTips").append($("#submitFilterDiv"));
 				$("#submitFilterDiv").removeClass("hidden");
-				$(".backboneTips").append($("#backboneFilterDiv"));
-				$("#backboneFilterDiv").removeClass("hidden");
+				if($(".backboneTips").length != 0){
+					$(".backboneTips").append($("#backboneFilterDiv"));
+					$("#backboneFilterDiv").removeClass("hidden");
+				}
 				$(".stateTips").append($("#stateFilterDiv"));
 				$("#stateFilterDiv").removeClass("hidden");
 			}
